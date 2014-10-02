@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Windows Version Checker" Height="300" Width="550"
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/WinSPCheck;component/metro.ico">
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="b.ico">
     <Grid>
         <TextBox Height="23" Margin="12,12,12,0" Name="CurrentVersion" VerticalAlignment="Top" IsReadOnly="True"
                  Background="Transparent" BorderThickness="0" TextAlignment="Center" />
