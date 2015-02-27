@@ -1,29 +1,25 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Windows;
-using WinSPCheck.Internal;
+﻿using System;
+using MahApps.Metro.Controls;
+using Microsoft.Win32;
 
 namespace WinSPCheck
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     // ReSharper disable RedundantExtendsListEntry
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
         // ReSharper restore RedundantExtendsListEntry
     {
         public MainWindow()
         {
             InitializeComponent();
-
-            Loaded += (s, e) => GlassEffectHelper.EnableGlassEffect(this);
             RunVersionChecks();
         }
 
         private void RunVersionChecks()
         {
             WindowsVersion();
-            NetFrameworks();
         }
 
         private void WindowsVersion()
@@ -36,8 +32,10 @@ namespace WinSPCheck
                 ? string.Format(" | {0}", GetRegistryValue("CSDVersion"))
                 : string.Empty;
 
-            CurrentVersion.Text = string.Format("{0}{1} | {2}.{3} | {4}", productName, csdVersion, currentVersion,
-                currentBuild, buildLab);
+            CurrentVersion.Text = "Machine: " + Environment.MachineName + Environment.NewLine +
+                                  "Product: " + productName + csdVersion + Environment.NewLine +
+                                  "Build: " + currentVersion + " " + currentBuild +
+                                  Environment.NewLine + "Build lab: " + buildLab;
         }
 
         private string GetRegistryValue(string name)
@@ -45,17 +43,6 @@ namespace WinSPCheck
             var regPath = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
 
             return regPath != null && regPath.GetValue(name) != null ? regPath.GetValue(name).ToString() : string.Empty;
-        }
-
-        private void NetFrameworks()
-        {
-            var dotNetVersion = new DotNetVersion();
-
-            foreach (var dotNetFramework in dotNetVersion.DotNetVersionList)
-            {
-                NetFramework.Text += dotNetFramework;
-                NetFramework.Text += Environment.NewLine;
-            }
         }
     }
 }

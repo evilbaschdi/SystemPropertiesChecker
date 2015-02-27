@@ -1,14 +1,12 @@
-﻿<Window x:Class="WinSPCheck.MainWindow"
+﻿<controls:MetroWindow x:Class="WinSPCheck.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         Title="Windows Version Checker" Height="300" Width="550"
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="b.ico">
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="b.ico" EnableDWMDropShadow="True"
+                      GlowBrush="{DynamicResource AccentColorBrush}">
     <Grid>
-        <TextBox Height="23" Margin="12,12,12,0" Name="CurrentVersion" VerticalAlignment="Top" IsReadOnly="True"
-                 Background="Transparent" BorderThickness="0" TextAlignment="Center" />
-
-        <TextBox Height="Auto" Margin="14,40,10,0" x:Name="NetFramework" VerticalAlignment="Top" IsReadOnly="True"
-                 Background="Transparent" BorderThickness="0" TextAlignment="Center" TextWrapping="Wrap"
-                 AcceptsReturn="True" />
+        <TextBox Margin="10,10,10,0" Name="CurrentVersion" VerticalAlignment="Top" IsReadOnly="True"
+                 Background="Transparent" BorderThickness="0" TextAlignment="Center" Height="251" />
     </Grid>
-</Window>
+</controls:MetroWindow>
