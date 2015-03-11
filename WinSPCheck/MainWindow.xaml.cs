@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MahApps.Metro.Controls;
 using Microsoft.Win32;
+using WinSPCheck.Internal;
 
 namespace WinSPCheck
 {
@@ -11,6 +14,8 @@ namespace WinSPCheck
     public partial class MainWindow : MetroWindow
         // ReSharper restore RedundantExtendsListEntry
     {
+        private List<string> _dotNetVersionList;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -19,6 +24,8 @@ namespace WinSPCheck
 
         private void RunVersionChecks()
         {
+            var dotNetVersion = new DotNetVersion();
+            _dotNetVersionList = dotNetVersion.DotNetVersionList;
             WindowsVersion();
         }
 
@@ -32,10 +39,11 @@ namespace WinSPCheck
                 ? string.Format(" | {0}", GetRegistryValue("CSDVersion"))
                 : string.Empty;
 
-            CurrentVersion.Text = "Machine: " + Environment.MachineName + Environment.NewLine +
-                                  "Product: " + productName + csdVersion + Environment.NewLine +
-                                  "Build: " + currentVersion + " " + currentBuild +
-                                  Environment.NewLine + "Build lab: " + buildLab;
+            CurrentVersion.Text =
+                string.Format("Machine: {0}{1}Product: {2}{3}{1}Version: {4}.{5}{1}Build lab: {6}{1}{1}{7}",
+                    Environment.MachineName, Environment.NewLine, productName, csdVersion, currentVersion, currentBuild,
+                    buildLab, _dotNetVersionList.Aggregate(string.Empty,
+                        (current, version) => current + (version + Environment.NewLine)));
         }
 
         private string GetRegistryValue(string name)

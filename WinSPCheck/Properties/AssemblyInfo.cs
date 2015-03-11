@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("Windows Version Checker")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("mister-x")]
+[assembly: AssemblyCompany("evil.baschdi")]
 [assembly: AssemblyProduct("Windows Version Checker")]
-[assembly: AssemblyCopyright("Copyright © mister-x 2012")]
+[assembly: AssemblyCopyright("Copyright © evil.baschdi 2012 - 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
