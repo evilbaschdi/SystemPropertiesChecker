@@ -1,8 +1,11 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using MahApps.Metro.Controls;
-using Microsoft.Win32;
+using System.Windows;
+using System.Windows.Controls;
+using WinSPCheck.Core;
 using WinSPCheck.Internal;
 
 namespace WinSPCheck
@@ -12,13 +15,16 @@ namespace WinSPCheck
     /// </summary>
     // ReSharper disable RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
-        // ReSharper restore RedundantExtendsListEntry
+    // ReSharper restore RedundantExtendsListEntry
     {
         private List<string> _dotNetVersionList;
+        private readonly ApplicationStyle _style;
 
         public MainWindow()
         {
+            _style = new ApplicationStyle(this);
             InitializeComponent();
+            _style.Load();
             RunVersionChecks();
         }
 
@@ -52,5 +58,59 @@ namespace WinSPCheck
 
             return regPath != null && regPath.GetValue(name) != null ? regPath.GetValue(name).ToString() : string.Empty;
         }
+
+        #region Flyout
+
+        private void ToggleSettingsFlyoutClick(object sender, RoutedEventArgs e)
+        {
+            ToggleFlyout(0);
+        }
+
+        private void ToggleFlyout(int index, bool stayOpen = false)
+        {
+            var activeFlyout = (Flyout)Flyouts.Items[index];
+            if (activeFlyout == null)
+            {
+                return;
+            }
+
+            foreach (
+                var nonactiveFlyout in
+                    Flyouts.Items.Cast<Flyout>()
+                        .Where(nonactiveFlyout => nonactiveFlyout.IsOpen && nonactiveFlyout.Name != activeFlyout.Name))
+            {
+                nonactiveFlyout.IsOpen = false;
+            }
+
+            if (activeFlyout.IsOpen && stayOpen)
+            {
+                activeFlyout.IsOpen = true;
+            }
+            else
+            {
+                activeFlyout.IsOpen = !activeFlyout.IsOpen;
+            }
+        }
+
+        #endregion Flyout
+
+        #region Style
+
+        private void SaveStyleClick(object sender, RoutedEventArgs e)
+        {
+            _style.SaveStyle();
+        }
+
+        private void Theme(object sender, RoutedEventArgs e)
+        {
+            _style.SetTheme(sender, e);
+        }
+
+        private void AccentOnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _style.SetAccent(sender, e);
+        }
+
+        #endregion Style
     }
 }
