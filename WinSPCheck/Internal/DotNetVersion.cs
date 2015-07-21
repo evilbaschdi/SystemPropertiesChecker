@@ -1,7 +1,7 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Win32;
 
 namespace WinSPCheck.Internal
 {
@@ -32,7 +32,7 @@ namespace WinSPCheck.Internal
         private void GetNetFrameworkVersionFromRegistry()
         {
             // Opens the registry key for the .NET Framework entry.
-            using (var ndpKey =
+            using(var ndpKey =
                 RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "").
                     OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
             {
@@ -40,54 +40,54 @@ namespace WinSPCheck.Internal
                 // or later, you can use:
                 // using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
                 // RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
-                if (ndpKey == null)
+                if(ndpKey == null)
                 {
                     return;
                 }
-                foreach (var versionKeyName in ndpKey.GetSubKeyNames().Where(v => v.StartsWith("v")))
+                foreach(var versionKeyName in ndpKey.GetSubKeyNames().Where(v => v.StartsWith("v")))
                 {
                     var versionKey = ndpKey.OpenSubKey(versionKeyName);
 
-                    if (versionKey != null)
+                    if(versionKey != null)
                     {
-                        var name = (string)versionKey.GetValue("Version", "");
+                        var name = (string) versionKey.GetValue("Version", "");
                         var sp = versionKey.GetValue("SP", "").ToString();
                         var install = versionKey.GetValue("Install", "").ToString();
 
                         // .Net 2.0, 3.0, 3.5
-                        if (!string.IsNullOrEmpty(name))
+                        if(!string.IsNullOrEmpty(name))
                         {
                             _dotNetVersionList.Add(install != "" && install == "1" && sp != ""
-                                ? string.Format("{0} | SP{1} | {2}", versionKeyName, sp, name)
-                                : string.Format("{0} | {1}", versionKeyName, name));
+                                ? $"{versionKeyName} | SP{sp} | {name}"
+                                : $"{versionKeyName} | {name}");
                         }
 
                         // .Net 4.0
-                        if (string.IsNullOrEmpty(name))
+                        if(string.IsNullOrEmpty(name))
                         {
-                            foreach (var subKeyName in versionKey.GetSubKeyNames())
+                            foreach(var subKeyName in versionKey.GetSubKeyNames())
                             {
                                 var subKey = versionKey.OpenSubKey(subKeyName);
 
-                                if (subKey != null)
+                                if(subKey != null)
                                 {
-                                    name = (string)subKey.GetValue("Version", "");
-                                    if (name != "")
+                                    name = (string) subKey.GetValue("Version", "");
+                                    if(name != "")
                                     {
                                         sp = subKey.GetValue("SP", "").ToString();
                                     }
                                     install = subKey.GetValue("Install", "").ToString();
                                 }
 
-                                if (!string.IsNullOrEmpty(install) && install == "1")
+                                if(!string.IsNullOrEmpty(install) && install == "1")
                                 {
                                     _dotNetVersionList.Add(!string.IsNullOrEmpty(sp)
-                                        ? string.Format("{0} | SP{1} | {2}", subKeyName, sp, name)
-                                        : string.Format("{0}: {1}", subKeyName, name));
+                                        ? $"{subKeyName} | SP{sp} | {name}"
+                                        : $"{subKeyName}: {name}");
                                 }
                                 else
                                 {
-                                    _dotNetVersionList.Add(string.Format("{0} | {1}", versionKeyName, name));
+                                    _dotNetVersionList.Add($"{versionKeyName} | {name}");
                                 }
                             }
                         }
@@ -98,16 +98,15 @@ namespace WinSPCheck.Internal
 
         private void GetNetFrameworkVersionHigher4FromRegistry()
         {
-            using (
+            using(
                 var ndpKey =
                     RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "")
                         .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\"))
             {
-                if (ndpKey != null)
+                if(ndpKey != null)
                 {
                     var releaseKey = Convert.ToInt32(ndpKey.GetValue("Release"));
-                    //_dotNetVersionList.Add(CheckFor45DotVersion(releaseKey));
-                    _dotNetVersionList.Add(CheckFor45DotVersion(393292));
+                    _dotNetVersionList.Add(CheckFor45DotVersion(releaseKey));
                 }
             }
         }
@@ -117,7 +116,7 @@ namespace WinSPCheck.Internal
         // the framework to ensure your app works the same.
         private string CheckFor45DotVersion(int releaseKey)
         {
-            foreach (
+            foreach(
                 var key in
                     DotNetVersionReleaseKeyList().OrderByDescending(key => key.Key).Where(key => releaseKey >= key.Key))
             {
@@ -130,8 +129,7 @@ namespace WinSPCheck.Internal
         }
 
         private IEnumerable<KeyValuePair<int, string>> DotNetVersionReleaseKeyList()
-        {
-            return new List<KeyValuePair<int, string>>
+            => new List<KeyValuePair<int, string>>
             {
                 new KeyValuePair<int, string>(378389, ".NET Framework 4.5"),
                 new KeyValuePair<int, string>(378675,
@@ -140,8 +138,8 @@ namespace WinSPCheck.Internal
                     ".Net Framework 4.5.1 installed on Windows 8, Windows 7 SP1, or Windows Vista SP2"),
                 new KeyValuePair<int, string>(379893, ".Net Framework 4.5.2"),
                 new KeyValuePair<int, string>(381029, ".Net Framework 4.6 Preview"),
-                new KeyValuePair<int, string>(393273, ".Net Framework 4.6 RC or later")
+                new KeyValuePair<int, string>(393273, ".Net Framework 4.6 RC"),
+                new KeyValuePair<int, string>(393295, ".Net Framework 4.6 or later")
             };
-        }
     }
 }
