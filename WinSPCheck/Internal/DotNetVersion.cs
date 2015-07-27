@@ -20,7 +20,7 @@ namespace WinSPCheck.Internal
         {
             _dotNetVersionList = new List<string>
             {
-                ".NET Frameworks:"
+                ".Net Frameworks:"
             };
             // .Net 2.0, 3.0, 3.5
             // .Net 4.0
@@ -58,8 +58,8 @@ namespace WinSPCheck.Internal
                         if(!string.IsNullOrEmpty(name))
                         {
                             _dotNetVersionList.Add(install != "" && install == "1" && sp != ""
-                                ? string.Format("{0} | SP{1} | {2}", versionKeyName, sp, name)
-                                : string.Format("{0} | {1}", versionKeyName, name));
+                                ? $"{versionKeyName} | SP{sp} | {name}"
+                                : $"{versionKeyName} | {name}");
                         }
 
                         // .Net 4.0
@@ -82,12 +82,12 @@ namespace WinSPCheck.Internal
                                 if(!string.IsNullOrEmpty(install) && install == "1")
                                 {
                                     _dotNetVersionList.Add(!string.IsNullOrEmpty(sp)
-                                        ? string.Format("{0} | SP{1} | {2}", subKeyName, sp, name)
-                                        : string.Format("{0}: {1}", subKeyName, name));
+                                        ? $"{subKeyName} | SP{sp} | {name}"
+                                        : $"{subKeyName}: {name}");
                                 }
                                 else
                                 {
-                                    _dotNetVersionList.Add(string.Format("{0} | {1}", versionKeyName, name));
+                                    _dotNetVersionList.Add($"{versionKeyName} | {name}");
                                 }
                             }
                         }
@@ -116,7 +116,9 @@ namespace WinSPCheck.Internal
         // the framework to ensure your app works the same.
         private string CheckFor45DotVersion(int releaseKey)
         {
-            foreach(var key in DotNetVersionReleaseKeyList().Where(key => key.Key >= releaseKey))
+            foreach(
+                var key in
+                    DotNetVersionReleaseKeyList().OrderByDescending(key => key.Key).Where(key => releaseKey >= key.Key))
             {
                 return key.Value;
             }
@@ -127,17 +129,17 @@ namespace WinSPCheck.Internal
         }
 
         private IEnumerable<KeyValuePair<int, string>> DotNetVersionReleaseKeyList()
-        {
-            return new List<KeyValuePair<int, string>>
+            => new List<KeyValuePair<int, string>>
             {
                 new KeyValuePair<int, string>(378389, ".NET Framework 4.5"),
                 new KeyValuePair<int, string>(378675,
-                    ".NET Framework 4.5.1 installed with Windows 8.1 or Windows Server 2012 R2"),
+                    ".Net Framework 4.5.1 installed with Windows 8.1 or Windows Server 2012 R2"),
                 new KeyValuePair<int, string>(378758,
-                    ".NET Framework 4.5.1 installed on Windows 8, Windows 7 SP1, or Windows Vista SP2"),
-                new KeyValuePair<int, string>(379893, ".NET Framework 4.5.2"),
-                new KeyValuePair<int, string>(381029, ".NET Framework 4.6 Preview")
+                    ".Net Framework 4.5.1 installed on Windows 8, Windows 7 SP1, or Windows Vista SP2"),
+                new KeyValuePair<int, string>(379893, ".Net Framework 4.5.2"),
+                new KeyValuePair<int, string>(381029, ".Net Framework 4.6 Preview"),
+                new KeyValuePair<int, string>(393273, ".Net Framework 4.6 RC"),
+                new KeyValuePair<int, string>(393295, ".Net Framework 4.6 or later")
             };
-        }
     }
 }
