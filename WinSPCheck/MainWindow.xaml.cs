@@ -43,6 +43,7 @@ namespace WinSPCheck
             var currentVersion = GetRegistryValue("CurrentVersion");
             var currentMajorVersionNumber = GetRegistryValue("CurrentMajorVersionNumber");
             var currentMinorVersionNumber = GetRegistryValue("CurrentMinorVersionNumber");
+            var releaseId = GetRegistryValue("ReleaseId");
             var csdVersion = !string.IsNullOrEmpty(GetRegistryValue("CSDVersion"))
                 ? $" | {GetRegistryValue("CSDVersion")}"
                 : string.Empty;
@@ -51,12 +52,23 @@ namespace WinSPCheck
                           !string.IsNullOrWhiteSpace(currentMinorVersionNumber)
                 ? $"{currentMajorVersionNumber}.{currentMinorVersionNumber}"
                 : currentVersion;
+            var dotNet = _dotNetVersionList.Aggregate(string.Empty,
+                (c, v) => c + (v + Environment.NewLine));
+
+            //CurrentVersion.Text =
+            //    string.Format("Machine: {0}{1}Product: {2}{3}{1}Version: {4}.{5}{1}Build lab: {6}{1}{1}{7}",
+            //        Environment.MachineName, Environment.NewLine, productName, csdVersion, version, currentBuild,
+            //        buildLab, _dotNetVersionList.Aggregate(string.Empty,
+            //            (c, v) => c + (v + Environment.NewLine)));
 
             CurrentVersion.Text =
-                string.Format("Machine: {0}{1}Product: {2}{3}{1}Version: {4}.{5}{1}Build lab: {6}{1}{1}{7}",
-                    Environment.MachineName, Environment.NewLine, productName, csdVersion, version, currentBuild,
-                    buildLab, _dotNetVersionList.Aggregate(string.Empty,
-                        (c, v) => c + (v + Environment.NewLine)));
+                $"Machine: {Environment.MachineName}{Environment.NewLine}" +
+                $"Product: {productName}{csdVersion}{Environment.NewLine}" +
+                $"Version: {version} | " +
+                $"Build: {currentBuild} | " +
+                $"Release: {releaseId}{Environment.NewLine}" +
+                $"Build Lab: {buildLab}{Environment.NewLine}{Environment.NewLine}" +
+                $"{dotNet}";
         }
 
         private string GetRegistryValue(string name)
