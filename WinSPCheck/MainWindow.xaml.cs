@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
@@ -10,12 +11,8 @@ using WinSPCheck.Internal;
 
 namespace WinSPCheck
 {
-    /// <summary>
-    ///     Interaction logic for MainWindow.xaml
-    /// </summary>
-    // ReSharper disable RedundantExtendsListEntry
+    // ReSharper disable once RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
-        // ReSharper restore RedundantExtendsListEntry
     {
         private List<string> _dotNetVersionList;
         private readonly ApplicationStyle _style;
@@ -35,47 +32,70 @@ namespace WinSPCheck
             WindowsVersion();
         }
 
-        private void WindowsVersion()
+        private ValueHelper GetValues()
         {
-            var buildLab = GetRegistryValue("BuildLab");
-            var productName = GetRegistryValue("ProductName");
-            var currentBuild = GetRegistryValue("CurrentBuild");
+            var bits = Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
+
             var currentVersion = GetRegistryValue("CurrentVersion");
             var currentMajorVersionNumber = GetRegistryValue("CurrentMajorVersionNumber");
             var currentMinorVersionNumber = GetRegistryValue("CurrentMinorVersionNumber");
-            var releaseId = GetRegistryValue("ReleaseId");
+
             var csdVersion = !string.IsNullOrEmpty(GetRegistryValue("CSDVersion"))
-                ? $" | {GetRegistryValue("CSDVersion")}"
+                ? $" with {GetRegistryValue("CSDVersion")}"
+                : string.Empty;
+
+            var releaseId = !string.IsNullOrEmpty(GetRegistryValue("ReleaseId"))
+                ? $" Version: {GetRegistryValue("ReleaseId")}"
                 : string.Empty;
 
             var version = !string.IsNullOrWhiteSpace(currentMajorVersionNumber) &&
                           !string.IsNullOrWhiteSpace(currentMinorVersionNumber)
                 ? $"{currentMajorVersionNumber}.{currentMinorVersionNumber}"
                 : currentVersion;
-            var dotNet = _dotNetVersionList.Aggregate(string.Empty,
-                (c, v) => c + (v + Environment.NewLine));
 
-            //CurrentVersion.Text =
-            //    string.Format("Machine: {0}{1}Product: {2}{3}{1}Version: {4}.{5}{1}Build lab: {6}{1}{1}{7}",
-            //        Environment.MachineName, Environment.NewLine, productName, csdVersion, version, currentBuild,
-            //        buildLab, _dotNetVersionList.Aggregate(string.Empty,
-            //            (c, v) => c + (v + Environment.NewLine)));
+            return new ValueHelper
+            {
+                Bits = bits,
+                BuildLab = GetRegistryValue("BuildLab"),
+                BuildLabEx = GetRegistryValue("BuildLabEx"),
+                BuildLabExArray = GetRegistryValue("BuildLabEx").Split('.'),
+                CurrentBuild = GetRegistryValue("CurrentBuild"),
+                ProductName = GetRegistryValue("ProductName"),
+                CurrentVersion = version,
+                CsdVersion = csdVersion,
+                ReleaseId = releaseId
+            };
+        }
 
-            CurrentVersion.Text =
-                $"Machine: {Environment.MachineName}{Environment.NewLine}" +
-                $"Product: {productName}{csdVersion}{Environment.NewLine}" +
-                $"Version: {version} | " +
-                $"Build: {currentBuild} | " +
-                $"Release: {releaseId}{Environment.NewLine}" +
-                $"Build Lab: {buildLab}{Environment.NewLine}{Environment.NewLine}" +
-                $"{dotNet}";
+        private void WindowsVersion()
+        {
+            var values = GetValues();
+
+            var sb = new StringBuilder();
+            sb.Append($"Computername: {Environment.MachineName} {Environment.NewLine}");
+            sb.Append($"{values.ProductName}{values.CsdVersion}{values.ReleaseId}{Environment.NewLine}");
+            sb.Append($"System type: {values.Bits}{Environment.NewLine}");
+            sb.Append($"{Environment.NewLine}");
+            sb.Append($"Version number: {values.CurrentVersion} Build: {values.CurrentBuild} (OS Build: {values.BuildLabExArray[0]}.{values.BuildLabExArray[1]})");
+            sb.Append(Environment.NewLine);
+            sb.Append($"Build Lab: {values.BuildLab}{Environment.NewLine}");
+            sb.Append(Environment.NewLine);
+            sb.Append(_dotNetVersionList.Aggregate(string.Empty, (c, v) => c + (v + Environment.NewLine)));
+
+            CurrentVersion.Text = sb.ToString();
         }
 
         private string GetRegistryValue(string name)
         {
+            if(name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
             var regPath = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
 
-            return regPath?.GetValue(name) != null ? regPath.GetValue(name).ToString() : string.Empty;
+            return regPath?.GetValue(name) != null
+                ? regPath.GetValue(name).ToString()
+                : string.Empty;
         }
 
         #region Flyout

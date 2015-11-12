@@ -1,7 +1,7 @@
-﻿using MahApps.Metro;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using MahApps.Metro;
 
 namespace WinSPCheck.Core
 {
@@ -29,7 +29,7 @@ namespace WinSPCheck.Core
         {
             if(mainWindow == null)
             {
-                throw new ArgumentNullException("mainWindow");
+                throw new ArgumentNullException(nameof(mainWindow));
             }
             _mainWindow = mainWindow;
         }

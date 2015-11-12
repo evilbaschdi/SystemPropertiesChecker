@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Win32;
 
 namespace WinSPCheck.Internal
@@ -44,8 +45,9 @@ namespace WinSPCheck.Internal
                 {
                     return;
                 }
-                foreach(var versionKeyName in ndpKey.GetSubKeyNames().Where(v => v.StartsWith("v")))
+                Parallel.ForEach(ndpKey.GetSubKeyNames().Where(v => v.StartsWith("v")), versionKeyName =>
                 {
+                    // ReSharper disable once AccessToDisposedClosure
                     var versionKey = ndpKey.OpenSubKey(versionKeyName);
 
                     if(versionKey != null)
@@ -65,7 +67,7 @@ namespace WinSPCheck.Internal
                         // .Net 4.0
                         if(string.IsNullOrEmpty(name))
                         {
-                            foreach(var subKeyName in versionKey.GetSubKeyNames())
+                            Parallel.ForEach(versionKey.GetSubKeyNames(), subKeyName =>
                             {
                                 var subKey = versionKey.OpenSubKey(subKeyName);
 
@@ -89,10 +91,10 @@ namespace WinSPCheck.Internal
                                 {
                                     _dotNetVersionList.Add($"{versionKeyName} | {name}");
                                 }
-                            }
+                            });
                         }
                     }
-                }
+                });
             }
         }
 
@@ -103,11 +105,12 @@ namespace WinSPCheck.Internal
                     RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "")
                         .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\"))
             {
-                if(ndpKey != null)
+                if(ndpKey == null)
                 {
-                    var releaseKey = Convert.ToInt32(ndpKey.GetValue("Release"));
-                    _dotNetVersionList.Add(CheckFor45DotVersion(releaseKey));
+                    return;
                 }
+                var releaseKey = Convert.ToInt32(ndpKey.GetValue("Release"));
+                _dotNetVersionList.Add(CheckFor45DotVersion(releaseKey));
             }
         }
 
@@ -116,16 +119,8 @@ namespace WinSPCheck.Internal
         // the framework to ensure your app works the same.
         private string CheckFor45DotVersion(int releaseKey)
         {
-            foreach(
-                var key in
-                    DotNetVersionReleaseKeyList().OrderByDescending(key => key.Key).Where(key => releaseKey >= key.Key))
-            {
-                return key.Value;
-            }
-
-            // This line should never execute. A non-null release key should mean
-            // that 4.5 or later is installed.
-            return "No 4.5 or later version detected";
+            var value = DotNetVersionReleaseKeyList().OrderByDescending(key => key.Key).FirstOrDefault(key => releaseKey >= key.Key).Value;
+            return !string.IsNullOrWhiteSpace(value) ? value : "No 4.5 or later version detected";
         }
 
         private IEnumerable<KeyValuePair<int, string>> DotNetVersionReleaseKeyList()
