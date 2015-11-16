@@ -60,6 +60,25 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>bin\Release\WinSPCheck.XML</DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro, Version=1.1.3.225, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.3-ALPHA225\lib\net40\MahApps.Metro.dll</HintPath>
@@ -89,8 +108,23 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\ApplicationStyle.cs" />
-    <Compile Include="Internal\DotNetVersion.cs" />
-    <Compile Include="Internal\ValueHelper.cs" />
+    <Compile Include="Internal\GetWindowsVersionInformation.cs">
+      <DependentUpon>IWindowsVersionInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\GetWindowsVersionInfromationStack.cs">
+      <DependentUpon>IWindowsVersionInformationStack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\HklmSoftwareMicrosoftWindowsNtCurrentVersion.cs">
+      <DependentUpon>IRegistryValue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\IRegistryValue.cs" />
+    <Compile Include="Internal\IWindowsVersionInformation.cs" />
+    <Compile Include="Internal\DotNetVersion.cs">
+      <DependentUpon>IDotNetVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\IDotNetVersion.cs" />
+    <Compile Include="Internal\IWindowsVersionInformationHelper.cs" />
+    <Compile Include="Internal\IWindowsVersionInformationStack.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -98,6 +132,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Internal\WindowsVersionInformationHelper.cs">
+      <DependentUpon>IWindowsVersionInformationHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
