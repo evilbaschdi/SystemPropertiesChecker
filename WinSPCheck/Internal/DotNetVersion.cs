@@ -6,16 +6,25 @@ using Microsoft.Win32;
 
 namespace WinSPCheck.Internal
 {
-    public class DotNetVersion
+    /// <summary>
+    ///     Class that returns a list of current installed dot net versions.
+    /// </summary>
+    public class DotNetVersion : IDotNetVersion
     {
-        public List<string> DotNetVersionList;
         private List<string> _dotNetVersionList;
 
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
         public DotNetVersion()
         {
             GetNetFrameworks();
-            DotNetVersionList = _dotNetVersionList;
         }
+
+        /// <summary>
+        ///     Contains a list of current installed dot net versions.
+        /// </summary>
+        public List<string> List => _dotNetVersionList;
 
         private void GetNetFrameworks()
         {
@@ -127,10 +136,8 @@ namespace WinSPCheck.Internal
             => new List<KeyValuePair<int, string>>
             {
                 new KeyValuePair<int, string>(378389, ".NET Framework 4.5"),
-                new KeyValuePair<int, string>(378675,
-                    ".Net Framework 4.5.1 installed with Windows 8.1 or Windows Server 2012 R2"),
-                new KeyValuePair<int, string>(378758,
-                    ".Net Framework 4.5.1 installed on Windows 8, Windows 7 SP1, or Windows Vista SP2"),
+                new KeyValuePair<int, string>(378675, ".Net Framework 4.5.1"),
+                new KeyValuePair<int, string>(378758, ".Net Framework 4.5.1"),
                 new KeyValuePair<int, string>(379893, ".Net Framework 4.5.2"),
                 new KeyValuePair<int, string>(381029, ".Net Framework 4.6 Preview"),
                 new KeyValuePair<int, string>(393273, ".Net Framework 4.6 RC"),
