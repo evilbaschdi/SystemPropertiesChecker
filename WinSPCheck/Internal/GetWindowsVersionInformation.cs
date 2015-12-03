@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Management;
 
 namespace WinSPCheck.Internal
 {
@@ -54,7 +55,37 @@ namespace WinSPCheck.Internal
                     ? $"{currentMajorVersionNumber}.{currentMinorVersionNumber}"
                     : currentVersion;
 
+                var win32Computersystem = "SELECT * FROM Win32_ComputerSystem";
+                var managementObjectSearcher = new ManagementObjectSearcher(win32Computersystem);
+                var virtualSystem = false;
+                var info = managementObjectSearcher.Get();
+                var manufacturer = string.Empty;
+                foreach(var item in info)
+                {
+                    manufacturer = item["Manufacturer"].ToString().ToLower();
+
+                    if((manufacturer == "microsoft corporation" && item["Model"].ToString().ToUpperInvariant().Contains("VIRTUAL"))
+                       || manufacturer.Contains("vmware")
+                       || item["Model"].ToString() == "VirtualBox")
+                    {
+                        virtualSystem = true;
+                    }
+                }
+
+                var computername = $"{Environment.MachineName}";
+
+
+                var domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
+
+                if(!string.IsNullOrWhiteSpace(domain))
+                {
+                    computername += $" Domain: {domain}";
+                }
+
+                _windowsVersionInformationHelper.Computername = computername;
                 _windowsVersionInformationHelper.Bits = bits;
+                _windowsVersionInformationHelper.Virtual = virtualSystem;
+                _windowsVersionInformationHelper.Manufacturer = manufacturer;
                 _windowsVersionInformationHelper.BuildLab = _registryValue.For("BuildLab");
                 _windowsVersionInformationHelper.BuildLabEx = _registryValue.For("BuildLabEx");
                 _windowsVersionInformationHelper.BuildLabExArray = _registryValue.For("BuildLabEx").Split('.');

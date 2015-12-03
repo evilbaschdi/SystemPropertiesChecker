@@ -39,9 +39,13 @@ namespace WinSPCheck.Internal
                 var values = _windowsVersionInformation.Values;
 
                 var sb = new StringBuilder();
-                sb.Append($"Computername: {Environment.MachineName} {Environment.NewLine}");
+                sb.Append($"Computername: {values.Computername} {Environment.NewLine}"); //todo: domain
                 sb.Append($"{values.ProductName}{values.CsdVersion}{values.ReleaseId}{Environment.NewLine}");
                 sb.Append($"System type: {values.Bits}{Environment.NewLine}");
+                sb.Append(values.Virtual
+                    ? $"Virtual System: {values.Manufacturer}"
+                    : $"Virtual System: -");
+                sb.Append($"{Environment.NewLine}");
                 sb.Append($"{Environment.NewLine}");
                 sb.Append($"Version number: {values.CurrentVersion} Build: {values.CurrentBuild} (OS Build: {values.BuildLabExArray[0]}.{values.BuildLabExArray[1]})");
                 sb.Append(Environment.NewLine);

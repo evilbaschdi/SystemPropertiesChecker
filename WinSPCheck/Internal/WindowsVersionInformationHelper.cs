@@ -11,6 +11,10 @@ namespace WinSPCheck.Internal
 
         /// <summary>
         /// </summary>
+        public bool Virtual { get; set; }
+
+        /// <summary>
+        /// </summary>
         public string BuildLab { get; set; }
 
         /// <summary>
@@ -40,5 +44,13 @@ namespace WinSPCheck.Internal
         /// <summary>
         /// </summary>
         public string[] BuildLabExArray { get; set; }
+
+        /// <summary>
+        /// </summary>
+        public string Manufacturer { get; set; }
+
+        /// <summary>
+        /// </summary>
+        public object Computername { get; set; }
     }
 }
