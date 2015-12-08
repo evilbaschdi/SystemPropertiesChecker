@@ -39,19 +39,24 @@ namespace WinSPCheck.Internal
                 var values = _windowsVersionInformation.Values;
 
                 var sb = new StringBuilder();
-                sb.Append($"Computername: {values.Computername} {Environment.NewLine}"); //todo: domain
-                sb.Append($"{values.ProductName}{values.CsdVersion}{values.ReleaseId}{Environment.NewLine}");
+                sb.Append($"Computername: {values.Computername} {Environment.NewLine}");
+                sb.Append($"Productname: {values.ProductName}{values.CsdVersion}{values.ReleaseId}{Environment.NewLine}");
                 sb.Append($"System type: {values.Bits}{Environment.NewLine}");
                 sb.Append(values.Virtual
                     ? $"Virtual System: {values.Manufacturer}"
                     : $"Virtual System: -");
                 sb.Append($"{Environment.NewLine}");
                 sb.Append($"{Environment.NewLine}");
-                sb.Append($"Version number: {values.CurrentVersion} Build: {values.CurrentBuild} (OS Build: {values.BuildLabExArray[0]}.{values.BuildLabExArray[1]})");
+                sb.Append($"Version number: {values.CurrentVersion} Current build: {values.CurrentBuild} (Build: ");
+                sb.Append(!string.IsNullOrWhiteSpace(values.Ubr)
+                    ? $"{values.CurrentBuild}.{values.Ubr}"
+                    : $"{values.BuildLabExArray[0]}.{values.BuildLabExArray[1]}");
+                sb.Append(")");
                 sb.Append(Environment.NewLine);
-                sb.Append($"Build Lab: {values.BuildLab}{Environment.NewLine}");
+                sb.Append($"BuildLab: {values.BuildLab}{Environment.NewLine}");
+                sb.Append($"BuildLabEx: {values.BuildLabEx}{Environment.NewLine}");
                 sb.Append(Environment.NewLine);
-                sb.Append(_dotNetVersion.List.Aggregate(string.Empty, (c, v) => c + (v + Environment.NewLine)));
+                sb.Append(_dotNetVersion.List.Aggregate(string.Empty, (c, v) => c + v + Environment.NewLine));
 
                 return sb.ToString();
             }

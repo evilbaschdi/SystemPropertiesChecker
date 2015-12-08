@@ -47,7 +47,7 @@ namespace WinSPCheck.Internal
                     : string.Empty;
 
                 var releaseId = !string.IsNullOrEmpty(_registryValue.For("ReleaseId"))
-                    ? $" Version: {_registryValue.For("ReleaseId")}"
+                    ? $" (Version {_registryValue.For("ReleaseId")})"
                     : string.Empty;
 
                 var version = !string.IsNullOrWhiteSpace(currentMajorVersionNumber) &&
@@ -94,6 +94,7 @@ namespace WinSPCheck.Internal
                 _windowsVersionInformationHelper.CurrentVersion = version;
                 _windowsVersionInformationHelper.CsdVersion = csdVersion;
                 _windowsVersionInformationHelper.ReleaseId = releaseId;
+                _windowsVersionInformationHelper.Ubr = _registryValue.For("UBR");
                 _values = _windowsVersionInformationHelper;
                 return _values;
             }
