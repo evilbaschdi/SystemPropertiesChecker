@@ -142,8 +142,7 @@ namespace WinSPCheck.Internal
                 new KeyValuePair<int, string>(381029, ".Net Framework 4.6 Preview"),
                 new KeyValuePair<int, string>(393273, ".Net Framework 4.6 RC"),
                 new KeyValuePair<int, string>(393295, ".Net Framework 4.6"),
-                new KeyValuePair<int, string>(394254, ".Net Framework 4.6.1 RC"),
-                new KeyValuePair<int, string>(394256, ".Net Framework 4.6.1 RC"),
+                new KeyValuePair<int, string>(394254, ".Net Framework 4.6.1"),
                 new KeyValuePair<int, string>(394271, ".Net Framework 4.6.1")
             };
     }
