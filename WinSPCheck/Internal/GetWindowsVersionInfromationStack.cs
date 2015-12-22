@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 
 namespace WinSPCheck.Internal
@@ -40,6 +42,7 @@ namespace WinSPCheck.Internal
 
                 var sb = new StringBuilder();
                 sb.Append($"Computername: {values.Computername} {Environment.NewLine}");
+                sb.Append($"Current IP: {GetLocalIpAddress()}{Environment.NewLine}");
                 sb.Append($"Productname: {values.ProductName}{values.CsdVersion}{values.ReleaseId}{Environment.NewLine}");
                 sb.Append($"System type: {values.Bits}{Environment.NewLine}");
                 sb.Append(values.Virtual
@@ -55,11 +58,25 @@ namespace WinSPCheck.Internal
                 sb.Append(Environment.NewLine);
                 sb.Append($"BuildLab: {values.BuildLab}{Environment.NewLine}");
                 sb.Append($"BuildLabEx: {values.BuildLabEx}{Environment.NewLine}");
+
                 sb.Append(Environment.NewLine);
                 sb.Append(_dotNetVersion.List.Aggregate(string.Empty, (c, v) => c + v + Environment.NewLine));
 
                 return sb.ToString();
             }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLocalIpAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach(var ip in host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork))
+            {
+                return ip.ToString();
+            }
+            return "Local IP Address Not Found!";
         }
     }
 }
