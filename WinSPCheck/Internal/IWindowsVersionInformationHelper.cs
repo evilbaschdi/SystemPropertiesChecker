@@ -52,6 +52,9 @@ namespace WinSPCheck.Internal
         /// <summary>
         /// </summary>
         object Computername { get; set; }
+
+        /// <summary>
+        /// </summary>
         string Ubr { get; set; }
     }
 }
