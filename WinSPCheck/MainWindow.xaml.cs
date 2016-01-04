@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using EvilBaschdi.Core.Application;
+using EvilBaschdi.Core.Wpf;
 using MahApps.Metro.Controls;
 using WinSPCheck.Core;
 using WinSPCheck.Internal;
@@ -10,17 +12,27 @@ namespace WinSPCheck
     // ReSharper disable once RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
     {
-        private readonly ApplicationStyle _style;
+        private readonly IMetroStyle _style;
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
+        private readonly ISettings _coreSettings;
+        private int _overrideProtection;
 
         /// <summary>
         ///     MainWindow
         /// </summary>
         public MainWindow()
         {
-            _style = new ApplicationStyle(this);
+            _coreSettings = new CoreSettings();
             InitializeComponent();
+            _style = new MetroStyle(this, Accent, Dark, Light, _coreSettings);
             _style.Load();
+            Load();
             RunVersionChecks();
+        }
+
+        private void Load()
+        {
+            _overrideProtection = 1;
         }
 
         private void RunVersionChecks()
@@ -68,23 +80,35 @@ namespace WinSPCheck
 
         #endregion Flyout
 
-        #region Style
+        #region MetroStyle
 
         private void SaveStyleClick(object sender, RoutedEventArgs e)
         {
+            if(_overrideProtection == 0)
+            {
+                return;
+            }
             _style.SaveStyle();
         }
 
         private void Theme(object sender, RoutedEventArgs e)
         {
+            if(_overrideProtection == 0)
+            {
+                return;
+            }
             _style.SetTheme(sender, e);
         }
 
         private void AccentOnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if(_overrideProtection == 0)
+            {
+                return;
+            }
             _style.SetAccent(sender, e);
         }
 
-        #endregion Style
+        #endregion MetroStyle
     }
 }
