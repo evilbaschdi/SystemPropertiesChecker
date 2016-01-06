@@ -51,7 +51,19 @@ namespace WinSPCheck.Internal
 
         /// <summary>
         /// </summary>
-        object Computername { get; set; }
+        string Computername { get; set; }
+
+        /// <summary>
+        /// </summary>
+        string Domain { get; set; }
+
+        /// <summary>
+        /// </summary>
+        string UserName { get; set; }
+
+        /// <summary>
+        /// </summary>
+        string PasswordExpirationDate { get; set; }
 
         /// <summary>
         /// </summary>

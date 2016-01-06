@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.DirectoryServices.AccountManagement;
+using System.DirectoryServices.ActiveDirectory;
 using System.Management;
 
 namespace WinSPCheck.Internal
@@ -36,7 +39,9 @@ namespace WinSPCheck.Internal
                 {
                     return _values;
                 }
-                var bits = Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
+                var bits = Bits();
+                var virtualSystem = VirtualSystem();
+                var domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
 
                 var currentVersion = _registryValue.For("CurrentVersion");
                 var currentMajorVersionNumber = _registryValue.For("CurrentMajorVersionNumber");
@@ -55,37 +60,18 @@ namespace WinSPCheck.Internal
                     ? $"{currentMajorVersionNumber}.{currentMinorVersionNumber}"
                     : currentVersion;
 
-                var win32Computersystem = "SELECT * FROM Win32_ComputerSystem";
-                var managementObjectSearcher = new ManagementObjectSearcher(win32Computersystem);
-                var virtualSystem = false;
-                var info = managementObjectSearcher.Get();
-                var manufacturer = string.Empty;
-                foreach(var item in info)
-                {
-                    manufacturer = item["Manufacturer"].ToString().ToLower();
-
-                    if((manufacturer == "microsoft corporation" && item["Model"].ToString().ToUpperInvariant().Contains("VIRTUAL"))
-                       || manufacturer.Contains("vmware")
-                       || item["Model"].ToString() == "VirtualBox")
-                    {
-                        virtualSystem = true;
-                    }
-                }
-
-                var computername = $"{Environment.MachineName}";
-
-
-                var domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
-
                 if(!string.IsNullOrWhiteSpace(domain))
                 {
-                    computername += $" Domain: {domain}";
+                    _windowsVersionInformationHelper.Domain = domain;
+                    var passwordExpirationDate = PasswordExpirationDate(domain);
+                    _windowsVersionInformationHelper.UserName = passwordExpirationDate.Key;
+                    _windowsVersionInformationHelper.PasswordExpirationDate = passwordExpirationDate.Value;
                 }
 
-                _windowsVersionInformationHelper.Computername = computername;
+                _windowsVersionInformationHelper.Computername = Environment.MachineName;
                 _windowsVersionInformationHelper.Bits = bits;
-                _windowsVersionInformationHelper.Virtual = virtualSystem;
-                _windowsVersionInformationHelper.Manufacturer = manufacturer;
+                _windowsVersionInformationHelper.Virtual = virtualSystem.Key;
+                _windowsVersionInformationHelper.Manufacturer = virtualSystem.Value;
                 _windowsVersionInformationHelper.BuildLab = _registryValue.For("BuildLab");
                 _windowsVersionInformationHelper.BuildLabEx = _registryValue.For("BuildLabEx");
                 _windowsVersionInformationHelper.BuildLabExArray = _registryValue.For("BuildLabEx").Split('.');
@@ -98,6 +84,56 @@ namespace WinSPCheck.Internal
                 _values = _windowsVersionInformationHelper;
                 return _values;
             }
+        }
+
+        private string Bits()
+        {
+            return Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
+        }
+
+        private KeyValuePair<bool, string> VirtualSystem()
+        {
+            var win32Computersystem = "SELECT * FROM Win32_ComputerSystem";
+            var managementObjectSearcher = new ManagementObjectSearcher(win32Computersystem);
+            var virtualSystem = false;
+            var info = managementObjectSearcher.Get();
+            var manufacturer = string.Empty;
+            foreach(var item in info)
+            {
+                manufacturer = item["Manufacturer"].ToString().ToLower();
+
+                if((manufacturer == "microsoft corporation" && item["Model"].ToString().ToUpperInvariant().Contains("VIRTUAL"))
+                   || manufacturer.Contains("vmware")
+                   || item["Model"].ToString() == "VirtualBox")
+                {
+                    virtualSystem = true;
+                }
+            }
+            return new KeyValuePair<bool, string>(virtualSystem, manufacturer);
+        }
+
+        private KeyValuePair<string, string> PasswordExpirationDate(string domain)
+        {
+            var context = new DirectoryContext(DirectoryContextType.Domain, domain);
+            using(var dc = DomainController.FindOne(context))
+            {
+                using(var ds = dc.GetDirectorySearcher())
+                {
+                    var samAccountName = UserPrincipal.Current.SamAccountName;
+                    ds.Filter = $"(sAMAccountName={samAccountName})";
+                    ds.SizeLimit = 10;
+                    var sr = ds.FindOne();
+
+                    if(sr != null)
+                    {
+                        var de = sr.GetDirectoryEntry();
+                        var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
+                        var dateString = nextSet.ToString("g");
+                        return new KeyValuePair<string, string>(samAccountName, nextSet.Year == 1970 ? "-" : dateString);
+                    }
+                }
+            }
+            return new KeyValuePair<string, string>();
         }
     }
 }

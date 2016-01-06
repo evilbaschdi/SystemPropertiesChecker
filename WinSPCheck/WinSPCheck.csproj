@@ -92,6 +92,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management">
       <Private>False</Private>
@@ -120,7 +121,7 @@
     <Compile Include="Internal\GetWindowsVersionInformation.cs">
       <DependentUpon>IWindowsVersionInformation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\GetWindowsVersionInfromationStack.cs">
+    <Compile Include="Internal\GetWindowsVersionInformationStack.cs">
       <DependentUpon>IWindowsVersionInformationStack.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\HklmSoftwareMicrosoftWindowsNtCurrentVersion.cs">

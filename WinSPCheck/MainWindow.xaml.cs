@@ -41,7 +41,7 @@ namespace WinSPCheck
             var registryValue = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
             var windowsVersionInformationHelper = new WindowsVersionInformationHelper();
             var windowsVersionInformation = new GetWindowsVersionInformation(registryValue, windowsVersionInformationHelper);
-            var windowsVersionInformationStack = new GetWindowsVersionInfromationStack(dotNetVersion, windowsVersionInformation);
+            var windowsVersionInformationStack = new GetWindowsVersionInformationStack(dotNetVersion, windowsVersionInformation);
             CurrentVersion.Text = windowsVersionInformationStack.Value;
         }
 

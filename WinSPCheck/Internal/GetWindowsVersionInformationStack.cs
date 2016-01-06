@@ -9,7 +9,7 @@ namespace WinSPCheck.Internal
     /// <summary>
     ///     Class that provides a WindowsVersionInformationStack.
     /// </summary>
-    public class GetWindowsVersionInfromationStack : IWindowsVersionInformationStack
+    public class GetWindowsVersionInformationStack : IWindowsVersionInformationStack
     {
         private readonly IDotNetVersion _dotNetVersion;
         private readonly IWindowsVersionInformation _windowsVersionInformation;
@@ -17,7 +17,7 @@ namespace WinSPCheck.Internal
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
-        public GetWindowsVersionInfromationStack(IDotNetVersion dotNetVersion, IWindowsVersionInformation windowsVersionInformation)
+        public GetWindowsVersionInformationStack(IDotNetVersion dotNetVersion, IWindowsVersionInformation windowsVersionInformation)
         {
             if(dotNetVersion == null)
             {
@@ -41,16 +41,20 @@ namespace WinSPCheck.Internal
                 var values = _windowsVersionInformation.Values;
 
                 var sb = new StringBuilder();
-                sb.Append($"Computername: {values.Computername} {Environment.NewLine}");
+                sb.Append($"Computername: {values.Computername}{Environment.NewLine}");
+                if(!string.IsNullOrWhiteSpace(values.Domain))
+                {
+                    sb.Append($"Domain: {values.Domain}{Environment.NewLine}");
+                    sb.Append($"Current user: {values.UserName} | Password expiration date: {values.PasswordExpirationDate}{Environment.NewLine}");
+                }
                 sb.Append($"Current IP: {GetLocalIpAddress()}{Environment.NewLine}");
                 sb.Append($"Productname: {values.ProductName}{values.CsdVersion}{values.ReleaseId}{Environment.NewLine}");
                 sb.Append($"System type: {values.Bits}{Environment.NewLine}");
                 sb.Append(values.Virtual
-                    ? $"Virtual System: {values.Manufacturer}"
-                    : $"Virtual System: -");
-                sb.Append($"{Environment.NewLine}");
-                sb.Append($"{Environment.NewLine}");
-                sb.Append($"Version number: {values.CurrentVersion} Current build: {values.CurrentBuild} (Build: ");
+                    ? $"Virtual system: {values.Manufacturer}"
+                    : $"Virtual system: -");
+                sb.Append($"{Environment.NewLine}{Environment.NewLine}");
+                sb.Append($"Version number: {values.CurrentVersion} | Current build: {values.CurrentBuild} (Build: ");
                 sb.Append(!string.IsNullOrWhiteSpace(values.Ubr)
                     ? $"{values.CurrentBuild}.{values.Ubr}"
                     : $"{values.BuildLabExArray[0]}.{values.BuildLabExArray[1]}");
