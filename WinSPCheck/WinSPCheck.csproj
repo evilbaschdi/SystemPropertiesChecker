@@ -121,8 +121,8 @@
     <Compile Include="Internal\GetWindowsVersionInformation.cs">
       <DependentUpon>IWindowsVersionInformation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\GetWindowsVersionInformationStack.cs">
-      <DependentUpon>IWindowsVersionInformationStack.cs</DependentUpon>
+    <Compile Include="Internal\GetCurrentVersionText.cs">
+      <DependentUpon>ICurrentVersionText.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\HklmSoftwareMicrosoftWindowsNtCurrentVersion.cs">
       <DependentUpon>IRegistryValue.cs</DependentUpon>
@@ -134,7 +134,7 @@
     </Compile>
     <Compile Include="Internal\IDotNetVersion.cs" />
     <Compile Include="Internal\IWindowsVersionInformationHelper.cs" />
-    <Compile Include="Internal\IWindowsVersionInformationStack.cs" />
+    <Compile Include="Internal\ICurrentVersionText.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

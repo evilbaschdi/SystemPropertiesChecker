@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using EvilBaschdi.Core.Application;
@@ -13,8 +14,10 @@ namespace WinSPCheck
     public partial class MainWindow : MetroWindow
     {
         private readonly IMetroStyle _style;
+
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly ISettings _coreSettings;
+
         private int _overrideProtection;
 
         /// <summary>
@@ -41,8 +44,11 @@ namespace WinSPCheck
             var registryValue = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
             var windowsVersionInformationHelper = new WindowsVersionInformationHelper();
             var windowsVersionInformation = new GetWindowsVersionInformation(registryValue, windowsVersionInformationHelper);
-            var windowsVersionInformationStack = new GetWindowsVersionInformationStack(dotNetVersion, windowsVersionInformation);
-            CurrentVersion.Text = windowsVersionInformationStack.Value;
+            var currentVersionText = new GetCurrentVersionText(windowsVersionInformation);
+            var windowsVersionText = new GetWindowsVersionText(windowsVersionInformation);
+            CurrentVersion.Text = currentVersionText.Value;
+            WindowsVersion.Text = windowsVersionText.Value;
+            DotNetVersion.Text = dotNetVersion.List.Aggregate(string.Empty, (c, v) => c + v + Environment.NewLine);
         }
 
         #region Flyout

@@ -30,7 +30,7 @@ namespace WinSPCheck.Internal
         {
             _dotNetVersionList = new List<string>
             {
-                ".Net Frameworks:"
+                "currently installed versions:"
             };
             // .Net 2.0, 3.0, 3.5
             // .Net 4.0
