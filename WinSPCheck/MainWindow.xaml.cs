@@ -6,6 +6,7 @@ using EvilBaschdi.Core.Application;
 using EvilBaschdi.Core.Wpf;
 using MahApps.Metro.Controls;
 using WinSPCheck.Core;
+using WinSPCheck.Extension;
 using WinSPCheck.Internal;
 
 namespace WinSPCheck
@@ -48,6 +49,9 @@ namespace WinSPCheck
             var windowsVersionText = new GetWindowsVersionText(windowsVersionInformation);
             CurrentVersion.Text = currentVersionText.Value;
             WindowsVersion.Text = windowsVersionText.Value;
+            var temp = string.Empty;
+            DomainInformation.Text = temp;
+            DomainTab.Visibility = ControlHelpers.BoolToVisibilityConverter(!string.IsNullOrWhiteSpace(temp));
             DotNetVersion.Text = dotNetVersion.List.Aggregate(string.Empty, (c, v) => c + v + Environment.NewLine);
         }
 
