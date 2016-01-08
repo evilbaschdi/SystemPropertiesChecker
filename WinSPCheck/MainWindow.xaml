@@ -27,23 +27,31 @@
     <Grid>
         <!-- Tabs -->
         <TabControl Name="Tab" HorizontalContentAlignment="Center">
-            <!-- Binaries -->
-            <TabItem Name="BasicTab" Header="Basic Information">
+            <!-- Basic -->
+            <TabItem Name="BasicTab" Header="Basic">
                 <Grid>
                     <TextBox Name="CurrentVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
             </TabItem>
-            <TabItem Name="WindowsTab" Header="Windows Build">
+            <!-- Windows -->
+            <TabItem Name="WindowsTab" Header="Windows">
                 <Grid>
                     <TextBox Name="WindowsVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
             </TabItem>
-            <TabItem Name="DotNetTab" Header=".net">
+            <!-- .net -->
+            <TabItem Name="DotNetTab" Header=".Net">
                 <Grid>
                     <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
             </TabItem>
         </TabControl>
+        <!-- Domain -->
+        <TabItem Name="DomainTab" Header="Domain">
+            <Grid>
+                <TextBox Name="DomainInformation" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+        </TabItem>
     </Grid>
     <!--  Flyouts  -->
     <controls:MetroWindow.Flyouts>
