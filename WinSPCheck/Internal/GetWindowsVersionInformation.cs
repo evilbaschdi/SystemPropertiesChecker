@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
 using System.Management;
+using EvilBaschdi.Core.Wpf;
 
 namespace WinSPCheck.Internal
 {
@@ -128,6 +129,12 @@ namespace WinSPCheck.Internal
                     {
                         var de = sr.GetDirectoryEntry();
                         var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
+                        var dif = nextSet - DateTime.Now;
+                        if(dif.Days < 10)
+                        {
+                            var toast = new Toast("b.png");
+                            toast.Show("Your password will expire in", $"{dif.Days} days and {dif.Hours} hours.");
+                        }
                         var dateString = nextSet.ToString("g");
                         return new KeyValuePair<string, string>(samAccountName, nextSet.Year == 1970 ? "-" : dateString);
                     }

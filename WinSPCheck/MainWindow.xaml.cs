@@ -120,5 +120,9 @@ namespace WinSPCheck
         }
 
         #endregion MetroStyle
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+        }
     }
 }

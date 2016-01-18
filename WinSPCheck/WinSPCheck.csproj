@@ -119,6 +119,7 @@
     </ApplicationDefinition>
     <Compile Include="Core\CoreSettings.cs" />
     <Compile Include="Extension\ControlHelpers.cs" />
+    <Compile Include="Internal\Class1.cs" />
     <Compile Include="Internal\GetWindowsVersionInformation.cs">
       <DependentUpon>IWindowsVersionInformation.cs</DependentUpon>
     </Compile>
@@ -214,6 +215,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="b.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
