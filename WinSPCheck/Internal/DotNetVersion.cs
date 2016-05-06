@@ -29,9 +29,9 @@ namespace WinSPCheck.Internal
         private void GetNetFrameworks()
         {
             _dotNetVersionList = new List<string>
-            {
-                "currently installed versions:"
-            };
+                                 {
+                                     "currently installed versions:"
+                                 };
             // .Net 2.0, 3.0, 3.5
             // .Net 4.0
             GetNetFrameworkVersionFromRegistry();
@@ -42,79 +42,81 @@ namespace WinSPCheck.Internal
         private void GetNetFrameworkVersionFromRegistry()
         {
             // Opens the registry key for the .NET Framework entry.
-            using(var ndpKey =
+            using (var ndpKey =
                 RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "").
-                    OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
+                            OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
             {
                 // As an alternative, if you know the computers you will query are running .NET Framework 4.5
                 // or later, you can use:
                 // using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
                 // RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
-                if(ndpKey == null)
+                if (ndpKey == null)
                 {
                     return;
                 }
-                Parallel.ForEach(ndpKey.GetSubKeyNames().Where(v => v.StartsWith("v")), versionKeyName =>
-                {
-                    // ReSharper disable once AccessToDisposedClosure
-                    var versionKey = ndpKey.OpenSubKey(versionKeyName);
-
-                    if(versionKey != null)
+                Parallel.ForEach(ndpKey.GetSubKeyNames().Where(v => v.StartsWith("v")),
+                    versionKeyName =>
                     {
-                        var name = (string) versionKey.GetValue("Version", "");
-                        var sp = versionKey.GetValue("SP", "").ToString();
-                        var install = versionKey.GetValue("Install", "").ToString();
+                        // ReSharper disable once AccessToDisposedClosure
+                        var versionKey = ndpKey.OpenSubKey(versionKeyName);
 
-                        // .Net 2.0, 3.0, 3.5
-                        if(!string.IsNullOrEmpty(name))
+                        if (versionKey != null)
                         {
-                            _dotNetVersionList.Add(install != "" && install == "1" && sp != ""
-                                ? $"{versionKeyName} | SP{sp} | {name}"
-                                : $"{versionKeyName} | {name}");
-                        }
+                            var name = (string) versionKey.GetValue("Version", "");
+                            var sp = versionKey.GetValue("SP", "").ToString();
+                            var install = versionKey.GetValue("Install", "").ToString();
 
-                        // .Net 4.0
-                        if(string.IsNullOrEmpty(name))
-                        {
-                            Parallel.ForEach(versionKey.GetSubKeyNames(), subKeyName =>
+                            // .Net 2.0, 3.0, 3.5
+                            if (!string.IsNullOrEmpty(name))
                             {
-                                var subKey = versionKey.OpenSubKey(subKeyName);
+                                _dotNetVersionList.Add(install != "" && install == "1" && sp != ""
+                                    ? $"{versionKeyName} | SP{sp} | {name}"
+                                    : $"{versionKeyName} | {name}");
+                            }
 
-                                if(subKey != null)
-                                {
-                                    name = (string) subKey.GetValue("Version", "");
-                                    if(name != "")
+                            // .Net 4.0
+                            if (string.IsNullOrEmpty(name))
+                            {
+                                Parallel.ForEach(versionKey.GetSubKeyNames(),
+                                    subKeyName =>
                                     {
-                                        sp = subKey.GetValue("SP", "").ToString();
-                                    }
-                                    install = subKey.GetValue("Install", "").ToString();
-                                }
+                                        var subKey = versionKey.OpenSubKey(subKeyName);
 
-                                if(!string.IsNullOrEmpty(install) && install == "1")
-                                {
-                                    _dotNetVersionList.Add(!string.IsNullOrEmpty(sp)
-                                        ? $"{subKeyName} | SP{sp} | {name}"
-                                        : $"{subKeyName}: {name}");
-                                }
-                                else
-                                {
-                                    _dotNetVersionList.Add($"{versionKeyName} | {name}");
-                                }
-                            });
+                                        if (subKey != null)
+                                        {
+                                            name = (string) subKey.GetValue("Version", "");
+                                            if (name != "")
+                                            {
+                                                sp = subKey.GetValue("SP", "").ToString();
+                                            }
+                                            install = subKey.GetValue("Install", "").ToString();
+                                        }
+
+                                        if (!string.IsNullOrEmpty(install) && install == "1")
+                                        {
+                                            _dotNetVersionList.Add(!string.IsNullOrEmpty(sp)
+                                                ? $"{subKeyName} | SP{sp} | {name}"
+                                                : $"{subKeyName}: {name}");
+                                        }
+                                        else
+                                        {
+                                            _dotNetVersionList.Add($"{versionKeyName} | {name}");
+                                        }
+                                    });
+                            }
                         }
-                    }
-                });
+                    });
             }
         }
 
         private void GetNetFrameworkVersionHigher4FromRegistry()
         {
-            using(
+            using (
                 var ndpKey =
                     RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "")
-                        .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\"))
+                               .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\"))
             {
-                if(ndpKey == null)
+                if (ndpKey == null)
                 {
                     return;
                 }
@@ -134,17 +136,17 @@ namespace WinSPCheck.Internal
 
         private IEnumerable<KeyValuePair<int, string>> DotNetVersionReleaseKeyList()
             => new List<KeyValuePair<int, string>>
-            {
-                new KeyValuePair<int, string>(378389, ".NET Framework 4.5"),
-                new KeyValuePair<int, string>(378675, ".Net Framework 4.5.1"),
-                new KeyValuePair<int, string>(378758, ".Net Framework 4.5.1"),
-                new KeyValuePair<int, string>(379893, ".Net Framework 4.5.2"),
-                new KeyValuePair<int, string>(381029, ".Net Framework 4.6 Preview"),
-                new KeyValuePair<int, string>(393273, ".Net Framework 4.6 RC"),
-                new KeyValuePair<int, string>(393295, ".Net Framework 4.6"),
-                new KeyValuePair<int, string>(394254, ".Net Framework 4.6.1"),
-                new KeyValuePair<int, string>(394271, ".Net Framework 4.6.1"),
-                new KeyValuePair<int, string>(394748, ".Net Framework 4.6.2 Preview")
-            };
+               {
+                   new KeyValuePair<int, string>(378389, ".NET Framework 4.5"),
+                   new KeyValuePair<int, string>(378675, ".Net Framework 4.5.1"),
+                   new KeyValuePair<int, string>(378758, ".Net Framework 4.5.1"),
+                   new KeyValuePair<int, string>(379893, ".Net Framework 4.5.2"),
+                   new KeyValuePair<int, string>(381029, ".Net Framework 4.6 Preview"),
+                   new KeyValuePair<int, string>(393273, ".Net Framework 4.6 RC"),
+                   new KeyValuePair<int, string>(393295, ".Net Framework 4.6"),
+                   new KeyValuePair<int, string>(394254, ".Net Framework 4.6.1"),
+                   new KeyValuePair<int, string>(394271, ".Net Framework 4.6.1"),
+                   new KeyValuePair<int, string>(394747, ".Net Framework 4.6.2 Preview")
+               };
     }
 }
