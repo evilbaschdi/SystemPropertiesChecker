@@ -1,11 +1,11 @@
 ﻿<controls:MetroWindow x:Class="WinSPCheck.MainWindow"
-                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-                        Title="System Properties Checker" Width="500" Height="250"
-                        WindowStartupLocation="CenterScreen" Icon="b.ico"
-                        GlowBrush="{DynamicResource AccentColorBrush}"
-                        ResizeMode="CanMinimize">
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      Title="System Properties Checker" Width="500" Height="250"
+                      WindowStartupLocation="CenterScreen" Icon="b.ico"
+                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      ResizeMode="CanMinimize">
     <!--  RightWindowCommands  -->
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
@@ -30,28 +30,32 @@
             <!-- Basic -->
             <TabItem Name="BasicTab" Header="Basic">
                 <Grid>
-                    <TextBox Name="CurrentVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBox Name="CurrentVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
                 </Grid>
             </TabItem>
             <!-- Windows -->
             <TabItem Name="WindowsTab" Header="Windows">
                 <Grid>
-                    <TextBox Name="WindowsVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBox Name="WindowsVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
                 </Grid>
             </TabItem>
             <!-- .net -->
             <TabItem Name="DotNetTab" Header=".Net">
                 <Grid>
-                    <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
+                </Grid>
+            </TabItem>
+            <!-- Domain -->
+            <TabItem Name="DomainTab" Header="Domain">
+                <Grid>
+                    <TextBox Name="DomainInformation" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center"
+                             HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
             </TabItem>
         </TabControl>
-        <!-- Domain -->
-        <TabItem Name="DomainTab" Header="Domain">
-            <Grid>
-                <TextBox Name="DomainInformation" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </Grid>
-        </TabItem>
     </Grid>
     <!--  Flyouts  -->
     <controls:MetroWindow.Flyouts>
