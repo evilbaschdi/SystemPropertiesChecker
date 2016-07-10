@@ -28,8 +28,8 @@ namespace WinSPCheck
         {
             _coreSettings = new CoreSettings();
             InitializeComponent();
-            _style = new MetroStyle(this, Accent, Dark, Light, _coreSettings);
-            _style.Load();
+            _style = new MetroStyle(this, Accent, ThemeSwitch, _coreSettings);
+            _style.Load(true);
             Load();
             RunVersionChecks();
         }
@@ -65,20 +65,20 @@ namespace WinSPCheck
         private void ToggleFlyout(int index, bool stayOpen = false)
         {
             var activeFlyout = (Flyout) Flyouts.Items[index];
-            if(activeFlyout == null)
+            if (activeFlyout == null)
             {
                 return;
             }
 
-            foreach(
+            foreach (
                 var nonactiveFlyout in
                     Flyouts.Items.Cast<Flyout>()
-                        .Where(nonactiveFlyout => nonactiveFlyout.IsOpen && nonactiveFlyout.Name != activeFlyout.Name))
+                           .Where(nonactiveFlyout => nonactiveFlyout.IsOpen && nonactiveFlyout.Name != activeFlyout.Name))
             {
                 nonactiveFlyout.IsOpen = false;
             }
 
-            if(activeFlyout.IsOpen && stayOpen)
+            if (activeFlyout.IsOpen && stayOpen)
             {
                 activeFlyout.IsOpen = true;
             }
@@ -94,25 +94,33 @@ namespace WinSPCheck
 
         private void SaveStyleClick(object sender, RoutedEventArgs e)
         {
-            if(_overrideProtection == 0)
+            if (_overrideProtection == 0)
             {
                 return;
             }
             _style.SaveStyle();
         }
 
-        private void Theme(object sender, RoutedEventArgs e)
+        private void Theme(object sender, EventArgs e)
         {
-            if(_overrideProtection == 0)
+            if (_overrideProtection == 0)
             {
                 return;
             }
-            _style.SetTheme(sender, e);
+            var routedEventArgs = e as RoutedEventArgs;
+            if (routedEventArgs != null)
+            {
+                _style.SetTheme(sender, routedEventArgs);
+            }
+            else
+            {
+                _style.SetTheme(sender);
+            }
         }
 
         private void AccentOnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(_overrideProtection == 0)
+            if (_overrideProtection == 0)
             {
                 return;
             }
@@ -120,7 +128,5 @@ namespace WinSPCheck
         }
 
         #endregion MetroStyle
-
-   
     }
 }

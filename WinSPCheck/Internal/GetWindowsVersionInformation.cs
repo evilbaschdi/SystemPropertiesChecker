@@ -21,7 +21,7 @@ namespace WinSPCheck.Internal
         /// </summary>
         public GetWindowsVersionInformation(IRegistryValue registryValue, IWindowsVersionInformationHelper windowsVersionInformationHelper)
         {
-            if(registryValue == null)
+            if (registryValue == null)
             {
                 throw new ArgumentNullException(nameof(registryValue));
             }
@@ -36,7 +36,7 @@ namespace WinSPCheck.Internal
         {
             get
             {
-                if(_values != null)
+                if (_values != null)
                 {
                     return _values;
                 }
@@ -53,7 +53,7 @@ namespace WinSPCheck.Internal
                     : string.Empty;
 
                 var releaseId = !string.IsNullOrEmpty(_registryValue.For("ReleaseId"))
-                    ? $" (Version {_registryValue.For("ReleaseId")})"
+                    ? $" (Release {_registryValue.For("ReleaseId")})"
                     : string.Empty;
 
                 var version = !string.IsNullOrWhiteSpace(currentMajorVersionNumber) &&
@@ -61,7 +61,7 @@ namespace WinSPCheck.Internal
                     ? $"{currentMajorVersionNumber}.{currentMinorVersionNumber}"
                     : currentVersion;
 
-                if(!string.IsNullOrWhiteSpace(domain))
+                if (!string.IsNullOrWhiteSpace(domain))
                 {
                     _windowsVersionInformationHelper.Domain = domain;
                     var passwordExpirationDate = PasswordExpirationDate(domain);
@@ -99,13 +99,13 @@ namespace WinSPCheck.Internal
             var virtualSystem = false;
             var info = managementObjectSearcher.Get();
             var manufacturer = string.Empty;
-            foreach(var item in info)
+            foreach (var item in info)
             {
                 manufacturer = item["Manufacturer"].ToString().ToLower();
 
-                if((manufacturer == "microsoft corporation" && item["Model"].ToString().ToUpperInvariant().Contains("VIRTUAL"))
-                   || manufacturer.Contains("vmware")
-                   || item["Model"].ToString() == "VirtualBox")
+                if ((manufacturer == "microsoft corporation" && item["Model"].ToString().ToUpperInvariant().Contains("VIRTUAL"))
+                    || manufacturer.Contains("vmware")
+                    || item["Model"].ToString() == "VirtualBox")
                 {
                     virtualSystem = true;
                 }
@@ -116,21 +116,21 @@ namespace WinSPCheck.Internal
         private KeyValuePair<string, string> PasswordExpirationDate(string domain)
         {
             var context = new DirectoryContext(DirectoryContextType.Domain, domain);
-            using(var dc = DomainController.FindOne(context))
+            using (var dc = DomainController.FindOne(context))
             {
-                using(var ds = dc.GetDirectorySearcher())
+                using (var ds = dc.GetDirectorySearcher())
                 {
                     var samAccountName = UserPrincipal.Current.SamAccountName;
                     ds.Filter = $"(sAMAccountName={samAccountName})";
                     ds.SizeLimit = 10;
                     var sr = ds.FindOne();
 
-                    if(sr != null)
+                    if (sr != null)
                     {
                         var de = sr.GetDirectoryEntry();
                         var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
                         var dif = nextSet - DateTime.Now;
-                        if(dif.Days < 10)
+                        if (dif.Days < 10)
                         {
                             var toast = new Toast("b.png");
                             toast.Show("Your password will expire in", $"{dif.Days} days and {dif.Hours} hours.");

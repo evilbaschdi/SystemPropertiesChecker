@@ -65,9 +65,11 @@
                 <StackPanel>
                     <!-- Theme -->
                     <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
-                        <Label Width="50" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Theme:" />
-                        <RadioButton Name="Dark" Margin="10,0,5,0" Checked="Theme" Content="Dark" />
-                        <RadioButton Name="Light" Margin="10,0,5,0" Checked="Theme" Content="Light" IsChecked="True" />
+                        <Label Width="50" Margin="0,5,0,0" HorizontalAlignment="Left"
+                                   VerticalAlignment="Top" Content="Theme" />
+                        <controls:ToggleSwitch Name="ThemeSwitch" Margin="10,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12" IsCheckedChanged="Theme"
+                                                   OnSwitchBrush="{DynamicResource AccentColorBrush}" OnLabel="Dark"
+                                                   OffSwitchBrush="{DynamicResource AccentColorBrush}" OffLabel="Light" />
                     </StackPanel>
                     <!-- Accent -->
                     <StackPanel Margin="10,5,0,0" Orientation="Horizontal">

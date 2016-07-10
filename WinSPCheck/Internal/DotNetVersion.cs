@@ -131,7 +131,7 @@ namespace WinSPCheck.Internal
         private string CheckFor45DotVersion(int releaseKey)
         {
             var value = DotNetVersionReleaseKeyList().OrderByDescending(key => key.Key).FirstOrDefault(key => releaseKey >= key.Key).Value;
-            return !string.IsNullOrWhiteSpace(value) ? value : "No 4.5 or later version detected";
+            return !string.IsNullOrWhiteSpace(value) ? $"{value} (Release key: '{releaseKey}')" : "No 4.5 or later version detected";
         }
 
         private IEnumerable<KeyValuePair<int, string>> DotNetVersionReleaseKeyList()
