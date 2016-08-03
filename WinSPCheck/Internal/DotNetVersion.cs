@@ -44,7 +44,7 @@ namespace WinSPCheck.Internal
             // Opens the registry key for the .NET Framework entry.
             using (var ndpKey =
                 RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "").
-                            OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
+                           OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
             {
                 // As an alternative, if you know the computers you will query are running .NET Framework 4.5
                 // or later, you can use:
@@ -139,14 +139,13 @@ namespace WinSPCheck.Internal
                {
                    new KeyValuePair<int, string>(378389, ".NET Framework 4.5"),
                    new KeyValuePair<int, string>(378675, ".Net Framework 4.5.1"),
-                   new KeyValuePair<int, string>(378758, ".Net Framework 4.5.1"),
                    new KeyValuePair<int, string>(379893, ".Net Framework 4.5.2"),
                    new KeyValuePair<int, string>(381029, ".Net Framework 4.6 Preview"),
                    new KeyValuePair<int, string>(393273, ".Net Framework 4.6 RC"),
                    new KeyValuePair<int, string>(393295, ".Net Framework 4.6"),
                    new KeyValuePair<int, string>(394254, ".Net Framework 4.6.1"),
-                   new KeyValuePair<int, string>(394271, ".Net Framework 4.6.1"),
-                   new KeyValuePair<int, string>(394747, ".Net Framework 4.6.2 Preview")
+                   new KeyValuePair<int, string>(394747, ".Net Framework 4.6.2 Preview"),
+                   new KeyValuePair<int, string>(394802, ".Net Framework 4.6.2")
                };
     }
 }
