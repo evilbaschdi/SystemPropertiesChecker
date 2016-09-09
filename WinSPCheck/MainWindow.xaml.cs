@@ -41,10 +41,11 @@ namespace WinSPCheck
 
         private void RunVersionChecks()
         {
+            var toast = new Toast(Title, "b.png");
             var dotNetVersion = new DotNetVersion();
             var registryValue = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
             var windowsVersionInformationHelper = new WindowsVersionInformationHelper();
-            var windowsVersionInformation = new GetWindowsVersionInformation(registryValue, windowsVersionInformationHelper);
+            var windowsVersionInformation = new GetWindowsVersionInformation(registryValue, windowsVersionInformationHelper, toast);
             var currentVersionText = new GetCurrentVersionText(windowsVersionInformation);
             var windowsVersionText = new GetWindowsVersionText(windowsVersionInformation);
             CurrentVersion.Text = currentVersionText.Value;
@@ -72,8 +73,8 @@ namespace WinSPCheck
 
             foreach (
                 var nonactiveFlyout in
-                    Flyouts.Items.Cast<Flyout>()
-                           .Where(nonactiveFlyout => nonactiveFlyout.IsOpen && nonactiveFlyout.Name != activeFlyout.Name))
+                Flyouts.Items.Cast<Flyout>()
+                       .Where(nonactiveFlyout => nonactiveFlyout.IsOpen && nonactiveFlyout.Name != activeFlyout.Name))
             {
                 nonactiveFlyout.IsOpen = false;
             }

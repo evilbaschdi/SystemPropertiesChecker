@@ -14,19 +14,34 @@ namespace WinSPCheck.Internal
     {
         private readonly IRegistryValue _registryValue;
         private readonly IWindowsVersionInformationHelper _windowsVersionInformationHelper;
-        private IWindowsVersionInformationHelper _values;
+        private readonly IToast _toast;
+        private IWindowsVersionInformationHelper _cachedWindowsVersionInformationHelper;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
-        public GetWindowsVersionInformation(IRegistryValue registryValue, IWindowsVersionInformationHelper windowsVersionInformationHelper)
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="registryValue" /> is <see langword="null" />.
+        ///     <paramref name="windowsVersionInformationHelper" /> is <see langword="null" />.
+        ///     <paramref name="toast" /> is <see langword="null" />.
+        /// </exception>
+        public GetWindowsVersionInformation(IRegistryValue registryValue, IWindowsVersionInformationHelper windowsVersionInformationHelper, IToast toast)
         {
             if (registryValue == null)
             {
                 throw new ArgumentNullException(nameof(registryValue));
             }
+            if (windowsVersionInformationHelper == null)
+            {
+                throw new ArgumentNullException(nameof(windowsVersionInformationHelper));
+            }
+            if (toast == null)
+            {
+                throw new ArgumentNullException(nameof(toast));
+            }
             _registryValue = registryValue;
             _windowsVersionInformationHelper = windowsVersionInformationHelper;
+            _toast = toast;
         }
 
         /// <summary>
@@ -36,9 +51,9 @@ namespace WinSPCheck.Internal
         {
             get
             {
-                if (_values != null)
+                if (_cachedWindowsVersionInformationHelper != null)
                 {
-                    return _values;
+                    return _cachedWindowsVersionInformationHelper;
                 }
                 var bits = Bits();
                 var virtualSystem = VirtualSystem();
@@ -82,8 +97,8 @@ namespace WinSPCheck.Internal
                 _windowsVersionInformationHelper.CsdVersion = csdVersion;
                 _windowsVersionInformationHelper.ReleaseId = releaseId;
                 _windowsVersionInformationHelper.Ubr = _registryValue.For("UBR");
-                _values = _windowsVersionInformationHelper;
-                return _values;
+                _cachedWindowsVersionInformationHelper = _windowsVersionInformationHelper;
+                return _cachedWindowsVersionInformationHelper;
             }
         }
 
@@ -132,8 +147,7 @@ namespace WinSPCheck.Internal
                         var dif = nextSet - DateTime.Now;
                         if (dif.Days < 10)
                         {
-                            var toast = new Toast("b.png");
-                            toast.Show("Your password will expire in", $"{dif.Days} days and {dif.Hours} hours.");
+                            _toast.Show("Your password will expire in", $"{dif.Days} days and {dif.Hours} hours.");
                         }
                         var dateString = nextSet.ToString("g");
                         return new KeyValuePair<string, string>(samAccountName, nextSet.Year == 1970 ? "-" : dateString);
