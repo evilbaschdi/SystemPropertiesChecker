@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using EvilBaschdi.Core.Application;
@@ -30,6 +32,8 @@ namespace WinSPCheck
             InitializeComponent();
             _style = new MetroStyle(this, Accent, ThemeSwitch, _coreSettings);
             _style.Load(true);
+            var linkerTime = Assembly.GetExecutingAssembly().GetLinkerTime();
+            LinkerTime.Content = linkerTime.ToString(CultureInfo.InvariantCulture);
             Load();
             RunVersionChecks();
         }
