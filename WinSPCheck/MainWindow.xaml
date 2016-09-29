@@ -5,7 +5,7 @@
                       Title="System Properties Checker" Width="500" Height="250"
                       WindowStartupLocation="CenterScreen" Icon="b.ico"
                       GlowBrush="{DynamicResource AccentColorBrush}"
-                      ResizeMode="CanMinimize">
+                      ResizeMode="CanMinimize" TitleCharacterCasing="Normal">
     <!--  RightWindowCommands  -->
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
