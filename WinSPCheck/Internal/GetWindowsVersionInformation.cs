@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
 using System.Management;
-using EvilBaschdi.Core.Wpf;
+using System.Windows.Shell;
 
 namespace WinSPCheck.Internal
 {
@@ -14,7 +14,8 @@ namespace WinSPCheck.Internal
     {
         private readonly IRegistryValue _registryValue;
         private readonly IWindowsVersionInformationHelper _windowsVersionInformationHelper;
-        private readonly IToast _toast;
+        private readonly MainWindow _mainWindow;
+
         private IWindowsVersionInformationHelper _cachedWindowsVersionInformationHelper;
 
         /// <summary>
@@ -23,9 +24,9 @@ namespace WinSPCheck.Internal
         /// <exception cref="ArgumentNullException">
         ///     <paramref name="registryValue" /> is <see langword="null" />.
         ///     <paramref name="windowsVersionInformationHelper" /> is <see langword="null" />.
-        ///     <paramref name="toast" /> is <see langword="null" />.
+        ///     <paramref name="mainWindow" /> is <see langword="null" />.
         /// </exception>
-        public GetWindowsVersionInformation(IRegistryValue registryValue, IWindowsVersionInformationHelper windowsVersionInformationHelper, IToast toast)
+        public GetWindowsVersionInformation(IRegistryValue registryValue, IWindowsVersionInformationHelper windowsVersionInformationHelper, MainWindow mainWindow)
         {
             if (registryValue == null)
             {
@@ -35,13 +36,13 @@ namespace WinSPCheck.Internal
             {
                 throw new ArgumentNullException(nameof(windowsVersionInformationHelper));
             }
-            if (toast == null)
+            if (mainWindow == null)
             {
-                throw new ArgumentNullException(nameof(toast));
+                throw new ArgumentNullException(nameof(mainWindow));
             }
             _registryValue = registryValue;
             _windowsVersionInformationHelper = windowsVersionInformationHelper;
-            _toast = toast;
+            _mainWindow = mainWindow;
         }
 
         /// <summary>
@@ -145,9 +146,19 @@ namespace WinSPCheck.Internal
                         var de = sr.GetDirectoryEntry();
                         var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
                         var dif = nextSet - DateTime.Now;
-                        if (dif.Days < 10)
+                        if (dif.Days < 10 && nextSet.Year != 1970)
                         {
-                            _toast.Show("Your password will expire in", $"{dif.Days} days and {dif.Hours} hours.");
+                            //if (VersionHelper.IsWindows10 || VersionHelper.IsWindows8)
+                            //{
+                            //    _toast.Show("Your password will expire in", $"{dif.Days} days and {dif.Hours} hours.");
+                            //}
+                            //else
+                            //{
+                            //    MessageBox.Show($"Your password will expire in {dif.Days} days and {dif.Hours} hours.");
+                            //}
+                            _mainWindow.ShowMessage("Password Expiration Date", $"Your password will expire in {dif.Days} days and {dif.Hours} hours.");
+                            _mainWindow.TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
+                            _mainWindow.TaskbarItemInfo.ProgressValue = 1;
                         }
                         var dateString = nextSet.ToString("g");
                         return new KeyValuePair<string, string>(samAccountName, nextSet.Year == 1970 ? "-" : dateString);

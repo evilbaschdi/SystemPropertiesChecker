@@ -21,8 +21,13 @@
                     <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="settings" />
                 </StackPanel>
             </Button>
+            <!--<Button Name="TestButton" Click="TestButton_OnClick"/>-->
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
+    <!-- TaskbarItemInfo -->
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo />
+    </Window.TaskbarItemInfo>
     <!-- Grid -->
     <Grid>
         <!-- Tabs -->
@@ -45,6 +50,13 @@
             <TabItem Name="DotNetTab" Header=".Net">
                 <Grid>
                     <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
+                </Grid>
+            </TabItem>
+            <!-- Other -->
+            <TabItem Name="OtherTab" Header="Other">
+                <Grid>
+                    <TextBox Name="Other" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
                              VerticalAlignment="Center" />
                 </Grid>
             </TabItem>

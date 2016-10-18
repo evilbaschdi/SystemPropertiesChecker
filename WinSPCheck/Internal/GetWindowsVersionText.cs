@@ -14,7 +14,7 @@ namespace WinSPCheck.Internal
         /// </summary>
         public GetWindowsVersionText(IWindowsVersionInformation windowsVersionInformation)
         {
-            if(windowsVersionInformation == null)
+            if (windowsVersionInformation == null)
             {
                 throw new ArgumentNullException(nameof(windowsVersionInformation));
             }

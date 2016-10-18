@@ -4,9 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Shell;
 using EvilBaschdi.Core.Application;
 using EvilBaschdi.Core.Wpf;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using WinSPCheck.Core;
 using WinSPCheck.Extension;
 using WinSPCheck.Internal;
@@ -34,30 +36,53 @@ namespace WinSPCheck
             _style.Load(true);
             var linkerTime = Assembly.GetExecutingAssembly().GetLinkerTime();
             LinkerTime.Content = linkerTime.ToString(CultureInfo.InvariantCulture);
+
             Load();
             RunVersionChecks();
         }
 
+
         private void Load()
         {
             _overrideProtection = 1;
+            // ShowMessage("title", "message");
         }
 
         private void RunVersionChecks()
         {
-            var toast = new Toast(Title, "b.png");
             var dotNetVersion = new DotNetVersion();
             var registryValue = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
             var windowsVersionInformationHelper = new WindowsVersionInformationHelper();
-            var windowsVersionInformation = new GetWindowsVersionInformation(registryValue, windowsVersionInformationHelper, toast);
+            var windowsVersionInformation = new GetWindowsVersionInformation(registryValue, windowsVersionInformationHelper, this);
             var currentVersionText = new GetCurrentVersionText(windowsVersionInformation);
             var windowsVersionText = new GetWindowsVersionText(windowsVersionInformation);
+            var otherText = new GetOtherInformationText();
             CurrentVersion.Text = currentVersionText.Value;
             WindowsVersion.Text = windowsVersionText.Value;
+            Other.Text = otherText.Value;
             var temp = string.Empty;
             DomainInformation.Text = temp;
             DomainTab.Visibility = (!string.IsNullOrWhiteSpace(temp)).ToVisibility();
             DotNetVersion.Text = dotNetVersion.List.Aggregate(string.Empty, (c, v) => c + v + Environment.NewLine);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="message"></param>
+        public async void ShowMessage(string title, string message)
+        {
+            var options = new MetroDialogSettings
+                          {
+                              ColorScheme = MetroDialogColorScheme.Theme
+                          };
+
+            MetroDialogOptions = options;
+            var result = await this.ShowMessageAsync(title, message);
+            if (result == MessageDialogResult.Affirmative)
+            {
+                TaskbarItemInfo.ProgressState = TaskbarItemProgressState.None;
+            }
         }
 
         #region Flyout
@@ -133,5 +158,10 @@ namespace WinSPCheck
         }
 
         #endregion MetroStyle
+
+        private void TestButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ShowMessage("title", "test");
+        }
     }
 }

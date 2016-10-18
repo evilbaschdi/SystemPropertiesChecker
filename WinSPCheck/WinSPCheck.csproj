@@ -82,6 +82,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EvilBaschdi.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EvilBaschdi.Core.1.0.0.3\lib\net462\EvilBaschdi.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.3.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.3.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -116,7 +120,7 @@
     </ApplicationDefinition>
     <Compile Include="Core\CoreSettings.cs" />
     <Compile Include="Extension\ControlHelpers.cs" />
-    <Compile Include="Internal\Class1.cs" />
+    <Compile Include="Internal\GetOtherInformationText.cs" />
     <Compile Include="Internal\GetWindowsVersionInformation.cs">
       <DependentUpon>IWindowsVersionInformation.cs</DependentUpon>
     </Compile>
@@ -127,6 +131,7 @@
     <Compile Include="Internal\HklmSoftwareMicrosoftWindowsNtCurrentVersion.cs">
       <DependentUpon>IRegistryValue.cs</DependentUpon>
     </Compile>
+    <Compile Include="Internal\IOtherInformationText.cs" />
     <Compile Include="Internal\IRegistryValue.cs" />
     <Compile Include="Internal\IWindowsVersionInformation.cs" />
     <Compile Include="Internal\DotNetVersion.cs">
@@ -215,12 +220,6 @@
     </Content>
     <Resource Include="Resources\Entypo-license.txt" />
     <Resource Include="Resources\WindowsIcons-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\EvilBaschdi.Core\EvilBaschdi.Core\EvilBaschdi.Core.csproj">
-      <Project>{8a06a423-244f-404f-aad8-53de2ee2aed7}</Project>
-      <Name>EvilBaschdi.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
