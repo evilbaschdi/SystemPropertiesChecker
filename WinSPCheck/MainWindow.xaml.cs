@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -10,7 +11,6 @@ using EvilBaschdi.Core.Wpf;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using WinSPCheck.Core;
-using WinSPCheck.Extension;
 using WinSPCheck.Internal;
 
 namespace WinSPCheck
@@ -18,34 +18,61 @@ namespace WinSPCheck
     // ReSharper disable once RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
     {
+        private readonly BackgroundWorker _bw;
         private readonly IMetroStyle _style;
-
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
-        private readonly ISettings _coreSettings;
-
+        private int _executionCount;
         private int _overrideProtection;
+        private string _currentVersionText;
+        private string _windowsVersionText;
+        private string _dotNetVersionText;
+        private string _otherText;
+        private string _passwordExpirationMessage;
 
         /// <summary>
         ///     MainWindow
         /// </summary>
         public MainWindow()
         {
-            _coreSettings = new CoreSettings();
+            ISettings coreSettings = new CoreSettings();
             InitializeComponent();
-            _style = new MetroStyle(this, Accent, ThemeSwitch, _coreSettings);
+            _style = new MetroStyle(this, Accent, ThemeSwitch, coreSettings);
             _style.Load(true);
             var linkerTime = Assembly.GetExecutingAssembly().GetLinkerTime();
             LinkerTime.Content = linkerTime.ToString(CultureInfo.InvariantCulture);
-
+            _bw = new BackgroundWorker();
             Load();
-            RunVersionChecks();
+            //RunVersionChecks();
         }
 
 
         private void Load()
         {
+            _executionCount++;
             _overrideProtection = 1;
+            if (_executionCount == 1)
+            {
+                _bw.DoWork += (o, args) => RunVersionChecks();
+                _bw.WorkerReportsProgress = true;
+                _bw.RunWorkerCompleted += BackgroundWorkerWorkerCompleted;
+            }
+            _bw.RunWorkerAsync();
             // ShowMessage("title", "message");
+        }
+
+        private void BackgroundWorkerWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            CurrentVersion.Text = _currentVersionText;
+            WindowsVersion.Text = _windowsVersionText;
+            DotNetVersion.Text = _dotNetVersionText;
+            Other.Text = _otherText;
+
+            if (!string.IsNullOrWhiteSpace(_passwordExpirationMessage))
+            {
+                ShowMessage("Password Expiration", _passwordExpirationMessage);
+                TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
+                TaskbarItemInfo.ProgressValue = 1;
+            }
+            DomainTab.Visibility = Visibility.Hidden;
         }
 
         private void RunVersionChecks()
@@ -53,17 +80,18 @@ namespace WinSPCheck
             var dotNetVersion = new DotNetVersion();
             var registryValue = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
             var windowsVersionInformationHelper = new WindowsVersionInformationHelper();
-            var windowsVersionInformation = new GetWindowsVersionInformation(registryValue, windowsVersionInformationHelper, this);
+            var windowsVersionInformation = new GetWindowsVersionInformation(registryValue, windowsVersionInformationHelper);
             var currentVersionText = new GetCurrentVersionText(windowsVersionInformation);
             var windowsVersionText = new GetWindowsVersionText(windowsVersionInformation);
             var otherText = new GetOtherInformationText();
-            CurrentVersion.Text = currentVersionText.Value;
-            WindowsVersion.Text = windowsVersionText.Value;
-            Other.Text = otherText.Value;
-            var temp = string.Empty;
-            DomainInformation.Text = temp;
-            DomainTab.Visibility = (!string.IsNullOrWhiteSpace(temp)).ToVisibility();
-            DotNetVersion.Text = dotNetVersion.List.Aggregate(string.Empty, (c, v) => c + v + Environment.NewLine);
+            _currentVersionText = currentVersionText.Value;
+            _windowsVersionText = windowsVersionText.Value;
+            _otherText = otherText.Value;
+            _dotNetVersionText = dotNetVersion.List.Aggregate(string.Empty, (c, v) => c + v + Environment.NewLine);
+            _passwordExpirationMessage = windowsVersionInformation.PasswordExpirationMessage;
+            //var temp = string.Empty;
+            //DomainInformation.Text = temp;
+            //DomainTab.Visibility = (!string.IsNullOrWhiteSpace(temp)).ToVisibility();
         }
 
         /// <summary>
@@ -158,10 +186,5 @@ namespace WinSPCheck
         }
 
         #endregion MetroStyle
-
-        private void TestButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            ShowMessage("title", "test");
-        }
     }
 }

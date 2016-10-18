@@ -21,7 +21,7 @@
                     <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="settings" />
                 </StackPanel>
             </Button>
-            <!--<Button Name="TestButton" Click="TestButton_OnClick"/>-->
+
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
     <!-- TaskbarItemInfo -->

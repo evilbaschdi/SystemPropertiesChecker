@@ -1,4 +1,6 @@
-﻿namespace WinSPCheck.Internal
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace WinSPCheck.Internal
 {
     /// <summary>
     ///     Interface for classes that provide values about the current windows version.
@@ -9,5 +11,7 @@
         ///     Contains WindowsVersionInformation values.
         /// </summary>
         IWindowsVersionInformationHelper Values { get; }
+
+        string PasswordExpirationMessage { get; } 
     }
 }
