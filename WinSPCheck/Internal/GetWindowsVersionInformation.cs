@@ -94,7 +94,9 @@ namespace WinSPCheck.Internal
                 return _cachedWindowsVersionInformationHelper;
             }
         }
-
+        /// <summary>
+        /// Passwordexpiration message.
+        /// </summary>
         public string PasswordExpirationMessage
         {
             get { return _passwordExpirationMessage; }

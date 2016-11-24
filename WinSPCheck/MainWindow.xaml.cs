@@ -10,6 +10,7 @@ using EvilBaschdi.Core.Application;
 using EvilBaschdi.Core.Wpf;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Practices.Unity;
 using WinSPCheck.Core;
 using WinSPCheck.Internal;
 
@@ -27,6 +28,7 @@ namespace WinSPCheck
         private string _dotNetVersionText;
         private string _otherText;
         private string _passwordExpirationMessage;
+        //private readonly UnityContainer _coreContainer;
 
         /// <summary>
         ///     MainWindow
@@ -35,15 +37,31 @@ namespace WinSPCheck
         {
             ISettings coreSettings = new CoreSettings();
             InitializeComponent();
+
+            //_coreContainer = new UnityContainer();
+            //_coreContainer.RegisterType<ISettings, CoreSettings>();
+            //_coreContainer.RegisterInstance(this);
+            //_coreContainer.RegisterInstance(Accent);
+            //_coreContainer.RegisterInstance(ThemeSwitch);
+            //_coreContainer.RegisterType<IMetroStyle, MetroStyle>();
+
+            //_style = _coreContainer.Resolve<IMetroStyle>();
+
             _style = new MetroStyle(this, Accent, ThemeSwitch, coreSettings);
             _style.Load(true);
             var linkerTime = Assembly.GetExecutingAssembly().GetLinkerTime();
             LinkerTime.Content = linkerTime.ToString(CultureInfo.InvariantCulture);
             _bw = new BackgroundWorker();
             Load();
-            //RunVersionChecks();
         }
 
+        //protected override void OnClosing(CancelEventArgs e)
+        //{
+        //    e.Cancel = true;
+        //    _coreContainer.Teardown(_style);
+        //    _coreContainer.Dispose();
+        //    base.OnClosing(e);
+        //}
 
         private void Load()
         {
@@ -56,7 +74,7 @@ namespace WinSPCheck
                 _bw.RunWorkerCompleted += BackgroundWorkerWorkerCompleted;
             }
             _bw.RunWorkerAsync();
-            // ShowMessage("title", "message");
+            // ShowMessageAsync("title", "message");
         }
 
         private void BackgroundWorkerWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -68,7 +86,7 @@ namespace WinSPCheck
 
             if (!string.IsNullOrWhiteSpace(_passwordExpirationMessage))
             {
-                ShowMessage("Password Expiration", _passwordExpirationMessage);
+                ShowMessageAsync("Password Expiration", _passwordExpirationMessage);
                 TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
                 TaskbarItemInfo.ProgressValue = 1;
             }
@@ -77,18 +95,21 @@ namespace WinSPCheck
 
         private void RunVersionChecks()
         {
-            var dotNetVersion = new DotNetVersion();
-            var registryValue = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
-            var windowsVersionInformationHelper = new WindowsVersionInformationHelper();
-            var windowsVersionInformation = new GetWindowsVersionInformation(registryValue, windowsVersionInformationHelper);
-            var currentVersionText = new GetCurrentVersionText(windowsVersionInformation);
-            var windowsVersionText = new GetWindowsVersionText(windowsVersionInformation);
-            var otherText = new GetOtherInformationText();
-            _currentVersionText = currentVersionText.Value;
-            _windowsVersionText = windowsVersionText.Value;
-            _otherText = otherText.Value;
-            _dotNetVersionText = dotNetVersion.List.Aggregate(string.Empty, (c, v) => c + v + Environment.NewLine);
-            _passwordExpirationMessage = windowsVersionInformation.PasswordExpirationMessage;
+            var versionContainer = new UnityContainer();
+            versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
+            versionContainer.RegisterType<IRegistryValue, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
+            versionContainer.RegisterType<IWindowsVersionInformationHelper, WindowsVersionInformationHelper>();
+            versionContainer.RegisterType<IWindowsVersionInformation, GetWindowsVersionInformation>();
+            versionContainer.RegisterType<ICurrentVersionText, GetCurrentVersionText>();
+            versionContainer.RegisterType<IWindowsVersionText, GetWindowsVersionText>();
+            versionContainer.RegisterType<IOtherInformationText, GetOtherInformationText>();
+
+            _currentVersionText = versionContainer.Resolve<ICurrentVersionText>().Value;
+            _windowsVersionText = versionContainer.Resolve<IWindowsVersionText>().Value;
+            _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
+            _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().List.Aggregate(string.Empty, (c, v) => c + v + Environment.NewLine);
+            _passwordExpirationMessage = versionContainer.Resolve<IWindowsVersionInformation>().PasswordExpirationMessage;
+            versionContainer.Dispose();
             //var temp = string.Empty;
             //DomainInformation.Text = temp;
             //DomainTab.Visibility = (!string.IsNullOrWhiteSpace(temp)).ToVisibility();
@@ -98,7 +119,7 @@ namespace WinSPCheck
         /// </summary>
         /// <param name="title"></param>
         /// <param name="message"></param>
-        public async void ShowMessage(string title, string message)
+        public async void ShowMessageAsync(string title, string message)
         {
             var options = new MetroDialogSettings
                           {
@@ -106,7 +127,7 @@ namespace WinSPCheck
                           };
 
             MetroDialogOptions = options;
-            var result = await this.ShowMessageAsync(title, message);
+            var result = await DialogManager.ShowMessageAsync(this, title, message);
             if (result == MessageDialogResult.Affirmative)
             {
                 TaskbarItemInfo.ProgressState = TaskbarItemProgressState.None;

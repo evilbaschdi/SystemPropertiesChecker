@@ -1,14 +1,18 @@
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Windows;
 using Microsoft.Win32;
 
 namespace WinSPCheck.Internal
 {
     /// <summary>
-    /// 
     /// </summary>
     public class GetOtherInformationText : IOtherInformationText
-    {
+    {/// <summary>
+    /// Other information text.
+    /// </summary>
         public string Value
         {
             get
@@ -23,7 +27,8 @@ namespace WinSPCheck.Internal
                     psVersion = GetPowerShell1Version();
                 }
 
-                return $"Internet Explorer: {GetIEVersion()}{Environment.NewLine}PowerShell: {psVersion}";
+                
+                return $"Internet Explorer: {GetIEVersion()}{Environment.NewLine}PowerShell: {psVersion}{Environment.NewLine}Git for Windows: {GetGitVersion()}";
             }
         }
 
@@ -39,6 +44,22 @@ namespace WinSPCheck.Internal
             return value;
         }
 
+        private string GetGitVersion()
+        {
+            var programFiles = Directory.Exists(@"C:\Program Files\Git\bin")
+                ? @"C:\Program Files\Git\bin"
+                : Directory.Exists(@"C:\Program Files (x86)\Git\bin")
+                    ? @"C:\Program Files (x86)\Git\bin"
+                    : string.Empty;
+
+            if (string.IsNullOrWhiteSpace(programFiles))
+            {
+                return "(not found)";
+            }
+            var versInfo = FileVersionInfo.GetVersionInfo(Path.Combine(programFiles, "git.exe"));
+            return $"{versInfo.FileMajorPart}.{versInfo.FileMinorPart}.{versInfo.FileBuildPart}.{versInfo.FilePrivatePart}";
+        }
+
         private string GetPowerShell3Version()
         {
             var key = @"SOFTWARE\Microsoft\PowerShell\3\PowerShellEngine";
@@ -48,7 +69,7 @@ namespace WinSPCheck.Internal
                 return "0";
             }
             var value = subKey.GetValue("PSCompatibleVersion").ToString().Split(',');
-            return value.Last();
+            return value.Last().Trim();
         }
 
         private string GetPowerShell1Version()
@@ -60,7 +81,7 @@ namespace WinSPCheck.Internal
                 return "0";
             }
             var value = subKey.GetValue("PSCompatibleVersion").ToString().Split(',');
-            return value.Last();
+            return value.Last().Trim();
         }
 
         private bool PowerShell1Exists()

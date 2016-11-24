@@ -11,7 +11,9 @@ namespace WinSPCheck.Internal
         ///     Contains WindowsVersionInformation values.
         /// </summary>
         IWindowsVersionInformationHelper Values { get; }
-
+        /// <summary>
+        /// Passwordexpiration message.
+        /// </summary>
         string PasswordExpirationMessage { get; } 
     }
 }
