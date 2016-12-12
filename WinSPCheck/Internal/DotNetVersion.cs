@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Win32;
 
 namespace WinSPCheck.Internal
@@ -44,7 +43,7 @@ namespace WinSPCheck.Internal
             // Opens the registry key for the .NET Framework entry.
             using (var ndpKey =
                 RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "").
-                           OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
+                            OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
             {
                 // As an alternative, if you know the computers you will query are running .NET Framework 4.5
                 // or later, you can use:
@@ -54,58 +53,56 @@ namespace WinSPCheck.Internal
                 {
                     return;
                 }
-                Parallel.ForEach(ndpKey.GetSubKeyNames().Where(v => v.StartsWith("v")),
-                    versionKeyName =>
+                foreach (var versionKeyName in ndpKey.GetSubKeyNames().Where(v => v.StartsWith("v")))
+                {
+                    // ReSharper disable once AccessToDisposedClosure
+                    var versionKey = ndpKey.OpenSubKey(versionKeyName);
+
+                    if (versionKey != null)
                     {
-                        // ReSharper disable once AccessToDisposedClosure
-                        var versionKey = ndpKey.OpenSubKey(versionKeyName);
+                        var name = (string) versionKey.GetValue("Version", "");
+                        var sp = versionKey.GetValue("SP", "").ToString();
+                        var install = versionKey.GetValue("Install", "").ToString();
 
-                        if (versionKey != null)
+                        // .Net 2.0, 3.0, 3.5
+                        if (!string.IsNullOrEmpty(name))
                         {
-                            var name = (string) versionKey.GetValue("Version", "");
-                            var sp = versionKey.GetValue("SP", "").ToString();
-                            var install = versionKey.GetValue("Install", "").ToString();
+                            _dotNetVersionList.Add(install != "" && install == "1" && sp != ""
+                                ? $"{versionKeyName} | SP{sp} | {name}"
+                                : $"{versionKeyName} | {name}");
+                        }
 
-                            // .Net 2.0, 3.0, 3.5
-                            if (!string.IsNullOrEmpty(name))
+                        // .Net 4.0
+                        if (string.IsNullOrEmpty(name))
+                        {
+                            foreach (var subKeyName in versionKey.GetSubKeyNames())
                             {
-                                _dotNetVersionList.Add(install != "" && install == "1" && sp != ""
-                                    ? $"{versionKeyName} | SP{sp} | {name}"
-                                    : $"{versionKeyName} | {name}");
-                            }
+                                var subKey = versionKey.OpenSubKey(subKeyName);
 
-                            // .Net 4.0
-                            if (string.IsNullOrEmpty(name))
-                            {
-                                Parallel.ForEach(versionKey.GetSubKeyNames(),
-                                    subKeyName =>
+                                if (subKey != null)
+                                {
+                                    name = (string) subKey.GetValue("Version", "");
+                                    if (name != "")
                                     {
-                                        var subKey = versionKey.OpenSubKey(subKeyName);
+                                        sp = subKey.GetValue("SP", "").ToString();
+                                    }
+                                    install = subKey.GetValue("Install", "").ToString();
+                                }
 
-                                        if (subKey != null)
-                                        {
-                                            name = (string) subKey.GetValue("Version", "");
-                                            if (name != "")
-                                            {
-                                                sp = subKey.GetValue("SP", "").ToString();
-                                            }
-                                            install = subKey.GetValue("Install", "").ToString();
-                                        }
-
-                                        if (!string.IsNullOrEmpty(install) && install == "1")
-                                        {
-                                            _dotNetVersionList.Add(!string.IsNullOrEmpty(sp)
-                                                ? $"{subKeyName} | SP{sp} | {name}"
-                                                : $"{subKeyName}: {name}");
-                                        }
-                                        else
-                                        {
-                                            _dotNetVersionList.Add($"{versionKeyName} | {name}");
-                                        }
-                                    });
+                                if (!string.IsNullOrEmpty(install) && install == "1")
+                                {
+                                    _dotNetVersionList.Add(!string.IsNullOrEmpty(sp)
+                                        ? $"{subKeyName} | SP{sp} | {name}"
+                                        : $"{subKeyName}: {name}");
+                                }
+                                else
+                                {
+                                    _dotNetVersionList.Add($"{versionKeyName} | {name}");
+                                }
                             }
                         }
-                    });
+                    }
+                }
             }
         }
 

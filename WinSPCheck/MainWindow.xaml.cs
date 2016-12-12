@@ -77,6 +77,11 @@ namespace WinSPCheck
             // ShowMessageAsync("title", "message");
         }
 
+        private void ReloadClick(object sender, RoutedEventArgs e)
+        {
+            Load();
+        }
+
         private void BackgroundWorkerWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             CurrentVersion.Text = _currentVersionText;
@@ -107,7 +112,7 @@ namespace WinSPCheck
             _currentVersionText = versionContainer.Resolve<ICurrentVersionText>().Value;
             _windowsVersionText = versionContainer.Resolve<IWindowsVersionText>().Value;
             _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
-            _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().List.Aggregate(string.Empty, (c, v) => c + v + Environment.NewLine);
+            _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().List.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
             _passwordExpirationMessage = versionContainer.Resolve<IWindowsVersionInformation>().PasswordExpirationMessage;
             versionContainer.Dispose();
             //var temp = string.Empty;

@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("evil.baschdi")]
 [assembly: AssemblyProduct("Windows Version Checker")]
-[assembly: AssemblyCopyright("Copyright © evil.baschdi 2012 - 2015")]
+[assembly: AssemblyCopyright("Copyright © evil.baschdi 2012 - 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
