@@ -1,17 +1,15 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shell;
 using EvilBaschdi.Core.Application;
 using EvilBaschdi.Core.Wpf;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.Unity;
-using WinSPCheck.Core;
 using WinSPCheck.Internal;
 
 namespace WinSPCheck
@@ -19,8 +17,8 @@ namespace WinSPCheck
     // ReSharper disable once RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
     {
-        private readonly BackgroundWorker _bw;
         private readonly IMetroStyle _style;
+        private readonly IDialogService _dialogService;
         private int _executionCount;
         private int _overrideProtection;
         private string _currentVersionText;
@@ -28,6 +26,7 @@ namespace WinSPCheck
         private string _dotNetVersionText;
         private string _otherText;
         private string _passwordExpirationMessage;
+
         //private readonly UnityContainer _coreContainer;
 
         /// <summary>
@@ -35,24 +34,26 @@ namespace WinSPCheck
         /// </summary>
         public MainWindow()
         {
-            ISettings coreSettings = new CoreSettings();
             InitializeComponent();
 
-            //_coreContainer = new UnityContainer();
-            //_coreContainer.RegisterType<ISettings, CoreSettings>();
+            //var _coreContainer = new UnityContainer();
+            //_coreContainer.RegisterType<ISettings, CoreSettings>(new HierarchicalLifetimeManager());
             //_coreContainer.RegisterInstance(this);
             //_coreContainer.RegisterInstance(Accent);
             //_coreContainer.RegisterInstance(ThemeSwitch);
-            //_coreContainer.RegisterType<IMetroStyle, MetroStyle>();
+            //_coreContainer.RegisterType<IMetroStyle, MetroStyle>(new HierarchicalLifetimeManager());
 
             //_style = _coreContainer.Resolve<IMetroStyle>();
-
-            _style = new MetroStyle(this, Accent, ThemeSwitch, coreSettings);
+            ISettings coreSettings = new CoreSettings(Properties.Settings.Default);
+            IThemeManagerHelper themeManagerHelper = new ThemeManagerHelper();
+            _style = new MetroStyle(this, Accent, ThemeSwitch, coreSettings, themeManagerHelper);
             _style.Load(true);
+
+            _dialogService = new DialogService(this);
+
             var linkerTime = Assembly.GetExecutingAssembly().GetLinkerTime();
             LinkerTime.Content = linkerTime.ToString(CultureInfo.InvariantCulture);
-            _bw = new BackgroundWorker();
-            Load();
+            LoadAsync();
         }
 
         //protected override void OnClosing(CancelEventArgs e)
@@ -63,27 +64,17 @@ namespace WinSPCheck
         //    base.OnClosing(e);
         //}
 
-        private void Load()
+        private async void LoadAsync()
         {
+            var task = Task.Factory.StartNew(RunVersionChecks);
+
             _executionCount++;
             _overrideProtection = 1;
             if (_executionCount == 1)
             {
-                _bw.DoWork += (o, args) => RunVersionChecks();
-                _bw.WorkerReportsProgress = true;
-                _bw.RunWorkerCompleted += BackgroundWorkerWorkerCompleted;
+                await task;
             }
-            _bw.RunWorkerAsync();
-            // ShowMessageAsync("title", "message");
-        }
 
-        private void ReloadClick(object sender, RoutedEventArgs e)
-        {
-            Load();
-        }
-
-        private void BackgroundWorkerWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
             CurrentVersion.Text = _currentVersionText;
             WindowsVersion.Text = _windowsVersionText;
             DotNetVersion.Text = _dotNetVersionText;
@@ -91,11 +82,16 @@ namespace WinSPCheck
 
             if (!string.IsNullOrWhiteSpace(_passwordExpirationMessage))
             {
-                ShowMessageAsync("Password Expiration", _passwordExpirationMessage);
+                await _dialogService.ShowMessage("Password Expiration", _passwordExpirationMessage);
                 TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
                 TaskbarItemInfo.ProgressValue = 1;
             }
             DomainTab.Visibility = Visibility.Hidden;
+        }
+
+        private void ReloadClick(object sender, RoutedEventArgs e)
+        {
+            LoadAsync();
         }
 
         private void RunVersionChecks()
@@ -118,25 +114,6 @@ namespace WinSPCheck
             //var temp = string.Empty;
             //DomainInformation.Text = temp;
             //DomainTab.Visibility = (!string.IsNullOrWhiteSpace(temp)).ToVisibility();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="title"></param>
-        /// <param name="message"></param>
-        public async void ShowMessageAsync(string title, string message)
-        {
-            var options = new MetroDialogSettings
-                          {
-                              ColorScheme = MetroDialogColorScheme.Theme
-                          };
-
-            MetroDialogOptions = options;
-            var result = await DialogManager.ShowMessageAsync(this, title, message);
-            if (result == MessageDialogResult.Affirmative)
-            {
-                TaskbarItemInfo.ProgressState = TaskbarItemProgressState.None;
-            }
         }
 
         #region Flyout
