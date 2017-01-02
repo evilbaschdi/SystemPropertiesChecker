@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
 using System.Management;
+using WinSPCheck.Model;
 
 namespace WinSPCheck.Internal
 {
@@ -12,8 +13,9 @@ namespace WinSPCheck.Internal
     public class GetWindowsVersionInformation : IWindowsVersionInformation
     {
         private readonly IRegistryValue _registryValue;
-        private readonly IWindowsVersionInformationHelper _windowsVersionInformationHelper;
-        private IWindowsVersionInformationHelper _cachedWindowsVersionInformationHelper;
+        private readonly IWindowsVersionInformationModel _windowsVersionInformationModel;
+        private readonly IPingDevice _pingDevice;
+        private IWindowsVersionInformationModel _cachedWindowsVersionInformationModel;
         private string _passwordExpirationMessage;
 
         /// <summary>
@@ -21,47 +23,56 @@ namespace WinSPCheck.Internal
         /// </summary>
         /// <exception cref="ArgumentNullException">
         ///     <paramref name="registryValue" /> is <see langword="null" />.
-        ///     <paramref name="windowsVersionInformationHelper" /> is <see langword="null" />.
+        ///     <paramref name="windowsVersionInformationModel" /> is <see langword="null" />.
         /// </exception>
-        public GetWindowsVersionInformation(IRegistryValue registryValue, IWindowsVersionInformationHelper windowsVersionInformationHelper)
+        public GetWindowsVersionInformation(IRegistryValue registryValue, IWindowsVersionInformationModel windowsVersionInformationModel, IPingDevice pingDevice)
         {
             if (registryValue == null)
             {
                 throw new ArgumentNullException(nameof(registryValue));
             }
-            if (windowsVersionInformationHelper == null)
+            if (windowsVersionInformationModel == null)
             {
-                throw new ArgumentNullException(nameof(windowsVersionInformationHelper));
+                throw new ArgumentNullException(nameof(windowsVersionInformationModel));
+            }
+            if (pingDevice == null)
+            {
+                throw new ArgumentNullException(nameof(pingDevice));
+            }
+            if (pingDevice == null)
+            {
+                throw new ArgumentNullException(nameof(pingDevice));
             }
             _registryValue = registryValue;
-            _windowsVersionInformationHelper = windowsVersionInformationHelper;
+            _windowsVersionInformationModel = windowsVersionInformationModel;
+            _pingDevice = pingDevice;
         }
 
         /// <summary>
         ///     Contains WindowsVersionInformation values.
         /// </summary>
-        public IWindowsVersionInformationHelper Values
+        public IWindowsVersionInformationModel Values
         {
             get
             {
-                if (_cachedWindowsVersionInformationHelper != null)
+                if (_cachedWindowsVersionInformationModel != null)
                 {
-                    return _cachedWindowsVersionInformationHelper;
+                    return _cachedWindowsVersionInformationModel;
                 }
                 var bits = Bits();
                 var virtualSystem = VirtualSystem();
                 var domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
 
-                var currentVersion = _registryValue.For("CurrentVersion");
-                var currentMajorVersionNumber = _registryValue.For("CurrentMajorVersionNumber");
-                var currentMinorVersionNumber = _registryValue.For("CurrentMinorVersionNumber");
+                var currentVersion = _registryValue.ValueFor("CurrentVersion");
+                var currentMajorVersionNumber = _registryValue.ValueFor("CurrentMajorVersionNumber");
+                var currentMinorVersionNumber = _registryValue.ValueFor("CurrentMinorVersionNumber");
 
-                var csdVersion = !string.IsNullOrEmpty(_registryValue.For("CSDVersion"))
-                    ? $" with {_registryValue.For("CSDVersion")}"
+                var csdVersion = !string.IsNullOrEmpty(_registryValue.ValueFor("CSDVersion"))
+                    ? $" with {_registryValue.ValueFor("CSDVersion")}"
                     : string.Empty;
 
-                var releaseId = !string.IsNullOrEmpty(_registryValue.For("ReleaseId"))
-                    ? $" (Release {_registryValue.For("ReleaseId")})"
+                var releaseId = !string.IsNullOrEmpty(_registryValue.ValueFor("ReleaseId"))
+                    ? $" (Release {_registryValue.ValueFor("ReleaseId")})"
                     : string.Empty;
 
                 var version = !string.IsNullOrWhiteSpace(currentMajorVersionNumber) &&
@@ -71,31 +82,32 @@ namespace WinSPCheck.Internal
 
                 if (!string.IsNullOrWhiteSpace(domain))
                 {
-                    _windowsVersionInformationHelper.Domain = domain;
+                    _windowsVersionInformationModel.Domain = domain;
                     var passwordExpirationDate = PasswordExpirationDate(domain);
-                    _windowsVersionInformationHelper.UserName = passwordExpirationDate.Key;
-                    _windowsVersionInformationHelper.PasswordExpirationDate = passwordExpirationDate.Value;
+                    _windowsVersionInformationModel.UserName = passwordExpirationDate.Key;
+                    _windowsVersionInformationModel.PasswordExpirationDate = passwordExpirationDate.Value;
                 }
 
-                _windowsVersionInformationHelper.Computername = Environment.MachineName;
-                _windowsVersionInformationHelper.Bits = bits;
-                _windowsVersionInformationHelper.Virtual = virtualSystem.Key;
-                _windowsVersionInformationHelper.Manufacturer = virtualSystem.Value;
-                _windowsVersionInformationHelper.BuildLab = _registryValue.For("BuildLab");
-                _windowsVersionInformationHelper.BuildLabEx = _registryValue.For("BuildLabEx");
-                _windowsVersionInformationHelper.BuildLabExArray = _registryValue.For("BuildLabEx").Split('.');
-                _windowsVersionInformationHelper.CurrentBuild = _registryValue.For("CurrentBuild");
-                _windowsVersionInformationHelper.ProductName = _registryValue.For("ProductName");
-                _windowsVersionInformationHelper.CurrentVersion = version;
-                _windowsVersionInformationHelper.CsdVersion = csdVersion;
-                _windowsVersionInformationHelper.ReleaseId = releaseId;
-                _windowsVersionInformationHelper.Ubr = _registryValue.For("UBR");
-                _cachedWindowsVersionInformationHelper = _windowsVersionInformationHelper;
-                return _cachedWindowsVersionInformationHelper;
+                _windowsVersionInformationModel.Computername = Environment.MachineName;
+                _windowsVersionInformationModel.Bits = bits;
+                _windowsVersionInformationModel.Virtual = virtualSystem.Key;
+                _windowsVersionInformationModel.Manufacturer = virtualSystem.Value;
+                _windowsVersionInformationModel.BuildLab = _registryValue.ValueFor("BuildLab");
+                _windowsVersionInformationModel.BuildLabEx = _registryValue.ValueFor("BuildLabEx");
+                _windowsVersionInformationModel.BuildLabExArray = _registryValue.ValueFor("BuildLabEx").Split('.');
+                _windowsVersionInformationModel.CurrentBuild = _registryValue.ValueFor("CurrentBuild");
+                _windowsVersionInformationModel.ProductName = _registryValue.ValueFor("ProductName");
+                _windowsVersionInformationModel.CurrentVersion = version;
+                _windowsVersionInformationModel.CsdVersion = csdVersion;
+                _windowsVersionInformationModel.ReleaseId = releaseId;
+                _windowsVersionInformationModel.Ubr = _registryValue.ValueFor("UBR");
+                _cachedWindowsVersionInformationModel = _windowsVersionInformationModel;
+                return _cachedWindowsVersionInformationModel;
             }
         }
+
         /// <summary>
-        /// Passwordexpiration message.
+        ///     Passwordexpiration message.
         /// </summary>
         public string PasswordExpirationMessage
         {

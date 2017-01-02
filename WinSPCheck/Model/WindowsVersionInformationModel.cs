@@ -1,9 +1,9 @@
-namespace WinSPCheck.Internal
+namespace WinSPCheck.Model
 {
     /// <summary>
     ///     Helper class.
     /// </summary>
-    public class WindowsVersionInformationHelper : IWindowsVersionInformationHelper
+    public class WindowsVersionInformationModel : IWindowsVersionInformationModel
     {
         /// <summary>
         /// </summary>

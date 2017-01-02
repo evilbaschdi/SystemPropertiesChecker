@@ -1,11 +1,11 @@
-﻿namespace WinSPCheck.Internal
+﻿using EvilBaschdi.Core.DotNetExtensions;
+
+namespace WinSPCheck.Internal
 {
     /// <summary>
     /// </summary>
-    public interface IWindowsVersionText
+    public interface IWindowsVersionText : IValue<string>
     {
-        /// <summary>
-        /// </summary>
-        string Value { get; }
     }
+   
 }

@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using WinSPCheck.Model;
 
 namespace WinSPCheck.Internal
 {
@@ -10,10 +10,11 @@ namespace WinSPCheck.Internal
         /// <summary>
         ///     Contains WindowsVersionInformation values.
         /// </summary>
-        IWindowsVersionInformationHelper Values { get; }
+        IWindowsVersionInformationModel Values { get; }
+
         /// <summary>
-        /// Passwordexpiration message.
+        ///     Passwordexpiration message.
         /// </summary>
-        string PasswordExpirationMessage { get; } 
+        string PasswordExpirationMessage { get; }
     }
 }

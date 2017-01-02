@@ -11,10 +11,14 @@ using EvilBaschdi.Core.Wpf;
 using MahApps.Metro.Controls;
 using Microsoft.Practices.Unity;
 using WinSPCheck.Internal;
+using WinSPCheck.Model;
 
 namespace WinSPCheck
 {
     // ReSharper disable once RedundantExtendsListEntry
+    /// <summary>
+    ///     MainWindow
+    /// </summary>
     public partial class MainWindow : MetroWindow
     {
         private readonly IMetroStyle _style;
@@ -97,9 +101,10 @@ namespace WinSPCheck
         private void RunVersionChecks()
         {
             var versionContainer = new UnityContainer();
+            versionContainer.RegisterType<IPingDevice, PingDevice>();
             versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
             versionContainer.RegisterType<IRegistryValue, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
-            versionContainer.RegisterType<IWindowsVersionInformationHelper, WindowsVersionInformationHelper>();
+            versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
             versionContainer.RegisterType<IWindowsVersionInformation, GetWindowsVersionInformation>();
             versionContainer.RegisterType<ICurrentVersionText, GetCurrentVersionText>();
             versionContainer.RegisterType<IWindowsVersionText, GetWindowsVersionText>();

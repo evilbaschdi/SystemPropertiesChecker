@@ -208,25 +208,33 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Extension\ControlHelpers.cs" />
-    <Compile Include="Internal\GetOtherInformationText.cs" />
+    <Compile Include="Internal\GetOtherInformationText.cs">
+      <DependentUpon>IOtherInformationText.cs</DependentUpon>
+    </Compile>
     <Compile Include="Internal\GetWindowsVersionInformation.cs">
       <DependentUpon>IWindowsVersionInformation.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\GetCurrentVersionText.cs">
       <DependentUpon>ICurrentVersionText.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\GetWindowsVersionText.cs" />
+    <Compile Include="Internal\GetWindowsVersionText.cs">
+      <DependentUpon>IWindowsVersionText.cs</DependentUpon>
+    </Compile>
     <Compile Include="Internal\HklmSoftwareMicrosoftWindowsNtCurrentVersion.cs">
       <DependentUpon>IRegistryValue.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\IOtherInformationText.cs" />
+    <Compile Include="Internal\IPingDevice.cs" />
     <Compile Include="Internal\IRegistryValue.cs" />
     <Compile Include="Internal\IWindowsVersionInformation.cs" />
     <Compile Include="Internal\DotNetVersion.cs">
       <DependentUpon>IDotNetVersion.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\IDotNetVersion.cs" />
-    <Compile Include="Internal\IWindowsVersionInformationHelper.cs" />
+    <Compile Include="Internal\PingDevice.cs">
+      <DependentUpon>IPingDevice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\IWindowsVersionInformationModel.cs" />
     <Compile Include="Internal\ICurrentVersionText.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -237,8 +245,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Internal\IWindowsVersionText.cs" />
-    <Compile Include="Internal\WindowsVersionInformationHelper.cs">
-      <DependentUpon>IWindowsVersionInformationHelper.cs</DependentUpon>
+    <Compile Include="Model\WindowsVersionInformationModel.cs">
+      <DependentUpon>IWindowsVersionInformationModel.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
