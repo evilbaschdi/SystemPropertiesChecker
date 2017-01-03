@@ -9,14 +9,14 @@ namespace WinSPCheck.Internal
     /// <summary>
     ///     Class that provides a WindowsVersionInformationStack.
     /// </summary>
-    public class GetCurrentVersionText : ICurrentVersionText
+    public class CurrentVersionText : ICurrentVersionText
     {
         private readonly IWindowsVersionInformation _windowsVersionInformation;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
-        public GetCurrentVersionText(IWindowsVersionInformation windowsVersionInformation)
+        public CurrentVersionText(IWindowsVersionInformation windowsVersionInformation)
         {
             if (windowsVersionInformation == null)
             {
@@ -32,7 +32,7 @@ namespace WinSPCheck.Internal
         {
             get
             {
-                var values = _windowsVersionInformation.Values;
+                var values = _windowsVersionInformation.Value;
 
                 var sb = new StringBuilder();
                 sb.Append($"Computername: {values.Computername}{Environment.NewLine}");

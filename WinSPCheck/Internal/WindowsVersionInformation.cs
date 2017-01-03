@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.DirectoryServices.AccountManagement;
-using System.DirectoryServices.ActiveDirectory;
 using System.Management;
 using WinSPCheck.Model;
 
@@ -10,38 +8,38 @@ namespace WinSPCheck.Internal
     /// <summary>
     ///     Class that provides values about the current windows version.
     /// </summary>
-    public class GetWindowsVersionInformation : IWindowsVersionInformation
+    public class WindowsVersionInformation : IWindowsVersionInformation
     {
         private readonly IRegistryValue _registryValue;
-        private readonly IWindowsVersionInformationModel _windowsVersionInformationModel;
-        private IWindowsVersionInformationModel _cachedWindowsVersionInformationModel;
-        private string _passwordExpirationMessage;
+        private readonly IPasswordExpirationDate _passwordExpirationDate;
+        private readonly WindowsVersionInformationModel _windowsVersionInformationModel = new WindowsVersionInformationModel();
+        private WindowsVersionInformationModel _cachedWindowsVersionInformationModel;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         /// <exception cref="ArgumentNullException">
         ///     <paramref name="registryValue" /> is <see langword="null" />.
-        ///     <paramref name="windowsVersionInformationModel" /> is <see langword="null" />.
         /// </exception>
-        public GetWindowsVersionInformation(IRegistryValue registryValue, IWindowsVersionInformationModel windowsVersionInformationModel)
+        public WindowsVersionInformation(IRegistryValue registryValue, IPasswordExpirationDate passwordExpirationDate)
         {
             if (registryValue == null)
             {
                 throw new ArgumentNullException(nameof(registryValue));
             }
-            if (windowsVersionInformationModel == null)
+            if (passwordExpirationDate == null)
             {
-                throw new ArgumentNullException(nameof(windowsVersionInformationModel));
+                throw new ArgumentNullException(nameof(passwordExpirationDate));
             }
+
             _registryValue = registryValue;
-            _windowsVersionInformationModel = windowsVersionInformationModel;
+            _passwordExpirationDate = passwordExpirationDate;
         }
 
         /// <summary>
         ///     Contains WindowsVersionInformation values.
         /// </summary>
-        public IWindowsVersionInformationModel Values
+        public WindowsVersionInformationModel Value
         {
             get
             {
@@ -73,9 +71,9 @@ namespace WinSPCheck.Internal
                 if (!string.IsNullOrWhiteSpace(domain))
                 {
                     _windowsVersionInformationModel.Domain = domain;
-                    var passwordExpirationDate = PasswordExpirationDate(domain);
-                    _windowsVersionInformationModel.UserName = passwordExpirationDate.Key;
-                    _windowsVersionInformationModel.PasswordExpirationDate = passwordExpirationDate.Value;
+                    var passwordExpirationDate = _passwordExpirationDate.ValueFor(domain);
+                    _windowsVersionInformationModel.UserName = passwordExpirationDate.UserName;
+                    _windowsVersionInformationModel.PasswordExpirationDate = passwordExpirationDate.DateString;
                 }
 
                 _windowsVersionInformationModel.Computername = Environment.MachineName;
@@ -94,14 +92,6 @@ namespace WinSPCheck.Internal
                 _cachedWindowsVersionInformationModel = _windowsVersionInformationModel;
                 return _cachedWindowsVersionInformationModel;
             }
-        }
-
-        /// <summary>
-        ///     Passwordexpiration message.
-        /// </summary>
-        public string PasswordExpirationMessage
-        {
-            get { return _passwordExpirationMessage; }
         }
 
         private string Bits()
@@ -128,43 +118,6 @@ namespace WinSPCheck.Internal
                 }
             }
             return new KeyValuePair<bool, string>(virtualSystem, manufacturer);
-        }
-
-        private KeyValuePair<string, string> PasswordExpirationDate(string domain)
-        {
-            try
-            {
-                var context = new DirectoryContext(DirectoryContextType.Domain, domain);
-                using (var dc = DomainController.FindOne(context))
-                {
-                    using (var ds = dc.GetDirectorySearcher())
-                    {
-                        var samAccountName = UserPrincipal.Current.SamAccountName;
-                        ds.Filter = $"(sAMAccountName={samAccountName})";
-                        ds.SizeLimit = 10;
-                        var sr = ds.FindOne();
-
-                        if (sr != null)
-                        {
-                            var de = sr.GetDirectoryEntry();
-                            var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
-                            var dif = nextSet - DateTime.Now;
-                            if (dif.Days < 10 && nextSet.Year != 1970)
-                            {
-                                _passwordExpirationMessage = $"{dif.Days} days and {dif.Hours} hours.";
-                            }
-                            var dateString = nextSet.ToString("g");
-                            return new KeyValuePair<string, string>(samAccountName, nextSet.Year == 1970 ? "-" : dateString);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-            return new KeyValuePair<string, string>("", "(indeterminate)");
         }
     }
 }

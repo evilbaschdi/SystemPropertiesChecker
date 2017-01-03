@@ -208,32 +208,37 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Extension\ControlHelpers.cs" />
-    <Compile Include="Internal\GetOtherInformationText.cs">
+    <Compile Include="Internal\IPasswordExpirationDate.cs" />
+    <Compile Include="Internal\IPasswordExpirationMessage.cs" />
+    <Compile Include="Internal\OtherInformationText.cs">
       <DependentUpon>IOtherInformationText.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\GetWindowsVersionInformation.cs">
+    <Compile Include="Internal\PasswordExpirationDate.cs">
+      <DependentUpon>IPasswordExpirationDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\PasswordExpirationMessage.cs">
+      <DependentUpon>IPasswordExpirationMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\WindowsVersionInformation.cs">
       <DependentUpon>IWindowsVersionInformation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\GetCurrentVersionText.cs">
+    <Compile Include="Internal\CurrentVersionText.cs">
       <DependentUpon>ICurrentVersionText.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internal\GetWindowsVersionText.cs">
+    <Compile Include="Internal\WindowsVersionText.cs">
       <DependentUpon>IWindowsVersionText.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\HklmSoftwareMicrosoftWindowsNtCurrentVersion.cs">
       <DependentUpon>IRegistryValue.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\IOtherInformationText.cs" />
-    <Compile Include="Internal\IPingDevice.cs" />
     <Compile Include="Internal\IRegistryValue.cs" />
     <Compile Include="Internal\IWindowsVersionInformation.cs" />
     <Compile Include="Internal\DotNetVersion.cs">
       <DependentUpon>IDotNetVersion.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\IDotNetVersion.cs" />
-    <Compile Include="Internal\PingDevice.cs">
-      <DependentUpon>IPingDevice.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Model\IPasswordExpirationModel.cs" />
     <Compile Include="Model\IWindowsVersionInformationModel.cs" />
     <Compile Include="Internal\ICurrentVersionText.cs" />
     <Page Include="MainWindow.xaml">
@@ -245,6 +250,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Internal\IWindowsVersionText.cs" />
+    <Compile Include="Model\PasswordExpirationModel.cs">
+      <DependentUpon>IPasswordExpirationModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\WindowsVersionInformationModel.cs">
       <DependentUpon>IWindowsVersionInformationModel.cs</DependentUpon>
     </Compile>

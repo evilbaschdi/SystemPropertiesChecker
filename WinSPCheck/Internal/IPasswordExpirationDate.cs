@@ -1,11 +1,11 @@
-﻿using System.Net.NetworkInformation;
 using EvilBaschdi.Core.DotNetExtensions;
+using WinSPCheck.Model;
 
 namespace WinSPCheck.Internal
 {
     /// <summary>
     /// </summary>
-    public interface IPingDevice : IValueFor<string, IPStatus>
+    public interface IPasswordExpirationDate : IValueFor<string, PasswordExpirationModel>
     {
     }
 }

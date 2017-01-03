@@ -9,7 +9,7 @@ namespace WinSPCheck.Internal
 {
     /// <summary>
     /// </summary>
-    public class GetOtherInformationText : IOtherInformationText
+    public class OtherInformationText : IOtherInformationText
     {/// <summary>
     /// Other information text.
     /// </summary>

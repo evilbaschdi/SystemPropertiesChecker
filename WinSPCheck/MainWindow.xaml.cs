@@ -101,20 +101,21 @@ namespace WinSPCheck
         private void RunVersionChecks()
         {
             var versionContainer = new UnityContainer();
-
             versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
             versionContainer.RegisterType<IRegistryValue, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
             versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
-            versionContainer.RegisterType<IWindowsVersionInformation, GetWindowsVersionInformation>();
-            versionContainer.RegisterType<ICurrentVersionText, GetCurrentVersionText>();
-            versionContainer.RegisterType<IWindowsVersionText, GetWindowsVersionText>();
-            versionContainer.RegisterType<IOtherInformationText, GetOtherInformationText>();
+            versionContainer.RegisterType<IWindowsVersionInformation, WindowsVersionInformation>();
+            versionContainer.RegisterType<ICurrentVersionText, CurrentVersionText>();
+            versionContainer.RegisterType<IWindowsVersionText, WindowsVersionText>();
+            versionContainer.RegisterType<IOtherInformationText, OtherInformationText>();
+            versionContainer.RegisterType<IPasswordExpirationDate, PasswordExpirationDate>();
+            versionContainer.RegisterType<IPasswordExpirationMessage, PasswordExpirationMessage>();
 
             _currentVersionText = versionContainer.Resolve<ICurrentVersionText>().Value;
             _windowsVersionText = versionContainer.Resolve<IWindowsVersionText>().Value;
             _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
             _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().List.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
-            _passwordExpirationMessage = versionContainer.Resolve<IWindowsVersionInformation>().PasswordExpirationMessage;
+            _passwordExpirationMessage = versionContainer.Resolve<IPasswordExpirationMessage>().Value;
             versionContainer.Dispose();
             //var temp = string.Empty;
             //DomainInformation.Text = temp;

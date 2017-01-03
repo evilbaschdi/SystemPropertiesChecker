@@ -73,7 +73,7 @@
                 </Grid>
             </TabItem>
             <!-- Domain -->
-            <TabItem Name="DomainTab" Header="Domain">
+            <TabItem Name="DomainTab" Header="Domain" Visibility="Hidden">
                 <Grid>
                     <TextBox Name="DomainInformation" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center"
                              HorizontalAlignment="Center" VerticalAlignment="Center" />
