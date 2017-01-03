@@ -14,7 +14,6 @@ namespace WinSPCheck.Internal
     {
         private readonly IRegistryValue _registryValue;
         private readonly IWindowsVersionInformationModel _windowsVersionInformationModel;
-        private readonly IPingDevice _pingDevice;
         private IWindowsVersionInformationModel _cachedWindowsVersionInformationModel;
         private string _passwordExpirationMessage;
 
@@ -25,7 +24,7 @@ namespace WinSPCheck.Internal
         ///     <paramref name="registryValue" /> is <see langword="null" />.
         ///     <paramref name="windowsVersionInformationModel" /> is <see langword="null" />.
         /// </exception>
-        public GetWindowsVersionInformation(IRegistryValue registryValue, IWindowsVersionInformationModel windowsVersionInformationModel, IPingDevice pingDevice)
+        public GetWindowsVersionInformation(IRegistryValue registryValue, IWindowsVersionInformationModel windowsVersionInformationModel)
         {
             if (registryValue == null)
             {
@@ -35,17 +34,8 @@ namespace WinSPCheck.Internal
             {
                 throw new ArgumentNullException(nameof(windowsVersionInformationModel));
             }
-            if (pingDevice == null)
-            {
-                throw new ArgumentNullException(nameof(pingDevice));
-            }
-            if (pingDevice == null)
-            {
-                throw new ArgumentNullException(nameof(pingDevice));
-            }
             _registryValue = registryValue;
             _windowsVersionInformationModel = windowsVersionInformationModel;
-            _pingDevice = pingDevice;
         }
 
         /// <summary>
@@ -142,31 +132,39 @@ namespace WinSPCheck.Internal
 
         private KeyValuePair<string, string> PasswordExpirationDate(string domain)
         {
-            var context = new DirectoryContext(DirectoryContextType.Domain, domain);
-            using (var dc = DomainController.FindOne(context))
+            try
             {
-                using (var ds = dc.GetDirectorySearcher())
+                var context = new DirectoryContext(DirectoryContextType.Domain, domain);
+                using (var dc = DomainController.FindOne(context))
                 {
-                    var samAccountName = UserPrincipal.Current.SamAccountName;
-                    ds.Filter = $"(sAMAccountName={samAccountName})";
-                    ds.SizeLimit = 10;
-                    var sr = ds.FindOne();
-
-                    if (sr != null)
+                    using (var ds = dc.GetDirectorySearcher())
                     {
-                        var de = sr.GetDirectoryEntry();
-                        var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
-                        var dif = nextSet - DateTime.Now;
-                        if (dif.Days < 10 && nextSet.Year != 1970)
+                        var samAccountName = UserPrincipal.Current.SamAccountName;
+                        ds.Filter = $"(sAMAccountName={samAccountName})";
+                        ds.SizeLimit = 10;
+                        var sr = ds.FindOne();
+
+                        if (sr != null)
                         {
-                            _passwordExpirationMessage = $"{dif.Days} days and {dif.Hours} hours.";
+                            var de = sr.GetDirectoryEntry();
+                            var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
+                            var dif = nextSet - DateTime.Now;
+                            if (dif.Days < 10 && nextSet.Year != 1970)
+                            {
+                                _passwordExpirationMessage = $"{dif.Days} days and {dif.Hours} hours.";
+                            }
+                            var dateString = nextSet.ToString("g");
+                            return new KeyValuePair<string, string>(samAccountName, nextSet.Year == 1970 ? "-" : dateString);
                         }
-                        var dateString = nextSet.ToString("g");
-                        return new KeyValuePair<string, string>(samAccountName, nextSet.Year == 1970 ? "-" : dateString);
                     }
                 }
             }
-            return new KeyValuePair<string, string>();
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return new KeyValuePair<string, string>("", "(indeterminate)");
         }
     }
 }

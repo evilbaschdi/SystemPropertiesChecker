@@ -101,7 +101,7 @@ namespace WinSPCheck
         private void RunVersionChecks()
         {
             var versionContainer = new UnityContainer();
-            versionContainer.RegisterType<IPingDevice, PingDevice>();
+
             versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
             versionContainer.RegisterType<IRegistryValue, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
             versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();

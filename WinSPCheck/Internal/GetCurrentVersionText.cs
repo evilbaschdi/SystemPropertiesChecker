@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 
@@ -57,12 +57,24 @@ namespace WinSPCheck.Internal
         /// <returns></returns>
         public static string GetLocalIpAddress()
         {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork))
+            var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces().Where(i => i.OperationalStatus == OperationalStatus.Up);
+
+            foreach (NetworkInterface networkInterface in networkInterfaces)
             {
-                return ip.ToString();
+                var adapterProperties = networkInterface.GetIPProperties();
+
+                if (adapterProperties.GatewayAddresses.FirstOrDefault() != null)
+                {
+                    foreach (UnicastIPAddressInformation ip in networkInterface.GetIPProperties().UnicastAddresses)
+                    {
+                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            return ip.Address.ToString();
+                        }
+                    }
+                }
             }
-            return "Local IP Address Not Found!";
+            return "";
         }
     }
 }
