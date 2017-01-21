@@ -1,0 +1,131 @@
+﻿<controls:MetroWindow x:Class="SystemPropertiesChecker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Icon="b.ico"
+        Title="System Properties Checker" Width="500" Height="250"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        ResizeMode="CanMinimize" TitleCharacterCasing="Normal">
+    <!--  RightWindowCommands  -->
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <!-- Reload -->
+            <Button Name="Reload" Click="ReloadClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill"
+                                         Visual="{StaticResource appbar_reset}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="reload" />
+                </StackPanel>
+            </Button>
+            <!--  Settings  -->
+            <Button Click="ToggleSettingsFlyoutClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="settings" />
+                </StackPanel>
+            </Button>
+
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <!-- TaskbarItemInfo -->
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo />
+    </Window.TaskbarItemInfo>
+    <!-- Grid -->
+    <Grid>
+        <!-- Tabs -->
+        <TabControl Name="Tab" HorizontalContentAlignment="Center">
+            <!-- Basic -->
+            <TabItem Name="BasicTab" Header="Basic">
+                <Grid>
+                    <TextBox Name="CurrentVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
+                </Grid>
+            </TabItem>
+            <!-- Windows -->
+            <TabItem Name="WindowsTab" Header="Windows">
+                <Grid>
+                    <TextBox Name="WindowsVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
+                </Grid>
+            </TabItem>
+            <!-- .net -->
+            <TabItem Name="DotNetTab" Header=".Net">
+                <Grid>
+                    <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
+                </Grid>
+            </TabItem>
+            <!-- Other -->
+            <TabItem Name="OtherTab" Header="Other">
+                <Grid>
+                    <TextBox Name="Other" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
+                </Grid>
+            </TabItem>
+            <!-- Domain -->
+            <TabItem Name="DomainTab" Header="Domain" Visibility="Hidden">
+                <Grid>
+                    <TextBox Name="DomainInformation" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center"
+                             HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+    <!--  Flyouts  -->
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <!--  Settings Flyout  -->
+            <controls:Flyout Name="SettingsFlyout" Width="250" AnimateOnPositionChange="True" AnimateOpacity="True" Header="settings" Position="Right" Theme="Accent">
+                <StackPanel>
+                    <!-- Theme -->
+                    <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
+                        <Label Width="50" Margin="0,5,0,0" HorizontalAlignment="Left"
+                               VerticalAlignment="Top" Content="Theme" />
+                        <controls:ToggleSwitch Name="ThemeSwitch" Margin="10,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12" IsCheckedChanged="Theme"
+                                               OnSwitchBrush="{DynamicResource AccentColorBrush}" OnLabel="Dark"
+                                               OffSwitchBrush="{DynamicResource AccentColorBrush}" OffLabel="Light" />
+                    </StackPanel>
+                    <!-- Accent -->
+                    <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
+                        <Label Width="50" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Accent:" />
+                        <ComboBox Name="Accent" Width="165" Margin="10,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="AccentOnSelectionChanged" />
+                    </StackPanel>
+                    <!-- Save Style -->
+                    <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
+                        <Button Name="SaveStyle" Width="165" Margin="60,5,0,0" Click="SaveStyleClick">
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="16" Height="16" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_save}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="save style" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <!-- Horizontal Line -->
+                    <StackPanel Margin="0,10,0,0" Orientation="Vertical">
+                        <Rectangle Width="220" VerticalAlignment="Stretch" Stroke="{DynamicResource AccentColorBrush}" />
+                    </StackPanel>
+                    <!-- Build / Linker Time -->
+                    <StackPanel Orientation="Horizontal">
+                        <Label Width="50" Margin="10,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Build" />
+                        <Label Width="310" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Name="LinkerTime" />
+                    </StackPanel>
+                </StackPanel>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+</controls:MetroWindow>
