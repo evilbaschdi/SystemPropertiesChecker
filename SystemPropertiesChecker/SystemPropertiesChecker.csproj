@@ -191,9 +191,6 @@
     <Content Include="b.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="b.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="b_150.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
