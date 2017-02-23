@@ -37,7 +37,7 @@ namespace SystemPropertiesChecker.Internal
                 {
                     var nextSet = _passwordExpirationDate.ValueFor(_windowsVersionInformation.Value.Domain).PasswordExpirationDate;
                     var dif = nextSet - DateTime.Now;
-                    return dif.Days < 10 && nextSet.Year != 1970 ? $"{dif.Days} days and {dif.Hours} hours." : "";
+                    return dif.Days < 10 && dif.Days > -50000 && nextSet.Year != 1970 ? $"{dif.Days} days and {dif.Hours} hours." : "";
                 }
                 return "";
             }

@@ -143,7 +143,7 @@ namespace SystemPropertiesChecker.Internal
                    new KeyValuePair<int, string>(394254, ".Net Framework 4.6.1"),
                    new KeyValuePair<int, string>(394747, ".Net Framework 4.6.2 Preview"),
                    new KeyValuePair<int, string>(394802, ".Net Framework 4.6.2"),
-                   new KeyValuePair<int, string>(394807, ".Net Framework 4.6.2 Successor")
+                   new KeyValuePair<int, string>(394807, "vNext")
                };
     }
 }
