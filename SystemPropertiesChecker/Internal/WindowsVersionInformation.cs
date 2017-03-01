@@ -103,21 +103,14 @@ namespace SystemPropertiesChecker.Internal
         {
             var win32Computersystem = "SELECT * FROM Win32_ComputerSystem";
             var managementObjectSearcher = new ManagementObjectSearcher(win32Computersystem);
-            var virtualSystem = false;
             var info = managementObjectSearcher.Get();
             var manufacturer = string.Empty;
             foreach (var item in info)
             {
-                manufacturer = item["Manufacturer"].ToString().ToLower();
-
-                if ((manufacturer == "microsoft corporation" && item["Model"].ToString().ToUpperInvariant().Contains("VIRTUAL"))
-                    || manufacturer.Contains("vmware")
-                    || item["Model"].ToString() == "VirtualBox")
-                {
-                    virtualSystem = true;
-                }
+                manufacturer = item["Manufacturer"].ToString();
+                break;
             }
-            return new KeyValuePair<bool, string>(virtualSystem, manufacturer);
+            return new KeyValuePair<bool, string>(true, manufacturer);
         }
     }
 }

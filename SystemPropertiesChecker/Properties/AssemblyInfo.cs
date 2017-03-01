@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("SystemPropertiesChecker")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("evil.baschdi")]
 [assembly: AssemblyProduct("SystemPropertiesChecker")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("Copyright © evil.baschdi 2015 - 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

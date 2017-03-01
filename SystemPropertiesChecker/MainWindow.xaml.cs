@@ -30,7 +30,7 @@ namespace SystemPropertiesChecker
         private string _otherText;
         private string _passwordExpirationMessage;
 
-        //private readonly UnityContainer _coreContainer;
+        //private read only UnityContainer _coreContainer;
 
         /// <summary>
         ///     MainWindow
@@ -104,7 +104,7 @@ namespace SystemPropertiesChecker
             //DomainTab.Visibility = (!string.IsNullOrWhiteSpace(temp)).ToVisibility();
         }
 
-        #region Flyout
+        #region Fly-out
 
         private void ToggleSettingsFlyoutClick(object sender, RoutedEventArgs e)
         {
@@ -137,7 +137,7 @@ namespace SystemPropertiesChecker
             }
         }
 
-        #endregion Flyout
+        #endregion Fly-out
 
         #region MetroStyle
 

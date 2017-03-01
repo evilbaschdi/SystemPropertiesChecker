@@ -18,13 +18,13 @@ namespace SystemPropertiesChecker.Internal
             get
             {
                 var psVersion = "0";
-                if (PowerShell3Exists())
+                if (PowerShellExists(3))
                 {
-                    psVersion = GetPowerShell3Version();
+                    psVersion = GetPowerShellVersion(3);
                 }
-                else if (PowerShell1Exists())
+                else if (PowerShellExists(1))
                 {
-                    psVersion = GetPowerShell1Version();
+                    psVersion = GetPowerShellVersion(1);
                 }
 
 
@@ -60,9 +60,9 @@ namespace SystemPropertiesChecker.Internal
             return $"{versInfo.FileMajorPart}.{versInfo.FileMinorPart}.{versInfo.FileBuildPart}.{versInfo.FilePrivatePart}";
         }
 
-        private string GetPowerShell3Version()
+        private string GetPowerShellVersion(int version)
         {
-            var key = @"SOFTWARE\Microsoft\PowerShell\3\PowerShellEngine";
+            var key = $@"SOFTWARE\Microsoft\PowerShell\{version}\PowerShellEngine";
             var subKey = Registry.LocalMachine.OpenSubKey(key, false);
             if (subKey == null)
             {
@@ -72,27 +72,9 @@ namespace SystemPropertiesChecker.Internal
             return value.Last().Trim();
         }
 
-        private string GetPowerShell1Version()
+        private bool PowerShellExists(int version)
         {
-            var key = @"SOFTWARE\Microsoft\PowerShell\1\PowerShellEngine";
-            var subKey = Registry.LocalMachine.OpenSubKey(key, false);
-            if (subKey == null)
-            {
-                return "0";
-            }
-            var value = subKey.GetValue("PSCompatibleVersion").ToString().Split(',');
-            return value.Last().Trim();
-        }
-
-        private bool PowerShell1Exists()
-        {
-            var value = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\1", "Install", null).ToString();
-            return value.Equals("1");
-        }
-
-        private bool PowerShell3Exists()
-        {
-            var value = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\3", "Install", null).ToString();
+            var value = Registry.GetValue($@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\{version}", "Install", null).ToString();
             return value.Equals("1");
         }
     }

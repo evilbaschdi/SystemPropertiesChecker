@@ -43,10 +43,8 @@ namespace SystemPropertiesChecker.Internal
                 }
                 sb.Append($"Current IP: {GetLocalIpAddress()}{Environment.NewLine}");
                 sb.Append($"Productname: {values.ProductName}{values.CsdVersion}{values.ReleaseId}{Environment.NewLine}");
-                sb.Append($"System type: {values.Bits}{Environment.NewLine}");
-                sb.Append(values.Virtual
-                    ? $"Virtual system: {values.Manufacturer}"
-                    : $"Virtual system: -");
+                sb.Append($"Architecture: {values.Bits}{Environment.NewLine}");
+                sb.Append($"Manufacturer: {values.Manufacturer}");
 
                 return sb.ToString();
             }
