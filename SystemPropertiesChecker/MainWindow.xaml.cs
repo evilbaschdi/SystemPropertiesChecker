@@ -83,6 +83,7 @@ namespace SystemPropertiesChecker
         private void RunVersionChecks()
         {
             var versionContainer = new UnityContainer();
+            versionContainer.RegisterType<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
             versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
             versionContainer.RegisterType<IRegistryValue, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
             versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();

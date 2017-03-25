@@ -74,8 +74,8 @@ namespace SystemPropertiesChecker.Internal
 
         private bool PowerShellExists(int version)
         {
-            var value = Registry.GetValue($@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\{version}", "Install", null).ToString();
-            return value.Equals("1");
+            var value = Registry.GetValue($@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\{version}", "Install", null)?.ToString();
+            return !string.IsNullOrWhiteSpace(value) && value.Equals("1");
         }
     }
 }

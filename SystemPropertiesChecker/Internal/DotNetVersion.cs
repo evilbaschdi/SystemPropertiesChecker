@@ -10,15 +10,22 @@ namespace SystemPropertiesChecker.Internal
     /// </summary>
     public class DotNetVersion : IDotNetVersion
     {
+        private readonly IDotNetVersionReleaseKeyMappingList _dotNetVersionReleaseKeyMappingList;
         private List<string> _dotNetVersionList;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
-        public DotNetVersion()
+        public DotNetVersion(IDotNetVersionReleaseKeyMappingList dotNetVersionReleaseKeyMappingList)
         {
+            if (dotNetVersionReleaseKeyMappingList == null)
+            {
+                throw new ArgumentNullException(nameof(dotNetVersionReleaseKeyMappingList));
+            }
+            _dotNetVersionReleaseKeyMappingList = dotNetVersionReleaseKeyMappingList;
             GetNetFrameworks();
         }
+
 
         /// <summary>
         ///     Contains a list of current installed dot net versions.
@@ -67,7 +74,7 @@ namespace SystemPropertiesChecker.Internal
                         // .Net 2.0, 3.0, 3.5
                         if (!string.IsNullOrEmpty(name))
                         {
-                            _dotNetVersionList.Add(install != "" && install == "1" && sp != ""
+                            _dotNetVersionList.Add(install != "" && install.Equals("1") && sp != ""
                                 ? $"{versionKeyName} | SP{sp} | {name}"
                                 : $"{versionKeyName} | {name}");
                         }
@@ -89,7 +96,7 @@ namespace SystemPropertiesChecker.Internal
                                     install = subKey.GetValue("Install", "").ToString();
                                 }
 
-                                if (!string.IsNullOrEmpty(install) && install == "1")
+                                if (!string.IsNullOrEmpty(install) && install.Equals("1"))
                                 {
                                     _dotNetVersionList.Add(!string.IsNullOrEmpty(sp)
                                         ? $"{subKeyName} | SP{sp} | {name}"
@@ -127,25 +134,13 @@ namespace SystemPropertiesChecker.Internal
         // the framework to ensure your app works the same.
         private string CheckFor45DotVersion(int releaseKey)
         {
-            var value = DotNetVersionReleaseKeyList().OrderByDescending(key => key.Key).FirstOrDefault(key => releaseKey >= key.Key).Value;
+            if (releaseKey <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(releaseKey));
+            }
+            //releaseKey = 460900;
+            var value = _dotNetVersionReleaseKeyMappingList.ValueFor(releaseKey);
             return !string.IsNullOrWhiteSpace(value) ? $"{value} (Release key: '{releaseKey}')" : "No 4.5 or later version detected";
         }
-
-        private IEnumerable<KeyValuePair<int, string>> DotNetVersionReleaseKeyList()
-            => new List<KeyValuePair<int, string>>
-               {
-                   new KeyValuePair<int, string>(378389, ".NET Framework 4.5"),
-                   new KeyValuePair<int, string>(378675, ".Net Framework 4.5.1"),
-                   new KeyValuePair<int, string>(379893, ".Net Framework 4.5.2"),
-                   new KeyValuePair<int, string>(381029, ".Net Framework 4.6 Preview"),
-                   new KeyValuePair<int, string>(393273, ".Net Framework 4.6 RC"),
-                   new KeyValuePair<int, string>(393295, ".Net Framework 4.6"),
-                   new KeyValuePair<int, string>(394254, ".Net Framework 4.6.1"),
-                   new KeyValuePair<int, string>(394747, ".Net Framework 4.6.2 Preview"),
-                   new KeyValuePair<int, string>(394802, ".Net Framework 4.6.2"),
-                   //460798
-                   new KeyValuePair<int, string>(460798, ".Net Framework 4.7"),
-                   new KeyValuePair<int, string>(460800, "vNext")
-               };
     }
 }
