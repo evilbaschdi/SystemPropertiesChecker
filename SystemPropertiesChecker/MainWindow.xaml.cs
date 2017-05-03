@@ -24,7 +24,7 @@ namespace SystemPropertiesChecker
     {
         private readonly IMetroStyle _style;
         private readonly IDialogService _dialogService;
-        private int _executionCount;
+
         private int _overrideProtection;
         private string _currentVersionText;
         private string _windowsVersionText;
@@ -88,7 +88,7 @@ namespace SystemPropertiesChecker
                           };
 
             MetroDialogOptions = options;
-            _controller = await this.ShowProgressAsync("Loading...", "searching information", true, options);
+            _controller = await this.ShowProgressAsync("Loading...", "Checking Properties", true, options);
             _controller.SetIndeterminate();
             _controller.Canceled += ControllerCanceled;
 
@@ -103,6 +103,8 @@ namespace SystemPropertiesChecker
             WindowsVersion.Text = _windowsVersionText;
             DotNetVersion.Text = _dotNetVersionText;
             Other.Text = _otherText;
+
+            _overrideProtection = 1;
 
             if (!string.IsNullOrWhiteSpace(_passwordExpirationMessage))
             {
