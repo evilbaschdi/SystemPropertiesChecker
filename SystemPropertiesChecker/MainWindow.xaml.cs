@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Shell;
 using SystemPropertiesChecker.Core;
 using SystemPropertiesChecker.Internal;
@@ -10,6 +11,7 @@ using SystemPropertiesChecker.Model;
 using EvilBaschdi.Core.Application;
 using EvilBaschdi.Core.Wpf;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.Unity;
 
 namespace SystemPropertiesChecker
@@ -29,6 +31,9 @@ namespace SystemPropertiesChecker
         private string _dotNetVersionText;
         private string _otherText;
         private string _passwordExpirationMessage;
+        private bool _windowShown;
+        private ProgressDialogController _controller;
+        private Task _task;
 
         //private read only UnityContainer _coreContainer;
 
@@ -47,20 +52,53 @@ namespace SystemPropertiesChecker
             _dialogService = new DialogService(this);
 
             LinkerTime.Content = linkerTime.Value;
-            LoadAsync();
+            //LoadAsync();
         }
 
-        private async void LoadAsync()
+        /// <summary>
+        ///     Executing code when window is shown.
+        /// </summary>
+        /// <param name="e"></param>
+        protected override async void OnContentRendered(EventArgs e)
         {
-            var task = Task.Factory.StartNew(RunVersionChecks);
+            base.OnContentRendered(e);
 
-            _executionCount++;
-            _overrideProtection = 1;
-            if (_executionCount == 1)
+            if (_windowShown)
             {
-                await task;
+                return;
             }
 
+            _windowShown = true;
+
+            await ConfigureController();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public async Task ConfigureController()
+        {
+            TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
+
+            Cursor = Cursors.Wait;
+
+            var options = new MetroDialogSettings
+                          {
+                              ColorScheme = MetroDialogColorScheme.Accented
+                          };
+
+            MetroDialogOptions = options;
+            _controller = await this.ShowProgressAsync("Loading...", "searching information", true, options);
+            _controller.SetIndeterminate();
+            _controller.Canceled += ControllerCanceled;
+
+            _task = Task.Factory.StartNew(RunVersionChecks);
+            await _task;
+            _task.GetAwaiter().OnCompleted(TaskCompleted);
+        }
+
+        private void TaskCompleted()
+        {
             CurrentVersion.Text = _currentVersionText;
             WindowsVersion.Text = _windowsVersionText;
             DotNetVersion.Text = _dotNetVersionText;
@@ -68,16 +106,36 @@ namespace SystemPropertiesChecker
 
             if (!string.IsNullOrWhiteSpace(_passwordExpirationMessage))
             {
-                await _dialogService.ShowMessage("Password Expiration", _passwordExpirationMessage);
+                _dialogService.ShowMessage("Password Expiration", _passwordExpirationMessage);
                 TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
                 TaskbarItemInfo.ProgressValue = 1;
             }
             DomainTab.Visibility = Visibility.Hidden;
+            _controller.CloseAsync();
+            _controller.Closed += ControllerClosed;
+        }
+
+        private void ControllerClosed(object sender, EventArgs e)
+        {
+            TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
+            TaskbarItemInfo.ProgressValue = 1;
+            Cursor = Cursors.Arrow;
+        }
+
+        private void ControllerCanceled(object sender, EventArgs e)
+        {
+            _controller.CloseAsync();
+            _controller.Closed += ControllerClosed;
         }
 
         private void ReloadClick(object sender, RoutedEventArgs e)
         {
-            LoadAsync();
+            ReloadAsync();
+        }
+
+        private async void ReloadAsync()
+        {
+            await ConfigureController();
         }
 
         private void RunVersionChecks()
