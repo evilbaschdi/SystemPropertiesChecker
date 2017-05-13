@@ -159,6 +159,7 @@ namespace SystemPropertiesChecker
             _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
             _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
             _passwordExpirationMessage = versionContainer.Resolve<IPasswordExpirationMessage>().Value;
+
             versionContainer.Dispose();
             //var temp = string.Empty;
             //DomainInformation.Text = temp;
@@ -204,25 +205,15 @@ namespace SystemPropertiesChecker
 
         private void SaveStyleClick(object sender, RoutedEventArgs e)
         {
-            if (_overrideProtection == 0)
+            if (_overrideProtection != 0)
             {
-                return;
+                _style.SaveStyle();
             }
-            _style.SaveStyle();
         }
 
         private void Theme(object sender, EventArgs e)
         {
-            if (_overrideProtection == 0)
-            {
-                return;
-            }
-            var routedEventArgs = e as RoutedEventArgs;
-            if (routedEventArgs != null)
-            {
-                _style.SetTheme(sender, routedEventArgs);
-            }
-            else
+            if (_overrideProtection != 0)
             {
                 _style.SetTheme(sender);
             }
@@ -230,11 +221,10 @@ namespace SystemPropertiesChecker
 
         private void AccentOnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_overrideProtection == 0)
+            if (_overrideProtection != 0)
             {
-                return;
+                _style.SetAccent(sender, e);
             }
-            _style.SetAccent(sender, e);
         }
 
         #endregion MetroStyle
