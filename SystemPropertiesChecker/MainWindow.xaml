@@ -7,8 +7,9 @@
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       mc:Ignorable="d" WindowStartupLocation="CenterScreen" Icon="b.ico"
                       Title="System Properties Checker" Width="500" Height="250"
-                      GlowBrush="{DynamicResource AccentColorBrush}"
-                      ResizeMode="CanMinimize" TitleCharacterCasing="Normal">
+                      ResizeMode="CanMinimize" GlowBrush="{DynamicResource AccentColorBrush}"
+                      TitleCharacterCasing="Normal">
+
     <!--  RightWindowCommands  -->
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
@@ -26,7 +27,6 @@
                     <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="settings" />
                 </StackPanel>
             </Button>
-
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
     <!-- TaskbarItemInfo -->
@@ -36,41 +36,68 @@
     <!-- Grid -->
     <Grid>
         <!-- Tabs -->
-        <TabControl Name="Tab" HorizontalContentAlignment="Center">
+        <TabControl Name="SystemPropertiesTab" HorizontalContentAlignment="Center" TabStripPlacement="Left" controls:TabControlHelper.Underlined="TabPanel" >
             <!-- Basic -->
-            <TabItem Name="BasicTab" Header="Basic">
-                <Grid>
-                    <TextBox Name="CurrentVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
-                             VerticalAlignment="Center" />
-                </Grid>
+            <TabItem Name="BasicTab" ToolTip="Basic">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="InformationOutline" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <TextBox Name="CurrentVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" />
             </TabItem>
             <!-- Windows -->
-            <TabItem Name="WindowsTab" Header="Windows">
-                <Grid>
-                    <TextBox Name="WindowsVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
-                             VerticalAlignment="Center" />
-                </Grid>
+            <TabItem Name="WindowsTab" ToolTip="Windows">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Windows" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <TextBox Name="WindowsVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" />
             </TabItem>
             <!-- .net -->
-            <TabItem Name="DotNetTab" Header=".Net">
-                <Grid>
-                    <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
-                             VerticalAlignment="Center" />
-                </Grid>
+            <TabItem Name="DotNetTab" ToolTip=".Net">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Visualstudio" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" />
+
             </TabItem>
             <!-- Other -->
-            <TabItem Name="OtherTab" Header="Other">
-                <Grid>
-                    <TextBox Name="Other" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
-                             VerticalAlignment="Center" />
-                </Grid>
+            <TabItem Name="OtherTab" ToolTip="Other">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="DotsHorizontal" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <TextBox Name="Other" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" />
+
             </TabItem>
             <!-- Domain -->
-            <TabItem Name="DomainTab" Header="Domain" Visibility="Hidden">
-                <Grid>
-                    <TextBox Name="DomainInformation" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center"
-                             HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Grid>
+            <TabItem Name="DomainTab" ToolTip="Domain" Visibility="Hidden">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Domain" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <TextBox Name="DomainInformation" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" />
             </TabItem>
         </TabControl>
     </Grid>

@@ -8,6 +8,7 @@ using System.Windows.Shell;
 using SystemPropertiesChecker.Core;
 using SystemPropertiesChecker.Internal;
 using SystemPropertiesChecker.Model;
+using SystemPropertiesChecker.Properties;
 using EvilBaschdi.Core.Application;
 using EvilBaschdi.Core.Wpf;
 using MahApps.Metro.Controls;
@@ -22,18 +23,18 @@ namespace SystemPropertiesChecker
     // ReSharper disable once RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
     {
-        private readonly IMetroStyle _style;
         private readonly IDialogService _dialogService;
-
-        private int _overrideProtection;
+        private readonly IMetroStyle _style;
+        private ProgressDialogController _controller;
         private string _currentVersionText;
-        private string _windowsVersionText;
         private string _dotNetVersionText;
         private string _otherText;
+
+        private int _overrideProtection;
         private string _passwordExpirationMessage;
-        private bool _windowShown;
-        private ProgressDialogController _controller;
         private Task _task;
+        private bool _windowShown;
+        private string _windowsVersionText;
 
         //private read only UnityContainer _coreContainer;
 
@@ -43,7 +44,7 @@ namespace SystemPropertiesChecker
         public MainWindow()
         {
             InitializeComponent();
-            ISettings coreSettings = new CoreSettings(Properties.Settings.Default);
+            ISettings coreSettings = new CoreSettings(Settings.Default);
             IThemeManagerHelper themeManagerHelper = new ThemeManagerHelper();
             ILinkerTime linkerTime = new LinkerTime();
             _style = new MetroStyle(this, Accent, ThemeSwitch, coreSettings, themeManagerHelper);
@@ -52,6 +53,7 @@ namespace SystemPropertiesChecker
             _dialogService = new DialogService(this);
 
             LinkerTime.Content = linkerTime.Value;
+
             //LoadAsync();
         }
 
@@ -70,13 +72,13 @@ namespace SystemPropertiesChecker
 
             _windowShown = true;
 
-            await ConfigureController();
+            await ConfigureControllerAsync().ConfigureAwait(true);
         }
 
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        public async Task ConfigureController()
+        public async Task ConfigureControllerAsync()
         {
             TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
 
@@ -88,12 +90,12 @@ namespace SystemPropertiesChecker
                           };
 
             MetroDialogOptions = options;
-            _controller = await this.ShowProgressAsync("Loading...", "Checking Properties", true, options);
+            _controller = await this.ShowProgressAsync("Loading...", "Checking Properties", true, options).ConfigureAwait(true);
             _controller.SetIndeterminate();
             _controller.Canceled += ControllerCanceled;
 
             _task = Task.Factory.StartNew(RunVersionChecks);
-            await _task;
+            await _task.ConfigureAwait(true);
             _task.GetAwaiter().OnCompleted(TaskCompleted);
         }
 
@@ -137,7 +139,8 @@ namespace SystemPropertiesChecker
 
         private async void ReloadAsync()
         {
-            await ConfigureController();
+            // ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
+            await ConfigureControllerAsync().ConfigureAwait(true);
         }
 
         private void RunVersionChecks()
