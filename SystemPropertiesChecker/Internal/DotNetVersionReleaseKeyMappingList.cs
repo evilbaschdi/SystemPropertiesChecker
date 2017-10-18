@@ -6,6 +6,7 @@ namespace SystemPropertiesChecker.Internal
 {
     /// <summary>
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class DotNetVersionReleaseKeyMappingList : IDotNetVersionReleaseKeyMappingList
     {
         /// <summary>

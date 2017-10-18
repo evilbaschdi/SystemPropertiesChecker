@@ -5,6 +5,7 @@ namespace SystemPropertiesChecker.Internal
 {
     /// <summary>
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class WindowsVersionText : IWindowsVersionText
     {
         private readonly IWindowsVersionInformation _windowsVersionInformation;

@@ -29,7 +29,6 @@ namespace SystemPropertiesChecker
         private string _currentVersionText;
         private string _dotNetVersionText;
         private string _otherText;
-
         private int _overrideProtection;
         private string _passwordExpirationMessage;
         private Task _task;
@@ -38,6 +37,7 @@ namespace SystemPropertiesChecker
 
         //private read only UnityContainer _coreContainer;
 
+        /// <inheritdoc />
         /// <summary>
         ///     MainWindow
         /// </summary>
@@ -57,6 +57,7 @@ namespace SystemPropertiesChecker
             //LoadAsync();
         }
 
+        /// <inheritdoc />
         /// <summary>
         ///     Executing code when window is shown.
         /// </summary>
@@ -78,7 +79,7 @@ namespace SystemPropertiesChecker
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        public async Task ConfigureControllerAsync()
+        private async Task ConfigureControllerAsync()
         {
             TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Indeterminate;
 

@@ -3,11 +3,15 @@ namespace SystemPropertiesChecker.Model
     /// <summary>
     ///     Helper interface.
     /// </summary>
+    // ReSharper disable UnusedMember.Global
+    // ReSharper disable UnusedMemberInSuper.Global
     public interface IWindowsVersionInformationModel
     {
         /// <summary>
         /// </summary>
+
         string Bits { get; set; }
+
 
         /// <summary>
         /// </summary>
@@ -69,4 +73,6 @@ namespace SystemPropertiesChecker.Model
         /// </summary>
         string Ubr { get; set; }
     }
+    // ReSharper restore UnusedMemberInSuper.Global
+    // ReSharper restore UnusedMember.Global
 }

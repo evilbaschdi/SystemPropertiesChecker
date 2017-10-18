@@ -7,6 +7,7 @@ namespace SystemPropertiesChecker.Internal
 {
     /// <summary>
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class PasswordExpirationDate : IPasswordExpirationDate
     {
         /// <inheritdoc />
@@ -23,19 +24,15 @@ namespace SystemPropertiesChecker.Internal
                         ds.Filter = $"(sAMAccountName={samAccountName})";
                         ds.SizeLimit = 10;
                         var sr = ds.FindOne();
-
-                        if (sr != null)
-                        {
-                            var de = sr.GetDirectoryEntry();
-                            var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
-                            var dateString = nextSet.ToString("g");
-                            return new PasswordExpirationModel
-                                   {
-                                       DateString = nextSet.Year == 1970 ? "-" : dateString,
-                                       UserName = samAccountName,
-                                       PasswordExpirationDate = nextSet
-                                   };
-                        }
+                        var de = sr.GetDirectoryEntry();
+                        var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
+                        var dateString = nextSet.ToString("g");
+                        return new PasswordExpirationModel
+                               {
+                                   DateString = nextSet.Year == 1970 ? "-" : dateString,
+                                   UserName = samAccountName,
+                                   PasswordExpirationDate = nextSet
+                               };
                     }
                 }
             }

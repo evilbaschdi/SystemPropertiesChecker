@@ -12,9 +12,12 @@
 
     <!--  RightWindowCommands  -->
     <controls:MetroWindow.RightWindowCommands>
+        <!-- ReSharper disable UnusedMember.Global -->
         <controls:WindowCommands>
             <!-- Reload -->
+
             <Button Name="Reload" Click="ReloadClick">
+
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Kind="Reload" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="reload" />
@@ -28,6 +31,7 @@
                 </StackPanel>
             </Button>
         </controls:WindowCommands>
+        <!-- ReSharper restore UnusedMember.Global -->
     </controls:MetroWindow.RightWindowCommands>
     <!-- TaskbarItemInfo -->
     <Window.TaskbarItemInfo>
@@ -35,8 +39,9 @@
     </Window.TaskbarItemInfo>
     <!-- Grid -->
     <Grid>
+        <!-- ReSharper disable UnusedMember.Global -->
         <!-- Tabs -->
-        <TabControl Name="SystemPropertiesTab" HorizontalContentAlignment="Center" TabStripPlacement="Left" controls:TabControlHelper.Underlined="TabPanel" >
+        <TabControl Name="SystemPropertiesTab" HorizontalContentAlignment="Center" TabStripPlacement="Left" controls:TabControlHelper.Underlined="TabPanel">
             <!-- Basic -->
             <TabItem Name="BasicTab" ToolTip="Basic">
                 <TabItem.HeaderTemplate>
@@ -100,9 +105,12 @@
                          VerticalAlignment="Center" />
             </TabItem>
         </TabControl>
+        <!-- ReSharper restore UnusedMember.Global -->
     </Grid>
+
     <!--  Fly-outs  -->
     <controls:MetroWindow.Flyouts>
+        <!-- ReSharper disable UnusedMember.Global -->
         <controls:FlyoutsControl>
             <!--  Settings Fly-out  -->
             <controls:Flyout Name="SettingsFlyout" Width="250" AnimateOnPositionChange="True" AnimateOpacity="True" Header="settings" Position="Right" Theme="Accent">
@@ -141,5 +149,6 @@
                 </StackPanel>
             </controls:Flyout>
         </controls:FlyoutsControl>
+        <!-- ReSharper restore UnusedMember.Global -->
     </controls:MetroWindow.Flyouts>
 </controls:MetroWindow>

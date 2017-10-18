@@ -8,6 +8,7 @@ namespace SystemPropertiesChecker.Internal
     /// <summary>
     ///     Class that returns a list of current installed dot net versions.
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class DotNetVersion : IDotNetVersion
     {
         private readonly IDotNetVersionReleaseKeyMappingList _dotNetVersionReleaseKeyMappingList;
@@ -49,8 +50,7 @@ namespace SystemPropertiesChecker.Internal
         {
             // Opens the registry key for the .NET Framework entry.
             using (var ndpKey =
-                RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "").
-                            OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
+                RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "").OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
             {
                 // As an alternative, if you know the computers you will query are running .NET Framework 4.5
                 // or later, you can use:

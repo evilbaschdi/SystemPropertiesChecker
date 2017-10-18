@@ -6,6 +6,7 @@ namespace SystemPropertiesChecker.Internal
     /// <summary>
     ///     Class that provides RegisryValues from WindowsNT CurrentVersion.
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class HklmSoftwareMicrosoftWindowsNtCurrentVersion : IRegistryValue
     {
         /// <summary>

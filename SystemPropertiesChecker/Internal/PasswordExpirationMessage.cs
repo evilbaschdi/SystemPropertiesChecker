@@ -4,6 +4,7 @@ namespace SystemPropertiesChecker.Internal
 {
     /// <summary>
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class PasswordExpirationMessage : IPasswordExpirationMessage
     {
         private readonly IWindowsVersionInformation _windowsVersionInformation;

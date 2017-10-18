@@ -8,6 +8,7 @@ namespace SystemPropertiesChecker.Internal
     /// <summary>
     ///     Class that provides values about the current windows version.
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class WindowsVersionInformation : IWindowsVersionInformation
     {
         private readonly IRegistryValue _registryValue;
@@ -101,7 +102,7 @@ namespace SystemPropertiesChecker.Internal
 
         private KeyValuePair<bool, string> VirtualSystem()
         {
-            var win32Computersystem = "SELECT * FROM Win32_ComputerSystem";
+            const string win32Computersystem = "SELECT * FROM Win32_ComputerSystem";
             var managementObjectSearcher = new ManagementObjectSearcher(win32Computersystem);
             var info = managementObjectSearcher.Get();
             var manufacturer = string.Empty;

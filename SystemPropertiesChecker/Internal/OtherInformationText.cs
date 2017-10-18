@@ -8,6 +8,7 @@ namespace SystemPropertiesChecker.Internal
 {
     /// <summary>
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class OtherInformationText : IOtherInformationText
     {
         /// <summary>
@@ -34,7 +35,7 @@ namespace SystemPropertiesChecker.Internal
 
         private string GetIEVersion()
         {
-            var key = @"Software\Microsoft\Internet Explorer";
+            const string key = @"Software\Microsoft\Internet Explorer";
             var subKey = Registry.LocalMachine.OpenSubKey(key, false);
             if (subKey == null)
             {

@@ -6,9 +6,11 @@ using System.Text;
 
 namespace SystemPropertiesChecker.Internal
 {
+    /// <inheritdoc />
     /// <summary>
     ///     Class that provides a WindowsVersionInformationStack.
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class CurrentVersionText : ICurrentVersionText
     {
         private readonly IWindowsVersionInformation _windowsVersionInformation;
