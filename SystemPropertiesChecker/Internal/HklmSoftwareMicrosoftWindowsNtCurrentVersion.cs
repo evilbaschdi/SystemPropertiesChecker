@@ -20,7 +20,12 @@ namespace SystemPropertiesChecker.Internal
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            var regPath = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+
+            var bits = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
+
+            RegistryKey localMachine = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, bits);
+            var regPath = localMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+
 
             return regPath?.GetValue(name) != null
                 ? regPath.GetValue(name).ToString()

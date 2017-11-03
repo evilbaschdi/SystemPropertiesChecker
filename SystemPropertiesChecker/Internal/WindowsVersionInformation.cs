@@ -95,7 +95,7 @@ namespace SystemPropertiesChecker.Internal
             }
         }
 
-        private string Bits()
+        private static string Bits()
         {
             return Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
         }
