@@ -17,16 +17,8 @@ namespace SystemPropertiesChecker.Internal
         /// <param name="passwordExpirationDate"></param>
         public PasswordExpirationMessage(IWindowsVersionInformation windowsVersionInformation, IPasswordExpirationDate passwordExpirationDate)
         {
-            if (windowsVersionInformation == null)
-            {
-                throw new ArgumentNullException(nameof(windowsVersionInformation));
-            }
-            if (passwordExpirationDate == null)
-            {
-                throw new ArgumentNullException(nameof(passwordExpirationDate));
-            }
-            _windowsVersionInformation = windowsVersionInformation;
-            _passwordExpirationDate = passwordExpirationDate;
+            _windowsVersionInformation = windowsVersionInformation ?? throw new ArgumentNullException(nameof(windowsVersionInformation));
+            _passwordExpirationDate = passwordExpirationDate ?? throw new ArgumentNullException(nameof(passwordExpirationDate));
         }
 
         /// <inheritdoc />

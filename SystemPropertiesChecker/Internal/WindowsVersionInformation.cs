@@ -24,17 +24,8 @@ namespace SystemPropertiesChecker.Internal
         /// </exception>
         public WindowsVersionInformation(IRegistryValue registryValue, IPasswordExpirationDate passwordExpirationDate)
         {
-            if (registryValue == null)
-            {
-                throw new ArgumentNullException(nameof(registryValue));
-            }
-            if (passwordExpirationDate == null)
-            {
-                throw new ArgumentNullException(nameof(passwordExpirationDate));
-            }
-
-            _registryValue = registryValue;
-            _passwordExpirationDate = passwordExpirationDate;
+            _registryValue = registryValue ?? throw new ArgumentNullException(nameof(registryValue));
+            _passwordExpirationDate = passwordExpirationDate ?? throw new ArgumentNullException(nameof(passwordExpirationDate));
         }
 
         /// <summary>

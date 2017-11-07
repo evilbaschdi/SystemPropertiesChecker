@@ -20,11 +20,7 @@ namespace SystemPropertiesChecker.Internal
         /// </summary>
         public CurrentVersionText(IWindowsVersionInformation windowsVersionInformation)
         {
-            if (windowsVersionInformation == null)
-            {
-                throw new ArgumentNullException(nameof(windowsVersionInformation));
-            }
-            _windowsVersionInformation = windowsVersionInformation;
+            _windowsVersionInformation = windowsVersionInformation ?? throw new ArgumentNullException(nameof(windowsVersionInformation));
         }
 
         /// <summary>

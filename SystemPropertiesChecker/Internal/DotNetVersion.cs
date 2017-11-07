@@ -19,11 +19,7 @@ namespace SystemPropertiesChecker.Internal
         /// </summary>
         public DotNetVersion(IDotNetVersionReleaseKeyMappingList dotNetVersionReleaseKeyMappingList)
         {
-            if (dotNetVersionReleaseKeyMappingList == null)
-            {
-                throw new ArgumentNullException(nameof(dotNetVersionReleaseKeyMappingList));
-            }
-            _dotNetVersionReleaseKeyMappingList = dotNetVersionReleaseKeyMappingList;
+            _dotNetVersionReleaseKeyMappingList = dotNetVersionReleaseKeyMappingList ?? throw new ArgumentNullException(nameof(dotNetVersionReleaseKeyMappingList));
             GetNetFrameworks();
         }
 
