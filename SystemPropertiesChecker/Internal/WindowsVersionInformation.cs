@@ -91,7 +91,7 @@ namespace SystemPropertiesChecker.Internal
             return Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
         }
 
-        private KeyValuePair<bool, string> VirtualSystem()
+        private static KeyValuePair<bool, string> VirtualSystem()
         {
             const string win32Computersystem = "SELECT * FROM Win32_ComputerSystem";
             var managementObjectSearcher = new ManagementObjectSearcher(win32Computersystem);

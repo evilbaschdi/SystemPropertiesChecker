@@ -59,14 +59,15 @@ namespace SystemPropertiesChecker.Internal
             {
                 var adapterProperties = networkInterface.GetIPProperties();
 
-                if (adapterProperties.GatewayAddresses.FirstOrDefault() != null)
+                if (adapterProperties.GatewayAddresses.FirstOrDefault() == null)
                 {
-                    foreach (var ip in networkInterface.GetIPProperties().UnicastAddresses)
+                    continue;
+                }
+                foreach (var ip in networkInterface.GetIPProperties().UnicastAddresses)
+                {
+                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
                     {
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                        {
-                            return ip.Address.ToString();
-                        }
+                        return ip.Address.ToString();
                     }
                 }
             }

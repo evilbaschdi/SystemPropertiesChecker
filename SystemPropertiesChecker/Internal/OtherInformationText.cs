@@ -29,11 +29,11 @@ namespace SystemPropertiesChecker.Internal
                 }
 
 
-                return $"Internet Explorer: {GetIEVersion()}{Environment.NewLine}PowerShell: {psVersion}{Environment.NewLine}Git for Windows: {GetGitVersion()}";
+                return $"Internet Explorer: {GetIeVersion()}{Environment.NewLine}PowerShell: {psVersion}{Environment.NewLine}Git for Windows: {GetGitVersion()}";
             }
         }
 
-        private string GetIEVersion()
+        private static string GetIeVersion()
         {
             const string key = @"Software\Microsoft\Internet Explorer";
             var subKey = Registry.LocalMachine.OpenSubKey(key, false);
@@ -45,7 +45,7 @@ namespace SystemPropertiesChecker.Internal
             return value;
         }
 
-        private string GetGitVersion()
+        private static string GetGitVersion()
         {
             var programFiles = Directory.Exists(@"C:\Program Files\Git\bin")
                 ? @"C:\Program Files\Git\bin"
@@ -61,7 +61,7 @@ namespace SystemPropertiesChecker.Internal
             return $"{versInfo.FileMajorPart}.{versInfo.FileMinorPart}.{versInfo.FileBuildPart}.{versInfo.FilePrivatePart}";
         }
 
-        private string GetPowerShellVersion(int version)
+        private static string GetPowerShellVersion(int version)
         {
             var key = $@"SOFTWARE\Microsoft\PowerShell\{version}\PowerShellEngine";
             var subKey = Registry.LocalMachine.OpenSubKey(key, false);
@@ -73,7 +73,7 @@ namespace SystemPropertiesChecker.Internal
             return value.Last().Trim();
         }
 
-        private bool PowerShellExists(int version)
+        private static bool PowerShellExists(int version)
         {
             var value = Registry.GetValue($@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\{version}", "Install", null)?.ToString();
             return !string.IsNullOrWhiteSpace(value) && value.Equals("1");
