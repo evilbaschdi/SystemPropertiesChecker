@@ -56,6 +56,7 @@ namespace SystemPropertiesChecker.Internal
                 {
                     return;
                 }
+
                 foreach (var versionKeyName in ndpKey.GetSubKeyNames().Where(v => v.StartsWith("v")))
                 {
                     // ReSharper disable once AccessToDisposedClosure
@@ -89,6 +90,7 @@ namespace SystemPropertiesChecker.Internal
                                     {
                                         sp = subKey.GetValue("SP", "").ToString();
                                     }
+
                                     install = subKey.GetValue("Install", "").ToString();
                                 }
 
@@ -120,6 +122,7 @@ namespace SystemPropertiesChecker.Internal
                 {
                     return;
                 }
+
                 var releaseKey = Convert.ToInt32(ndpKey.GetValue("Release"));
                 _dotNetVersionList.Add(CheckFor45DotVersion(releaseKey));
             }
@@ -134,6 +137,7 @@ namespace SystemPropertiesChecker.Internal
             {
                 throw new ArgumentOutOfRangeException(nameof(releaseKey));
             }
+
             //releaseKey = 460900;
             var value = _dotNetVersionReleaseKeyMappingList.ValueFor(releaseKey);
             return !string.IsNullOrWhiteSpace(value) ? $"{value} (Release key: '{releaseKey}')" : "No 4.5 or later version detected";

@@ -39,6 +39,7 @@ namespace SystemPropertiesChecker.Internal
                 {
                     return _cachedWindowsVersionInformationModel;
                 }
+
                 var bits = Bits();
                 var virtualSystem = VirtualSystem();
                 var domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
@@ -102,6 +103,7 @@ namespace SystemPropertiesChecker.Internal
                 manufacturer = item["Manufacturer"].ToString();
                 break;
             }
+
             return new KeyValuePair<bool, string>(true, manufacturer);
         }
     }

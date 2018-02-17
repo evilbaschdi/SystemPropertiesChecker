@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using System.Reflection;
-using EvilBaschdi.Core.Application;
+using EvilBaschdi.Core.Extensions;
 
 namespace SystemPropertiesChecker.Core
 {

@@ -41,6 +41,7 @@ namespace SystemPropertiesChecker.Internal
             {
                 return "0";
             }
+
             var value = subKey.GetValue("svcVersion").ToString();
             return value;
         }
@@ -57,6 +58,7 @@ namespace SystemPropertiesChecker.Internal
             {
                 return "(not found)";
             }
+
             var versInfo = FileVersionInfo.GetVersionInfo(Path.Combine(programFiles, "git.exe"));
             return $"{versInfo.FileMajorPart}.{versInfo.FileMinorPart}.{versInfo.FileBuildPart}.{versInfo.FilePrivatePart}";
         }
@@ -69,6 +71,7 @@ namespace SystemPropertiesChecker.Internal
             {
                 return "0";
             }
+
             var value = subKey.GetValue("PSCompatibleVersion").ToString().Split(',');
             return value.Last().Trim();
         }

@@ -1,5 +1,5 @@
 ﻿using SystemPropertiesChecker.Model;
-using EvilBaschdi.Core.DotNetExtensions;
+using EvilBaschdi.Core;
 
 namespace SystemPropertiesChecker.Internal
 {

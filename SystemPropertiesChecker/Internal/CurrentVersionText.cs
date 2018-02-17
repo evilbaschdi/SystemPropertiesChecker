@@ -39,6 +39,7 @@ namespace SystemPropertiesChecker.Internal
                     sb.Append($"Domain: {values.Domain}{Environment.NewLine}");
                     sb.Append($"Current user: {values.UserName} | Password expiration date: {values.PasswordExpirationDate}{Environment.NewLine}");
                 }
+
                 sb.Append($"Current IP: {GetLocalIpAddress()}{Environment.NewLine}");
                 sb.Append($"Productname: {values.ProductName}{values.CsdVersion}{values.ReleaseId}{Environment.NewLine}");
                 sb.Append($"Architecture: {values.Bits}{Environment.NewLine}");
@@ -63,6 +64,7 @@ namespace SystemPropertiesChecker.Internal
                 {
                     continue;
                 }
+
                 foreach (var ip in networkInterface.GetIPProperties().UnicastAddresses)
                 {
                     if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
@@ -71,6 +73,7 @@ namespace SystemPropertiesChecker.Internal
                     }
                 }
             }
+
             return "";
         }
     }

@@ -9,8 +9,9 @@ using SystemPropertiesChecker.Core;
 using SystemPropertiesChecker.Internal;
 using SystemPropertiesChecker.Model;
 using SystemPropertiesChecker.Properties;
-using EvilBaschdi.Core.Application;
-using EvilBaschdi.Core.Wpf;
+using EvilBaschdi.CoreExtended;
+using EvilBaschdi.CoreExtended.AppHelpers;
+using EvilBaschdi.CoreExtended.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Unity;
@@ -24,7 +25,7 @@ namespace SystemPropertiesChecker
     public partial class MainWindow : MetroWindow
     {
         private readonly IDialogService _dialogService;
-        private readonly IMetroStyle _style;
+        private readonly IApplicationStyle _applicationStyle;
         private ProgressDialogController _controller;
         private string _currentVersionText;
         private string _dotNetVersionText;
@@ -44,11 +45,12 @@ namespace SystemPropertiesChecker
         public MainWindow()
         {
             InitializeComponent();
-            ISettings coreSettings = new CoreSettings(Settings.Default);
+            IAppSettingsBase applicationSettingsBase = new AppSettingsBase(Settings.Default);
+            IApplicationStyleSettings coreSettings = new ApplicationStyleSettings(applicationSettingsBase);
             IThemeManagerHelper themeManagerHelper = new ThemeManagerHelper();
             ILinkerTime linkerTime = new LinkerTime();
-            _style = new MetroStyle(this, Accent, ThemeSwitch, coreSettings, themeManagerHelper);
-            _style.Load(true);
+            _applicationStyle = new ApplicationStyle(this, Accent, ThemeSwitch, coreSettings, themeManagerHelper);
+            _applicationStyle.Load(true);
 
             _dialogService = new DialogService(this);
 
@@ -115,6 +117,7 @@ namespace SystemPropertiesChecker
                 TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
                 TaskbarItemInfo.ProgressValue = 1;
             }
+
             DomainTab.Visibility = Visibility.Hidden;
             _controller.CloseAsync();
             _controller.Closed += ControllerClosed;
@@ -211,7 +214,7 @@ namespace SystemPropertiesChecker
         {
             if (_overrideProtection != 0)
             {
-                _style.SaveStyle();
+                _applicationStyle.SaveStyle();
             }
         }
 
@@ -219,7 +222,7 @@ namespace SystemPropertiesChecker
         {
             if (_overrideProtection != 0)
             {
-                _style.SetTheme(sender);
+                _applicationStyle.SetTheme(sender);
             }
         }
 
@@ -227,7 +230,7 @@ namespace SystemPropertiesChecker
         {
             if (_overrideProtection != 0)
             {
-                _style.SetAccent(sender, e);
+                _applicationStyle.SetAccent(sender, e);
             }
         }
 

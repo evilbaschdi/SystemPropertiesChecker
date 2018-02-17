@@ -19,7 +19,8 @@ namespace SystemPropertiesChecker.Internal
                 throw new ArgumentOutOfRangeException(nameof(releaseKey));
             }
 
-            var value = ConfigurationManager.AppSettings.AllKeys.OrderByDescending(key => key).FirstOrDefault(key => releaseKey >= Convert.ToInt32(key));
+            var value = ConfigurationManager.AppSettings.AllKeys.Where(key => key.All(char.IsDigit)).OrderByDescending(key => key)
+                                            .FirstOrDefault(key => releaseKey >= Convert.ToInt32(key));
 
             var fullName = ConfigurationManager.AppSettings[value];
             return !string.IsNullOrWhiteSpace(fullName) ? fullName : releaseKey.ToString();
