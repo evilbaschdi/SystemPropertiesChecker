@@ -52,12 +52,44 @@ namespace SystemPropertiesChecker
             _applicationStyle = new ApplicationStyle(this, Accent, ThemeSwitch, coreSettings, themeManagerHelper);
             _applicationStyle.Load(true);
 
+            //_applicationStyle = StyleContainer().Resolve<IApplicationStyle>();
+            _applicationStyle.Load(true);
+
             _dialogService = new DialogService(this);
 
             LinkerTime.Content = linkerTime.Value;
 
             //LoadAsync();
         }
+
+
+        //public UnityContainer StyleContainer()
+        //{
+        //    //IAppSettingsBase applicationSettingsBase = new AppSettingsBase(Settings.Default);
+        //    //IApplicationStyleSettings coreSettings = new ApplicationStyleSettings(applicationSettingsBase);
+        //    //IThemeManagerHelper themeManagerHelper = new ThemeManagerHelper();
+
+        //    //_applicationStyle = new ApplicationStyle(this, Accent, ThemeSwitch, coreSettings, themeManagerHelper);
+
+        //    var styleContainer = new UnityContainer();
+        //    //styleContainer.RegisterInstance(Settings.Default);
+
+        //    var settings = styleContainer.Resolve<Settings>();
+        //    styleContainer.RegisterInstance(settings.Default)
+
+
+        //    styleContainer.RegisterInstance(this);
+        //    styleContainer.RegisterInstance(Accent);
+        //    styleContainer.RegisterInstance(ThemeSwitch);
+
+
+        //    styleContainer.RegisterType<IAppSettingsBase, AppSettingsBase>();
+        //    styleContainer.RegisterType<IApplicationStyleSettings, ApplicationStyleSettings>();
+        //    styleContainer.RegisterType<IThemeManagerHelper, ThemeManagerHelper>();
+        //    styleContainer.RegisterType<IApplicationStyle, ApplicationStyle>();
+
+        //    return styleContainer;
+        //}
 
         /// <inheritdoc />
         /// <summary>
