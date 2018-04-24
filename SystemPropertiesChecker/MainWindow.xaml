@@ -16,15 +16,14 @@
         <controls:WindowCommands>
             <!-- Reload -->
 
-            <Button Name="Reload" Click="ReloadClick">
-
+            <Button Command="{Binding Reload.Command}">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Kind="Reload" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="reload" />
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{Binding Reload.Text}" />
                 </StackPanel>
             </Button>
             <!--  Settings  -->
-            <Button Click="ToggleSettingsFlyoutClick">
+            <Button Command="{Binding ToggleFlyout.Command}">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Kind="Settings" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="settings" />
@@ -52,7 +51,7 @@
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
                 <TextBox Name="CurrentVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
-                         VerticalAlignment="Center" />
+                         VerticalAlignment="Center" Text="{Binding CurrentVersionText}" />
             </TabItem>
             <!-- Windows -->
             <TabItem Name="WindowsTab" ToolTip="Windows">
@@ -64,7 +63,7 @@
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
                 <TextBox Name="WindowsVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
-                         VerticalAlignment="Center" />
+                         VerticalAlignment="Center" Text="{Binding WindowsVersionText}" />
             </TabItem>
             <!-- .net -->
             <TabItem Name="DotNetTab" ToolTip=".Net">
@@ -76,7 +75,7 @@
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
                 <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
-                         VerticalAlignment="Center" />
+                         VerticalAlignment="Center" Text="{Binding DotNetVersionText}" />
 
             </TabItem>
             <!-- Other -->
@@ -89,7 +88,7 @@
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
                 <TextBox Name="Other" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
-                         VerticalAlignment="Center" />
+                         VerticalAlignment="Center" Text="{Binding OtherText}" />
 
             </TabItem>
             <!-- Domain -->
@@ -113,24 +112,27 @@
         <!-- ReSharper disable UnusedMember.Global -->
         <controls:FlyoutsControl>
             <!--  Settings Fly-out  -->
-            <controls:Flyout Name="SettingsFlyout" Width="250" AnimateOnPositionChange="True" AnimateOpacity="True" Header="settings" Position="Right" Theme="Accent">
+            <controls:Flyout Name="SettingsFlyout" Width="250" AnimateOnPositionChange="True" AnimateOpacity="True" Header="settings" Position="Right" Theme="Accent"
+                             IsOpen="{Binding SettingsFlyoutIsOpen}">
                 <StackPanel>
                     <!-- Theme -->
                     <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
                         <Label Width="50" Margin="0,5,0,0" HorizontalAlignment="Left"
                                VerticalAlignment="Top" Content="Theme" />
-                        <controls:ToggleSwitch Name="ThemeSwitch" Margin="10,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12" IsCheckedChanged="Theme"
+                        <controls:ToggleSwitch Name="ThemeSwitch" Margin="10,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12"
+                                               IsChecked="{Binding AppUsesDarkTheme, Mode=TwoWay}" IsEnabled="{Binding AppDoesNotUseSystemStyle, Mode=TwoWay}"
                                                OnSwitchBrush="{DynamicResource AccentColorBrush}" OnLabel="Dark"
                                                OffSwitchBrush="{DynamicResource AccentColorBrush}" OffLabel="Light" />
                     </StackPanel>
                     <!-- Accent -->
                     <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
                         <Label Width="50" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Accent:" />
-                        <ComboBox Name="Accent" Width="165" Margin="10,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="AccentOnSelectionChanged" />
+                        <ComboBox Name="Accent" Width="165" Margin="10,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" SelectedItem="{Binding StyleAccent}"
+                                  ItemsSource="{Binding StyleAccents}" />
                     </StackPanel>
                     <!-- Save Style -->
                     <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
-                        <Button Name="SaveStyle" Width="165" Margin="60,5,0,0" Click="SaveStyleClick">
+                        <Button Name="SaveStyle" Width="165" Margin="60,5,0,0" Command="{Binding SaveStyleSettings.Command}">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconMaterial Kind="ContentSaveSettings" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="save style" />
@@ -144,7 +146,7 @@
                     <!-- Build / Linker Time -->
                     <StackPanel Orientation="Horizontal">
                         <Label Width="50" Margin="10,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Build" />
-                        <Label Width="310" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Name="LinkerTime" />
+                        <Label Width="310" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding LinkerTime}" />
                     </StackPanel>
                 </StackPanel>
             </controls:Flyout>

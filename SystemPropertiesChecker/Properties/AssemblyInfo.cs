@@ -8,9 +8,9 @@ using System.Windows;
 [assembly: AssemblyTitle("SystemPropertiesChecker")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("evil.baschdi")]
+[assembly: AssemblyCompany("evilbaschdi")]
 [assembly: AssemblyProduct("SystemPropertiesChecker")]
-[assembly: AssemblyCopyright("Copyright © evil.baschdi 2015 - 2018")]
+[assembly: AssemblyCopyright("Copyright © evilbaschdi 2015 - 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
