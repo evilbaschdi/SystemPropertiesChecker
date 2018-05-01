@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management;
-using SystemPropertiesChecker.Model;
+using SystemPropertiesChecker.Models;
 
 namespace SystemPropertiesChecker.Internal
 {

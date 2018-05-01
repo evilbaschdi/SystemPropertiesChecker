@@ -61,7 +61,7 @@
     <PackageReference Include="ControlzEx" Version="3.0.2.4" />
     <PackageReference Include="EvilBaschdi.Core" Version="2018.416.22.11" />
     <PackageReference Include="EvilBaschdi.CoreExtended" Version="2018.424.21.15" />
-    <PackageReference Include="MahApps.Metro" Version="1.6.1" />
+    <PackageReference Include="MahApps.Metro" Version="1.6.2" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="2.2.0" />
     <PackageReference Include="Unity" Version="5.8.6" />
   </ItemGroup>
@@ -91,6 +91,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Core\ProcessExtensions.cs" />
+    <Compile Include="Internal\DotNetCoreRuntimes.cs">
+      <DependentUpon>IDotNetCoreRuntimes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\DotNetCoreSdks.cs">
+      <DependentUpon>IDotNetCoreSdks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\DotNetCoreVersion.cs">
+      <DependentUpon>IDotNetCoreVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\IDotNetCoreRuntimes.cs" />
+    <Compile Include="Internal\IDotNetCoreSdks.cs" />
+    <Compile Include="Internal\IDotNetCoreVersion.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -146,12 +159,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\IPasswordExpirationModel.cs" />
-    <Compile Include="Model\IWindowsVersionInformationModel.cs" />
-    <Compile Include="Model\PasswordExpirationModel.cs">
+    <Compile Include="Models\IPasswordExpirationModel.cs" />
+    <Compile Include="Models\IWindowsVersionInformationModel.cs" />
+    <Compile Include="Models\PasswordExpirationModel.cs">
       <DependentUpon>IPasswordExpirationModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\WindowsVersionInformationModel.cs">
+    <Compile Include="Models\WindowsVersionInformationModel.cs">
       <DependentUpon>IWindowsVersionInformationModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

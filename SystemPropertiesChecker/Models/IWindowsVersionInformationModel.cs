@@ -1,4 +1,4 @@
-namespace SystemPropertiesChecker.Model
+namespace SystemPropertiesChecker.Models
 {
     /// <summary>
     ///     Helper interface.

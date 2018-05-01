@@ -1,6 +1,6 @@
 using System;
 
-namespace SystemPropertiesChecker.Model
+namespace SystemPropertiesChecker.Models
 {
     /// <summary>
     /// </summary>

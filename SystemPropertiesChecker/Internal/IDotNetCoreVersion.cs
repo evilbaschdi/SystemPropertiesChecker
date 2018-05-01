@@ -4,8 +4,9 @@ namespace SystemPropertiesChecker.Internal
 {
     /// <inheritdoc />
     /// <summary>
+    ///     Interface for classes that return the current installed version of .net core
     /// </summary>
-    public interface IWindowsVersionText : IValue<string>
+    public interface IDotNetCoreVersion : IValue<string>
     {
     }
 }

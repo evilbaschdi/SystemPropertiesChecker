@@ -1,7 +1,7 @@
 using System;
 using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
-using SystemPropertiesChecker.Model;
+using SystemPropertiesChecker.Models;
 
 namespace SystemPropertiesChecker.Internal
 {

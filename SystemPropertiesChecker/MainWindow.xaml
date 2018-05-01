@@ -34,13 +34,13 @@
     </controls:MetroWindow.RightWindowCommands>
     <!-- TaskbarItemInfo -->
     <Window.TaskbarItemInfo>
-        <TaskbarItemInfo />
+        <TaskbarItemInfo ProgressState="{Binding ProgressState}" ProgressValue="{Binding ProgressValue}" />
     </Window.TaskbarItemInfo>
     <!-- Grid -->
     <Grid>
         <!-- ReSharper disable UnusedMember.Global -->
         <!-- Tabs -->
-        <TabControl Name="SystemPropertiesTab" HorizontalContentAlignment="Center" TabStripPlacement="Left" controls:TabControlHelper.Underlined="TabPanel">
+        <TabControl Name="SystemPropertiesTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Left" controls:TabControlHelper.Underlined="TabPanel">
             <!-- Basic -->
             <TabItem Name="BasicTab" ToolTip="Basic">
                 <TabItem.HeaderTemplate>
@@ -74,9 +74,16 @@
                         </StackPanel>
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
-                <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
-                         VerticalAlignment="Center" Text="{Binding DotNetVersionText}" />
-
+                <TabControl Name="DotNetTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Top" controls:TabControlHelper.Underlined="TabPanel">
+                    <TabItem Name="DotNetFullTab" Header=".net framework" ToolTip=".Net Framework">
+                        <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding DotNetVersionText}" />
+                    </TabItem>
+                    <TabItem Name="DotNetCoreTab" Header=".net core" ToolTip=".Net Core">
+                        <TextBox Name="DotNetCoreVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto" />
+                    </TabItem>
+                </TabControl>
             </TabItem>
             <!-- Other -->
             <TabItem Name="OtherTab" ToolTip="Other">

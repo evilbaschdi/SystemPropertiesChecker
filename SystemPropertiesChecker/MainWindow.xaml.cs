@@ -1,22 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Shell;
-using SystemPropertiesChecker.Core;
-using SystemPropertiesChecker.Internal;
-using SystemPropertiesChecker.Model;
 using SystemPropertiesChecker.Properties;
 using SystemPropertiesChecker.ViewModel;
 using EvilBaschdi.CoreExtended;
 using EvilBaschdi.CoreExtended.AppHelpers;
 using EvilBaschdi.CoreExtended.Metro;
-using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using Unity;
 
 namespace SystemPropertiesChecker
 {
@@ -26,9 +16,9 @@ namespace SystemPropertiesChecker
     // ReSharper disable once RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
     {
+        private readonly IApplicationStyle _applicationStyle;
         private readonly IDialogService _dialogService;
         private readonly MainWindowViewModel _mainWindowViewModel;
-        private readonly IApplicationStyle _applicationStyle;
         private ProgressDialogController _controller;
         private string _currentVersionText;
         private string _dotNetVersionText;
@@ -51,16 +41,11 @@ namespace SystemPropertiesChecker
             IAppSettingsBase applicationSettingsBase = new AppSettingsBase(Settings.Default);
             IApplicationStyleSettings applicationStyleSettings = new ApplicationStyleSettings(applicationSettingsBase);
             IThemeManagerHelper themeManagerHelper = new ThemeManagerHelper();
-
+            //_dialogService = new DialogService(this);
             _mainWindowViewModel = new MainWindowViewModel(applicationStyleSettings, themeManagerHelper);
             Loaded += MainWindowLoaded;
 
             //_applicationStyle = StyleContainer().Resolve<IApplicationStyle>();
-
-
-            _dialogService = new DialogService(this);
-
-            //LoadAsync();
         }
 
         private void MainWindowLoaded(object sender, RoutedEventArgs e)
@@ -184,6 +169,5 @@ namespace SystemPropertiesChecker
         //    // ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
         //    await ConfigureControllerAsync().ConfigureAwait(true);
         //}
-
     }
 }

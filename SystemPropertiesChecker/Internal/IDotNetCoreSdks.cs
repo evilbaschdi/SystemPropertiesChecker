@@ -5,9 +5,9 @@ namespace SystemPropertiesChecker.Internal
 {
     /// <inheritdoc />
     /// <summary>
-    ///     Interface for classes that return a list of current installed .net versions
+    ///     Interface for classes that return a list of current installed .net core sdks
     /// </summary>
-    public interface IDotNetVersion : IValue<List<string>>
+    public interface IDotNetCoreSdks : IValue<List<string>>
     {
     }
 }
