@@ -51,11 +51,19 @@ namespace SystemPropertiesChecker.Internal
 
                 stringBuilder.AppendLine("currently installed version:");
 
-                var process = new Process();
-                process.SetHiddenProcessFor("dotnet", "--version");
-                process.Start();
-                stringBuilder.AppendLine(process.StandardOutput.ReadToEnd());
-                process.WaitForExit();
+                try
+                {
+                    var process = new Process();
+                    process.SetHiddenProcessFor("dotnet", "--version");
+                    process.Start();
+                    stringBuilder.AppendLine(process.StandardOutput.ReadToEnd());
+                    process.WaitForExit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    stringBuilder.AppendLine("(none)");
+                }
 
                 return stringBuilder.ToString().Trim();
             }

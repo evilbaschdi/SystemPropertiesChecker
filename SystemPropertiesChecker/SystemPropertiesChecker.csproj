@@ -61,7 +61,7 @@
     <PackageReference Include="ControlzEx" Version="3.0.2.4" />
     <PackageReference Include="EvilBaschdi.Core" Version="2018.416.22.11" />
     <PackageReference Include="EvilBaschdi.CoreExtended" Version="2018.424.21.15" />
-    <PackageReference Include="MahApps.Metro" Version="1.6.2" />
+    <PackageReference Include="MahApps.Metro" Version="1.6.3" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="2.2.0" />
     <PackageReference Include="Unity" Version="5.8.6" />
   </ItemGroup>
