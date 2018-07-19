@@ -80,7 +80,7 @@
                                  HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding DotNetVersionText}" />
                     </TabItem>
                     <TabItem Name="DotNetCoreTab" Header=".net core" ToolTip=".Net Core">
-                        <TextBox Name="DotNetCoreVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center"
+                        <TextBox Name="DotNetCoreVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" TextWrapping="Wrap"
                                  HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto" />
                     </TabItem>
                 </TabControl>
