@@ -30,27 +30,6 @@ namespace SystemPropertiesChecker.Internal
             {
                 var stringBuilder = new StringBuilder();
 
-                if (_dotNetCoreRuntimes.Value?.Any() == true)
-                {
-                    stringBuilder.AppendLine("currently installed runtimes:");
-                    //_dotNetCoreRuntimes.Value.ForEach(x => stringBuilder.AppendLine(x));
-                    stringBuilder.AppendLine(string.Join(", ", _dotNetCoreRuntimes.Value));
-                    stringBuilder.AppendLine();
-                }
-
-                if (_dotNetCoreSdks.Value?.Any() == true)
-                {
-                    stringBuilder.AppendLine("currently installed sdks:");
-                    //_dotNetCoreSdks.Value.ForEach(x => stringBuilder.AppendLine(x));
-                    stringBuilder.AppendLine(string.Join(", ", _dotNetCoreSdks.Value));
-                    stringBuilder.AppendLine();
-                }
-
-                if (!string.IsNullOrWhiteSpace(stringBuilder.ToString()))
-                {
-                    return stringBuilder.ToString().Trim();
-                }
-
                 stringBuilder.AppendLine("currently installed version:");
 
                 try
@@ -60,6 +39,22 @@ namespace SystemPropertiesChecker.Internal
                     process.Start();
                     stringBuilder.AppendLine(process.StandardOutput.ReadToEnd());
                     process.WaitForExit();
+
+                    if (_dotNetCoreRuntimes.Value?.Any() == true)
+                    {
+                        stringBuilder.AppendLine("currently installed runtimes:");
+                        //_dotNetCoreRuntimes.Value.ForEach(x => stringBuilder.AppendLine(x));
+                        stringBuilder.AppendLine(string.Join(", ", _dotNetCoreRuntimes.Value));
+                        stringBuilder.AppendLine();
+                    }
+
+                    if (_dotNetCoreSdks.Value?.Any() == true)
+                    {
+                        stringBuilder.AppendLine("currently installed sdks:");
+                        //_dotNetCoreSdks.Value.ForEach(x => stringBuilder.AppendLine(x));
+                        stringBuilder.AppendLine(string.Join(", ", _dotNetCoreSdks.Value));
+                        stringBuilder.AppendLine();
+                    }
                 }
                 catch (Exception e)
                 {
