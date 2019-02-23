@@ -39,26 +39,23 @@ namespace SystemPropertiesChecker.Internal
                     process.Start();
                     stringBuilder.AppendLine(process.StandardOutput.ReadToEnd());
                     process.WaitForExit();
-
-                    if (_dotNetCoreRuntimes.Value?.Any() == true)
-                    {
-                        stringBuilder.AppendLine("currently installed runtimes:");
-                        //_dotNetCoreRuntimes.Value.ForEach(x => stringBuilder.AppendLine(x));
-                        stringBuilder.AppendLine(string.Join(", ", _dotNetCoreRuntimes.Value));
-                        stringBuilder.AppendLine();
-                    }
+                
+                    //if (_dotNetCoreRuntimes.Value?.Any() == true)
+                    //{
+                    //    stringBuilder.AppendLine("currently installed runtimes:");
+                    //    stringBuilder.AppendLine(string.Join(", ", _dotNetCoreRuntimes.Value));
+                    //    stringBuilder.AppendLine();
+                    //}
 
                     if (_dotNetCoreSdks.Value?.Any() == true)
                     {
                         stringBuilder.AppendLine("currently installed sdks:");
-                        //_dotNetCoreSdks.Value.ForEach(x => stringBuilder.AppendLine(x));
                         stringBuilder.AppendLine(string.Join(", ", _dotNetCoreSdks.Value));
                         stringBuilder.AppendLine();
                     }
                 }
-                catch (Exception e)
+                catch
                 {
-                    Console.WriteLine(e);
                     stringBuilder.AppendLine("(none)");
                 }
 

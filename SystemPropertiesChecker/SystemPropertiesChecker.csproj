@@ -64,7 +64,8 @@
     <PackageReference Include="EvilBaschdi.CoreExtended" Version="2018.424.21.15" />
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="2.3.0" />
-    <PackageReference Include="Unity" Version="5.8.13" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
+    <PackageReference Include="Unity" Version="5.9.5" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -102,9 +103,15 @@
     <Compile Include="Internal\DotNetCoreVersion.cs">
       <DependentUpon>IDotNetCoreVersion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Internal\HklmSystemSetupSourcesInstallDates.cs">
+      <DependentUpon>ISourceOsCollection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Internal\IDotNetCoreRuntimes.cs" />
     <Compile Include="Internal\IDotNetCoreSdks.cs" />
     <Compile Include="Internal\IDotNetCoreVersion.cs" />
+    <Compile Include="Internal\ISourceOsCollection.cs" />
+    <Compile Include="Models\PasswordExpirationModel.cs" />
+    <Compile Include="Models\SourceOs.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -128,7 +135,7 @@
       <DependentUpon>IDotNetVersionReleaseKeyMappingList.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\HklmSoftwareMicrosoftWindowsNtCurrentVersion.cs">
-      <DependentUpon>IRegistryValue.cs</DependentUpon>
+      <DependentUpon>IRegistryValueFor.cs</DependentUpon>
     </Compile>
     <Compile Include="Internal\ICurrentVersionText.cs" />
     <Compile Include="Internal\IDotNetVersion.cs" />
@@ -136,7 +143,7 @@
     <Compile Include="Internal\IOtherInformationText.cs" />
     <Compile Include="Internal\IPasswordExpirationDate.cs" />
     <Compile Include="Internal\IPasswordExpirationMessage.cs" />
-    <Compile Include="Internal\IRegistryValue.cs" />
+    <Compile Include="Internal\IRegistryValueFor.cs" />
     <Compile Include="Internal\IWindowsVersionInformation.cs" />
     <Compile Include="Internal\IWindowsVersionText.cs" />
     <Compile Include="Internal\OtherInformationText.cs">
@@ -160,11 +167,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\IPasswordExpirationModel.cs" />
     <Compile Include="Models\IWindowsVersionInformationModel.cs" />
-    <Compile Include="Models\PasswordExpirationModel.cs">
-      <DependentUpon>IPasswordExpirationModel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\WindowsVersionInformationModel.cs">
       <DependentUpon>IWindowsVersionInformationModel.cs</DependentUpon>
     </Compile>

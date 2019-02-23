@@ -10,6 +10,6 @@ namespace SystemPropertiesChecker.Core
     {
         /// <summary>
         /// </summary>
-        public string Value => Assembly.GetExecutingAssembly().GetLinkerTime().ToString(CultureInfo.InvariantCulture);
+        public string Value => Assembly.GetExecutingAssembly().GetLinkerTime().ToString("yyyy-MM-dd hh:mm:ss");
     }
 }

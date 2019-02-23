@@ -33,6 +33,7 @@ namespace SystemPropertiesChecker.Internal
                     : $"{values.BuildLabExArray[0]}.{values.BuildLabExArray[1]}");
                 sb.Append(")");
                 sb.Append(Environment.NewLine);
+                sb.AppendLine($"Install Date: {values.InstallDate}");
                 sb.Append($"BuildLab: {values.BuildLab}{Environment.NewLine}");
                 sb.Append($"BuildLabEx: {values.BuildLabEx}{Environment.NewLine}");
 

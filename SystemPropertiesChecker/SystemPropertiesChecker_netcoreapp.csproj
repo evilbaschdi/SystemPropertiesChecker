@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>net462;net47;net472</TargetFrameworks>
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>   
+    <UseWPF>true</UseWPF>
+    <AssemblyName>SystemPropertiesChecker</AssemblyName>
+    <RootNamespace>SystemPropertiesChecker</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <!--<ItemGroup>
+    <PackageReference Include="ControlzEx" Version="4.0.0-alpha0222" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2.0.0-CI-20190130-072657" />
+    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2018.424.21.15" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0212" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0103" />
+    <PackageReference Include="Unity" Version="5.9.3" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.0" />
+  </ItemGroup>-->
+
+  <ItemGroup>
+    <PackageReference Include="ControlzEx" Version="3.0.2.4" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2018.416.22.11" />
+    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2018.424.21.15" />
+    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="2.3.0" />
+    <PackageReference Include="Unity" Version="5.9.5" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
+    <PackageReference Include="System.Security.AccessControl" Version="4.5.0" />
+    <PackageReference Include="System.Security.Permissions" Version="4.5.0" />
+    <PackageReference Include="System.Security.Principal.Windows" Version="4.5.1" />
+    <PackageReference Include="System.DirectoryServices" Version="4.5.0" />
+    <PackageReference Include="System.Management" Version="4.5.0" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.5.0" />
+  </ItemGroup>
+</Project>

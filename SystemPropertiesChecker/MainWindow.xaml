@@ -4,10 +4,8 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-                      mc:Ignorable="d" WindowStartupLocation="CenterScreen" Icon="b.ico"
-                      Title="System Properties Checker" Width="500" Height="250"
-                      ResizeMode="CanMinimize" GlowBrush="{DynamicResource AccentColorBrush}"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" mc:Ignorable="d" WindowStartupLocation="CenterScreen" Icon="b.ico"
+                      Title="System Properties Checker" Width="600" Height="250" GlowBrush="{DynamicResource AccentColorBrush}"
                       TitleCharacterCasing="Normal">
 
     <!--  RightWindowCommands  -->
@@ -16,7 +14,7 @@
         <controls:WindowCommands>
             <!-- Reload -->
 
-            <Button Command="{Binding Reload.Command}">
+            <Button Command="{Binding Reload.Command}" Visibility="Hidden">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Kind="Reload" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{Binding Reload.Text}" />
@@ -62,8 +60,51 @@
                         </StackPanel>
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
-                <TextBox Name="WindowsVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
-                         VerticalAlignment="Center" Text="{Binding WindowsVersionText}" />
+
+                <TabControl Name="WindowsTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Top" controls:TabControlHelper.Underlined="TabPanel">
+                    <TabItem Name="WindowsVersionTab" Header="windows version" ToolTip="Windows Version">
+                        <TextBox Name="WindowsVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" Text="{Binding WindowsVersionText}" />
+                    </TabItem>
+                    <TabItem Name="WindowsHistoryTap" Header="history" ToolTip="History">
+                        <DataGrid Name="WindowsHistory" Margin="0" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Single" ColumnWidth="*"
+                                  Style="{DynamicResource AzureDataGrid}" GridLinesVisibility="Horizontal" CanUserDeleteRows="False" AutoGenerateColumns="False"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
+                                  HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding SourceOsCollection}" VerticalScrollBarVisibility="Auto">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Build}" Header="Build" Width="70">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding ProductName}" Header="Product Name" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding ReleaseId}" Header="Release Id" Width="90">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding InstallDate, StringFormat=\{0:yyyy-MM-dd hh:mm:ss\}}" Header="Install Date" Width="125">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                </TabControl>
             </TabItem>
             <!-- .net -->
             <TabItem Name="DotNetTab" ToolTip=".Net">
@@ -124,12 +165,11 @@
                 <StackPanel>
                     <!-- Theme -->
                     <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
-                        <Label Width="50" Margin="0,5,0,0" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" Content="Theme" />
+                        <Label Width="50" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Theme" />
                         <controls:ToggleSwitch Name="ThemeSwitch" Margin="10,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12"
                                                IsChecked="{Binding AppUsesDarkTheme, Mode=TwoWay}" IsEnabled="{Binding AppDoesNotUseSystemStyle, Mode=TwoWay}"
-                                               OnSwitchBrush="{DynamicResource AccentColorBrush}" OnLabel="Dark"
-                                               OffSwitchBrush="{DynamicResource AccentColorBrush}" OffLabel="Light" />
+                                               OnSwitchBrush="{DynamicResource AccentColorBrush}" OnLabel="Dark" OffSwitchBrush="{DynamicResource AccentColorBrush}"
+                                               OffLabel="Light" />
                     </StackPanel>
                     <!-- Accent -->
                     <StackPanel Margin="10,5,0,0" Orientation="Horizontal">

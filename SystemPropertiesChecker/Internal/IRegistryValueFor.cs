@@ -6,7 +6,7 @@ namespace SystemPropertiesChecker.Internal
     /// <summary>
     ///     Interface for classes that provide RegistryValues.
     /// </summary>
-    public interface IRegistryValue : IValueFor<string, string>
+    public interface IRegistryValueFor : IValueFor<string, string>
     {
     }
 }

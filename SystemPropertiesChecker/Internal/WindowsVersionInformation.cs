@@ -11,7 +11,7 @@ namespace SystemPropertiesChecker.Internal
     // ReSharper disable once ClassNeverInstantiated.Global
     public class WindowsVersionInformation : IWindowsVersionInformation
     {
-        private readonly IRegistryValue _registryValue;
+        private readonly IRegistryValueFor _registryValueFor;
         private readonly IPasswordExpirationDate _passwordExpirationDate;
         private readonly WindowsVersionInformationModel _windowsVersionInformationModel = new WindowsVersionInformationModel();
         private WindowsVersionInformationModel _cachedWindowsVersionInformationModel;
@@ -20,11 +20,11 @@ namespace SystemPropertiesChecker.Internal
         ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="registryValue" /> is <see langword="null" />.
+        ///     <paramref name="registryValueFor" /> is <see langword="null" />.
         /// </exception>
-        public WindowsVersionInformation(IRegistryValue registryValue, IPasswordExpirationDate passwordExpirationDate)
+        public WindowsVersionInformation(IRegistryValueFor registryValueFor, IPasswordExpirationDate passwordExpirationDate)
         {
-            _registryValue = registryValue ?? throw new ArgumentNullException(nameof(registryValue));
+            _registryValueFor = registryValueFor ?? throw new ArgumentNullException(nameof(registryValueFor));
             _passwordExpirationDate = passwordExpirationDate ?? throw new ArgumentNullException(nameof(passwordExpirationDate));
         }
 
@@ -44,16 +44,16 @@ namespace SystemPropertiesChecker.Internal
                 var virtualSystem = VirtualSystem();
                 var domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
 
-                var currentVersion = _registryValue.ValueFor("CurrentVersion");
-                var currentMajorVersionNumber = _registryValue.ValueFor("CurrentMajorVersionNumber");
-                var currentMinorVersionNumber = _registryValue.ValueFor("CurrentMinorVersionNumber");
+                var currentVersion = _registryValueFor.ValueFor("CurrentVersion");
+                var currentMajorVersionNumber = _registryValueFor.ValueFor("CurrentMajorVersionNumber");
+                var currentMinorVersionNumber = _registryValueFor.ValueFor("CurrentMinorVersionNumber");
 
-                var csdVersion = !string.IsNullOrEmpty(_registryValue.ValueFor("CSDVersion"))
-                    ? $" with {_registryValue.ValueFor("CSDVersion")}"
+                var csdVersion = !string.IsNullOrEmpty(_registryValueFor.ValueFor("CSDVersion"))
+                    ? $" with {_registryValueFor.ValueFor("CSDVersion")}"
                     : string.Empty;
 
-                var releaseId = !string.IsNullOrEmpty(_registryValue.ValueFor("ReleaseId"))
-                    ? $" (Release {_registryValue.ValueFor("ReleaseId")})"
+                var releaseId = !string.IsNullOrEmpty(_registryValueFor.ValueFor("ReleaseId"))
+                    ? $" (Release {_registryValueFor.ValueFor("ReleaseId")})"
                     : string.Empty;
 
                 var version = !string.IsNullOrWhiteSpace(currentMajorVersionNumber) &&
@@ -73,15 +73,16 @@ namespace SystemPropertiesChecker.Internal
                 _windowsVersionInformationModel.Bits = bits;
                 _windowsVersionInformationModel.Virtual = virtualSystem.Key;
                 _windowsVersionInformationModel.Manufacturer = virtualSystem.Value;
-                _windowsVersionInformationModel.BuildLab = _registryValue.ValueFor("BuildLab");
-                _windowsVersionInformationModel.BuildLabEx = _registryValue.ValueFor("BuildLabEx");
-                _windowsVersionInformationModel.BuildLabExArray = _registryValue.ValueFor("BuildLabEx").Split('.');
-                _windowsVersionInformationModel.CurrentBuild = _registryValue.ValueFor("CurrentBuild");
-                _windowsVersionInformationModel.ProductName = _registryValue.ValueFor("ProductName");
+                _windowsVersionInformationModel.BuildLab = _registryValueFor.ValueFor("BuildLab");
+                _windowsVersionInformationModel.BuildLabEx = _registryValueFor.ValueFor("BuildLabEx");
+                _windowsVersionInformationModel.BuildLabExArray = _registryValueFor.ValueFor("BuildLabEx").Split('.');
+                _windowsVersionInformationModel.CurrentBuild = _registryValueFor.ValueFor("CurrentBuild");
+                _windowsVersionInformationModel.ProductName = _registryValueFor.ValueFor("ProductName");
                 _windowsVersionInformationModel.CurrentVersion = version;
                 _windowsVersionInformationModel.CsdVersion = csdVersion;
                 _windowsVersionInformationModel.ReleaseId = releaseId;
-                _windowsVersionInformationModel.Ubr = _registryValue.ValueFor("UBR");
+                _windowsVersionInformationModel.Ubr = _registryValueFor.ValueFor("UBR");
+                _windowsVersionInformationModel.InstallDate = InstallDate();
                 _cachedWindowsVersionInformationModel = _windowsVersionInformationModel;
                 return _cachedWindowsVersionInformationModel;
             }
@@ -94,8 +95,8 @@ namespace SystemPropertiesChecker.Internal
 
         private static KeyValuePair<bool, string> VirtualSystem()
         {
-            const string win32Computersystem = "SELECT * FROM Win32_ComputerSystem";
-            var managementObjectSearcher = new ManagementObjectSearcher(win32Computersystem);
+            const string win32ComputerSystem = "SELECT * FROM Win32_ComputerSystem";
+            var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
             var info = managementObjectSearcher.Get();
             var manufacturer = string.Empty;
             foreach (var item in info)
@@ -105,6 +106,21 @@ namespace SystemPropertiesChecker.Internal
             }
 
             return new KeyValuePair<bool, string>(true, manufacturer);
+        }
+
+        private static string InstallDate()
+        {
+            const string win32OperatingSystem = "SELECT * FROM Win32_OperatingSystem";
+            var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
+            var info = managementObjectSearcher.Get();
+            var installDate = string.Empty;
+            foreach (var item in info)
+            {
+                installDate = item["InstallDate"].ToString();
+                break;
+            }
+
+            return ManagementDateTimeConverter.ToDateTime(installDate).ToString("yyyy-MM-dd hh:mm:ss");
         }
     }
 }

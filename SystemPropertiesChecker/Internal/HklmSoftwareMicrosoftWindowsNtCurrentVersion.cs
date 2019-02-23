@@ -4,10 +4,10 @@ using Microsoft.Win32;
 namespace SystemPropertiesChecker.Internal
 {
     /// <summary>
-    ///     Class that provides RegisryValues from WindowsNT CurrentVersion.
+    ///     Class that provides RegistryValues from WindowsNT CurrentVersion.
     /// </summary>
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class HklmSoftwareMicrosoftWindowsNtCurrentVersion : IRegistryValue
+    public class HklmSoftwareMicrosoftWindowsNtCurrentVersion : IRegistryValueFor
     {
         /// <summary>
         ///     Contains a string providing a registry value.

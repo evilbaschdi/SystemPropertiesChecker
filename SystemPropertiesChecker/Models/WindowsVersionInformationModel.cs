@@ -85,6 +85,11 @@ namespace SystemPropertiesChecker.Models
         /// <summary>
         /// </summary>
         public string Ubr { get; set; }
+
+        /// <summary>
+        /// InstallDate
+        /// </summary>
+        public string InstallDate { get; set; }
     }
     // ReSharper restore UnusedAutoPropertyAccessor.Global
 }

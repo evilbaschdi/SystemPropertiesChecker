@@ -32,7 +32,7 @@ namespace SystemPropertiesChecker.Internal
                     Console.WriteLine(e);
                 }
 
-                return list;
+                return list.OrderByDescending(i => i).ToList();
             }
         }
     }

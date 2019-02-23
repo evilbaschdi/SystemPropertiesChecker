@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,7 +7,6 @@ using System.Windows.Shell;
 using SystemPropertiesChecker.Core;
 using SystemPropertiesChecker.Internal;
 using SystemPropertiesChecker.Models;
-using EvilBaschdi.CoreExtended;
 using EvilBaschdi.CoreExtended.Metro;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
@@ -21,17 +21,17 @@ namespace SystemPropertiesChecker.ViewModel
     /// </summary>
     public class MainWindowViewModel : ApplicationStyleViewModel
     {
-       
         private ProgressDialogController _controller;
         private string _currentVersionText;
-        private string _dotNetVersionText;
         private string _dotNetCoreVersionText;
+        private string _dotNetVersionText;
         private ILinkerTime _linkerTime;
         private string _otherText;
         private string _passwordExpirationMessage;
 
         private TaskbarItemProgressState _progressState;
         private int _progressValue;
+        private ObservableCollection<SourceOs> _sourceOsCollection;
         private Task _task;
         private string _windowsVersionText;
 
@@ -42,7 +42,6 @@ namespace SystemPropertiesChecker.ViewModel
         protected internal MainWindowViewModel(IApplicationStyleSettings applicationStyleSettings, IThemeManagerHelper themeManagerHelper)
             : base(applicationStyleSettings, themeManagerHelper)
         {
-            
             Reload = new DefaultCommand
                      {
                          Text = "reload",
@@ -51,19 +50,22 @@ namespace SystemPropertiesChecker.ViewModel
             BuildCompositionRoot();
         }
 
-
-        /// <summary>
-        /// </summary>
-        public ICommandViewModel Reload { get; set; }
-
-        public string LinkerTime => _linkerTime.Value;
-
         public string CurrentVersionText
         {
             get => _currentVersionText;
             set
             {
                 _currentVersionText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string DotNetCoreVersionText
+        {
+            get => _dotNetCoreVersionText;
+            set
+            {
+                _dotNetCoreVersionText = value;
                 OnPropertyChanged();
             }
         }
@@ -78,15 +80,7 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
-        public string DotNetCoreVersionText
-        {
-            get => _dotNetCoreVersionText;
-            set
-            {
-                _dotNetCoreVersionText = value;
-                OnPropertyChanged();
-            }
-        }
+        public string LinkerTime => _linkerTime.Value;
 
         public string OtherText
         {
@@ -108,22 +102,38 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
-        public string WindowsVersionText
-        {
-            get => _windowsVersionText;
-            set
-            {
-                _windowsVersionText = value;
-                OnPropertyChanged();
-            }
-        }
-
         public TaskbarItemProgressState ProgressState
         {
             get => _progressState;
             set
             {
                 _progressState = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        /// <summary>
+        /// </summary>
+        public ICommandViewModel Reload { get; set; }
+
+        public ObservableCollection<SourceOs> SourceOsCollection
+        {
+            get => _sourceOsCollection;
+
+            set
+            {
+                _sourceOsCollection = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string WindowsVersionText
+        {
+            get => _windowsVersionText;
+            set
+            {
+                _windowsVersionText = value;
                 OnPropertyChanged();
             }
         }
@@ -199,7 +209,8 @@ namespace SystemPropertiesChecker.ViewModel
             versionContainer.RegisterType<IDotNetCoreSdks, DotNetCoreSdks>();
             versionContainer.RegisterType<IDotNetCoreRuntimes, DotNetCoreRuntimes>();
             versionContainer.RegisterType<IDotNetCoreVersion, DotNetCoreVersion>();
-            versionContainer.RegisterType<IRegistryValue, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
+            versionContainer.RegisterType<IRegistryValueFor, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
+            versionContainer.RegisterType<ISourceOsCollection, HklmSystemSetupSourcesInstallDates>();
             versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
             versionContainer.RegisterType<IWindowsVersionInformation, WindowsVersionInformation>();
             versionContainer.RegisterType<ICurrentVersionText, CurrentVersionText>();
@@ -214,6 +225,7 @@ namespace SystemPropertiesChecker.ViewModel
             _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
             _dotNetCoreVersionText = versionContainer.Resolve<IDotNetCoreVersion>().Value;
             _passwordExpirationMessage = versionContainer.Resolve<IPasswordExpirationMessage>().Value;
+            _sourceOsCollection = versionContainer.Resolve<ISourceOsCollection>().Value;
 
             versionContainer.Dispose();
             //var temp = string.Empty;
