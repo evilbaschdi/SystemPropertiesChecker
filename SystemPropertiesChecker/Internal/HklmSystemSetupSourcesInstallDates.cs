@@ -26,10 +26,10 @@ namespace SystemPropertiesChecker.Internal
                             where currentSubKey != null
                             select new SourceOs
                                    {
-                                       ProductName = currentSubKey.GetValue("ProductName").ToString(),
-                                       ReleaseId = currentSubKey.GetValue("ReleaseId").ToString(),
-                                       Build = currentSubKey.GetValue("CurrentBuild").ToString(),
-                                       InstallDate = new DateTime(1970, 1, 1).AddSeconds(Convert.ToDouble(currentSubKey.GetValue("InstallDate").ToString()))
+                                       ProductName = currentSubKey.GetValue("ProductName")?.ToString(),
+                                       ReleaseId = currentSubKey.GetValue("ReleaseId")?.ToString(),
+                                       Build = currentSubKey.GetValue("CurrentBuild")?.ToString(),
+                                       InstallDate = new DateTime(1970, 1, 1).AddSeconds(Convert.ToDouble(currentSubKey.GetValue("InstallDate")?.ToString()))
                                    }).ToList();
 
                 return new ObservableCollection<SourceOs>(list.OrderByDescending(i => i.InstallDate));
