@@ -120,7 +120,7 @@ namespace SystemPropertiesChecker.Internal
                 break;
             }
 
-            return ManagementDateTimeConverter.ToDateTime(installDate).ToString("yyyy-MM-dd hh:mm:ss");
+            return ManagementDateTimeConverter.ToDateTime(installDate).ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 }

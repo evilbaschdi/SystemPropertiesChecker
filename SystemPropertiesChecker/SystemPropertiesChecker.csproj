@@ -5,19 +5,23 @@
     <TargetFrameworks>net462;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>b.ico</ApplicationIcon>
-    <Version>2.0.0</Version>
-    <Authors>evilbaschdi</Authors>
+    <Version>2019.3.4.1842</Version>
+    <Authors>Sebastian Walter</Authors>
     <Company>evilbaschdi</Company>
-    <Copyright>Copyright © evilbaschdi 2015 - 2019</Copyright>
+    <Copyright>Copyright © evilbaschdi 2014 - 2019</Copyright>
     <PackageProjectUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</PackageProjectUrl>
     <PackageIconUrl>https://github.com/evilbaschdi/SystemPropertiesChecker/blob/master/SystemPropertiesChecker/b.ico</PackageIconUrl>
     <RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>    
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="b.png" />
     <None Remove="SystemPropertiesChecker.VisualElementsManifest.xml" />
     <None Remove="b_150.png" />
     <None Remove="b_70.png" />
     <None Remove="b.ico" />
+    <Content Include="b.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SystemPropertiesChecker.VisualElementsManifest.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -32,19 +36,35 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="3.0.2.4" />
-    <PackageReference Include="EvilBaschdi.Core" Version="2018.416.22.11" />
-    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2018.424.21.15" />
-    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="2.3.0" />
-    <PackageReference Include="Unity" Version="5.9.5" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
-    <PackageReference Include="System.Security.AccessControl" Version="4.5.0" />
-    <PackageReference Include="System.Security.Permissions" Version="4.5.0" />
-    <PackageReference Include="System.Security.Principal.Windows" Version="4.5.1" />
-    <PackageReference Include="System.DirectoryServices" Version="4.5.0" />
-    <PackageReference Include="System.Management" Version="4.5.0" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.5.0" />
+    <PackageReference Include="ControlzEx" Version="4.0.0-alpha0231" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2019.3.4.751-develop" />
+    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2019.3.3.1900-develop" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0261" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0103" />
+    <PackageReference Include="Unity" Version="5.9.7" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.6.0-preview.19073.11" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0-preview.19073.11" />
+    <PackageReference Include="System.Security.AccessControl" Version="4.6.0-preview.19073.11" />
+    <PackageReference Include="System.Security.Permissions" Version="4.6.0-preview.19073.11" />
+    <PackageReference Include="System.Security.Principal.Windows" Version="4.6.0-preview.19073.11" />
+    <PackageReference Include="System.DirectoryServices" Version="4.6.0-preview.19073.11" />
+    <PackageReference Include="System.Management" Version="4.6.0-preview.19073.11" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.6.0-preview.19073.11" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>

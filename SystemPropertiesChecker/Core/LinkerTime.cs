@@ -10,6 +10,13 @@ namespace SystemPropertiesChecker.Core
     {
         /// <summary>
         /// </summary>
-        public string Value => Assembly.GetExecutingAssembly().GetLinkerTime().ToString("yyyy-MM-dd hh:mm:ss");
+        public string Value
+        {
+            get {
+
+                var version = typeof(MainWindow).Assembly.GetName().Version;
+                return version.ToString();
+            }
+        }
     }
 }

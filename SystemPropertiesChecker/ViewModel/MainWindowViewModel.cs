@@ -8,8 +8,11 @@ using SystemPropertiesChecker.Core;
 using SystemPropertiesChecker.Internal;
 using SystemPropertiesChecker.Models;
 using EvilBaschdi.CoreExtended.Metro;
+using EvilBaschdi.CoreExtended.Mvvm;
+using EvilBaschdi.CoreExtended.Mvvm.View;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
+using JetBrains.Annotations;
 using MahApps.Metro.Controls.Dialogs;
 using Unity;
 
@@ -21,6 +24,7 @@ namespace SystemPropertiesChecker.ViewModel
     /// </summary>
     public class MainWindowViewModel : ApplicationStyleViewModel
     {
+        private readonly IThemeManagerHelper _themeManagerHelper;
         private ProgressDialogController _controller;
         private string _currentVersionText;
         private string _dotNetCoreVersionText;
@@ -39,16 +43,25 @@ namespace SystemPropertiesChecker.ViewModel
         /// <summary>
         ///     Constructor
         /// </summary>
-        protected internal MainWindowViewModel(IApplicationStyleSettings applicationStyleSettings, IThemeManagerHelper themeManagerHelper)
-            : base(applicationStyleSettings, themeManagerHelper)
+        protected internal MainWindowViewModel([NotNull] IThemeManagerHelper themeManagerHelper)
+            : base(themeManagerHelper)
         {
+            _themeManagerHelper = themeManagerHelper ?? throw new ArgumentNullException(nameof(themeManagerHelper));
             Reload = new DefaultCommand
                      {
                          Text = "reload",
                          Command = new RelayCommand(async rc => await ConfigureControllerAsync().ConfigureAwait(true))
                      };
+     
+            AboutWindowClick = new DefaultCommand
+                               {
+                                   Text = "About",
+                                   Command = new RelayCommand(rc => BtnAboutWindowClick())
+                               };
             BuildCompositionRoot();
         }
+
+        public ICommandViewModel AboutWindowClick { get; set; }
 
         public string CurrentVersionText
         {
@@ -231,6 +244,17 @@ namespace SystemPropertiesChecker.ViewModel
             //var temp = string.Empty;
             //DomainInformation.Text = temp;
             //DomainTab.Visibility = (!string.IsNullOrWhiteSpace(temp)).ToVisibility();
+        }
+
+
+        private void BtnAboutWindowClick()
+        {
+            var aboutWindow = new AboutWindow();
+            var assembly = typeof(MainWindow).Assembly;
+
+            IAboutWindowContent aboutWindowContent = new AboutWindowContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
+            aboutWindow.DataContext = new AboutViewModel(aboutWindowContent, _themeManagerHelper);
+            aboutWindow.Show();
         }
     }
 }
