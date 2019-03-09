@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net462;net472</TargetFrameworks>
+    <TargetFrameworks>net46;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>b.ico</ApplicationIcon>
-    <Version>2019.3.4.1842</Version>
+    <Version>2019.3.9.1653</Version>
     <Authors>Sebastian Walter</Authors>
     <Company>evilbaschdi</Company>
     <Copyright>Copyright © evilbaschdi 2014 - 2019</Copyright>
     <PackageProjectUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</PackageProjectUrl>
     <PackageIconUrl>https://github.com/evilbaschdi/SystemPropertiesChecker/blob/master/SystemPropertiesChecker/b.ico</PackageIconUrl>
-    <RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>    
+    <RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="b.png" />
@@ -31,29 +31,50 @@
     <Content Include="b_70.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-     <Resource Include="b.ico">
+    <Resource Include="b.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="4.0.0-alpha0231" />
-    <PackageReference Include="EvilBaschdi.Core" Version="2019.3.4.751-develop" />
-    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2019.3.3.1900-develop" />
-    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0261" />
+    <PackageReference Include="ControlzEx" Version="4.0.0-alpha0232" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2019.3.9.1706-develop" />
+    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2019.3.9.1706-develop" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0262" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0103" />
     <PackageReference Include="Unity" Version="5.9.7" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.6.0-preview.19073.11" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0-preview.19073.11" />
-    <PackageReference Include="System.Security.AccessControl" Version="4.6.0-preview.19073.11" />
-    <PackageReference Include="System.Security.Permissions" Version="4.6.0-preview.19073.11" />
-    <PackageReference Include="System.Security.Principal.Windows" Version="4.6.0-preview.19073.11" />
-    <PackageReference Include="System.DirectoryServices" Version="4.6.0-preview.19073.11" />
-    <PackageReference Include="System.Management" Version="4.6.0-preview.19073.11" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.6.0-preview.19073.11" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net46' ">
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.6.0-preview3.19128.7" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0-preview3.19128.7" />
+    <PackageReference Include="System.Security.AccessControl" Version="4.6.0-preview3.19128.7" />
+    <PackageReference Include="System.Security.Permissions" Version="4.6.0-preview3.19128.7" />
+    <PackageReference Include="System.Security.Principal.Windows" Version="4.6.0-preview3.19128.7" />
+    <PackageReference Include="System.DirectoryServices" Version="4.6.0-preview3.19128.7" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.6.0-preview3.19128.7" />
+    <PackageReference Include="System.Management" Version="4.6.0-preview3.19128.7" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />    
+    <Reference Include="System.Configuration" />
+
+    <Reference Include="System.Configuration.ConfigurationManager" />    
+    <Reference Include="System.Security.AccessControl"/>
+    <Reference Include="System.Security.Permissions" />
+    <Reference Include="System.Security.Principal.Windows"/>
+    <Reference Include="System.DirectoryServices"/>    
+    <Reference Include="System.DirectoryServices.AccountManagement"/>
+    <Reference Include="System.Management"/>
   </ItemGroup>
+
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
