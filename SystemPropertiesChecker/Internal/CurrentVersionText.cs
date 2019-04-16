@@ -33,17 +33,17 @@ namespace SystemPropertiesChecker.Internal
                 var values = _windowsVersionInformation.Value;
 
                 var sb = new StringBuilder();
-                sb.Append($"Computername: {values.Computername}{Environment.NewLine}");
+                sb.AppendLine($"Computername: {values.Computername}");
                 if (!string.IsNullOrWhiteSpace(values.Domain))
                 {
-                    sb.Append($"Domain: {values.Domain}{Environment.NewLine}");
-                    sb.Append($"Current user: {values.UserName} | Password expiration date: {values.PasswordExpirationDate}{Environment.NewLine}");
+                    sb.AppendLine($"Domain: {values.Domain}");
+                    sb.AppendLine($"Current user: {values.UserName} | Password expiration date: {values.PasswordExpirationDate}");
                 }
 
-                sb.Append($"Current IP: {GetLocalIpAddress()}{Environment.NewLine}");
-                sb.Append($"Productname: {values.ProductName}{values.CsdVersion}{values.ReleaseId}{Environment.NewLine}");
-                sb.Append($"Architecture: {values.Bits}{Environment.NewLine}");
-                sb.Append($"Manufacturer: {values.Manufacturer}");
+                sb.AppendLine($"Current IP: {GetLocalIpAddress()}");
+                sb.AppendLine($"Productname: {values.ProductName}{values.CsdVersion}{values.ReleaseId}");
+                sb.AppendLine($"Architecture: {values.Bits}");
+                sb.AppendLine($"Manufacturer: {values.Manufacturer}");
 
                 return sb.ToString();
             }

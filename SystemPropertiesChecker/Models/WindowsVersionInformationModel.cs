@@ -6,16 +6,15 @@ namespace SystemPropertiesChecker.Models
     /// </summary>
     public class WindowsVersionInformationModel : IWindowsVersionInformationModel
     {
+        /// <summary>
+        ///     InstallDate
+        /// </summary>
+        public string InstallDate { get; set; }
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
         public string Bits { get; set; }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-
-        public bool Virtual { get; set; }
 
         /// <inheritdoc />
         /// <summary>
@@ -61,6 +60,7 @@ namespace SystemPropertiesChecker.Models
         /// </summary>
         public string Manufacturer { get; set; }
 
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -85,11 +85,6 @@ namespace SystemPropertiesChecker.Models
         /// <summary>
         /// </summary>
         public string Ubr { get; set; }
-
-        /// <summary>
-        /// InstallDate
-        /// </summary>
-        public string InstallDate { get; set; }
     }
     // ReSharper restore UnusedAutoPropertyAccessor.Global
 }

@@ -52,7 +52,7 @@ namespace SystemPropertiesChecker.ViewModel
                          Text = "reload",
                          Command = new RelayCommand(async rc => await ConfigureControllerAsync().ConfigureAwait(true))
                      };
-     
+
             AboutWindowClick = new DefaultCommand
                                {
                                    Text = "About",
@@ -254,7 +254,7 @@ namespace SystemPropertiesChecker.ViewModel
 
             IAboutWindowContent aboutWindowContent = new AboutWindowContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
             aboutWindow.DataContext = new AboutViewModel(aboutWindowContent, _themeManagerHelper);
-            aboutWindow.Show();
+            aboutWindow.ShowDialog();
         }
     }
 }

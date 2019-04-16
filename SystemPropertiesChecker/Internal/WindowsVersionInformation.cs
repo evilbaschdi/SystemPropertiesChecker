@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Management;
 using SystemPropertiesChecker.Models;
 
@@ -11,8 +10,8 @@ namespace SystemPropertiesChecker.Internal
     // ReSharper disable once ClassNeverInstantiated.Global
     public class WindowsVersionInformation : IWindowsVersionInformation
     {
-        private readonly IRegistryValueFor _registryValueFor;
         private readonly IPasswordExpirationDate _passwordExpirationDate;
+        private readonly IRegistryValueFor _registryValueFor;
         private readonly WindowsVersionInformationModel _windowsVersionInformationModel = new WindowsVersionInformationModel();
         private WindowsVersionInformationModel _cachedWindowsVersionInformationModel;
 
@@ -41,7 +40,7 @@ namespace SystemPropertiesChecker.Internal
                 }
 
                 var bits = Bits();
-                var virtualSystem = VirtualSystem();
+                var virtualSystem = Manufacturer();
                 var domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
 
                 var currentVersion = _registryValueFor.ValueFor("CurrentVersion");
@@ -71,8 +70,8 @@ namespace SystemPropertiesChecker.Internal
 
                 _windowsVersionInformationModel.Computername = Environment.MachineName;
                 _windowsVersionInformationModel.Bits = bits;
-                _windowsVersionInformationModel.Virtual = virtualSystem.Key;
-                _windowsVersionInformationModel.Manufacturer = virtualSystem.Value;
+                _windowsVersionInformationModel.Manufacturer = Manufacturer();
+
                 _windowsVersionInformationModel.BuildLab = _registryValueFor.ValueFor("BuildLab");
                 _windowsVersionInformationModel.BuildLabEx = _registryValueFor.ValueFor("BuildLabEx");
                 _windowsVersionInformationModel.BuildLabExArray = _registryValueFor.ValueFor("BuildLabEx").Split('.');
@@ -93,19 +92,18 @@ namespace SystemPropertiesChecker.Internal
             return Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
         }
 
-        private static KeyValuePair<bool, string> VirtualSystem()
+        private static string Manufacturer()
         {
             const string win32ComputerSystem = "SELECT * FROM Win32_ComputerSystem";
             var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
             var info = managementObjectSearcher.Get();
-            var manufacturer = string.Empty;
+
             foreach (var item in info)
             {
-                manufacturer = item["Manufacturer"].ToString();
-                break;
+                return item["Manufacturer"].ToString();
             }
 
-            return new KeyValuePair<bool, string>(true, manufacturer);
+            return string.Empty;
         }
 
         private static string InstallDate()

@@ -12,11 +12,6 @@ namespace SystemPropertiesChecker.Models
 
         string Bits { get; set; }
 
-
-        /// <summary>
-        /// </summary>
-        bool Virtual { get; set; }
-
         /// <summary>
         /// </summary>
         string BuildLab { get; set; }
@@ -27,7 +22,15 @@ namespace SystemPropertiesChecker.Models
 
         /// <summary>
         /// </summary>
-        string ProductName { get; set; }
+        string[] BuildLabExArray { get; set; }
+
+        /// <summary>
+        /// </summary>
+        string Computername { get; set; }
+
+        /// <summary>
+        /// </summary>
+        string CsdVersion { get; set; }
 
         /// <summary>
         /// </summary>
@@ -39,39 +42,32 @@ namespace SystemPropertiesChecker.Models
 
         /// <summary>
         /// </summary>
-        string ReleaseId { get; set; }
-
-        /// <summary>
-        /// </summary>
-        string CsdVersion { get; set; }
-
-        /// <summary>
-        /// </summary>
-        string[] BuildLabExArray { get; set; }
+        string Domain { get; set; }
 
         /// <summary>
         /// </summary>
         string Manufacturer { get; set; }
 
-        /// <summary>
-        /// </summary>
-        string Computername { get; set; }
-
-        /// <summary>
-        /// </summary>
-        string Domain { get; set; }
-
-        /// <summary>
-        /// </summary>
-        string UserName { get; set; }
-
+      
         /// <summary>
         /// </summary>
         string PasswordExpirationDate { get; set; }
 
         /// <summary>
         /// </summary>
+        string ProductName { get; set; }
+
+        /// <summary>
+        /// </summary>
+        string ReleaseId { get; set; }
+
+        /// <summary>
+        /// </summary>
         string Ubr { get; set; }
+
+        /// <summary>
+        /// </summary>
+        string UserName { get; set; }
     }
     // ReSharper restore UnusedMemberInSuper.Global
     // ReSharper restore UnusedMember.Global

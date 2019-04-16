@@ -32,10 +32,10 @@ namespace SystemPropertiesChecker.Internal
                     ? $"{values.CurrentBuild}.{values.Ubr}"
                     : $"{values.BuildLabExArray[0]}.{values.BuildLabExArray[1]}");
                 sb.Append(")");
-                sb.Append(Environment.NewLine);
+                sb.AppendLine();
                 sb.AppendLine($"Install Date: {values.InstallDate}");
-                sb.Append($"BuildLab: {values.BuildLab}{Environment.NewLine}");
-                sb.Append($"BuildLabEx: {values.BuildLabEx}{Environment.NewLine}");
+                sb.AppendLine($"BuildLab: {values.BuildLab}");
+                sb.AppendLine($"BuildLabEx: {values.BuildLabEx}");
 
                 return sb.ToString();
             }
