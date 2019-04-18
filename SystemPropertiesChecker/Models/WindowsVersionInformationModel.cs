@@ -59,6 +59,10 @@ namespace SystemPropertiesChecker.Models
         /// <summary>
         /// </summary>
         public string Manufacturer { get; set; }
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
+        public string ManufacturerProduct { get; set; }
 
 
         /// <inheritdoc />

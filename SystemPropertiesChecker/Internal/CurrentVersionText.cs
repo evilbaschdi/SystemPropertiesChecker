@@ -14,6 +14,8 @@ namespace SystemPropertiesChecker.Internal
     public class CurrentVersionText : ICurrentVersionText
     {
         private readonly IWindowsVersionInformation _windowsVersionInformation;
+        private static string _ipAddressV4;
+        private static string _ipAddressV6;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
@@ -31,6 +33,7 @@ namespace SystemPropertiesChecker.Internal
             get
             {
                 var values = _windowsVersionInformation.Value;
+                GetLocalIpAddress();
 
                 var sb = new StringBuilder();
                 sb.AppendLine($"Computername: {values.Computername}");
@@ -40,10 +43,16 @@ namespace SystemPropertiesChecker.Internal
                     sb.AppendLine($"Current user: {values.UserName} | Password expiration date: {values.PasswordExpirationDate}");
                 }
 
-                sb.AppendLine($"Current IP: {GetLocalIpAddress()}");
-                sb.AppendLine($"Productname: {values.ProductName}{values.CsdVersion}{values.ReleaseId}");
+                sb.AppendLine($"Current IP (v4): {_ipAddressV4}");
+                sb.AppendLine($"Current IP (v6): {_ipAddressV6}");
+                sb.AppendLine($"Product Name: {values.ProductName}{values.CsdVersion}{values.ReleaseId}");
                 sb.AppendLine($"Architecture: {values.Bits}");
                 sb.AppendLine($"Manufacturer: {values.Manufacturer}");
+
+                if (!string.IsNullOrWhiteSpace(values.ManufacturerProduct))
+                {
+                    sb.AppendLine($"Manufacturer Product: {values.ManufacturerProduct}");
+                }
 
                 return sb.ToString();
             }
@@ -52,7 +61,7 @@ namespace SystemPropertiesChecker.Internal
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        private static string GetLocalIpAddress()
+        private static void GetLocalIpAddress()
         {
             var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces().Where(i => i.OperationalStatus == OperationalStatus.Up);
 
@@ -67,14 +76,17 @@ namespace SystemPropertiesChecker.Internal
 
                 foreach (var ip in networkInterface.GetIPProperties().UnicastAddresses)
                 {
-                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                    switch (ip.Address.AddressFamily)
                     {
-                        return ip.Address.ToString();
+                        case AddressFamily.InterNetwork:
+                            _ipAddressV4= ip.Address.ToString();
+                            break;
+                        case AddressFamily.InterNetworkV6:
+                            _ipAddressV6= ip.Address.ToString();
+                            break;
                     }
                 }
             }
-
-            return "";
         }
     }
 }

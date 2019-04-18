@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net46;net472;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>net46;net48;netcoreapp3.0</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>b.ico</ApplicationIcon>
-    <Version>2019.4.12.1800</Version>
+    <Version>2019.4.19.0028</Version>
     <Authors>Sebastian Walter</Authors>
     <Company>evilbaschdi</Company>
     <Copyright>Copyright © evilbaschdi 2014 - 2019</Copyright>
@@ -40,15 +40,14 @@
     <PackageReference Include="EvilBaschdi.Core" Version="2019.3.9.1706-develop" />
     <PackageReference Include="EvilBaschdi.CoreExtended" Version="2019.3.31.1028-develop" />
     <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0262" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0141" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0141" />    
     <PackageReference Include="Unity" Version="5.10.3" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="3.0.0-preview4.19126.13" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' != 'net46' ">
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.6.0-preview3.19128.7" />  
-    <PackageReference Include="System.DirectoryServices" Version="4.6.0-preview3.19128.7" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.6.0-preview3.19128.7" />
-    <PackageReference Include="System.Management" Version="4.6.0-preview3.19128.7" />
+    <PackageReference Include="System.DirectoryServices" Version="4.6.0-preview4.19212.13" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.6.0-preview4.19212.13" />
+    <PackageReference Include="System.Management" Version="4.6.0-preview4.19212.13" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.6.0-preview4.19212.13" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <Reference Include="mscorlib" />
@@ -61,9 +60,9 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />    
     <Reference Include="System.Configuration" />    
-    <Reference Include="System.DirectoryServices"/>    
-    <Reference Include="System.DirectoryServices.AccountManagement"/>
-    <Reference Include="System.Management"/>
+    <Reference Include="System.DirectoryServices" />    
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">

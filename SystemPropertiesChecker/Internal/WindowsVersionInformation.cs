@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Management;
 using SystemPropertiesChecker.Models;
 
@@ -40,7 +41,6 @@ namespace SystemPropertiesChecker.Internal
                 }
 
                 var bits = Bits();
-                var virtualSystem = Manufacturer();
                 var domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
 
                 var currentVersion = _registryValueFor.ValueFor("CurrentVersion");
@@ -70,7 +70,9 @@ namespace SystemPropertiesChecker.Internal
 
                 _windowsVersionInformationModel.Computername = Environment.MachineName;
                 _windowsVersionInformationModel.Bits = bits;
-                _windowsVersionInformationModel.Manufacturer = Manufacturer();
+                _windowsVersionInformationModel.Manufacturer = ManufacturerByWin32ComputerSystem();
+                _windowsVersionInformationModel.ManufacturerProduct = ManufacturerByWin32ComputerSystem().Equals(ManufacturerByWin32BaseBoard().Key) ? ManufacturerByWin32BaseBoard().Value : string.Empty;
+                
 
                 _windowsVersionInformationModel.BuildLab = _registryValueFor.ValueFor("BuildLab");
                 _windowsVersionInformationModel.BuildLabEx = _registryValueFor.ValueFor("BuildLabEx");
@@ -92,7 +94,7 @@ namespace SystemPropertiesChecker.Internal
             return Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
         }
 
-        private static string Manufacturer()
+        private static string ManufacturerByWin32ComputerSystem()
         {
             const string win32ComputerSystem = "SELECT * FROM Win32_ComputerSystem";
             var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
@@ -104,6 +106,20 @@ namespace SystemPropertiesChecker.Internal
             }
 
             return string.Empty;
+        }
+
+        private static KeyValuePair<string,string> ManufacturerByWin32BaseBoard()
+        {
+            const string win32ComputerSystem = "SELECT * FROM Win32_BaseBoard";
+            var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
+            var info = managementObjectSearcher.Get();
+
+            foreach (var item in info)
+            {
+                return new KeyValuePair<string, string>(item["Manufacturer"].ToString(), item["Product"].ToString());
+            }
+
+            return new KeyValuePair<string, string>();
         }
 
         private static string InstallDate()

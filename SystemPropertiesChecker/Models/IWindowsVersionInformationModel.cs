@@ -48,7 +48,10 @@ namespace SystemPropertiesChecker.Models
         /// </summary>
         string Manufacturer { get; set; }
 
-      
+        /// <summary>
+        /// </summary>
+        string ManufacturerProduct { get; set; }
+
         /// <summary>
         /// </summary>
         string PasswordExpirationDate { get; set; }
