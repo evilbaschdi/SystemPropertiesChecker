@@ -2,16 +2,17 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net46;net48;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>net48;netcoreapp3.0</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>b.ico</ApplicationIcon>
-    <Version>2019.4.19.0028</Version>
+    <Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.hmm))-develop</Version>
     <Authors>Sebastian Walter</Authors>
     <Company>evilbaschdi</Company>
-    <Copyright>Copyright © evilbaschdi 2014 - 2019</Copyright>
+    <Copyright>Copyright © 2014 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
     <PackageProjectUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</PackageProjectUrl>
     <PackageIconUrl>https://github.com/evilbaschdi/SystemPropertiesChecker/blob/master/SystemPropertiesChecker/b.ico</PackageIconUrl>
     <RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="b.png" />
@@ -36,33 +37,15 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="4.0.0-alpha0232" />
-    <PackageReference Include="EvilBaschdi.Core" Version="2019.3.9.1706-develop" />
-    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2019.3.31.1028-develop" />
-    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0262" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0141" />    
-    <PackageReference Include="Unity" Version="5.10.3" />
+    <PackageReference Include="ControlzEx" Version="4.0.0" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2019.7.21.835-develop" />
+    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2019.7.21.844-develop" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0409" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0188" />
+    <PackageReference Include="Unity" Version="5.11.1" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net46' ">
-    <PackageReference Include="System.DirectoryServices" Version="4.6.0-preview4.19212.13" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.6.0-preview4.19212.13" />
-    <PackageReference Include="System.Management" Version="4.6.0-preview4.19212.13" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.6.0-preview4.19212.13" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Xml" />    
-    <Reference Include="System.Configuration" />    
-    <Reference Include="System.DirectoryServices" />    
-    <Reference Include="System.DirectoryServices.AccountManagement" />
-    <Reference Include="System.Management" />
+  <ItemGroup>
+    <ProjectReference Include="..\SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">

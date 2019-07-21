@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Shell;
-using SystemPropertiesChecker.Core;
-using SystemPropertiesChecker.Internal;
-using SystemPropertiesChecker.Models;
+using SystemPropertiesChecker.Core.Internal;
+using SystemPropertiesChecker.Core.Internal.DotNet;
+using SystemPropertiesChecker.Core.Models;
 using EvilBaschdi.CoreExtended.Metro;
 using EvilBaschdi.CoreExtended.Mvvm;
 using EvilBaschdi.CoreExtended.Mvvm.View;
@@ -14,7 +14,6 @@ using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
 using JetBrains.Annotations;
 using MahApps.Metro.Controls.Dialogs;
-using Unity;
 
 namespace SystemPropertiesChecker.ViewModel
 {
@@ -29,7 +28,7 @@ namespace SystemPropertiesChecker.ViewModel
         private string _currentVersionText;
         private string _dotNetCoreVersionText;
         private string _dotNetVersionText;
-        private ILinkerTime _linkerTime;
+
         private string _otherText;
         private string _passwordExpirationMessage;
 
@@ -93,7 +92,6 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
-        public string LinkerTime => _linkerTime.Value;
 
         public string OtherText
         {
@@ -153,7 +151,6 @@ namespace SystemPropertiesChecker.ViewModel
 
         private async void BuildCompositionRoot()
         {
-            _linkerTime = new LinkerTime();
             RunVersionChecks();
             //await ConfigureControllerAsync().ConfigureAwait(true);
         }
@@ -189,12 +186,14 @@ namespace SystemPropertiesChecker.ViewModel
 
             //_overrideProtection = 1;
 
-            if (!string.IsNullOrWhiteSpace(_passwordExpirationMessage))
+            if (string.IsNullOrWhiteSpace(_passwordExpirationMessage))
             {
-                //_dialogService.ShowMessage("Password Expiration", _passwordExpirationMessage);
-                _progressState = TaskbarItemProgressState.Normal;
-                _progressValue = 1;
+                return;
             }
+
+            //_dialogService.ShowMessage("Password Expiration", _passwordExpirationMessage);
+            _progressState = TaskbarItemProgressState.Normal;
+            _progressValue = 1;
 
             //DomainTab.Visibility = Visibility.Hidden;
             //_controller.CloseAsync();
@@ -216,34 +215,56 @@ namespace SystemPropertiesChecker.ViewModel
 
         private void RunVersionChecks()
         {
-            var versionContainer = new UnityContainer();
-            versionContainer.RegisterType<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
-            versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
-            versionContainer.RegisterType<IDotNetCoreSdks, DotNetCoreSdks>();
-            versionContainer.RegisterType<IDotNetCoreRuntimes, DotNetCoreRuntimes>();
-            versionContainer.RegisterType<IDotNetCoreVersion, DotNetCoreVersion>();
-            versionContainer.RegisterType<IRegistryValueFor, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
-            versionContainer.RegisterType<ISourceOsCollection, HklmSystemSetupSourcesInstallDates>();
-            versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
-            versionContainer.RegisterType<IWindowsVersionInformation, WindowsVersionInformation>();
-            versionContainer.RegisterType<ICurrentVersionText, CurrentVersionText>();
-            versionContainer.RegisterType<IWindowsVersionText, WindowsVersionText>();
-            versionContainer.RegisterType<IOtherInformationText, OtherInformationText>();
-            versionContainer.RegisterType<IPasswordExpirationDate, PasswordExpirationDate>();
-            versionContainer.RegisterType<IPasswordExpirationMessage, PasswordExpirationMessage>();
+            //    var versionContainer = new UnityContainer();
+            //    versionContainer.RegisterType<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
+            //    versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
+            //    versionContainer.RegisterType<IDotNetCoreSdks, DotNetCoreSdks>();
+            //    versionContainer.RegisterType<IDotNetCoreRuntimes, DotNetCoreRuntimes>();
+            //    versionContainer.RegisterType<IDotNetCoreVersion, DotNetCoreVersion>();
+            //    versionContainer.RegisterType<IRegistryValueFor, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
+            //    versionContainer.RegisterType<ISourceOsCollection, HklmSystemSetupSourcesInstallDates>();
+            //    versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
+            //    versionContainer.RegisterType<IWindowsVersionInformation, WindowsVersionInformation>();
+            //    versionContainer.RegisterType<ICurrentVersionText, CurrentVersionText>();
+            //    versionContainer.RegisterType<IWindowsVersionText, WindowsVersionText>();
+            //    versionContainer.RegisterType<IOtherInformationText, OtherInformationText>();
+            //    versionContainer.RegisterType<IPasswordExpirationDate, PasswordExpirationDate>();
+            //    versionContainer.RegisterType<IPasswordExpirationMessage, PasswordExpirationMessage>();
 
-            _currentVersionText = versionContainer.Resolve<ICurrentVersionText>().Value;
-            _windowsVersionText = versionContainer.Resolve<IWindowsVersionText>().Value;
-            _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
-            _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
-            _dotNetCoreVersionText = versionContainer.Resolve<IDotNetCoreVersion>().Value;
-            _passwordExpirationMessage = versionContainer.Resolve<IPasswordExpirationMessage>().Value;
-            _sourceOsCollection = versionContainer.Resolve<ISourceOsCollection>().Value;
+            //    _currentVersionText = versionContainer.Resolve<ICurrentVersionText>().Value;
+            //    _windowsVersionText = versionContainer.Resolve<IWindowsVersionText>().Value;
+            //    _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
+            //    _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
+            //    _dotNetCoreVersionText = versionContainer.Resolve<IDotNetCoreVersion>().Value;
+            //    _passwordExpirationMessage = versionContainer.Resolve<IPasswordExpirationMessage>().Value;
+            //    _sourceOsCollection = versionContainer.Resolve<ISourceOsCollection>().Value;
 
-            versionContainer.Dispose();
+            //    versionContainer.Dispose();
             //var temp = string.Empty;
             //DomainInformation.Text = temp;
             //DomainTab.Visibility = (!string.IsNullOrWhiteSpace(temp)).ToVisibility();
+
+            IRegistryValueFor registryValueFor = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
+            IPasswordExpirationDate passwordExpirationDate = new PasswordExpirationDate();
+            IWindowsVersionInformation windowsVersionInformation = new WindowsVersionInformation(registryValueFor, passwordExpirationDate);
+            ICurrentVersionText currentVersionText = new CurrentVersionText(windowsVersionInformation);
+            IWindowsVersionText windowsVersionText = new WindowsVersionText(windowsVersionInformation);
+            IOtherInformationText otherInformationText = new OtherInformationText();
+            IDotNetCoreRuntimes dotNetCoreRuntimes = new DotNetCoreRuntimes();
+            IDotNetCoreSdks dotNetCoreSdks = new DotNetCoreSdks();
+            IDotNetCoreVersion dotNetCoreVersion = new DotNetCoreVersion();
+            IDotNetVersionReleaseKeyMappingList dotNetVersionReleaseKeyMappingList = new DotNetVersionReleaseKeyMappingList();
+            IDotNetVersion dotNetVersion = new DotNetVersion(dotNetVersionReleaseKeyMappingList);
+            IPasswordExpirationMessage passwordExpirationMessage = new PasswordExpirationMessage(windowsVersionInformation, passwordExpirationDate);
+            ISourceOsCollection sourceOsCollection = new HklmSystemSetupSourcesInstallDates();
+
+            _currentVersionText = currentVersionText.Value;
+            _windowsVersionText = windowsVersionText.Value;
+            _otherText = otherInformationText.Value;
+            _dotNetVersionText = dotNetVersion.Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
+            _dotNetCoreVersionText = "currently not working";//dotNetCoreVersion.Value + Environment.NewLine + dotNetCoreRuntimes.Value + Environment.NewLine+ dotNetCoreSdks.Value;
+            _passwordExpirationMessage = passwordExpirationMessage.Value;
+            _sourceOsCollection = sourceOsCollection.Value;
         }
 
 

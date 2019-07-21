@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48;netcoreapp3.0</TargetFrameworks>
+    <Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.hmm))-develop</Version>
+    <Authors>Sebastian Walter</Authors>
+    <Company>evilbaschdi</Company>
+    <Copyright>Copyright © 2014 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="EvilBaschdi.Core" Version="2019.7.21.835-develop" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0-preview6.19304.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.0.0-preview6.19304.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.0.0-preview6.19304.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.0.0-preview6.19304.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0-preview6.19304.6" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0-preview6.19303.8" />
+    <PackageReference Include="Unity" Version="5.11.1" />
+    <PackageReference Include="System.DirectoryServices" Version="4.6.0-preview6.19303.8" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.6.0-preview6.19303.8" />
+    <PackageReference Include="System.Management" Version="4.6.0-preview6.19303.8" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.6.0-preview6.19303.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DotNetVersionReleaseKeyMapping.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
