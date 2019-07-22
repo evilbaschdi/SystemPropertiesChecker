@@ -262,7 +262,7 @@ namespace SystemPropertiesChecker.ViewModel
             _windowsVersionText = windowsVersionText.Value;
             _otherText = otherInformationText.Value;
             _dotNetVersionText = dotNetVersion.Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
-            _dotNetCoreVersionText = "currently not working";//dotNetCoreVersion.Value + Environment.NewLine + dotNetCoreRuntimes.Value + Environment.NewLine+ dotNetCoreSdks.Value;
+            _dotNetCoreVersionText = dotNetCoreVersion.Value + Environment.NewLine + dotNetCoreRuntimes.Value + Environment.NewLine+ dotNetCoreSdks.Value;
             _passwordExpirationMessage = passwordExpirationMessage.Value;
             _sourceOsCollection = sourceOsCollection.Value;
         }

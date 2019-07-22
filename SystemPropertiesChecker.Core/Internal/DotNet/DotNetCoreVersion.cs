@@ -20,6 +20,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                 process.SetHiddenProcessFor("dotnet", "--version");
                 process.Start();
                 stringBuilder.AppendLine(process.StandardOutput.ReadToEnd());
+                stringBuilder.AppendLine();
                 //process.WaitForExit();
                 //}
                 //catch (Exception ex)
