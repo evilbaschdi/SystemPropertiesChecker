@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="EvilBaschdi.Core" Version="2019.7.21.835-develop" />
     <PackageReference Include="Unity" Version="5.11.1" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" PrivateAssets="All" />
   </ItemGroup>
 
 

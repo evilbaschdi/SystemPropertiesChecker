@@ -46,14 +46,12 @@ namespace SystemPropertiesChecker.Core
         /// <param name="arguments"></param>
         public static void SetHiddenProcessFor(this Process process, string fileName, string arguments)
         {
-            process.StartInfo = new ProcessStartInfo
+            process.StartInfo = new ProcessStartInfo(fileName, arguments)
                                 {
                                     UseShellExecute = false,
                                     CreateNoWindow = true,
                                     RedirectStandardOutput = true,
-                                    RedirectStandardError = true,
-                                    FileName = fileName,
-                                    Arguments = arguments
+                                    RedirectStandardError = true
                                 };
         }
     }

@@ -43,6 +43,7 @@
     <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0409" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0188" />
     <PackageReference Include="Unity" Version="5.11.1" />
+  <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj" />

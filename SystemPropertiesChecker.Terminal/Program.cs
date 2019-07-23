@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
@@ -10,7 +9,7 @@ namespace SystemPropertiesChecker.Terminal
     {
         static void Main(string[] args)
         {
-           IRegistryValueFor registryValueFor = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
+            IRegistryValueFor registryValueFor = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
             IPasswordExpirationDate passwordExpirationDate = new PasswordExpirationDate();
             IWindowsVersionInformation windowsVersionInformation = new WindowsVersionInformation(registryValueFor, passwordExpirationDate);
             ICurrentVersionText currentVersionText = new CurrentVersionText(windowsVersionInformation);
@@ -49,8 +48,16 @@ namespace SystemPropertiesChecker.Terminal
             Console.WriteLine(dotNetVersion.Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}"));
             Console.WriteLine("---");
 
-            Console.WriteLine("## .NET CORE ##");
-            Console.WriteLine("{0}{1}{2}{1}{3}", dotNetCoreVersion.Value, Environment.NewLine, dotNetCoreRuntimes.Value, dotNetCoreSdks.Value);
+            Console.WriteLine("## .NET CORE VERSION ##");
+            Console.WriteLine(dotNetCoreVersion.Value);
+            Console.WriteLine("---");
+
+            Console.WriteLine("## .NET CORE SDKS ##");
+            Console.WriteLine(dotNetCoreSdks.Value);
+            Console.WriteLine("---");
+
+            Console.WriteLine("## .NET CORE RUNTIMES ##");
+            Console.WriteLine(dotNetCoreRuntimes.Value);
 
             Console.ReadLine();
         }

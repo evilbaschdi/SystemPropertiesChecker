@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace SystemPropertiesChecker.Core.Internal.DotNet
@@ -14,22 +15,22 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                 var stringBuilder = new StringBuilder();
                 stringBuilder.AppendLine("currently installed version:");
 
-                //try
-                //{
-                var process = new Process();
-                process.SetHiddenProcessFor("dotnet", "--version");
-                process.Start();
-                stringBuilder.AppendLine(process.StandardOutput.ReadToEnd());
-                stringBuilder.AppendLine();
-                //process.WaitForExit();
-                //}
-                //catch (Exception ex)
-                //{
-                //    Console.WriteLine(ex.Message);
-                //    stringBuilder.AppendLine("(none)");
-                //}
+                try
+                {
+                    var process = new Process();
+                    process.SetHiddenProcessFor("dotnet", "--version");
+                    process.Start();
+                    stringBuilder.AppendLine(process.StandardOutput.ReadToEnd().Trim());
 
-                return stringBuilder.ToString().Trim();
+                    process.Close();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    stringBuilder.AppendLine("(none)");
+                }
+
+                return stringBuilder.ToString();
             }
         }
     }
