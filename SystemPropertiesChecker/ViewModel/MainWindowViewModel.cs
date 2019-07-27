@@ -14,6 +14,7 @@ using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
 using JetBrains.Annotations;
 using MahApps.Metro.Controls.Dialogs;
+using Unity;
 
 namespace SystemPropertiesChecker.ViewModel
 {
@@ -24,6 +25,7 @@ namespace SystemPropertiesChecker.ViewModel
     public class MainWindowViewModel : ApplicationStyleViewModel
     {
         private readonly IThemeManagerHelper _themeManagerHelper;
+        private readonly IVersionContainer _versionContainer;
         private ProgressDialogController _controller;
         private string _currentVersionText;
         private string _dotNetCoreVersionText;
@@ -42,10 +44,11 @@ namespace SystemPropertiesChecker.ViewModel
         /// <summary>
         ///     Constructor
         /// </summary>
-        protected internal MainWindowViewModel([NotNull] IThemeManagerHelper themeManagerHelper)
+        protected internal MainWindowViewModel([NotNull] IThemeManagerHelper themeManagerHelper, [NotNull] IVersionContainer versionContainer)
             : base(themeManagerHelper)
         {
             _themeManagerHelper = themeManagerHelper ?? throw new ArgumentNullException(nameof(themeManagerHelper));
+            _versionContainer = versionContainer ?? throw new ArgumentNullException(nameof(versionContainer));
             Reload = new DefaultCommand
                      {
                          Text = "reload",
@@ -215,56 +218,60 @@ namespace SystemPropertiesChecker.ViewModel
 
         private void RunVersionChecks()
         {
-            //    var versionContainer = new UnityContainer();
-            //    versionContainer.RegisterType<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
-            //    versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
-            //    versionContainer.RegisterType<IDotNetCoreSdks, DotNetCoreSdks>();
-            //    versionContainer.RegisterType<IDotNetCoreRuntimes, DotNetCoreRuntimes>();
-            //    versionContainer.RegisterType<IDotNetCoreVersion, DotNetCoreVersion>();
-            //    versionContainer.RegisterType<IRegistryValueFor, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
-            //    versionContainer.RegisterType<ISourceOsCollection, HklmSystemSetupSourcesInstallDates>();
-            //    versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
-            //    versionContainer.RegisterType<IWindowsVersionInformation, WindowsVersionInformation>();
-            //    versionContainer.RegisterType<ICurrentVersionText, CurrentVersionText>();
-            //    versionContainer.RegisterType<IWindowsVersionText, WindowsVersionText>();
-            //    versionContainer.RegisterType<IOtherInformationText, OtherInformationText>();
-            //    versionContainer.RegisterType<IPasswordExpirationDate, PasswordExpirationDate>();
-            //    versionContainer.RegisterType<IPasswordExpirationMessage, PasswordExpirationMessage>();
+            //var versionContainer = new UnityContainer();
+            //versionContainer.RegisterType<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
+            //versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
+            //versionContainer.RegisterType<IDotNetCoreSdks, DotNetCoreSdks>();
+            //versionContainer.RegisterType<IDotNetCoreRuntimes, DotNetCoreRuntimes>();
+            //versionContainer.RegisterType<IDotNetCoreVersion, DotNetCoreVersion>();
+            //versionContainer.RegisterType<IRegistryValueFor, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
+            //versionContainer.RegisterType<ISourceOsCollection, HklmSystemSetupSourcesInstallDates>();
+            //versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
+            //versionContainer.RegisterType<IWindowsVersionInformation, WindowsVersionInformation>();
+            //versionContainer.RegisterType<ICurrentVersionText, CurrentVersionText>();
+            //versionContainer.RegisterType<IWindowsVersionText, WindowsVersionText>();
+            //versionContainer.RegisterType<IOtherInformationText, OtherInformationText>();
+            //versionContainer.RegisterType<IPasswordExpirationDate, PasswordExpirationDate>();
+            //versionContainer.RegisterType<IPasswordExpirationMessage, PasswordExpirationMessage>();
 
-            //    _currentVersionText = versionContainer.Resolve<ICurrentVersionText>().Value;
-            //    _windowsVersionText = versionContainer.Resolve<IWindowsVersionText>().Value;
-            //    _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
-            //    _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
-            //    _dotNetCoreVersionText = versionContainer.Resolve<IDotNetCoreVersion>().Value;
-            //    _passwordExpirationMessage = versionContainer.Resolve<IPasswordExpirationMessage>().Value;
-            //    _sourceOsCollection = versionContainer.Resolve<ISourceOsCollection>().Value;
+            var versionContainer = _versionContainer.Value;
 
-            //    versionContainer.Dispose();
+            _currentVersionText = versionContainer.Resolve<ICurrentVersionText>().Value;
+            _windowsVersionText = versionContainer.Resolve<IWindowsVersionText>().Value;
+            _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
+            _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
+            _dotNetCoreVersionText =
+                $"{versionContainer.Resolve<IDotNetCoreVersion>().Value}{Environment.NewLine}{versionContainer.Resolve<IDotNetCoreRuntimes>().Value}{Environment.NewLine}{versionContainer.Resolve<IDotNetCoreSdks>().Value}";
+
+            _passwordExpirationMessage = versionContainer.Resolve<IPasswordExpirationMessage>().Value;
+            _sourceOsCollection = versionContainer.Resolve<ISourceOsCollection>().Value;
+
+            versionContainer.Dispose();
             //var temp = string.Empty;
             //DomainInformation.Text = temp;
             //DomainTab.Visibility = (!string.IsNullOrWhiteSpace(temp)).ToVisibility();
 
-            IRegistryValueFor registryValueFor = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
-            IPasswordExpirationDate passwordExpirationDate = new PasswordExpirationDate();
-            IWindowsVersionInformation windowsVersionInformation = new WindowsVersionInformation(registryValueFor, passwordExpirationDate);
-            ICurrentVersionText currentVersionText = new CurrentVersionText(windowsVersionInformation);
-            IWindowsVersionText windowsVersionText = new WindowsVersionText(windowsVersionInformation);
-            IOtherInformationText otherInformationText = new OtherInformationText();
-            IDotNetCoreRuntimes dotNetCoreRuntimes = new DotNetCoreRuntimes();
-            IDotNetCoreSdks dotNetCoreSdks = new DotNetCoreSdks();
-            IDotNetCoreVersion dotNetCoreVersion = new DotNetCoreVersion();
-            IDotNetVersionReleaseKeyMappingList dotNetVersionReleaseKeyMappingList = new DotNetVersionReleaseKeyMappingList();
-            IDotNetVersion dotNetVersion = new DotNetVersion(dotNetVersionReleaseKeyMappingList);
-            IPasswordExpirationMessage passwordExpirationMessage = new PasswordExpirationMessage(windowsVersionInformation, passwordExpirationDate);
-            ISourceOsCollection sourceOsCollection = new HklmSystemSetupSourcesInstallDates();
+            //IRegistryValueFor registryValueFor = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
+            //IPasswordExpirationDate passwordExpirationDate = new PasswordExpirationDate();
+            //IWindowsVersionInformation windowsVersionInformation = new WindowsVersionInformation(registryValueFor, passwordExpirationDate);
+            //ICurrentVersionText currentVersionText = new CurrentVersionText(windowsVersionInformation);
+            //IWindowsVersionText windowsVersionText = new WindowsVersionText(windowsVersionInformation);
+            //IOtherInformationText otherInformationText = new OtherInformationText();
+            //IDotNetCoreRuntimes dotNetCoreRuntimes = new DotNetCoreRuntimes();
+            //IDotNetCoreSdks dotNetCoreSdks = new DotNetCoreSdks();
+            //IDotNetCoreVersion dotNetCoreVersion = new DotNetCoreVersion();
+            //IDotNetVersionReleaseKeyMappingList dotNetVersionReleaseKeyMappingList = new DotNetVersionReleaseKeyMappingList();
+            //IDotNetVersion dotNetVersion = new DotNetVersion(dotNetVersionReleaseKeyMappingList);
+            //IPasswordExpirationMessage passwordExpirationMessage = new PasswordExpirationMessage(windowsVersionInformation, passwordExpirationDate);
+            //ISourceOsCollection sourceOsCollection = new HklmSystemSetupSourcesInstallDates();
 
-            _currentVersionText = currentVersionText.Value;
-            _windowsVersionText = windowsVersionText.Value;
-            _otherText = otherInformationText.Value;
-            _dotNetVersionText = dotNetVersion.Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
-            _dotNetCoreVersionText = dotNetCoreVersion.Value + Environment.NewLine + dotNetCoreRuntimes.Value + Environment.NewLine+ dotNetCoreSdks.Value;
-            _passwordExpirationMessage = passwordExpirationMessage.Value;
-            _sourceOsCollection = sourceOsCollection.Value;
+            //_currentVersionText = currentVersionText.Value;
+            //_windowsVersionText = windowsVersionText.Value;
+            //_otherText = otherInformationText.Value;
+            //_dotNetVersionText = dotNetVersion.Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
+            //_dotNetCoreVersionText = dotNetCoreVersion.Value + Environment.NewLine + dotNetCoreRuntimes.Value + Environment.NewLine+ dotNetCoreSdks.Value;
+            //_passwordExpirationMessage = passwordExpirationMessage.Value;
+            //_sourceOsCollection = sourceOsCollection.Value;
         }
 
 

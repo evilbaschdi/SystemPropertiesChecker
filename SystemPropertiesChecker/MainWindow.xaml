@@ -5,7 +5,7 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" mc:Ignorable="d" WindowStartupLocation="CenterScreen" Icon="b.ico"
-                      Title="System Properties Checker" Width="600" Height="250" GlowBrush="{DynamicResource AccentColorBrush}"
+                      Title="System Properties Checker" Width="600" Height="250" GlowBrush="{DynamicResource MahApps.Brushes.AccentBase}"
                       TitleCharacterCasing="Normal">
 
     <!--  RightWindowCommands  -->
@@ -69,7 +69,7 @@
                     </TabItem>
                     <TabItem Name="WindowsHistoryTap" Header="history" ToolTip="History">
                         <DataGrid Name="WindowsHistory" Margin="0" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Single" ColumnWidth="*"
-                                  Style="{DynamicResource AzureDataGrid}" GridLinesVisibility="Horizontal" CanUserDeleteRows="False" AutoGenerateColumns="False"
+                                  Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" GridLinesVisibility="Horizontal" CanUserDeleteRows="False" AutoGenerateColumns="False"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
                                   HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding SourceOsCollection}" VerticalScrollBarVisibility="Auto">
                             <DataGrid.Columns>

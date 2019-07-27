@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.ViewModel;
 using EvilBaschdi.CoreExtended.Metro;
 using MahApps.Metro.Controls;
@@ -32,7 +33,8 @@ namespace SystemPropertiesChecker
             //}
 
             IThemeManagerHelper themeManagerHelper = new ThemeManagerHelper();
-            _mainWindowViewModel = new MainWindowViewModel(themeManagerHelper);
+            IVersionContainer versionContainer = new VersionContainer();
+            _mainWindowViewModel = new MainWindowViewModel(themeManagerHelper, versionContainer);
             Loaded += MainWindowLoaded;
         }
 
@@ -50,6 +52,7 @@ namespace SystemPropertiesChecker
                     currentWindow.Close();
                 }
             }
+
             base.OnClosed(e);
         }
     }

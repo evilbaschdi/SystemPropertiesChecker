@@ -4,6 +4,7 @@
     <TargetFrameworks>net48;netcoreapp3.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <Version>$([System.DateTime]::UtcNow.AddHours(2).ToString(yyyy.M.d.Hmm))-develop</Version>
   </PropertyGroup>
 
   <ItemGroup>
