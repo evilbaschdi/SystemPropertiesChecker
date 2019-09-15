@@ -136,7 +136,6 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                 throw new ArgumentNullException(nameof(releaseKey));
             }
 
-
             //releaseKey = 460900;
             var value = _dotNetVersionReleaseKeyMappingList.ValueFor(releaseKey);
             return !string.IsNullOrWhiteSpace(value) ? $"{value} (Release key: '{releaseKey}')" : "No 4.5 or later version detected";
