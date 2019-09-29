@@ -1,7 +1,10 @@
-using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using SystemPropertiesChecker.Core.Models;
 using Microsoft.Win32;
 
 namespace SystemPropertiesChecker.Core.Internal
@@ -28,8 +31,18 @@ namespace SystemPropertiesChecker.Core.Internal
                     psVersion = GetPowerShellVersion(1);
                 }
 
+                var stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine($"Internet Explorer: {GetIeVersion()}");
 
-                return $"Internet Explorer: {GetIeVersion()}{Environment.NewLine}PowerShell: {psVersion}{Environment.NewLine}Git for Windows: {GetGitVersion()}";
+                foreach (var browser in GetBrowsers())
+                {
+                    stringBuilder.AppendLine($"{browser.Name}: {browser.Version}");
+                }
+
+                stringBuilder.AppendLine($"PowerShell: {psVersion}");
+                stringBuilder.AppendLine($"Git for Windows: {GetGitVersion()}");
+
+                return stringBuilder.ToString();
             }
         }
 
@@ -59,8 +72,8 @@ namespace SystemPropertiesChecker.Core.Internal
                 return "(not found)";
             }
 
-            var versInfo = FileVersionInfo.GetVersionInfo(Path.Combine(programFiles, "git.exe"));
-            return $"{versInfo.FileMajorPart}.{versInfo.FileMinorPart}.{versInfo.FileBuildPart}.{versInfo.FilePrivatePart}";
+            var versionInfo = FileVersionInfo.GetVersionInfo(Path.Combine(programFiles, "git.exe"));
+            return $"{versionInfo.FileMajorPart}.{versionInfo.FileMinorPart}.{versionInfo.FileBuildPart}.{versionInfo.FilePrivatePart}";
         }
 
         private static string GetPowerShellVersion(int version)
@@ -80,6 +93,77 @@ namespace SystemPropertiesChecker.Core.Internal
         {
             var value = Registry.GetValue($@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\{version}", "Install", null)?.ToString();
             return !string.IsNullOrWhiteSpace(value) && value.Equals("1");
+        }
+
+        private static IEnumerable<Browser> GetBrowsers()
+        {
+            var browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Clients\StartMenuInternet") ??
+                              Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Clients\StartMenuInternet");
+
+            var browserNames = browserKeys?.GetSubKeyNames();
+            var browsers = new List<Browser>();
+            if (browserNames != null)
+            {
+                foreach (var browserName in browserNames)
+                {
+                    var browserKey = browserKeys.OpenSubKey(browserName);
+                    if (browserKey == null)
+                    {
+                        continue;
+                    }
+
+                    var browser = new Browser
+                                  {
+                                      Name = (string) browserKey.GetValue(null)
+                                  };
+
+                    if (browser.Name.Equals("Internet Explorer"))
+                    {
+                        continue;
+                    }
+
+                    var browserKeyPath = browserKey.OpenSubKey(@"shell\open\command");
+                    if (browserKeyPath != null)
+                    {
+                        browser.Path = browserKeyPath.GetValue(null).ToString().Replace("\"", "");
+                    }
+
+                    browser.Version = browser.Path != null ? FileVersionInfo.GetVersionInfo(browser.Path).FileVersion : "unknown";
+                    browsers.Add(browser);
+                }
+            }
+
+            var edgeBrowser = GetEdgeVersion();
+            if (edgeBrowser != null)
+            {
+                browsers.Add(edgeBrowser);
+            }
+
+            return browsers;
+        }
+
+        private static Browser GetEdgeVersion()
+        {
+            var edgeKey =
+                Registry.CurrentUser.OpenSubKey(
+                    @"SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppModel\SystemAppData\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\Schemas");
+            if (edgeKey == null)
+            {
+                return null;
+            }
+
+            var version = edgeKey.GetValue("PackageFullName").ToString().Replace("\"", "");
+            var result = Regex.Match(version, "(((([0-9.])\\d)+){1})");
+            if (result.Success)
+            {
+                return new Browser
+                       {
+                           Name = "MicrosoftEdge",
+                           Version = result.Value
+                       };
+            }
+
+            return null;
         }
     }
 }

@@ -9,18 +9,18 @@
     <LangVersion>8</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="EvilBaschdi.Core" Version="2019.9.4.822-develop" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0-preview9.19423.4" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.0.0-preview9.19423.4" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.0.0-preview9.19423.4" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.0.0-preview9.19423.4" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0-preview9.19423.4" />
-    <PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0-preview9.19421.4" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2019.9.25.1959" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0" />
     <PackageReference Include="Unity" Version="5.11.1" />
-    <PackageReference Include="System.DirectoryServices" Version="4.6.0-preview9.19421.4" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.6.0-preview9.19421.4" />
-    <PackageReference Include="System.Management" Version="4.6.0-preview9.19421.4" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.6.0-preview9.19421.4" />
+    <PackageReference Include="System.DirectoryServices" Version="4.6.0" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.6.0" />
+    <PackageReference Include="System.Management" Version="4.6.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.6.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

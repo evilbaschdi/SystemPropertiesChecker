@@ -111,7 +111,7 @@
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconMaterial Kind="Visualstudio" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <iconPacks:PackIconModern Kind="FrameworkNet" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
                 </TabItem.HeaderTemplate>

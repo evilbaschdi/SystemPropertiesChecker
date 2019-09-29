@@ -10,20 +10,6 @@ namespace SystemPropertiesChecker.Terminal
     {
         static void Main(string[] args)
         {
-            //IRegistryValueFor registryValueFor = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
-            //IPasswordExpirationDate passwordExpirationDate = new PasswordExpirationDate();
-            //IWindowsVersionInformation windowsVersionInformation = new WindowsVersionInformation(registryValueFor, passwordExpirationDate);
-            //ICurrentVersionText currentVersionText = new CurrentVersionText(windowsVersionInformation);
-            //IWindowsVersionText windowsVersionText = new WindowsVersionText(windowsVersionInformation);
-            //IOtherInformationText otherInformationText = new OtherInformationText();
-            //IDotNetCoreRuntimes dotNetCoreRuntimes = new DotNetCoreRuntimes();
-            //IDotNetCoreSdks dotNetCoreSdks = new DotNetCoreSdks();
-            //IDotNetCoreVersion dotNetCoreVersion = new DotNetCoreVersion();
-            //IDotNetVersionReleaseKeyMappingList dotNetVersionReleaseKeyMappingList = new DotNetVersionReleaseKeyMappingList();
-            //IDotNetVersion dotNetVersion = new DotNetVersion(dotNetVersionReleaseKeyMappingList);
-            //ISourceOsCollection sourceOsCollection = new HklmSystemSetupSourcesInstallDates();
-
-
             IVersionContainer versionContainer = new VersionContainer();
             var versionContainerValue = versionContainer.Value;
 

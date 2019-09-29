@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EvilBaschdi.Core" Version="2019.9.4.822-develop" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2019.9.25.1959" />
     <PackageReference Include="Unity" Version="5.11.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01">
       <PrivateAssets>all</PrivateAssets>
