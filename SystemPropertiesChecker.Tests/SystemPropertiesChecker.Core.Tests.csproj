@@ -19,7 +19,7 @@
     <PackageReference Include="FluentAssertions" Version="5.9.0" />
     <PackageReference Include="NCrunch.Framework" Version="3.17.0" />
     <PackageReference Include="NSubstitute" Version="4.2.1" />
-    <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.10" />
+    <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.11" />
     <PackageReference Include="System.ValueTuple" version="4.5.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.0-preview.18571.3" />

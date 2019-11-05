@@ -8,7 +8,7 @@ namespace SystemPropertiesChecker.Terminal
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             IVersionContainer versionContainer = new VersionContainer();
             var versionContainerValue = versionContainer.Value;
@@ -37,7 +37,7 @@ namespace SystemPropertiesChecker.Terminal
             Console.WriteLine("{0,20}|{1,20}|{2,20}|{3,20}", "Build", "Product Name", "Release Id", "Install Date");
             foreach (var sourceOs in sourceOsCollection)
             {
-                Console.WriteLine("{0,20}|{1,20}|{2,20}|{3,20:yyyy-MM-dd hh:mm:ss}", sourceOs.Build, sourceOs.ProductName, sourceOs.ReleaseId, sourceOs.InstallDate);
+                Console.WriteLine("{0,20}|{1,20}|{2,20}|{3,20:yyyy-MM-dd HH:mm:ss}", sourceOs.Build, sourceOs.ProductName, sourceOs.ReleaseId, sourceOs.InstallDate);
             }
 
             Console.WriteLine("---");

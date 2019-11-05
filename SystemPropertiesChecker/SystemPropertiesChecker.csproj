@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -7,8 +7,9 @@
     <ApplicationIcon>b.ico</ApplicationIcon>
     <Version>$([System.DateTime]::UtcNow.AddHours(2).ToString(yyyy.M.d.Hmm))-develop</Version>
     <Authors>Sebastian Walter</Authors>
-    <Company>evilbaschdi</Company>
-    <Copyright>Copyright © 2014 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
+    <Company>evilbaschdi (Sebastian Walter)</Company>
+    <Copyright>Copyright � 2014 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\SystemPropertiesChecker.xml</DocumentationFile>
     <PackageProjectUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</PackageProjectUrl>
     <PackageIconUrl>https://github.com/evilbaschdi/SystemPropertiesChecker/blob/master/SystemPropertiesChecker/b.ico</PackageIconUrl>
     <RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
@@ -37,11 +38,11 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="4.1.0" />
-    <PackageReference Include="EvilBaschdi.Core" Version="2019.9.25.1959" />
-    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2019.9.25.2011-develop" />
-    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0490" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0223" />
+    <PackageReference Include="ControlzEx" Version="4.1.1" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2019.10.10.1115-develop" />
+    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2019.10.21.1930-develop" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0531" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0257" />
     <PackageReference Include="Unity" Version="5.11.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01">
       <PrivateAssets>all</PrivateAssets>

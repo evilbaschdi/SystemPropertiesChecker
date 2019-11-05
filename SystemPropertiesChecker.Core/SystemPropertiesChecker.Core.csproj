@@ -9,7 +9,7 @@
     <LangVersion>8</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="EvilBaschdi.Core" Version="2019.9.25.1959" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2019.10.10.1115-develop" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.0.0" />
