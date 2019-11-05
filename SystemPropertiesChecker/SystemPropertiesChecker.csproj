@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -8,7 +8,7 @@
     <Version>$([System.DateTime]::UtcNow.AddHours(2).ToString(yyyy.M.d.Hmm))-develop</Version>
     <Authors>Sebastian Walter</Authors>
     <Company>evilbaschdi (Sebastian Walter)</Company>
-    <Copyright>Copyright � 2014 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
+    <Copyright>Copyright © 2014 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\SystemPropertiesChecker.xml</DocumentationFile>
     <PackageProjectUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</PackageProjectUrl>
     <PackageIconUrl>https://github.com/evilbaschdi/SystemPropertiesChecker/blob/master/SystemPropertiesChecker/b.ico</PackageIconUrl>
