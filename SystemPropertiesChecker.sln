@@ -5,11 +5,20 @@ VisualStudioVersion = 16.0.28516.95
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPropertiesChecker", "SystemPropertiesChecker\SystemPropertiesChecker.csproj", "{2CBB6DF7-363C-41B0-B38F-2BC75512F312}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemPropertiesChecker.Core.Tests", "SystemPropertiesChecker.Tests\SystemPropertiesChecker.Core.Tests.csproj", "{D13C954D-41D8-42F0-8A59-9CA5F55C4CEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPropertiesChecker.Core.Tests", "SystemPropertiesChecker.Tests\SystemPropertiesChecker.Core.Tests.csproj", "{D13C954D-41D8-42F0-8A59-9CA5F55C4CEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemPropertiesChecker.Terminal", "SystemPropertiesChecker.Terminal\SystemPropertiesChecker.Terminal.csproj", "{4C6D0722-0B3A-4BFD-85A2-D1A44EB10AAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPropertiesChecker.Terminal", "SystemPropertiesChecker.Terminal\SystemPropertiesChecker.Terminal.csproj", "{4C6D0722-0B3A-4BFD-85A2-D1A44EB10AAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemPropertiesChecker.Core", "SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj", "{C0D5924B-40F7-41EC-B060-137BEC6DF66B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPropertiesChecker.Core", "SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj", "{C0D5924B-40F7-41EC-B060-137BEC6DF66B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E2F96A5A-E1A9-4009-8954-A122824EA1AF}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		global.json = global.json
+		NuGet.config = NuGet.config
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
