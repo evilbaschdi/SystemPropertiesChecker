@@ -96,12 +96,17 @@ namespace SystemPropertiesChecker.Core.Internal
         }
 
         private static IEnumerable<Browser> GetBrowsers()
-        {
+        {  
+                
+           
+            var browsers = new List<Browser>();
+       
+            try
+            {
             var browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Clients\StartMenuInternet") ??
                               Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Clients\StartMenuInternet");
 
             var browserNames = browserKeys?.GetSubKeyNames();
-            var browsers = new List<Browser>();
             if (browserNames != null)
             {
                 foreach (var browserName in browserNames)
@@ -138,7 +143,12 @@ namespace SystemPropertiesChecker.Core.Internal
             {
                 browsers.Add(edgeBrowser);
             }
-
+ }
+            catch (System.Exception)
+            {
+                
+                
+            }
             return browsers;
         }
 
