@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -96,59 +97,62 @@ namespace SystemPropertiesChecker.Core.Internal
         }
 
         private static IEnumerable<Browser> GetBrowsers()
-        {  
-                
-           
+        {
             var browsers = new List<Browser>();
-       
+
             try
             {
-            var browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Clients\StartMenuInternet") ??
-                              Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Clients\StartMenuInternet");
+                var browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Clients\StartMenuInternet") ??
+                                  Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Clients\StartMenuInternet");
 
-            var browserNames = browserKeys?.GetSubKeyNames();
-            if (browserNames != null)
-            {
-                foreach (var browserName in browserNames)
+                var browserNames = browserKeys?.GetSubKeyNames();
+                if (browserNames != null)
                 {
-                    var browserKey = browserKeys.OpenSubKey(browserName);
-                    if (browserKey == null)
+                    foreach (var browserName in browserNames)
                     {
-                        continue;
+                        var browserKey = browserKeys.OpenSubKey(browserName);
+                        if (browserKey == null)
+                        {
+                            continue;
+                        }
+
+                        var browser = new Browser
+                                      {
+                                          Name = (string) browserKey.GetValue(null)
+                                      };
+
+                        if (browser.Name.Equals("Internet Explorer"))
+                        {
+                            continue;
+                        }
+
+                        var browserKeyPath = browserKey.OpenSubKey(@"shell\open\command");
+                        if (browserKeyPath != null)
+                        {
+                            browser.Path = browserKeyPath.GetValue(null).ToString().Replace("\"", "");
+                        }
+
+                        browser.Version = browser.Path != null ? FileVersionInfo.GetVersionInfo(browser.Path).FileVersion : "unknown";
+                        browsers.Add(browser);
                     }
+                }
 
-                    var browser = new Browser
-                                  {
-                                      Name = (string) browserKey.GetValue(null)
-                                  };
-
-                    if (browser.Name.Equals("Internet Explorer"))
-                    {
-                        continue;
-                    }
-
-                    var browserKeyPath = browserKey.OpenSubKey(@"shell\open\command");
-                    if (browserKeyPath != null)
-                    {
-                        browser.Path = browserKeyPath.GetValue(null).ToString().Replace("\"", "");
-                    }
-
-                    browser.Version = browser.Path != null ? FileVersionInfo.GetVersionInfo(browser.Path).FileVersion : "unknown";
-                    browsers.Add(browser);
+                var edgeBrowser = GetEdgeVersion();
+                if (edgeBrowser != null)
+                {
+                    browsers.Add(edgeBrowser);
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                browsers.Add(new Browser
+                             {
+                                 Name = "Error",
+                                 Version = e.Message
+                             });
+            }
 
-            var edgeBrowser = GetEdgeVersion();
-            if (edgeBrowser != null)
-            {
-                browsers.Add(edgeBrowser);
-            }
- }
-            catch (System.Exception)
-            {
-                
-                
-            }
             return browsers;
         }
 
