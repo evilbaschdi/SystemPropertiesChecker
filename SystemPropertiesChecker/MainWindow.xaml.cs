@@ -15,8 +15,6 @@ namespace SystemPropertiesChecker
     {
         private readonly MainWindowViewModel _mainWindowViewModel;
 
-        //private read only UnityContainer _coreContainer;
-
         /// <inheritdoc />
         /// <summary>
         ///     MainWindow
@@ -25,12 +23,6 @@ namespace SystemPropertiesChecker
         {
             InitializeComponent();
 
-            //if (Settings.Default.UpgradeRequired)
-            //{
-            //    Settings.Default.Upgrade();
-            //    Settings.Default.UpgradeRequired = false;
-            //    Settings.Default.Save();
-            //}
 
             IThemeManagerHelper themeManagerHelper = new ThemeManagerHelper();
             IVersionContainer versionContainer = new VersionContainer();
@@ -43,6 +35,7 @@ namespace SystemPropertiesChecker
             DataContext = _mainWindowViewModel;
         }
 
+        /// <inheritdoc />
         protected override void OnClosed(EventArgs e)
         {
             foreach (Window currentWindow in Application.Current.Windows)

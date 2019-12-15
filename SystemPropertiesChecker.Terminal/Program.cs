@@ -13,23 +13,25 @@ namespace SystemPropertiesChecker.Terminal
             IVersionContainer versionContainer = new VersionContainer();
             var versionContainerValue = versionContainer.Value;
 
-            var currentVersionText = versionContainerValue.Resolve<ICurrentVersionText>().Value;
-            var windowsVersionText = versionContainerValue.Resolve<IWindowsVersionText>().Value;
+            var currentVersionText = versionContainerValue.Resolve<IWindowsVersionDictionary>().Value;
             var otherText = versionContainerValue.Resolve<IOtherInformationText>().Value;
             var dotNetVersionText = versionContainerValue.Resolve<IDotNetVersion>().Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
-            var dotNetCoreRuntimes = versionContainerValue.Resolve<IDotNetCoreRuntimes>().Value;
-            var dotNetCoreSdks = versionContainerValue.Resolve<IDotNetCoreSdks>().Value;
-            var dotNetCoreVersion = versionContainerValue.Resolve<IDotNetCoreVersion>().Value;
+            //var dotNetCoreRuntimes = versionContainerValue.Resolve<IDotNetCoreRuntimes>().Value;
+            //var dotNetCoreSdks = versionContainerValue.Resolve<IDotNetCoreSdks>().Value;
+            //var dotNetCoreVersion = versionContainerValue.Resolve<IDotNetCoreVersion>().Value;
+            var dotNetCoreInfo = versionContainerValue.Resolve<IDotNetCoreInfo>().Value;
             var sourceOsCollection = versionContainerValue.Resolve<ISourceOsCollection>().Value;
+
 
             versionContainerValue.Dispose();
 
-            Console.WriteLine("## BASIC ##");
-            Console.WriteLine(currentVersionText);
-            Console.WriteLine("---");
-
             Console.WriteLine("## WINDOWS ##");
-            Console.WriteLine(windowsVersionText);
+            Console.WriteLine("{0,50}|{1,50}", "Key", "Value");
+            foreach (var item in currentVersionText)
+            {
+                Console.WriteLine("{0,50}|{1,50}", item.Key, item.Value);
+            }
+
             Console.WriteLine("---");
 
             Console.WriteLine("## HISTORY ##");
@@ -50,16 +52,18 @@ namespace SystemPropertiesChecker.Terminal
             Console.WriteLine(dotNetVersionText);
             Console.WriteLine("---");
 
-            Console.WriteLine("## .NET CORE VERSION ##");
-            Console.WriteLine(dotNetCoreVersion);
-            Console.WriteLine("---");
+            //Console.WriteLine("## .NET CORE VERSION ##");
+            //Console.WriteLine(dotNetCoreVersion);
+            //Console.WriteLine("---");
 
-            Console.WriteLine("## .NET CORE SDKS ##");
-            Console.WriteLine(dotNetCoreSdks);
-            Console.WriteLine("---");
+            //Console.WriteLine("## .NET CORE SDKS ##");
+            //Console.WriteLine(dotNetCoreSdks);
+            //Console.WriteLine("---");
 
-            Console.WriteLine("## .NET CORE RUNTIMES ##");
-            Console.WriteLine(dotNetCoreRuntimes);
+            //Console.WriteLine("## .NET CORE RUNTIMES ##");
+            //Console.WriteLine(dotNetCoreRuntimes);
+
+            Console.WriteLine(dotNetCoreInfo);
 
             Console.ReadLine();
         }

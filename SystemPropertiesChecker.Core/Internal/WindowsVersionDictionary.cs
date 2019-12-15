@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Text;
 
 namespace SystemPropertiesChecker.Core.Internal
 {
@@ -11,7 +11,7 @@ namespace SystemPropertiesChecker.Core.Internal
     ///     Class that provides a WindowsVersionInformationStack.
     /// </summary>
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class CurrentVersionText : ICurrentVersionText
+    public class WindowsVersionDictionary : IWindowsVersionDictionary
     {
         private static string _ipAddressV4;
         private static string _ipAddressV6;
@@ -20,7 +20,7 @@ namespace SystemPropertiesChecker.Core.Internal
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
-        public CurrentVersionText(IWindowsVersionInformation windowsVersionInformation)
+        public WindowsVersionDictionary(IWindowsVersionInformation windowsVersionInformation)
         {
             _windowsVersionInformation = windowsVersionInformation ?? throw new ArgumentNullException(nameof(windowsVersionInformation));
         }
@@ -28,33 +28,42 @@ namespace SystemPropertiesChecker.Core.Internal
         /// <summary>
         ///     Contains a string of WindowsVersionInfromation.
         /// </summary>
-        public string Value
+        public Dictionary<string, string> Value
         {
             get
             {
+                var dictionary = new Dictionary<string, string>();
                 var values = _windowsVersionInformation.Value;
                 GetLocalIpAddress();
 
-                var sb = new StringBuilder();
-                sb.AppendLine($"Computername: {values.Computername}");
+                dictionary.Add("Device Name", values.Computername);
+                dictionary.Add("Current IP v4", _ipAddressV4);
+                dictionary.Add("Current IP v6", _ipAddressV6);
                 if (!string.IsNullOrWhiteSpace(values.Domain))
                 {
-                    sb.AppendLine($"Domain: {values.Domain}");
-                    sb.AppendLine($"Current user: {values.UserName} | Password expiration date: {values.PasswordExpirationDate}");
+                    dictionary.Add("Domain", values.Domain);
+                    dictionary.Add("Current user", values.UserName);
+                    dictionary.Add("Password expiration date", values.PasswordExpirationDate);
                 }
 
-                sb.AppendLine($"Current IP (v4): {_ipAddressV4}");
-                sb.AppendLine($"Current IP (v6): {_ipAddressV6}");
-                sb.AppendLine($"Product Name: {values.ProductName}{values.CsdVersion}{values.ReleaseId}");
-                sb.AppendLine($"Architecture: {values.Bits}");
-                sb.AppendLine($"Manufacturer: {values.Manufacturer}");
+                dictionary.Add("Edition", $"{values.ProductName}{values.CsdVersion}{values.ReleaseId}");
+                dictionary.Add("Internal Version", values.CurrentVersion);
+                dictionary.Add("Current Build", values.CurrentBuild);
+                dictionary.Add("OS Build",
+                    !string.IsNullOrWhiteSpace(values.Ubr) ? $"{values.CurrentBuild}.{values.Ubr}" : $"{values.BuildLabExArray[0]}.{values.BuildLabExArray[1]}");
+                dictionary.Add("BuildLab", values.BuildLab);
+                dictionary.Add("BuildLabEx", values.BuildLabEx);
+                dictionary.Add("Architecture", values.Bits);
+                dictionary.Add("Install Date", values.InstallDate);
+
+                dictionary.Add("Manufacturer", values.Manufacturer);
 
                 if (!string.IsNullOrWhiteSpace(values.ManufacturerProduct))
                 {
-                    sb.AppendLine($"Manufacturer Product: {values.ManufacturerProduct}");
+                    dictionary.Add("Manufacturer Product", values.ManufacturerProduct);
                 }
 
-                return sb.ToString();
+                return dictionary;
             }
         }
 

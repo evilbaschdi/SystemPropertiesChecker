@@ -4,9 +4,9 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
 {
     /// <inheritdoc />
     /// <summary>
-    ///     Interface for classes that return a list of current installed .net core runtimes
+    ///     Interface for classes that return info regarding current installed version of .net core
     /// </summary>
-    public interface IDotNetCoreRuntimes : IValue<string>
+    public interface IDotNetCoreInfo : IValue<string>
     {
     }
 }

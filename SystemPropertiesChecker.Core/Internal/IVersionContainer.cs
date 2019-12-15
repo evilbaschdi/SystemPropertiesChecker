@@ -6,6 +6,5 @@ namespace SystemPropertiesChecker.Core.Internal
     /// <inheritdoc />
     public interface IVersionContainer : IValue<UnityContainer>
     {
-
     }
 }

@@ -7,8 +7,8 @@ namespace SystemPropertiesChecker.Core.Internal
     // ReSharper disable once ClassNeverInstantiated.Global
     public class PasswordExpirationMessage : IPasswordExpirationMessage
     {
-        private readonly IWindowsVersionInformation _windowsVersionInformation;
         private readonly IPasswordExpirationDate _passwordExpirationDate;
+        private readonly IWindowsVersionInformation _windowsVersionInformation;
 
         /// <summary>
         ///     Constructor of the class
@@ -34,7 +34,6 @@ namespace SystemPropertiesChecker.Core.Internal
                 var nextSet = _passwordExpirationDate.ValueFor(_windowsVersionInformation.Value.Domain).PasswordExpirationDate;
                 var dif = nextSet - DateTime.Now;
                 return dif.Days < 10 && dif.Days > -50000 && nextSet.Year != 1970 ? $"{dif.Days} days and {dif.Hours} hours." : "";
-
             }
         }
     }

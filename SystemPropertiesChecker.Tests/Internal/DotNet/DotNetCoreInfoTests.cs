@@ -7,29 +7,29 @@ using Xunit;
 
 namespace SystemPropertiesChecker.Core.Tests.Internal.DotNet
 {
-    public class DotNetCoreVersionTests
+    public class DotNetCoreInfoTests
     {
         [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
         public void Constructor_HasNullGuards(GuardClauseAssertion assertion)
         {
-            assertion.Verify(typeof(DotNetCoreVersion).GetConstructors());
+            assertion.Verify(typeof(DotNetCoreInfo).GetConstructors());
         }
 
         [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Constructor_ReturnsIDotNetCoreVersion(DotNetCoreVersion sut)
+        public void Constructor_ReturnsInterfaceName(DotNetCoreInfo sut)
         {
-            sut.Should().BeAssignableTo<IDotNetCoreVersion>();
+            sut.Should().BeAssignableTo<IDotNetCoreInfo>();
         }
 
         [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
         public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
         {
-            assertion.Verify(typeof(DotNetCoreVersion).GetMethods().Where(method => !method.IsAbstract));
+            assertion.Verify(typeof(DotNetCoreInfo).GetMethods().Where(method => !method.IsAbstract));
         }
 
         [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Value_ForParameterVersion_ReturnsVersion(
-            DotNetCoreVersion sut)
+        public void Value_ForParameterVersion_ReturnsInfo(
+            DotNetCoreInfo sut)
         {
             // Arrange
 

@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Shell;
+using System.Windows;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 using SystemPropertiesChecker.Core.Models;
@@ -13,7 +13,6 @@ using EvilBaschdi.CoreExtended.Mvvm.View;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
 using JetBrains.Annotations;
-using MahApps.Metro.Controls.Dialogs;
 using Unity;
 
 namespace SystemPropertiesChecker.ViewModel
@@ -26,34 +25,24 @@ namespace SystemPropertiesChecker.ViewModel
     {
         private readonly IThemeManagerHelper _themeManagerHelper;
         private readonly IVersionContainer _versionContainer;
-        private ProgressDialogController _controller;
-        private string _currentVersionText;
+        private Dictionary<string, string> _currentVersionText;
         private string _dotNetCoreVersionText;
         private string _dotNetVersionText;
-
         private string _otherText;
         private string _passwordExpirationMessage;
-
-        private TaskbarItemProgressState _progressState;
-        private int _progressValue;
         private ObservableCollection<SourceOs> _sourceOsCollection;
-        private Task _task;
-        private string _windowsVersionText;
+        private Visibility _windowsTabVisibility;
 
         /// <inheritdoc />
         /// <summary>
         ///     Constructor
         /// </summary>
-        protected internal MainWindowViewModel([NotNull] IThemeManagerHelper themeManagerHelper, [NotNull] IVersionContainer versionContainer)
+        protected internal MainWindowViewModel([NotNull] IThemeManagerHelper themeManagerHelper,
+                                               [NotNull] IVersionContainer versionContainer)
             : base(themeManagerHelper)
         {
             _themeManagerHelper = themeManagerHelper ?? throw new ArgumentNullException(nameof(themeManagerHelper));
             _versionContainer = versionContainer ?? throw new ArgumentNullException(nameof(versionContainer));
-            Reload = new DefaultCommand
-                     {
-                         Text = "reload",
-                         Command = new RelayCommand(async rc => await ConfigureControllerAsync().ConfigureAwait(true))
-                     };
 
             AboutWindowClick = new DefaultCommand
                                {
@@ -63,9 +52,13 @@ namespace SystemPropertiesChecker.ViewModel
             BuildCompositionRoot();
         }
 
+        /// <summary>
+        /// </summary>
         public ICommandViewModel AboutWindowClick { get; set; }
 
-        public string CurrentVersionText
+        /// <summary>
+        /// </summary>
+        public Dictionary<string, string> CurrentVersionText
         {
             get => _currentVersionText;
             set
@@ -75,6 +68,8 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
+        /// <summary>
+        /// </summary>
         public string DotNetCoreVersionText
         {
             get => _dotNetCoreVersionText;
@@ -85,6 +80,8 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
+        /// <summary>
+        /// </summary>
         public string DotNetVersionText
         {
             get => _dotNetVersionText;
@@ -95,7 +92,8 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
-
+        /// <summary>
+        /// </summary>
         public string OtherText
         {
             get => _otherText;
@@ -106,6 +104,8 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
+        /// <summary>
+        /// </summary>
         public string PasswordExpirationMessage
         {
             get => _passwordExpirationMessage;
@@ -116,21 +116,12 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
-        public TaskbarItemProgressState ProgressState
-        {
-            get => _progressState;
-            set
-            {
-                _progressState = value;
-                OnPropertyChanged();
-            }
-        }
-
-
         /// <summary>
         /// </summary>
         public ICommandViewModel Reload { get; set; }
 
+        /// <summary>
+        /// </summary>
         public ObservableCollection<SourceOs> SourceOsCollection
         {
             get => _sourceOsCollection;
@@ -142,136 +133,40 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
-        public string WindowsVersionText
+        /// <summary>
+        /// </summary>
+        public Visibility WindowsTabVisibility
         {
-            get => _windowsVersionText;
+            get => _windowsTabVisibility;
             set
             {
-                _windowsVersionText = value;
+                _windowsTabVisibility = value;
                 OnPropertyChanged();
             }
         }
 
+
+        /// <summary>
+        /// </summary>
         private async void BuildCompositionRoot()
         {
             RunVersionChecks();
-            //await ConfigureControllerAsync().ConfigureAwait(true);
-        }
-
-
-        private async Task ConfigureControllerAsync()
-        {
-            // _progressState = TaskbarItemProgressState.Indeterminate;
-
-            //Cursor = Cursors.Wait;
-
-            var options = new MetroDialogSettings
-                          {
-                              ColorScheme = MetroDialogColorScheme.Accented
-                          };
-
-            //MetroDialogOptions = options;
-            //_controller = await ShowProgressAsync("Loading...", "Checking Properties", true, options).ConfigureAwait(true);
-            //_controller.SetIndeterminate();
-            //_controller.Canceled += ControllerCanceled;
-
-            _task = Task.Factory.StartNew(RunVersionChecks);
-            await _task.ConfigureAwait(true);
-            _task.GetAwaiter().OnCompleted(TaskCompleted);
-        }
-
-        private void TaskCompleted()
-        {
-            //CurrentVersion.Text = _currentVersionText;
-            //WindowsVersion.Text = _windowsVersionText;
-            //DotNetVersion.Text = _dotNetVersionText;
-            //Other.Text = _otherText;
-
-            //_overrideProtection = 1;
-
-            if (string.IsNullOrWhiteSpace(_passwordExpirationMessage))
-            {
-                return;
-            }
-
-            //_dialogService.ShowMessage("Password Expiration", _passwordExpirationMessage);
-            _progressState = TaskbarItemProgressState.Normal;
-            _progressValue = 1;
-
-            //DomainTab.Visibility = Visibility.Hidden;
-            //_controller.CloseAsync();
-            //_controller.Closed += ControllerClosed;
-        }
-
-        private void ControllerClosed(object sender, EventArgs e)
-        {
-            _progressState = TaskbarItemProgressState.Normal;
-            _progressValue = 1;
-            //Cursor = Cursors.Arrow;
-        }
-
-        private void ControllerCanceled(object sender, EventArgs e)
-        {
-            _controller.CloseAsync();
-            _controller.Closed += ControllerClosed;
         }
 
         private void RunVersionChecks()
         {
-            //var versionContainer = new UnityContainer();
-            //versionContainer.RegisterType<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
-            //versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
-            //versionContainer.RegisterType<IDotNetCoreSdks, DotNetCoreSdks>();
-            //versionContainer.RegisterType<IDotNetCoreRuntimes, DotNetCoreRuntimes>();
-            //versionContainer.RegisterType<IDotNetCoreVersion, DotNetCoreVersion>();
-            //versionContainer.RegisterType<IRegistryValueFor, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
-            //versionContainer.RegisterType<ISourceOsCollection, HklmSystemSetupSourcesInstallDates>();
-            //versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
-            //versionContainer.RegisterType<IWindowsVersionInformation, WindowsVersionInformation>();
-            //versionContainer.RegisterType<ICurrentVersionText, CurrentVersionText>();
-            //versionContainer.RegisterType<IWindowsVersionText, WindowsVersionText>();
-            //versionContainer.RegisterType<IOtherInformationText, OtherInformationText>();
-            //versionContainer.RegisterType<IPasswordExpirationDate, PasswordExpirationDate>();
-            //versionContainer.RegisterType<IPasswordExpirationMessage, PasswordExpirationMessage>();
-
             var versionContainer = _versionContainer.Value;
 
-            _currentVersionText = versionContainer.Resolve<ICurrentVersionText>().Value;
-            _windowsVersionText = versionContainer.Resolve<IWindowsVersionText>().Value;
+            _currentVersionText = versionContainer.Resolve<IWindowsVersionDictionary>().Value;
             _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
-            _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
-            _dotNetCoreVersionText =
-                $"{versionContainer.Resolve<IDotNetCoreVersion>().Value}{Environment.NewLine}{versionContainer.Resolve<IDotNetCoreRuntimes>().Value}{Environment.NewLine}{versionContainer.Resolve<IDotNetCoreSdks>().Value}";
-
+            _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().Value
+                                                 .Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
+            _dotNetCoreVersionText = versionContainer.Resolve<IDotNetCoreInfo>().Value;
             _passwordExpirationMessage = versionContainer.Resolve<IPasswordExpirationMessage>().Value;
             _sourceOsCollection = versionContainer.Resolve<ISourceOsCollection>().Value;
+            _windowsTabVisibility = _sourceOsCollection.Any() ? Visibility.Visible : Visibility.Hidden;
 
             versionContainer.Dispose();
-            //var temp = string.Empty;
-            //DomainInformation.Text = temp;
-            //DomainTab.Visibility = (!string.IsNullOrWhiteSpace(temp)).ToVisibility();
-
-            //IRegistryValueFor registryValueFor = new HklmSoftwareMicrosoftWindowsNtCurrentVersion();
-            //IPasswordExpirationDate passwordExpirationDate = new PasswordExpirationDate();
-            //IWindowsVersionInformation windowsVersionInformation = new WindowsVersionInformation(registryValueFor, passwordExpirationDate);
-            //ICurrentVersionText currentVersionText = new CurrentVersionText(windowsVersionInformation);
-            //IWindowsVersionText windowsVersionText = new WindowsVersionText(windowsVersionInformation);
-            //IOtherInformationText otherInformationText = new OtherInformationText();
-            //IDotNetCoreRuntimes dotNetCoreRuntimes = new DotNetCoreRuntimes();
-            //IDotNetCoreSdks dotNetCoreSdks = new DotNetCoreSdks();
-            //IDotNetCoreVersion dotNetCoreVersion = new DotNetCoreVersion();
-            //IDotNetVersionReleaseKeyMappingList dotNetVersionReleaseKeyMappingList = new DotNetVersionReleaseKeyMappingList();
-            //IDotNetVersion dotNetVersion = new DotNetVersion(dotNetVersionReleaseKeyMappingList);
-            //IPasswordExpirationMessage passwordExpirationMessage = new PasswordExpirationMessage(windowsVersionInformation, passwordExpirationDate);
-            //ISourceOsCollection sourceOsCollection = new HklmSystemSetupSourcesInstallDates();
-
-            //_currentVersionText = currentVersionText.Value;
-            //_windowsVersionText = windowsVersionText.Value;
-            //_otherText = otherInformationText.Value;
-            //_dotNetVersionText = dotNetVersion.Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
-            //_dotNetCoreVersionText = dotNetCoreVersion.Value + Environment.NewLine + dotNetCoreRuntimes.Value + Environment.NewLine+ dotNetCoreSdks.Value;
-            //_passwordExpirationMessage = passwordExpirationMessage.Value;
-            //_sourceOsCollection = sourceOsCollection.Value;
         }
 
 
@@ -280,7 +175,8 @@ namespace SystemPropertiesChecker.ViewModel
             var aboutWindow = new AboutWindow();
             var assembly = typeof(MainWindow).Assembly;
 
-            IAboutWindowContent aboutWindowContent = new AboutWindowContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
+            IAboutWindowContent aboutWindowContent =
+                new AboutWindowContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
             aboutWindow.DataContext = new AboutViewModel(aboutWindowContent, _themeManagerHelper);
             aboutWindow.ShowDialog();
         }

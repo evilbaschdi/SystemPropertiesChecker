@@ -13,15 +13,12 @@ namespace SystemPropertiesChecker.Core.Internal
                 var versionContainer = new UnityContainer();
                 versionContainer.RegisterType<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
                 versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
-                versionContainer.RegisterType<IDotNetCoreSdks, DotNetCoreSdks>();
-                versionContainer.RegisterType<IDotNetCoreRuntimes, DotNetCoreRuntimes>();
-                versionContainer.RegisterType<IDotNetCoreVersion, DotNetCoreVersion>();
+                versionContainer.RegisterType<IDotNetCoreInfo, DotNetCoreInfo>();
                 versionContainer.RegisterType<IRegistryValueFor, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
                 versionContainer.RegisterType<ISourceOsCollection, HklmSystemSetupSourcesInstallDates>();
                 versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
                 versionContainer.RegisterType<IWindowsVersionInformation, WindowsVersionInformation>();
-                versionContainer.RegisterType<ICurrentVersionText, CurrentVersionText>();
-                versionContainer.RegisterType<IWindowsVersionText, WindowsVersionText>();
+                versionContainer.RegisterType<IWindowsVersionDictionary, WindowsVersionDictionary>();
                 versionContainer.RegisterType<IOtherInformationText, OtherInformationText>();
                 versionContainer.RegisterType<IPasswordExpirationDate, PasswordExpirationDate>();
                 versionContainer.RegisterType<IPasswordExpirationMessage, PasswordExpirationMessage>();

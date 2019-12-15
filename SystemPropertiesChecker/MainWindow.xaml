@@ -4,8 +4,10 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" mc:Ignorable="d" WindowStartupLocation="CenterScreen" Icon="b.ico"
-                      Title="System Properties Checker" Width="600" Height="250" GlowBrush="{DynamicResource MahApps.Brushes.AccentBase}"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" mc:Ignorable="d"
+                      WindowStartupLocation="CenterScreen" Icon="b.ico"
+                      Title="System Properties Checker" Width="600" Height="400"
+                      GlowBrush="{DynamicResource MahApps.Brushes.AccentBase}"
                       TitleCharacterCasing="Normal">
 
     <!--  RightWindowCommands  -->
@@ -16,14 +18,16 @@
 
             <Button Command="{Binding Reload.Command}" Visibility="Hidden">
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconMaterial Kind="Reload" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <iconPacks:PackIconMaterial Kind="Reload" Width="20" Height="20" HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
                     <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{Binding Reload.Text}" />
                 </StackPanel>
             </Button>
             <!--  About  -->
             <Button Command="{Binding AboutWindowClick.Command}">
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconMaterial Kind="Information" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <iconPacks:PackIconMaterial Kind="Information" Width="20" Height="20" HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
                     <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="about" />
                 </StackPanel>
             </Button>
@@ -38,91 +42,121 @@
     <Grid>
         <!-- ReSharper disable UnusedMember.Global -->
         <!-- Tabs -->
-        <TabControl Name="SystemPropertiesTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Left" controls:TabControlHelper.Underlined="TabPanel">
+        <TabControl Name="SystemPropertiesTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Left"
+                    controls:TabControlHelper.Underlined="TabPanel">
             <!-- Basic -->
             <TabItem Name="BasicTab" ToolTip="Basic">
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconMaterial Kind="InformationOutline" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <iconPacks:PackIconMaterial Kind="InformationOutline" Width="25" Height="25"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
-                <TextBox Name="CurrentVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
-                         VerticalAlignment="Center" Text="{Binding CurrentVersionText}" />
+                <DataGrid Name="CurrentVersion" Margin="0" CanUserAddRows="False" SelectionUnit="FullRow"
+                          SelectionMode="Single" ColumnWidth="*"
+                          Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
+                          GridLinesVisibility="Horizontal" CanUserDeleteRows="False"
+                          AutoGenerateColumns="False"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
+                          HorizontalAlignment="Center" VerticalAlignment="Top"
+                          ItemsSource="{Binding CurrentVersionText}" VerticalScrollBarVisibility="Auto">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="200">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
-            <!-- Windows -->
-            <TabItem Name="WindowsTab" ToolTip="Windows">
+            <!-- Windows History -->
+            <TabItem Name="WindowsTab" ToolTip="Windows History" Visibility="{Binding WindowsTabVisibility}">
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconMaterial Kind="Windows" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <iconPacks:PackIconMaterial Kind="Windows" Width="25" Height="25"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
-
-                <TabControl Name="WindowsTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Top" controls:TabControlHelper.Underlined="TabPanel">
-                    <TabItem Name="WindowsVersionTab" Header="windows version" ToolTip="Windows Version">
-                        <TextBox Name="WindowsVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center"
-                                 HorizontalAlignment="Center"
-                                 VerticalAlignment="Center" Text="{Binding WindowsVersionText}" />
-                    </TabItem>
-                    <TabItem Name="WindowsHistoryTap" Header="history" ToolTip="History">
-                        <DataGrid Name="WindowsHistory" Margin="0" CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Single" ColumnWidth="*"
-                                  Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" GridLinesVisibility="Horizontal" CanUserDeleteRows="False" AutoGenerateColumns="False"
-                                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
-                                  HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding SourceOsCollection}" VerticalScrollBarVisibility="Auto">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Build}" Header="Build" Width="70">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="HorizontalAlignment" Value="Center" />
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding ProductName}" Header="Product Name" Width="*">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="HorizontalAlignment" Value="Center" />
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding ReleaseId}" Header="Release Id" Width="90">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="HorizontalAlignment" Value="Center" />
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding InstallDate, StringFormat=\{0:yyyy-MM-dd hh:mm:ss\}}" Header="Install Date" Width="125">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="HorizontalAlignment" Value="Center" />
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </TabItem>
-                </TabControl>
+                <DataGrid Name="WindowsHistory" Margin="0" CanUserAddRows="False" SelectionUnit="FullRow"
+                          SelectionMode="Single" ColumnWidth="*"
+                          Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
+                          GridLinesVisibility="Horizontal" CanUserDeleteRows="False"
+                          AutoGenerateColumns="False"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
+                          HorizontalAlignment="Center" VerticalAlignment="Top"
+                          ItemsSource="{Binding SourceOsCollection}" VerticalScrollBarVisibility="Auto">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Build}" Header="Build" Width="70">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding ProductName}" Header="Product Name" Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding ReleaseId}" Header="Release Id" Width="90">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn
+                            Binding="{Binding InstallDate, StringFormat=\{0:yyyy-MM-dd hh:mm:ss\}}"
+                            Header="Install Date" Width="125">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
             <!-- .net -->
             <TabItem Name="DotNetTab" ToolTip=".Net">
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconModern Kind="FrameworkNet" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <iconPacks:PackIconModern Kind="FrameworkNet" Width="25" Height="25"
+                                                      HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
-                <TabControl Name="DotNetTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Top" controls:TabControlHelper.Underlined="TabPanel">
+                <TabControl Name="DotNetTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Top"
+                            controls:TabControlHelper.Underlined="TabPanel">
                     <TabItem Name="DotNetFullTab" Header=".net framework" ToolTip=".Net Framework">
-                        <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center"
-                                 HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding DotNetVersionText}" />
+                        <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent"
+                                 BorderThickness="0" TextAlignment="Center"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 Text="{Binding DotNetVersionText}" />
                     </TabItem>
                     <TabItem Name="DotNetCoreTab" Header=".net core" ToolTip=".Net Core">
-                        <TextBox Name="DotNetCoreVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" TextWrapping="Wrap"
-                                 HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto" />
+                        <TextBox Name="DotNetCoreVersion" Margin="10" IsReadOnly="True" Background="Transparent"
+                                 BorderThickness="0" TextAlignment="Center" TextWrapping="Wrap"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 Text="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto" />
                     </TabItem>
                 </TabControl>
             </TabItem>
@@ -131,11 +165,13 @@
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconMaterial Kind="DotsHorizontal" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <iconPacks:PackIconMaterial Kind="DotsHorizontal" Width="25" Height="25"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
-                <TextBox Name="Other" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                <TextBox Name="Other" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0"
+                         TextAlignment="Center" HorizontalAlignment="Center"
                          VerticalAlignment="Center" Text="{Binding OtherText}" />
 
             </TabItem>
@@ -144,11 +180,13 @@
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconMaterial Kind="Domain" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <iconPacks:PackIconMaterial Kind="Domain" Width="25" Height="25"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
-                <TextBox Name="DomainInformation" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                <TextBox Name="DomainInformation" Margin="10" IsReadOnly="True" Background="Transparent"
+                         BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
                          VerticalAlignment="Center" />
             </TabItem>
         </TabControl>

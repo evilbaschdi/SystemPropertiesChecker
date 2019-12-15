@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using EvilBaschdi.Core;
 
 namespace SystemPropertiesChecker.Core.Internal
@@ -6,7 +7,7 @@ namespace SystemPropertiesChecker.Core.Internal
     /// <summary>
     ///     Interface for classes that provide a WindowsVersionInformationStack.
     /// </summary>
-    public interface ICurrentVersionText : IValue<string>
+    public interface IWindowsVersionDictionary : IValue<Dictionary<string, string>>
     {
     }
 }

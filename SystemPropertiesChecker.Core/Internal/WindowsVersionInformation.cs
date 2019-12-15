@@ -52,7 +52,7 @@ namespace SystemPropertiesChecker.Core.Internal
                     : string.Empty;
 
                 var releaseId = !string.IsNullOrEmpty(_registryValueFor.ValueFor("ReleaseId"))
-                    ? $" (Release {_registryValueFor.ValueFor("ReleaseId")})"
+                    ? $" (Version {_registryValueFor.ValueFor("ReleaseId")})"
                     : string.Empty;
 
                 var version = !string.IsNullOrWhiteSpace(currentMajorVersionNumber) &&

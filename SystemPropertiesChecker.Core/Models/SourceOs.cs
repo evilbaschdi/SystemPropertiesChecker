@@ -3,24 +3,27 @@
 namespace SystemPropertiesChecker.Core.Models
 {
     /// <summary>
-    /// Source Os
+    ///     Source Os
     /// </summary>
     public class SourceOs
     {
         /// <summary>
-        /// CurrentBuild
+        ///     CurrentBuild
         /// </summary>
         public string Build { get; set; }
+
         /// <summary>
-        /// Install Date
+        ///     Install Date
         /// </summary>
         public DateTime InstallDate { get; set; }
+
         /// <summary>
-        /// Product Name
+        ///     Product Name
         /// </summary>
         public string ProductName { get; set; }
+
         /// <summary>
-        /// Release Id
+        ///     Release Id
         /// </summary>
         public string ReleaseId { get; set; }
     }
