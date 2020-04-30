@@ -1,22 +1,16 @@
-using System.IO;
-using Microsoft.Extensions.Configuration;
+using EvilBaschdi.Settings;
 
 namespace SystemPropertiesChecker.Core.Internal.DotNet
-{
-    /// <summary>
-    /// </summary>
-    public static class DotNetVersionReleaseKeyMapping
+{ // ReSharper disable once ClassNeverInstantiated.Global
+    /// <inheritdoc cref="SettingsFromJsonFile" />
+    public class DotNetVersionReleaseKeyMapping : SettingsFromJsonFile, IDotNetVersionReleaseKeyMapping
     {
-        static DotNetVersionReleaseKeyMapping()
-        {
-            AppSetting = new ConfigurationBuilder()
-                         .SetBasePath(Directory.GetCurrentDirectory())
-                         .AddJsonFile("DotNetVersionReleaseKeyMapping.json")
-                         .Build();
-        }
-
         /// <summary>
+        ///     Constructor
         /// </summary>
-        public static IConfiguration AppSetting { get; }
+        public DotNetVersionReleaseKeyMapping()
+            : base("DotNetVersionReleaseKeyMapping.json")
+        {
+        }
     }
 }

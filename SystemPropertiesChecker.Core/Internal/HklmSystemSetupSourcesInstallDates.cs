@@ -2,16 +2,17 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using SystemPropertiesChecker.Core.Models;
+using EvilBaschdi.Core;
 using Microsoft.Win32;
 
 namespace SystemPropertiesChecker.Core.Internal
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="ISourceOsCollection" />
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class HklmSystemSetupSourcesInstallDates : ISourceOsCollection
+    public class HklmSystemSetupSourcesInstallDates : CachedValue<ObservableCollection<SourceOs>>, ISourceOsCollection
     {
         /// <inheritdoc />
-        public ObservableCollection<SourceOs> Value
+        protected override ObservableCollection<SourceOs> NonCachedValue
         {
             get
             {

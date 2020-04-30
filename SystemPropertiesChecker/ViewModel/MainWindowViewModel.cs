@@ -7,7 +7,8 @@ using System.Windows;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 using SystemPropertiesChecker.Core.Models;
-using EvilBaschdi.CoreExtended.Metro;
+using EvilBaschdi.CoreExtended.AppHelpers;
+using ControlzEx.Theming;
 using EvilBaschdi.CoreExtended.Mvvm;
 using EvilBaschdi.CoreExtended.Mvvm.View;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
@@ -23,7 +24,8 @@ namespace SystemPropertiesChecker.ViewModel
     /// </summary>
     public class MainWindowViewModel : ApplicationStyleViewModel
     {
-        private readonly IThemeManagerHelper _themeManagerHelper;
+        private readonly IScreenShot _screenShot;
+        
         private readonly IVersionContainer _versionContainer;
         private Dictionary<string, string> _currentVersionText;
         private string _dotNetCoreVersionText;
@@ -37,17 +39,21 @@ namespace SystemPropertiesChecker.ViewModel
         /// <summary>
         ///     Constructor
         /// </summary>
-        protected internal MainWindowViewModel([NotNull] IThemeManagerHelper themeManagerHelper,
-                                               [NotNull] IVersionContainer versionContainer)
-            : base(themeManagerHelper)
+        protected internal MainWindowViewModel([NotNull] IVersionContainer versionContainer, [NotNull] IScreenShot screenShot)
+            
         {
-            _themeManagerHelper = themeManagerHelper ?? throw new ArgumentNullException(nameof(themeManagerHelper));
             _versionContainer = versionContainer ?? throw new ArgumentNullException(nameof(versionContainer));
+            _screenShot = screenShot ?? throw new ArgumentNullException(nameof(screenShot));
 
+            ScreenShot = new DefaultCommand
+                         {
+                             Text = "screenshot",
+                             Command = new RelayCommand(rc => ScreenShotCommand())
+                         };
             AboutWindowClick = new DefaultCommand
                                {
-                                   Text = "About",
-                                   Command = new RelayCommand(rc => BtnAboutWindowClick())
+                                   Text = "about",
+                                   Command = new RelayCommand(rc => AboutWindowCommand())
                                };
             BuildCompositionRoot();
         }
@@ -118,7 +124,7 @@ namespace SystemPropertiesChecker.ViewModel
 
         /// <summary>
         /// </summary>
-        public ICommandViewModel Reload { get; set; }
+        public ICommandViewModel ScreenShot { get; set; }
 
         /// <summary>
         /// </summary>
@@ -169,15 +175,22 @@ namespace SystemPropertiesChecker.ViewModel
             versionContainer.Dispose();
         }
 
+        private void ScreenShotCommand()
+        {
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            var current = _screenShot.ValueFor(mainWindow);
+            _screenShot.SaveToClipboard(current);
+        }
 
-        private void BtnAboutWindowClick()
+
+        private void AboutWindowCommand()
         {
             var aboutWindow = new AboutWindow();
             var assembly = typeof(MainWindow).Assembly;
 
             IAboutWindowContent aboutWindowContent =
                 new AboutWindowContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
-            aboutWindow.DataContext = new AboutViewModel(aboutWindowContent, _themeManagerHelper);
+            aboutWindow.DataContext = new AboutViewModel(aboutWindowContent);
             aboutWindow.ShowDialog();
         }
     }

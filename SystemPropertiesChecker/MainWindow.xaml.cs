@@ -2,7 +2,8 @@
 using System.Windows;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.ViewModel;
-using EvilBaschdi.CoreExtended.Metro;
+using EvilBaschdi.CoreExtended.AppHelpers;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 
 namespace SystemPropertiesChecker
@@ -24,9 +25,10 @@ namespace SystemPropertiesChecker
             InitializeComponent();
 
 
-            IThemeManagerHelper themeManagerHelper = new ThemeManagerHelper();
+            
             IVersionContainer versionContainer = new VersionContainer();
-            _mainWindowViewModel = new MainWindowViewModel(themeManagerHelper, versionContainer);
+            IScreenShot screenShot = new ScreenShot();
+            _mainWindowViewModel = new MainWindowViewModel(versionContainer, screenShot);
             Loaded += MainWindowLoaded;
         }
 

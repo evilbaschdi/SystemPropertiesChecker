@@ -4,7 +4,8 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" mc:Ignorable="d"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      mc:Ignorable="d"
                       WindowStartupLocation="CenterScreen" Icon="b.ico"
                       Title="System Properties Checker" Width="600" Height="400"
                       GlowBrush="{DynamicResource MahApps.Brushes.AccentBase}"
@@ -14,21 +15,20 @@
     <controls:MetroWindow.RightWindowCommands>
         <!-- ReSharper disable UnusedMember.Global -->
         <controls:WindowCommands>
-            <!-- Reload -->
-
-            <Button Command="{Binding Reload.Command}" Visibility="Hidden">
+            <!-- ScreenShot -->
+            <Button Command="{Binding ScreenShot.Command}">
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconMaterial Kind="Reload" Width="20" Height="20" HorizontalAlignment="Center"
-                                                VerticalAlignment="Center" />
-                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{Binding Reload.Text}" />
+                    <iconPacks:PackIconMaterial Kind="Monitor" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{Binding ScreenShot.Text}" />
                 </StackPanel>
             </Button>
+
             <!--  About  -->
             <Button Command="{Binding AboutWindowClick.Command}">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Kind="Information" Width="20" Height="20" HorizontalAlignment="Center"
                                                 VerticalAlignment="Center" />
-                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="about" />
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{Binding AboutWindowClick.Text}" />
                 </StackPanel>
             </Button>
         </controls:WindowCommands>
@@ -86,7 +86,7 @@
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconMaterial Kind="Windows" Width="25" Height="25"
+                            <iconPacks:PackIconMaterial Kind="MicrosoftWindows" Width="25" Height="25"
                                                         HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>

@@ -11,6 +11,7 @@ namespace SystemPropertiesChecker.Core.Internal
             get
             {
                 var versionContainer = new UnityContainer();
+                versionContainer.RegisterType<IDotNetVersionReleaseKeyMapping, DotNetVersionReleaseKeyMapping>();
                 versionContainer.RegisterType<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
                 versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
                 versionContainer.RegisterType<IDotNetCoreInfo, DotNetCoreInfo>();

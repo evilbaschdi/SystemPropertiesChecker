@@ -1,4 +1,5 @@
 ﻿using System;
+using EvilBaschdi.Core;
 using Microsoft.Win32;
 
 namespace SystemPropertiesChecker.Core.Internal
@@ -7,14 +8,14 @@ namespace SystemPropertiesChecker.Core.Internal
     ///     Class that provides RegistryValues from WindowsNT CurrentVersion.
     /// </summary>
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class HklmSoftwareMicrosoftWindowsNtCurrentVersion : IRegistryValueFor
+    public class HklmSoftwareMicrosoftWindowsNtCurrentVersion : CachedValueFor<string, string> ,IRegistryValueFor
     {
         /// <summary>
         ///     Contains a string providing a registry value.
         /// </summary>
         /// <param name="name">Name of the RegistryKey</param>
         /// <returns></returns>
-        public string ValueFor(string name)
+        protected override string NonCachedValueFor(string name)
         {
             if (name == null)
             {
