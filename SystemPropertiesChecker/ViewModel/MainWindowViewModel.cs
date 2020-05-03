@@ -8,9 +8,7 @@ using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 using SystemPropertiesChecker.Core.Models;
 using EvilBaschdi.CoreExtended.AppHelpers;
-using ControlzEx.Theming;
-using EvilBaschdi.CoreExtended.Mvvm;
-using EvilBaschdi.CoreExtended.Mvvm.View;
+using EvilBaschdi.CoreExtended.Controls.About;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
 using JetBrains.Annotations;
@@ -25,7 +23,7 @@ namespace SystemPropertiesChecker.ViewModel
     public class MainWindowViewModel : ApplicationStyleViewModel
     {
         private readonly IScreenShot _screenShot;
-        
+
         private readonly IVersionContainer _versionContainer;
         private Dictionary<string, string> _currentVersionText;
         private string _dotNetCoreVersionText;
@@ -40,7 +38,7 @@ namespace SystemPropertiesChecker.ViewModel
         ///     Constructor
         /// </summary>
         protected internal MainWindowViewModel([NotNull] IVersionContainer versionContainer, [NotNull] IScreenShot screenShot)
-            
+
         {
             _versionContainer = versionContainer ?? throw new ArgumentNullException(nameof(versionContainer));
             _screenShot = screenShot ?? throw new ArgumentNullException(nameof(screenShot));
@@ -188,8 +186,8 @@ namespace SystemPropertiesChecker.ViewModel
             var aboutWindow = new AboutWindow();
             var assembly = typeof(MainWindow).Assembly;
 
-            IAboutWindowContent aboutWindowContent =
-                new AboutWindowContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
+            IAboutContent aboutWindowContent =
+                new AboutContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
             aboutWindow.DataContext = new AboutViewModel(aboutWindowContent);
             aboutWindow.ShowDialog();
         }

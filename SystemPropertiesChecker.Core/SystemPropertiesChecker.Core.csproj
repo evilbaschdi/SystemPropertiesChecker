@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EvilBaschdi.Core" Version="2020.4.14.603" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2020.5.3.1518" />
     <PackageReference Include="EvilBaschdi.Settings" Version="2020.4.14.1627-develop" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0-preview.3.20214.6" />
     <PackageReference Include="Unity" Version="5.11.6" />

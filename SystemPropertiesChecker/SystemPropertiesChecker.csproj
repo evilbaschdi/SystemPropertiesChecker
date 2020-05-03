@@ -19,8 +19,8 @@
 
   <ItemGroup>
     <PackageReference Include="ControlzEx" Version="4.3.0-alpha0085" />
-    <PackageReference Include="EvilBaschdi.Core" Version="2020.4.14.603" />
-    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2020.4.30.540-develop" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2020.5.3.1518" />
+    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2020.5.3.1813-develop" />
     <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0775" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.0.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.0.0" />

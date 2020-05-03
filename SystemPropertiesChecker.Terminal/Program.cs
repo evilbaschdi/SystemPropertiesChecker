@@ -21,8 +21,6 @@ namespace SystemPropertiesChecker.Terminal
             var sourceOsCollection = versionContainerValue.Resolve<ISourceOsCollection>().Value;
 
 
-            versionContainerValue.Dispose();
-
             Console.WriteLine("## WINDOWS ##");
             Console.WriteLine("{0,-30} {1,-30}", "Key", "Value");
             Console.WriteLine("{0,-30} {1,-30}", "---", "-----");
@@ -68,6 +66,7 @@ namespace SystemPropertiesChecker.Terminal
             Console.WriteLine();
 
             Console.ReadLine();
+            versionContainerValue.Dispose();
         }
     }
 }
