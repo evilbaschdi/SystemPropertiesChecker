@@ -8,6 +8,10 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
     {
         private readonly IDotNetVersionReleaseKeyMapping _dotNetVersionReleaseKeyMapping;
 
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// <param name="dotNetVersionReleaseKeyMapping"></param>
         public DotNetVersionReleaseKeyMappingList(IDotNetVersionReleaseKeyMapping dotNetVersionReleaseKeyMapping)
         {
             _dotNetVersionReleaseKeyMapping = dotNetVersionReleaseKeyMapping ?? throw new ArgumentNullException(nameof(dotNetVersionReleaseKeyMapping));

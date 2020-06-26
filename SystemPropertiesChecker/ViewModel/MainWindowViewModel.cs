@@ -45,6 +45,7 @@ namespace SystemPropertiesChecker.ViewModel
 
             ScreenShot = new DefaultCommand
                          {
+                             // ReSharper disable once StringLiteralTypo
                              Text = "screenshot",
                              Command = new RelayCommand(rc => ScreenShotCommand())
                          };
@@ -58,10 +59,14 @@ namespace SystemPropertiesChecker.ViewModel
 
         /// <summary>
         /// </summary>
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
         public ICommandViewModel AboutWindowClick { get; set; }
 
         /// <summary>
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public Dictionary<string, string> CurrentVersionText
         {
             get => _currentVersionText;
@@ -74,6 +79,7 @@ namespace SystemPropertiesChecker.ViewModel
 
         /// <summary>
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public string DotNetCoreVersionText
         {
             get => _dotNetCoreVersionText;
@@ -86,6 +92,7 @@ namespace SystemPropertiesChecker.ViewModel
 
         /// <summary>
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public string DotNetVersionText
         {
             get => _dotNetVersionText;
@@ -98,6 +105,7 @@ namespace SystemPropertiesChecker.ViewModel
 
         /// <summary>
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public string OtherText
         {
             get => _otherText;
@@ -110,6 +118,7 @@ namespace SystemPropertiesChecker.ViewModel
 
         /// <summary>
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public string PasswordExpirationMessage
         {
             get => _passwordExpirationMessage;
@@ -122,10 +131,14 @@ namespace SystemPropertiesChecker.ViewModel
 
         /// <summary>
         /// </summary>
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
         public ICommandViewModel ScreenShot { get; set; }
 
         /// <summary>
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public ObservableCollection<SourceOs> SourceOsCollection
         {
             get => _sourceOsCollection;
@@ -139,6 +152,7 @@ namespace SystemPropertiesChecker.ViewModel
 
         /// <summary>
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public Visibility WindowsTabVisibility
         {
             get => _windowsTabVisibility;
@@ -152,7 +166,7 @@ namespace SystemPropertiesChecker.ViewModel
 
         /// <summary>
         /// </summary>
-        private async void BuildCompositionRoot()
+        private void BuildCompositionRoot()
         {
             RunVersionChecks();
         }

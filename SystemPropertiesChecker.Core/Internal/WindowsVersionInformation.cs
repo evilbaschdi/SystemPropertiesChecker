@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Management;
 using SystemPropertiesChecker.Core.Models;
+using JetBrains.Annotations;
 
 namespace SystemPropertiesChecker.Core.Internal
 {
@@ -11,8 +12,9 @@ namespace SystemPropertiesChecker.Core.Internal
     // ReSharper disable once ClassNeverInstantiated.Global
     public class WindowsVersionInformation : IWindowsVersionInformation
     {
+        private readonly IInsiderChannel _insiderChannel;
+        private readonly IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion _localMachineSoftwareMicrosoftWindowsNtCurrentVersion;
         private readonly IPasswordExpirationDate _passwordExpirationDate;
-        private readonly IRegistryValueFor _registryValueFor;
         private readonly WindowsVersionInformationModel _windowsVersionInformationModel = new WindowsVersionInformationModel();
         private WindowsVersionInformationModel _cachedWindowsVersionInformationModel;
 
@@ -20,11 +22,16 @@ namespace SystemPropertiesChecker.Core.Internal
         ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="registryValueFor" /> is <see langword="null" />.
+        ///     <paramref name="localMachineSoftwareMicrosoftWindowsNtCurrentVersion" /> is <see langword="null" />.
         /// </exception>
-        public WindowsVersionInformation(IRegistryValueFor registryValueFor, IPasswordExpirationDate passwordExpirationDate)
+        public WindowsVersionInformation([NotNull] IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion localMachineSoftwareMicrosoftWindowsNtCurrentVersion,
+                                         [NotNull] IInsiderChannel insiderChannel,
+                                         [NotNull] IPasswordExpirationDate passwordExpirationDate)
         {
-            _registryValueFor = registryValueFor ?? throw new ArgumentNullException(nameof(registryValueFor));
+            _localMachineSoftwareMicrosoftWindowsNtCurrentVersion = localMachineSoftwareMicrosoftWindowsNtCurrentVersion ??
+                                                                    throw new ArgumentNullException(nameof(localMachineSoftwareMicrosoftWindowsNtCurrentVersion));
+            _insiderChannel = insiderChannel ?? throw new ArgumentNullException(nameof(insiderChannel));
+
             _passwordExpirationDate = passwordExpirationDate ?? throw new ArgumentNullException(nameof(passwordExpirationDate));
         }
 
@@ -43,16 +50,16 @@ namespace SystemPropertiesChecker.Core.Internal
                 var bits = Bits();
                 var domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
 
-                var currentVersion = _registryValueFor.ValueFor("CurrentVersion");
-                var currentMajorVersionNumber = _registryValueFor.ValueFor("CurrentMajorVersionNumber");
-                var currentMinorVersionNumber = _registryValueFor.ValueFor("CurrentMinorVersionNumber");
+                var currentVersion = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CurrentVersion");
+                var currentMajorVersionNumber = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CurrentMajorVersionNumber");
+                var currentMinorVersionNumber = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CurrentMinorVersionNumber");
 
-                var csdVersion = !string.IsNullOrEmpty(_registryValueFor.ValueFor("CSDVersion"))
-                    ? $" with {_registryValueFor.ValueFor("CSDVersion")}"
+                var csdVersion = !string.IsNullOrEmpty(_localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CSDVersion"))
+                    ? $" with {_localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CSDVersion")}"
                     : string.Empty;
 
-                var releaseId = !string.IsNullOrEmpty(_registryValueFor.ValueFor("ReleaseId"))
-                    ? $" (Version {_registryValueFor.ValueFor("ReleaseId")})"
+                var releaseId = !string.IsNullOrEmpty(_localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ReleaseId"))
+                    ? $" (Version {_localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ReleaseId")})"
                     : string.Empty;
 
                 var version = !string.IsNullOrWhiteSpace(currentMajorVersionNumber) &&
@@ -75,16 +82,16 @@ namespace SystemPropertiesChecker.Core.Internal
                     ? ManufacturerByWin32BaseBoard().Value
                     : string.Empty;
 
-
-                _windowsVersionInformationModel.BuildLab = _registryValueFor.ValueFor("BuildLab");
-                _windowsVersionInformationModel.BuildLabEx = _registryValueFor.ValueFor("BuildLabEx");
-                _windowsVersionInformationModel.BuildLabExArray = _registryValueFor.ValueFor("BuildLabEx").Split('.');
-                _windowsVersionInformationModel.CurrentBuild = _registryValueFor.ValueFor("CurrentBuild");
-                _windowsVersionInformationModel.ProductName = _registryValueFor.ValueFor("ProductName");
+                _windowsVersionInformationModel.InsiderChannel = _insiderChannel.Value;
+                _windowsVersionInformationModel.BuildLab = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLab");
+                _windowsVersionInformationModel.BuildLabEx = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx");
+                _windowsVersionInformationModel.BuildLabExArray = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx").Split('.');
+                _windowsVersionInformationModel.CurrentBuild = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CurrentBuild");
+                _windowsVersionInformationModel.ProductName = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ProductName");
                 _windowsVersionInformationModel.CurrentVersion = version;
                 _windowsVersionInformationModel.CsdVersion = csdVersion;
                 _windowsVersionInformationModel.ReleaseId = releaseId;
-                _windowsVersionInformationModel.Ubr = _registryValueFor.ValueFor("UBR");
+                _windowsVersionInformationModel.Ubr = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("UBR");
                 _windowsVersionInformationModel.InstallDate = InstallDate();
                 _cachedWindowsVersionInformationModel = _windowsVersionInformationModel;
                 return _cachedWindowsVersionInformationModel;
@@ -132,11 +139,11 @@ namespace SystemPropertiesChecker.Core.Internal
             var installDate = string.Empty;
             foreach (var item in info)
             {
-                installDate = item["InstallDate"].ToString();
+                installDate = item["InstallDate"]?.ToString();
                 break;
             }
 
-            return ManagementDateTimeConverter.ToDateTime(installDate).ToString("yyyy-MM-dd HH:mm:ss");
+            return ManagementDateTimeConverter.ToDateTime(installDate ?? string.Empty).ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 }

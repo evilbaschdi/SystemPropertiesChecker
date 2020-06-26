@@ -4,8 +4,10 @@ using Unity;
 
 namespace SystemPropertiesChecker.Core.Internal
 {
+    /// <inheritdoc />
     public class VersionContainer : IVersionContainer
     {
+        /// <inheritdoc />
         public UnityContainer Value
         {
             get
@@ -15,7 +17,11 @@ namespace SystemPropertiesChecker.Core.Internal
                 versionContainer.RegisterType<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
                 versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
                 versionContainer.RegisterType<IDotNetCoreInfo, DotNetCoreInfo>();
-                versionContainer.RegisterType<IRegistryValueFor, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
+                versionContainer
+                    .RegisterType<IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion, RegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion>();
+                versionContainer
+                    .RegisterType<IRegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection, RegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection>();
+                versionContainer.RegisterType<IInsiderChannel, InsiderChannel>();
                 versionContainer.RegisterType<ISourceOsCollection, HklmSystemSetupSourcesInstallDates>();
                 versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
                 versionContainer.RegisterType<IWindowsVersionInformation, WindowsVersionInformation>();

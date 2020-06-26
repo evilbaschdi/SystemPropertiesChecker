@@ -56,7 +56,7 @@ namespace SystemPropertiesChecker.Core.Internal
                 return "0";
             }
 
-            var value = subKey.GetValue("svcVersion").ToString();
+            var value = subKey.GetValue("svcVersion")?.ToString();
             return value;
         }
 
@@ -86,8 +86,8 @@ namespace SystemPropertiesChecker.Core.Internal
                 return "0";
             }
 
-            var value = subKey.GetValue("PSCompatibleVersion").ToString().Split(',');
-            return value.Last().Trim();
+            var value = subKey.GetValue("PSCompatibleVersion")?.ToString()?.Split(',');
+            return value?.Last().Trim();
         }
 
         private static bool PowerShellExists(int version)
@@ -121,7 +121,7 @@ namespace SystemPropertiesChecker.Core.Internal
                                           Name = (string) browserKey.GetValue(null)
                                       };
 
-                        if (browser.Name.Equals("Internet Explorer"))
+                        if (browser.Name != null && browser.Name.Equals("Internet Explorer"))
                         {
                             continue;
                         }
@@ -129,7 +129,7 @@ namespace SystemPropertiesChecker.Core.Internal
                         var browserKeyPath = browserKey.OpenSubKey(@"shell\open\command");
                         if (browserKeyPath != null)
                         {
-                            browser.Path = browserKeyPath.GetValue(null).ToString().Replace("\"", "");
+                            browser.Path = browserKeyPath.GetValue(null)?.ToString()?.Replace("\"", "");
                         }
 
                         browser.Version = browser.Path != null ? FileVersionInfo.GetVersionInfo(browser.Path).FileVersion : "unknown";
@@ -166,8 +166,8 @@ namespace SystemPropertiesChecker.Core.Internal
                 return null;
             }
 
-            var version = edgeKey.GetValue("PackageFullName").ToString().Replace("\"", "");
-            var result = Regex.Match(version, "(((([0-9.])\\d)+){1})");
+            var version = edgeKey.GetValue("PackageFullName")?.ToString()?.Replace("\"", "");
+            var result = Regex.Match(version ?? string.Empty, "(((([0-9.])\\d)+){1})");
             if (result.Success)
             {
                 return new Browser

@@ -11,20 +11,21 @@
     <OutputType>WinExe</OutputType>
     <PackageIconUrl>https://github.com/evilbaschdi/SystemPropertiesChecker/blob/master/SystemPropertiesChecker/b.ico</PackageIconUrl>
     <PackageProjectUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</PackageProjectUrl>
+    <Product>SystemPropertiesChecker</Product>
     <RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
     <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))-develop</Version>
+    <Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="4.3.0-alpha0085" />
-    <PackageReference Include="EvilBaschdi.Core" Version="2020.5.3.1518" />
-    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2020.5.3.1813-develop" />
-    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0775" />
-    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.0.0" />
-    <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.0.0" />
-    <PackageReference Include="Unity" Version="5.11.6" />
+    <PackageReference Include="ControlzEx" Version="4.3.0" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2020.6.12.1028" />
+    <PackageReference Include="EvilBaschdi.CoreExtended" Version="2020.5.24.1338" />
+    <PackageReference Include="MahApps.Metro" Version="2.1.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.2.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.2.0" />
+    <PackageReference Include="Unity" Version="5.11.7" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

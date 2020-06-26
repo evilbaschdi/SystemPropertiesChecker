@@ -10,6 +10,7 @@ namespace SystemPropertiesChecker
     // ReSharper disable once RedundantExtendsListEntry
     public partial class App : Application
     {
+        /// <inheritdoc />
         protected override void OnStartup(StartupEventArgs e)
         {
             ThemeManager.Current.SyncTheme(ThemeSyncMode.SyncAll);

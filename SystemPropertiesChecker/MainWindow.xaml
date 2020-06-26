@@ -7,7 +7,7 @@
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       mc:Ignorable="d"
                       WindowStartupLocation="CenterScreen" Icon="b.ico"
-                      Title="System Properties Checker" Width="600" Height="400"
+                      Title="System Properties Checker" Width="600" Height="450"
                       GlowBrush="{DynamicResource MahApps.Brushes.AccentBase}"
                       TitleCharacterCasing="Normal">
 
@@ -34,10 +34,6 @@
         </controls:WindowCommands>
         <!-- ReSharper restore UnusedMember.Global -->
     </controls:MetroWindow.RightWindowCommands>
-    <!-- TaskbarItemInfo -->
-    <Window.TaskbarItemInfo>
-        <TaskbarItemInfo ProgressState="{Binding ProgressState}" ProgressValue="{Binding ProgressValue}" />
-    </Window.TaskbarItemInfo>
     <!-- Grid -->
     <Grid>
         <!-- ReSharper disable UnusedMember.Global -->
@@ -146,17 +142,17 @@
                 </TabItem.HeaderTemplate>
                 <TabControl Name="DotNetTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Top"
                             controls:TabControlHelper.Underlined="TabPanel">
-                    <TabItem Name="DotNetFullTab" Header=".net framework" ToolTip=".Net Framework">
-                        <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent"
-                                 BorderThickness="0" TextAlignment="Center"
-                                 HorizontalAlignment="Center" VerticalAlignment="Center"
-                                 Text="{Binding DotNetVersionText}" />
-                    </TabItem>
                     <TabItem Name="DotNetCoreTab" Header=".net core" ToolTip=".Net Core">
                         <TextBox Name="DotNetCoreVersion" Margin="10" IsReadOnly="True" Background="Transparent"
                                  BorderThickness="0" TextAlignment="Center" TextWrapping="Wrap"
                                  HorizontalAlignment="Center" VerticalAlignment="Center"
                                  Text="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto" />
+                    </TabItem>
+                    <TabItem Name="DotNetFullTab" Header=".net framework" ToolTip=".Net Framework">
+                        <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent"
+                                 BorderThickness="0" TextAlignment="Center"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 Text="{Binding DotNetVersionText}" />
                     </TabItem>
                 </TabControl>
             </TabItem>

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.ViewModel;
 using EvilBaschdi.CoreExtended.AppHelpers;
-using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 
 namespace SystemPropertiesChecker
@@ -25,7 +23,6 @@ namespace SystemPropertiesChecker
             InitializeComponent();
 
 
-            
             IVersionContainer versionContainer = new VersionContainer();
             IScreenShot screenShot = new ScreenShot();
             _mainWindowViewModel = new MainWindowViewModel(versionContainer, screenShot);
@@ -35,20 +32,6 @@ namespace SystemPropertiesChecker
         private void MainWindowLoaded(object sender, RoutedEventArgs e)
         {
             DataContext = _mainWindowViewModel;
-        }
-
-        /// <inheritdoc />
-        protected override void OnClosed(EventArgs e)
-        {
-            foreach (Window currentWindow in Application.Current.Windows)
-            {
-                if (currentWindow != Application.Current.MainWindow)
-                {
-                    currentWindow.Close();
-                }
-            }
-
-            base.OnClosed(e);
         }
     }
 }

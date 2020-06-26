@@ -49,6 +49,11 @@ namespace SystemPropertiesChecker.Core.Internal
                 dictionary.Add("Edition", $"{values.ProductName}{values.CsdVersion}{values.ReleaseId}");
                 dictionary.Add("Internal Version", values.CurrentVersion);
                 dictionary.Add("Current Build", values.CurrentBuild);
+                if (!string.IsNullOrWhiteSpace(values.InsiderChannel))
+                {
+                    dictionary.Add("Insider Channel", values.InsiderChannel);
+                }
+
                 dictionary.Add("OS Build",
                     !string.IsNullOrWhiteSpace(values.Ubr) ? $"{values.CurrentBuild}.{values.Ubr}" : $"{values.BuildLabExArray[0]}.{values.BuildLabExArray[1]}");
                 dictionary.Add("BuildLab", values.BuildLab);
