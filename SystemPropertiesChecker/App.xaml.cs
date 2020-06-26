@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using ControlzEx.Theming;
 
 namespace SystemPropertiesChecker
 {
@@ -9,5 +10,12 @@ namespace SystemPropertiesChecker
     // ReSharper disable once RedundantExtendsListEntry
     public partial class App : Application
     {
+        /// <inheritdoc />
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            ThemeManager.Current.SyncTheme(ThemeSyncMode.SyncAll);
+
+            base.OnStartup(e);
+        }
     }
 }

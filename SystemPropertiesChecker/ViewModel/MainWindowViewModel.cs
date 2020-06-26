@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Shell;
-using SystemPropertiesChecker.Core;
-using SystemPropertiesChecker.Internal;
-using SystemPropertiesChecker.Models;
-using EvilBaschdi.CoreExtended;
-using EvilBaschdi.CoreExtended.Metro;
+using System.Windows;
+using SystemPropertiesChecker.Core.Internal;
+using SystemPropertiesChecker.Core.Internal.DotNet;
+using SystemPropertiesChecker.Core.Models;
+using EvilBaschdi.CoreExtended.AppHelpers;
+using EvilBaschdi.CoreExtended.Controls.About;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
-using MahApps.Metro.Controls.Dialogs;
+using JetBrains.Annotations;
 using Unity;
 
 namespace SystemPropertiesChecker.ViewModel
@@ -21,44 +22,52 @@ namespace SystemPropertiesChecker.ViewModel
     /// </summary>
     public class MainWindowViewModel : ApplicationStyleViewModel
     {
-       
-        private ProgressDialogController _controller;
-        private string _currentVersionText;
-        private string _dotNetVersionText;
+        private readonly IScreenShot _screenShot;
+
+        private readonly IVersionContainer _versionContainer;
+        private Dictionary<string, string> _currentVersionText;
         private string _dotNetCoreVersionText;
-        private ILinkerTime _linkerTime;
+        private string _dotNetVersionText;
         private string _otherText;
         private string _passwordExpirationMessage;
-
-        private TaskbarItemProgressState _progressState;
-        private int _progressValue;
-        private Task _task;
-        private string _windowsVersionText;
+        private ObservableCollection<SourceOs> _sourceOsCollection;
+        private Visibility _windowsTabVisibility;
 
         /// <inheritdoc />
         /// <summary>
         ///     Constructor
         /// </summary>
-        protected internal MainWindowViewModel(IApplicationStyleSettings applicationStyleSettings, IThemeManagerHelper themeManagerHelper)
-            : base(applicationStyleSettings, themeManagerHelper)
+        protected internal MainWindowViewModel([NotNull] IVersionContainer versionContainer, [NotNull] IScreenShot screenShot)
+
         {
-            
-            Reload = new DefaultCommand
-                     {
-                         Text = "reload",
-                         Command = new RelayCommand(async rc => await ConfigureControllerAsync().ConfigureAwait(true))
-                     };
+            _versionContainer = versionContainer ?? throw new ArgumentNullException(nameof(versionContainer));
+            _screenShot = screenShot ?? throw new ArgumentNullException(nameof(screenShot));
+
+            ScreenShot = new DefaultCommand
+                         {
+                             // ReSharper disable once StringLiteralTypo
+                             Text = "screenshot",
+                             Command = new RelayCommand(rc => ScreenShotCommand())
+                         };
+            AboutWindowClick = new DefaultCommand
+                               {
+                                   Text = "about",
+                                   Command = new RelayCommand(rc => AboutWindowCommand())
+                               };
             BuildCompositionRoot();
         }
 
+        /// <summary>
+        /// </summary>
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
+        public ICommandViewModel AboutWindowClick { get; set; }
 
         /// <summary>
         /// </summary>
-        public ICommandViewModel Reload { get; set; }
-
-        public string LinkerTime => _linkerTime.Value;
-
-        public string CurrentVersionText
+        // ReSharper disable once UnusedMember.Global
+        public Dictionary<string, string> CurrentVersionText
         {
             get => _currentVersionText;
             set
@@ -68,16 +77,9 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
-        public string DotNetVersionText
-        {
-            get => _dotNetVersionText;
-            set
-            {
-                _dotNetVersionText = value;
-                OnPropertyChanged();
-            }
-        }
-
+        /// <summary>
+        /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public string DotNetCoreVersionText
         {
             get => _dotNetCoreVersionText;
@@ -88,6 +90,22 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
+        /// <summary>
+        /// </summary>
+        // ReSharper disable once UnusedMember.Global
+        public string DotNetVersionText
+        {
+            get => _dotNetVersionText;
+            set
+            {
+                _dotNetVersionText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public string OtherText
         {
             get => _otherText;
@@ -98,6 +116,9 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
+        /// <summary>
+        /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public string PasswordExpirationMessage
         {
             get => _passwordExpirationMessage;
@@ -108,117 +129,81 @@ namespace SystemPropertiesChecker.ViewModel
             }
         }
 
-        public string WindowsVersionText
+        /// <summary>
+        /// </summary>
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
+        public ICommandViewModel ScreenShot { get; set; }
+
+        /// <summary>
+        /// </summary>
+        // ReSharper disable once UnusedMember.Global
+        public ObservableCollection<SourceOs> SourceOsCollection
         {
-            get => _windowsVersionText;
+            get => _sourceOsCollection;
+
             set
             {
-                _windowsVersionText = value;
+                _sourceOsCollection = value;
                 OnPropertyChanged();
             }
         }
 
-        public TaskbarItemProgressState ProgressState
+        /// <summary>
+        /// </summary>
+        // ReSharper disable once UnusedMember.Global
+        public Visibility WindowsTabVisibility
         {
-            get => _progressState;
+            get => _windowsTabVisibility;
             set
             {
-                _progressState = value;
+                _windowsTabVisibility = value;
                 OnPropertyChanged();
             }
         }
 
-        private async void BuildCompositionRoot()
+
+        /// <summary>
+        /// </summary>
+        private void BuildCompositionRoot()
         {
-            _linkerTime = new LinkerTime();
             RunVersionChecks();
-            //await ConfigureControllerAsync().ConfigureAwait(true);
-        }
-
-
-        private async Task ConfigureControllerAsync()
-        {
-            // _progressState = TaskbarItemProgressState.Indeterminate;
-
-            //Cursor = Cursors.Wait;
-
-            var options = new MetroDialogSettings
-                          {
-                              ColorScheme = MetroDialogColorScheme.Accented
-                          };
-
-            //MetroDialogOptions = options;
-            //_controller = await ShowProgressAsync("Loading...", "Checking Properties", true, options).ConfigureAwait(true);
-            //_controller.SetIndeterminate();
-            //_controller.Canceled += ControllerCanceled;
-
-            _task = Task.Factory.StartNew(RunVersionChecks);
-            await _task.ConfigureAwait(true);
-            _task.GetAwaiter().OnCompleted(TaskCompleted);
-        }
-
-        private void TaskCompleted()
-        {
-            //CurrentVersion.Text = _currentVersionText;
-            //WindowsVersion.Text = _windowsVersionText;
-            //DotNetVersion.Text = _dotNetVersionText;
-            //Other.Text = _otherText;
-
-            //_overrideProtection = 1;
-
-            if (!string.IsNullOrWhiteSpace(_passwordExpirationMessage))
-            {
-                //_dialogService.ShowMessage("Password Expiration", _passwordExpirationMessage);
-                _progressState = TaskbarItemProgressState.Normal;
-                _progressValue = 1;
-            }
-
-            //DomainTab.Visibility = Visibility.Hidden;
-            //_controller.CloseAsync();
-            //_controller.Closed += ControllerClosed;
-        }
-
-        private void ControllerClosed(object sender, EventArgs e)
-        {
-            _progressState = TaskbarItemProgressState.Normal;
-            _progressValue = 1;
-            //Cursor = Cursors.Arrow;
-        }
-
-        private void ControllerCanceled(object sender, EventArgs e)
-        {
-            _controller.CloseAsync();
-            _controller.Closed += ControllerClosed;
         }
 
         private void RunVersionChecks()
         {
-            var versionContainer = new UnityContainer();
-            versionContainer.RegisterType<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
-            versionContainer.RegisterType<IDotNetVersion, DotNetVersion>();
-            versionContainer.RegisterType<IDotNetCoreSdks, DotNetCoreSdks>();
-            versionContainer.RegisterType<IDotNetCoreRuntimes, DotNetCoreRuntimes>();
-            versionContainer.RegisterType<IDotNetCoreVersion, DotNetCoreVersion>();
-            versionContainer.RegisterType<IRegistryValue, HklmSoftwareMicrosoftWindowsNtCurrentVersion>();
-            versionContainer.RegisterType<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
-            versionContainer.RegisterType<IWindowsVersionInformation, WindowsVersionInformation>();
-            versionContainer.RegisterType<ICurrentVersionText, CurrentVersionText>();
-            versionContainer.RegisterType<IWindowsVersionText, WindowsVersionText>();
-            versionContainer.RegisterType<IOtherInformationText, OtherInformationText>();
-            versionContainer.RegisterType<IPasswordExpirationDate, PasswordExpirationDate>();
-            versionContainer.RegisterType<IPasswordExpirationMessage, PasswordExpirationMessage>();
+            var versionContainer = _versionContainer.Value;
 
-            _currentVersionText = versionContainer.Resolve<ICurrentVersionText>().Value;
-            _windowsVersionText = versionContainer.Resolve<IWindowsVersionText>().Value;
+            _currentVersionText = versionContainer.Resolve<IWindowsVersionDictionary>().Value;
             _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
-            _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().Value.Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
-            _dotNetCoreVersionText = versionContainer.Resolve<IDotNetCoreVersion>().Value;
+            _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().Value
+                                                 .Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
+            _dotNetCoreVersionText = versionContainer.Resolve<IDotNetCoreInfo>().Value;
             _passwordExpirationMessage = versionContainer.Resolve<IPasswordExpirationMessage>().Value;
+            _sourceOsCollection = versionContainer.Resolve<ISourceOsCollection>().Value;
+            _windowsTabVisibility = _sourceOsCollection.Any() ? Visibility.Visible : Visibility.Hidden;
 
             versionContainer.Dispose();
-            //var temp = string.Empty;
-            //DomainInformation.Text = temp;
-            //DomainTab.Visibility = (!string.IsNullOrWhiteSpace(temp)).ToVisibility();
+        }
+
+        private void ScreenShotCommand()
+        {
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            var current = _screenShot.ValueFor(mainWindow);
+            _screenShot.SaveToClipboard(current);
+        }
+
+
+        private void AboutWindowCommand()
+        {
+            var aboutWindow = new AboutWindow();
+            var assembly = typeof(MainWindow).Assembly;
+
+            IAboutContent aboutWindowContent =
+                new AboutContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
+            aboutWindow.DataContext = new AboutViewModel(aboutWindowContent);
+            aboutWindow.ShowDialog();
         }
     }
 }
