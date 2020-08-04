@@ -46,6 +46,10 @@ namespace SystemPropertiesChecker.Core.Models
 
         /// <summary>
         /// </summary>
+        string InsiderChannel { get; set; }
+
+        /// <summary>
+        /// </summary>
         string Manufacturer { get; set; }
 
         /// <summary>
@@ -71,10 +75,6 @@ namespace SystemPropertiesChecker.Core.Models
         /// <summary>
         /// </summary>
         string UserName { get; set; }
-
-        /// <summary>
-        /// </summary>
-        string InsiderChannel { get; set; }
     }
     // ReSharper restore UnusedMemberInSuper.Global
     // ReSharper restore UnusedMember.Global

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <ApplicationIcon>b.ico</ApplicationIcon>
+    <ApplicationIcon>spc.ico</ApplicationIcon>
     <Authors>Sebastian Walter</Authors>
     <Company>evilbaschdi (Sebastian Walter)</Company>
     <Copyright>Copyright © 2014 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
@@ -9,22 +9,45 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\SystemPropertiesChecker.xml</DocumentationFile>
     <LangVersion>8</LangVersion>
     <OutputType>WinExe</OutputType>
-    <PackageIconUrl>https://github.com/evilbaschdi/SystemPropertiesChecker/blob/master/SystemPropertiesChecker/b.ico</PackageIconUrl>
+    <PackageIconUrl>https://github.com/evilbaschdi/SystemPropertiesChecker/blob/master/SystemPropertiesChecker/spc.ico</PackageIconUrl>
     <PackageProjectUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</PackageProjectUrl>
     <Product>SystemPropertiesChecker</Product>
     <RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net5</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="4.3.1" />
+    <None Remove="spc.png" />
+    <None Remove="SystemPropertiesChecker.VisualElementsManifest.xml" />
+    <None Remove="spc_150.png" />
+    <None Remove="spc_70.png" />
+    <None Remove="spc.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="spc.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SystemPropertiesChecker.VisualElementsManifest.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="spc_150.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="spc_70.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="spc.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ControlzEx" Version="4.3.2" />
+    <PackageReference Include="MahApps.Metro" Version="2.1.1" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.4.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.4.0" />
     <PackageReference Include="EvilBaschdi.Core" Version="2020.6.12.1028" />
     <PackageReference Include="EvilBaschdi.CoreExtended" Version="2020.5.24.1338" />
-    <PackageReference Include="MahApps.Metro" Version="2.1.1" />
-    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.3.0" />
-    <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.3.0" />
     <PackageReference Include="Unity" Version="5.11.7" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02">
       <PrivateAssets>all</PrivateAssets>
@@ -39,34 +62,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="b.png" />
-    <None Remove="SystemPropertiesChecker.VisualElementsManifest.xml" />
-    <None Remove="b_150.png" />
-    <None Remove="b_70.png" />
-    <None Remove="b.ico" />
-    <Content Include="b.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SystemPropertiesChecker.VisualElementsManifest.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="b_150.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="b_70.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Resource Include="b.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -74,7 +72,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

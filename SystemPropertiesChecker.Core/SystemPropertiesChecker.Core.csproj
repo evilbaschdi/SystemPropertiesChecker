@@ -9,19 +9,19 @@
     <LangVersion>8</LangVersion>
     <PackageProjectUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</PackageProjectUrl>
     <RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))-develop</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="EvilBaschdi.Core" Version="2020.6.12.1028" />
     <PackageReference Include="EvilBaschdi.Settings" Version="2020.5.31.1001-develop" />
-    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0-preview.6.20305.6" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0-preview.7.20364.11" />
     <PackageReference Include="Unity" Version="5.11.7" />
-    <PackageReference Include="System.DirectoryServices" Version="5.0.0-preview.6.20305.6" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0-preview.6.20305.6" />
-    <PackageReference Include="System.Management" Version="5.0.0-preview.6.20305.6" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0-preview.6.20305.6" />
+    <PackageReference Include="System.DirectoryServices" Version="5.0.0-preview.7.20364.11" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0-preview.7.20364.11" />
+    <PackageReference Include="System.Management" Version="5.0.0-preview.7.20364.11" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0-preview.7.20364.11" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

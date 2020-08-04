@@ -201,7 +201,7 @@ namespace SystemPropertiesChecker.ViewModel
             var assembly = typeof(MainWindow).Assembly;
 
             IAboutContent aboutWindowContent =
-                new AboutContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
+                new AboutContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\spc.png");
             aboutWindow.DataContext = new AboutViewModel(aboutWindowContent);
             aboutWindow.ShowDialog();
         }
