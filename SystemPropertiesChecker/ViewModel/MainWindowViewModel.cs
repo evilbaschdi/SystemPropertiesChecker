@@ -18,7 +18,7 @@ namespace SystemPropertiesChecker.ViewModel
 {
     /// <inheritdoc cref="INotifyPropertyChanged" />
     /// <summary>
-    ///     MainWindowViewModel of TestUi.
+    ///     MainWindowViewModel of SystemPropertiesChecker.
     /// </summary>
     public class MainWindowViewModel : ApplicationStyleViewModel
     {
@@ -197,12 +197,14 @@ namespace SystemPropertiesChecker.ViewModel
 
         private void AboutWindowCommand()
         {
-            var aboutWindow = new AboutWindow();
             var assembly = typeof(MainWindow).Assembly;
 
             IAboutContent aboutWindowContent =
                 new AboutContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\spc.png");
-            aboutWindow.DataContext = new AboutViewModel(aboutWindowContent);
+            var aboutWindow = new AboutWindow
+                              {
+                                  DataContext = new AboutViewModel(aboutWindowContent)
+                              };
             aboutWindow.ShowDialog();
         }
     }
