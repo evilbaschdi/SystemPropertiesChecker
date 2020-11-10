@@ -37,7 +37,7 @@ namespace SystemPropertiesChecker.Core.Tests.Internal.DotNet
             var result = sut.Value;
 
             // Assert
-            result.Should().NotBeNullOrWhiteSpace();
+            result.Should().NotBeEmpty();
         }
     }
 }

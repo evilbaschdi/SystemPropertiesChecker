@@ -1,4 +1,5 @@
-﻿using EvilBaschdi.Core;
+﻿using System.Collections.Generic;
+using EvilBaschdi.Core;
 
 namespace SystemPropertiesChecker.Core.Internal.DotNet
 {
@@ -6,7 +7,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
     /// <summary>
     ///     Interface for classes that return info regarding current installed version of .net core
     /// </summary>
-    public interface IDotNetCoreInfo : IValue<string>
+    public interface IDotNetCoreInfo : IValue<Dictionary<string,string>>
     {
     }
 }

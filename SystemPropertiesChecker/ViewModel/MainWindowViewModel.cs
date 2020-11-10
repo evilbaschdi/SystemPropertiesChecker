@@ -26,9 +26,9 @@ namespace SystemPropertiesChecker.ViewModel
 
         private readonly IVersionContainer _versionContainer;
         private Dictionary<string, string> _currentVersionText;
-        private string _dotNetCoreVersionText;
+        private Dictionary<string, string> _dotNetCoreVersionText;
         private string _dotNetVersionText;
-        private string _otherText;
+        private List<KeyValuePair<string,string>> _otherText;
         private string _passwordExpirationMessage;
         private ObservableCollection<SourceOs> _sourceOsCollection;
         private Visibility _windowsTabVisibility;
@@ -80,7 +80,7 @@ namespace SystemPropertiesChecker.ViewModel
         /// <summary>
         /// </summary>
         // ReSharper disable once UnusedMember.Global
-        public string DotNetCoreVersionText
+        public Dictionary<string, string> DotNetCoreVersionText
         {
             get => _dotNetCoreVersionText;
             set
@@ -106,7 +106,7 @@ namespace SystemPropertiesChecker.ViewModel
         /// <summary>
         /// </summary>
         // ReSharper disable once UnusedMember.Global
-        public string OtherText
+        public List<KeyValuePair<string,string>> OtherText
         {
             get => _otherText;
             set
@@ -177,8 +177,7 @@ namespace SystemPropertiesChecker.ViewModel
 
             _currentVersionText = versionContainer.Resolve<IWindowsVersionDictionary>().Value;
             _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
-            _dotNetVersionText = versionContainer.Resolve<IDotNetVersion>().Value
-                                                 .Aggregate(string.Empty, (c, v) => $"{c}{v}{Environment.NewLine}");
+            _dotNetVersionText = string.Join(Environment.NewLine, versionContainer.Resolve<IDotNetVersion>().Value);
             _dotNetCoreVersionText = versionContainer.Resolve<IDotNetCoreInfo>().Value;
             _passwordExpirationMessage = versionContainer.Resolve<IPasswordExpirationMessage>().Value;
             _sourceOsCollection = versionContainer.Resolve<ISourceOsCollection>().Value;

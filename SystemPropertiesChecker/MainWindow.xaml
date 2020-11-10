@@ -7,7 +7,7 @@
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       mc:Ignorable="d"
                       WindowStartupLocation="CenterScreen" Icon="spc.ico"
-                      Title="System Properties Checker" Width="600" Height="500"
+                      Title="System Properties Checker" Width="800" Height="800"
                       GlowBrush="{DynamicResource MahApps.Brushes.AccentBase}"
                       TitleCharacterCasing="Normal">
 
@@ -141,10 +141,32 @@
             <TabControl Name="DotNetTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Top"
                         controls:TabControlHelper.Underlined="TabPanel">
                 <TabItem Name="DotNetCoreTab" Header=".net core" ToolTip=".Net Core">
-                    <TextBox Name="DotNetCoreVersion" Margin="10" IsReadOnly="True" Background="Transparent"
-                             BorderThickness="0" TextAlignment="Center" TextWrapping="Wrap"
-                             HorizontalAlignment="Center" VerticalAlignment="Center"
-                             Text="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto" />
+                    <DataGrid Name="DotNetCoreDataGrid" Margin="0" CanUserAddRows="False" SelectionUnit="FullRow"
+                              SelectionMode="Single" ColumnWidth="*"
+                              Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
+                              GridLinesVisibility="Horizontal" CanUserDeleteRows="False"
+                              AutoGenerateColumns="False"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
+                              HorizontalAlignment="Center" VerticalAlignment="Top"
+                              ItemsSource="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </TabItem>
                 <TabItem Name="DotNetFullTab" Header=".net framework" ToolTip=".Net Framework">
                     <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent"
@@ -164,9 +186,32 @@
                     </StackPanel>
                 </DataTemplate>
             </TabItem.HeaderTemplate>
-            <TextBox Name="Other" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0"
-                     TextAlignment="Center" HorizontalAlignment="Center"
-                     VerticalAlignment="Center" Text="{Binding OtherText}" />
+            <DataGrid Name="OtherDataGrid" Margin="0" CanUserAddRows="False" SelectionUnit="FullRow"
+                      SelectionMode="Single" ColumnWidth="*"
+                      Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
+                      GridLinesVisibility="Horizontal" CanUserDeleteRows="False"
+                      AutoGenerateColumns="False"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
+                      HorizontalAlignment="Center" VerticalAlignment="Top"
+                      ItemsSource="{Binding OtherText}" VerticalScrollBarVisibility="Auto">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
 
         </TabItem>
     </TabControl>

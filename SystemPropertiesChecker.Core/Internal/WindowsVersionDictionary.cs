@@ -46,7 +46,20 @@ namespace SystemPropertiesChecker.Core.Internal
                     dictionary.Add("Password expiration date", values.PasswordExpirationDate);
                 }
 
-                dictionary.Add("Edition", $"{values.ProductName}{values.CsdVersion}{values.ReleaseId}");
+                dictionary.Add("Edition", $"{values.ProductName}{values.CsdVersion}");
+
+
+                if (!string.IsNullOrWhiteSpace(values.DisplayVersion))
+                {
+                    dictionary.Add("Version", values.DisplayVersion);
+                }
+
+                if (!string.IsNullOrWhiteSpace(values.ReleaseId))
+                {
+                    dictionary.Add("Release Id", values.ReleaseId);
+                }
+
+
                 dictionary.Add("Internal Version", values.CurrentVersion);
                 dictionary.Add("Current Build", values.CurrentBuild);
                 if (!string.IsNullOrWhiteSpace(values.InsiderChannel))

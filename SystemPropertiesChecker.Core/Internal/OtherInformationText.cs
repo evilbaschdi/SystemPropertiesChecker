@@ -18,10 +18,11 @@ namespace SystemPropertiesChecker.Core.Internal
         /// <summary>
         ///     Other information text.
         /// </summary>
-        public string Value
+        public List<KeyValuePair<string,string>> Value
         {
             get
             {
+                var list = new List<KeyValuePair<string, string>>();
                 var psVersion = "0";
                 if (PowerShellExists(3))
                 {
@@ -32,18 +33,20 @@ namespace SystemPropertiesChecker.Core.Internal
                     psVersion = GetPowerShellVersion(1);
                 }
 
-                var stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine($"Internet Explorer: {GetIeVersion()}");
+                
+                
+                list.Add(new KeyValuePair<string, string>("Internet Explorer",GetIeVersion()));
 
                 foreach (var browser in GetBrowsers())
                 {
-                    stringBuilder.AppendLine($"{browser.Name}: {browser.Version}");
+                    list.Add(new KeyValuePair<string, string>(browser.Name,browser.Version));
                 }
 
-                stringBuilder.AppendLine($"PowerShell: {psVersion}");
-                stringBuilder.AppendLine($"Git for Windows: {GetGitVersion()}");
+                list.Add(new KeyValuePair<string, string>("PowerShell",psVersion));
+                list.Add(new KeyValuePair<string, string>("Git",GetGitVersion()));
+                
 
-                return stringBuilder.ToString();
+                return list;
             }
         }
 

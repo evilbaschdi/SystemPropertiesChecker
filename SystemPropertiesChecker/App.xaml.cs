@@ -1,5 +1,9 @@
 ﻿using System.Windows;
+
+#if (!DEBUG)
 using ControlzEx.Theming;
+
+#endif
 
 namespace SystemPropertiesChecker
 {
@@ -10,6 +14,7 @@ namespace SystemPropertiesChecker
     // ReSharper disable once RedundantExtendsListEntry
     public partial class App : Application
     {
+#if (!DEBUG)
         /// <inheritdoc />
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -17,5 +22,6 @@ namespace SystemPropertiesChecker
 
             base.OnStartup(e);
         }
+#endif
     }
 }

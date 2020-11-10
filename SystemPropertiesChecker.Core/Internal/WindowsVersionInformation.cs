@@ -58,10 +58,6 @@ namespace SystemPropertiesChecker.Core.Internal
                     ? $" with {_localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CSDVersion")}"
                     : string.Empty;
 
-                var releaseId = !string.IsNullOrEmpty(_localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ReleaseId"))
-                    ? $" (Version {_localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ReleaseId")})"
-                    : string.Empty;
-
                 var version = !string.IsNullOrWhiteSpace(currentMajorVersionNumber) &&
                               !string.IsNullOrWhiteSpace(currentMinorVersionNumber)
                     ? $"{currentMajorVersionNumber}.{currentMinorVersionNumber}"
@@ -90,7 +86,8 @@ namespace SystemPropertiesChecker.Core.Internal
                 _windowsVersionInformationModel.ProductName = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ProductName");
                 _windowsVersionInformationModel.CurrentVersion = version;
                 _windowsVersionInformationModel.CsdVersion = csdVersion;
-                _windowsVersionInformationModel.ReleaseId = releaseId;
+                _windowsVersionInformationModel.ReleaseId = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ReleaseId");
+                _windowsVersionInformationModel.DisplayVersion = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("DisplayVersion");
                 _windowsVersionInformationModel.Ubr = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("UBR");
                 _windowsVersionInformationModel.InstallDate = InstallDate();
                 _cachedWindowsVersionInformationModel = _windowsVersionInformationModel;

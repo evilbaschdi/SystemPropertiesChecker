@@ -67,6 +67,9 @@ namespace SystemPropertiesChecker.Core.Models
         /// <summary>
         /// </summary>
         string ReleaseId { get; set; }
+        /// <summary>
+        /// </summary>
+        string DisplayVersion { get; set; }
 
         /// <summary>
         /// </summary>

@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 namespace SystemPropertiesChecker.Core.Internal.DotNet
 {
@@ -9,11 +9,11 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
     public class DotNetCoreInfo : IDotNetCoreInfo
     {
         /// <inheritdoc />
-        public string Value
+        public Dictionary<string,string> Value
         {
             get
             {
-                var stringBuilder = new StringBuilder();
+                var dictionary = new Dictionary<string,string>();
 
                 try
                 {
@@ -21,9 +21,21 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                     process.SetHiddenProcessFor("dotnet", "--info");
                     process.Start();
 
+
                     foreach (var item in process.ReadStandardOutput())
                     {
-                        stringBuilder.AppendLine(item.Contains("[") ? item.Split('[').First() : item);
+                        var line = (item.Contains("[") ? item.Split('[').First() : item).Trim();
+
+
+                        if (line.EndsWith(":"))
+                        {
+                            dictionary.Add(line, string.Empty);
+                        }
+                        else
+                        {
+                            var lastKey = dictionary.Last().Key;
+                            dictionary[lastKey] = $"{dictionary[lastKey]}{Environment.NewLine}{line}";
+                        }
                     }
 
                     process.Close();
@@ -31,11 +43,11 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    stringBuilder.AppendLine("(none)");
+                    dictionary.Add("(none)",string.Empty);
                 }
 
 
-                return stringBuilder.ToString();
+                return dictionary;
             }
         }
     }
