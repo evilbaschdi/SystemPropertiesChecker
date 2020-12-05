@@ -28,7 +28,7 @@ namespace SystemPropertiesChecker.ViewModel
         private Dictionary<string, string> _currentVersionText;
         private Dictionary<string, string> _dotNetCoreVersionText;
         private string _dotNetVersionText;
-        private List<KeyValuePair<string,string>> _otherText;
+        private List<KeyValuePair<string, string>> _otherText;
         private string _passwordExpirationMessage;
         private ObservableCollection<SourceOs> _sourceOsCollection;
         private Visibility _windowsTabVisibility;
@@ -47,12 +47,12 @@ namespace SystemPropertiesChecker.ViewModel
                          {
                              // ReSharper disable once StringLiteralTypo
                              Text = "screenshot",
-                             Command = new RelayCommand(rc => ScreenShotCommand())
+                             Command = new RelayCommand(_ => ScreenShotCommand())
                          };
             AboutWindowClick = new DefaultCommand
                                {
                                    Text = "about",
-                                   Command = new RelayCommand(rc => AboutWindowCommand())
+                                   Command = new RelayCommand(_ => AboutWindowCommand())
                                };
             BuildCompositionRoot();
         }
@@ -106,7 +106,7 @@ namespace SystemPropertiesChecker.ViewModel
         /// <summary>
         /// </summary>
         // ReSharper disable once UnusedMember.Global
-        public List<KeyValuePair<string,string>> OtherText
+        public List<KeyValuePair<string, string>> OtherText
         {
             get => _otherText;
             set
@@ -194,7 +194,7 @@ namespace SystemPropertiesChecker.ViewModel
         }
 
 
-        private void AboutWindowCommand()
+        private static void AboutWindowCommand()
         {
             var assembly = typeof(MainWindow).Assembly;
 

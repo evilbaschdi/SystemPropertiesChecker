@@ -9,11 +9,11 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
     public class DotNetCoreInfo : IDotNetCoreInfo
     {
         /// <inheritdoc />
-        public Dictionary<string,string> Value
+        public Dictionary<string, string> Value
         {
             get
             {
-                var dictionary = new Dictionary<string,string>();
+                var dictionary = new Dictionary<string, string>();
 
                 try
                 {
@@ -43,7 +43,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    dictionary.Add("(none)",string.Empty);
+                    dictionary.Add("(none)", string.Empty);
                 }
 
 

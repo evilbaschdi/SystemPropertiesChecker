@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using SystemPropertiesChecker.Core.Models;
 using Microsoft.Win32;
@@ -18,7 +18,7 @@ namespace SystemPropertiesChecker.Core.Internal
         /// <summary>
         ///     Other information text.
         /// </summary>
-        public List<KeyValuePair<string,string>> Value
+        public List<KeyValuePair<string, string>> Value
         {
             get
             {
@@ -33,18 +33,14 @@ namespace SystemPropertiesChecker.Core.Internal
                     psVersion = GetPowerShellVersion(1);
                 }
 
-                
-                
-                list.Add(new KeyValuePair<string, string>("Internet Explorer",GetIeVersion()));
 
-                foreach (var browser in GetBrowsers())
-                {
-                    list.Add(new KeyValuePair<string, string>(browser.Name,browser.Version));
-                }
+                list.Add(new KeyValuePair<string, string>("Internet Explorer", GetIeVersion()));
 
-                list.Add(new KeyValuePair<string, string>("PowerShell",psVersion));
-                list.Add(new KeyValuePair<string, string>("Git",GetGitVersion()));
-                
+                list.AddRange(GetBrowsers().Select(browser => new KeyValuePair<string, string>(browser.Name, browser.Version)));
+
+                list.Add(new KeyValuePair<string, string>("PowerShell", psVersion));
+                list.Add(new KeyValuePair<string, string>("Git", GetGitVersion()));
+
 
                 return list;
             }
@@ -52,6 +48,11 @@ namespace SystemPropertiesChecker.Core.Internal
 
         private static string GetIeVersion()
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return "(supported on windows only)";
+            }
+
             const string key = @"Software\Microsoft\Internet Explorer";
             var subKey = Registry.LocalMachine.OpenSubKey(key, false);
             if (subKey == null)
@@ -82,6 +83,11 @@ namespace SystemPropertiesChecker.Core.Internal
 
         private static string GetPowerShellVersion(int version)
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return "(supported on windows only)";
+            }
+
             var key = $@"SOFTWARE\Microsoft\PowerShell\{version}\PowerShellEngine";
             var subKey = Registry.LocalMachine.OpenSubKey(key, false);
             if (subKey == null)
@@ -95,6 +101,11 @@ namespace SystemPropertiesChecker.Core.Internal
 
         private static bool PowerShellExists(int version)
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return false;
+            }
+
             var value = Registry.GetValue($@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\{version}", "Install", null)?.ToString();
             return !string.IsNullOrWhiteSpace(value) && value.Equals("1");
         }
@@ -102,6 +113,11 @@ namespace SystemPropertiesChecker.Core.Internal
         private static IEnumerable<Browser> GetBrowsers()
         {
             var browsers = new List<Browser>();
+
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return browsers;
+            }
 
             try
             {
@@ -161,6 +177,11 @@ namespace SystemPropertiesChecker.Core.Internal
 
         private static Browser GetEdgeVersion()
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return null;
+            }
+
             var edgeKey =
                 Registry.CurrentUser.OpenSubKey(
                     @"SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppModel\SystemAppData\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\Schemas");

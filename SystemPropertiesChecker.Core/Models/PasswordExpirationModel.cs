@@ -8,15 +8,15 @@ namespace SystemPropertiesChecker.Core.Models
     {
         /// <summary>
         /// </summary>
-        public string DateString { get; set; }
+        public string DateString { get; init; }
 
 
         /// <summary>
         /// </summary>
-        public DateTime PasswordExpirationDate { get; set; }
+        public DateTime PasswordExpirationDate { get; init; }
 
         /// <summary>
         /// </summary>
-        public string UserName { get; set; }
+        public string UserName { get; init; }
     }
 }

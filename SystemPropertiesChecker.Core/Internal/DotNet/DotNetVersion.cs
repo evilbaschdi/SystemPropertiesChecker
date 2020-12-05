@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Microsoft.Win32;
 
 namespace SystemPropertiesChecker.Core.Internal.DotNet
@@ -43,6 +44,11 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
 
         private void GetNetFrameworkVersionFromRegistry()
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return;
+            }
+
             // Opens the registry key for the .NET Framework entry.
             using var ndpKey =
                 RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "").OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\");
@@ -66,13 +72,13 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                 }
 
                 var name = (string) versionKey.GetValue("Version", "");
-                var sp = versionKey.GetValue("SP", "").ToString();
-                var install = versionKey.GetValue("Install", "").ToString();
+                var sp = versionKey.GetValue("SP", "")?.ToString();
+                var install = versionKey.GetValue("Install", "")?.ToString();
 
                 // .Net 2.0, 3.0, 3.5
                 if (!string.IsNullOrEmpty(name))
                 {
-                    Value.Add(install != "" && install.Equals("1") && sp != ""
+                    Value.Add(!string.IsNullOrWhiteSpace(install) && install.Equals("1") && sp != ""
                         ? $"{versionKeyName} | SP{sp} | {name}"
                         : $"{versionKeyName} | {name}");
                 }
@@ -92,10 +98,10 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                         name = (string) subKey.GetValue("Version", "");
                         if (name != "")
                         {
-                            sp = subKey.GetValue("SP", "").ToString();
+                            sp = subKey.GetValue("SP", "")?.ToString();
                         }
 
-                        install = subKey.GetValue("Install", "").ToString();
+                        install = subKey.GetValue("Install", "")?.ToString();
                     }
 
                     if (!string.IsNullOrEmpty(install) && install.Equals("1"))
@@ -114,6 +120,11 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
 
         private void GetNetFrameworkVersionHigher4FromRegistry()
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return;
+            }
+
             using var ndpKey =
                 RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "")
                            .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\");
@@ -122,7 +133,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                 return;
             }
 
-            var releaseKey = ndpKey.GetValue("Release").ToString();
+            var releaseKey = ndpKey.GetValue("Release")?.ToString();
             Value.Add(CheckFor45DotVersion(releaseKey));
         }
 

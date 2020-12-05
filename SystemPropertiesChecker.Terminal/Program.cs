@@ -6,9 +6,9 @@ using Unity;
 
 namespace SystemPropertiesChecker.Terminal
 {
-    class Program
+    public static class Program
     {
-        static void Main()
+        private static void Main()
         {
             IVersionContainer versionContainer = new VersionContainer();
             var versionContainerValue = versionContainer.Value;

@@ -12,10 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EvilBaschdi.Core" Version="2020.10.2.2122-develop" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2020.12.1.744-develop" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
-    <PackageReference Include="Unity" Version="5.11.7" />
-    <PackageReference Include="Spectre.Console" Version="0.27.1-preview.0.10" />
+    <PackageReference Include="Unity" Version="5.11.9" />
+    <PackageReference Include="Spectre.Console" Version="0.32.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

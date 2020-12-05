@@ -1,6 +1,7 @@
 using System;
 using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
+using System.Runtime.InteropServices;
 using SystemPropertiesChecker.Core.Models;
 
 namespace SystemPropertiesChecker.Core.Internal
@@ -13,30 +14,35 @@ namespace SystemPropertiesChecker.Core.Internal
         /// <inheritdoc />
         public PasswordExpirationModel ValueFor(string domain)
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return new PasswordExpirationModel
+                       {
+                           DateString = "(undefined)",
+                           UserName = ""
+                       };
+            }
+
             try
             {
                 var context = new DirectoryContext(DirectoryContextType.Domain, domain);
-                using (var dc = DomainController.FindOne(context))
+                using var dc = DomainController.FindOne(context);
+                using var ds = dc.GetDirectorySearcher();
+                var samAccountName = UserPrincipal.Current.SamAccountName;
+                ds.Filter = $"(sAMAccountName={samAccountName})";
+                ds.SizeLimit = 10;
+                var sr = ds.FindOne();
+                if (sr != null)
                 {
-                    using (var ds = dc.GetDirectorySearcher())
-                    {
-                        var samAccountName = UserPrincipal.Current.SamAccountName;
-                        ds.Filter = $"(sAMAccountName={samAccountName})";
-                        ds.SizeLimit = 10;
-                        var sr = ds.FindOne();
-                        if (sr != null)
-                        {
-                            var de = sr.GetDirectoryEntry();
-                            var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
-                            var dateString = nextSet.ToString("g");
-                            return new PasswordExpirationModel
-                                   {
-                                       DateString = nextSet.Year == 1970 ? "-" : dateString,
-                                       UserName = samAccountName,
-                                       PasswordExpirationDate = nextSet
-                                   };
-                        }
-                    }
+                    var de = sr.GetDirectoryEntry();
+                    var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
+                    var dateString = nextSet.ToString("g");
+                    return new PasswordExpirationModel
+                           {
+                               DateString = nextSet.Year == 1970 ? "-" : dateString,
+                               UserName = samAccountName,
+                               PasswordExpirationDate = nextSet
+                           };
                 }
             }
             catch (Exception e)

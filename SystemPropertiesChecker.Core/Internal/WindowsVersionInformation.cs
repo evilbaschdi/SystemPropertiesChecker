@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management;
+using System.Runtime.InteropServices;
 using SystemPropertiesChecker.Core.Models;
 using JetBrains.Annotations;
 
@@ -15,7 +16,7 @@ namespace SystemPropertiesChecker.Core.Internal
         private readonly IInsiderChannel _insiderChannel;
         private readonly IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion _localMachineSoftwareMicrosoftWindowsNtCurrentVersion;
         private readonly IPasswordExpirationDate _passwordExpirationDate;
-        private readonly WindowsVersionInformationModel _windowsVersionInformationModel = new WindowsVersionInformationModel();
+        private readonly WindowsVersionInformationModel _windowsVersionInformationModel = new();
         private WindowsVersionInformationModel _cachedWindowsVersionInformationModel;
 
         /// <summary>
@@ -102,6 +103,11 @@ namespace SystemPropertiesChecker.Core.Internal
 
         private static string ManufacturerByWin32ComputerSystem()
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return "(supported on windows only)";
+            }
+
             const string win32ComputerSystem = "SELECT * FROM Win32_ComputerSystem";
             var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
             var info = managementObjectSearcher.Get();
@@ -116,6 +122,11 @@ namespace SystemPropertiesChecker.Core.Internal
 
         private static KeyValuePair<string, string> ManufacturerByWin32BaseBoard()
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return new KeyValuePair<string, string>("(supported on windows only)", "(supported on windows only)");
+            }
+
             const string win32ComputerSystem = "SELECT * FROM Win32_BaseBoard";
             var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
             var info = managementObjectSearcher.Get();
@@ -130,6 +141,11 @@ namespace SystemPropertiesChecker.Core.Internal
 
         private static string InstallDate()
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return "(supported on windows only)";
+            }
+
             const string win32OperatingSystem = "SELECT * FROM Win32_OperatingSystem";
             var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
             var info = managementObjectSearcher.Get();
@@ -139,6 +155,7 @@ namespace SystemPropertiesChecker.Core.Internal
                 installDate = item["InstallDate"]?.ToString();
                 break;
             }
+
 
             return ManagementDateTimeConverter.ToDateTime(installDate ?? string.Empty).ToString("yyyy-MM-dd HH:mm:ss");
         }

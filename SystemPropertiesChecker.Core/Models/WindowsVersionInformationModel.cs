@@ -44,6 +44,7 @@ namespace SystemPropertiesChecker.Core.Models
         /// <summary>
         /// </summary>
         public string ReleaseId { get; set; }
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
