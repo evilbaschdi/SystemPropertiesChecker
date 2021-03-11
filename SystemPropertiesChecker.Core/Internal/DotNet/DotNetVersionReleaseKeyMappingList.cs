@@ -27,6 +27,11 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                 throw new ArgumentNullException(nameof(releaseKey));
             }
 
+            if (!OperatingSystem.IsWindows())
+            {
+                return string.Empty;
+            }
+
             var fullName = _dotNetVersionReleaseKeyMapping.Value[releaseKey];
             return !string.IsNullOrWhiteSpace(fullName) ? fullName : "unknown";
         }

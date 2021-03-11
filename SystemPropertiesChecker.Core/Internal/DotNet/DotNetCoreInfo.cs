@@ -9,11 +9,11 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
     public class DotNetCoreInfo : IDotNetCoreInfo
     {
         /// <inheritdoc />
-        public Dictionary<string, string> Value
+        public List<KeyValuePair<string,string>> Value
         {
             get
             {
-                var dictionary = new Dictionary<string, string>();
+                var dictionary = new List<KeyValuePair<string,string>>();
 
                 try
                 {
@@ -29,12 +29,13 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
 
                         if (line.EndsWith(":"))
                         {
-                            dictionary.Add(line, string.Empty);
+                            dictionary.Add(new KeyValuePair<string, string>(line, string.Empty));
                         }
                         else
                         {
                             var lastKey = dictionary.Last().Key;
-                            dictionary[lastKey] = $"{dictionary[lastKey]}{Environment.NewLine}{line}";
+                            //dictionary[lastKey] = $"{dictionary[lastKey]}{Environment.NewLine}{line}";
+                            dictionary.Add(new KeyValuePair<string, string>(string.Empty,line));
                         }
                     }
 
@@ -43,7 +44,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    dictionary.Add("(none)", string.Empty);
+                    dictionary.Add(new KeyValuePair<string, string>("(none)", string.Empty));
                 }
 
 

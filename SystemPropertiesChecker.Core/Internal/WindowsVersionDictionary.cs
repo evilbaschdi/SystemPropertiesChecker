@@ -67,12 +67,15 @@ namespace SystemPropertiesChecker.Core.Internal
                     dictionary.Add("Insider Channel", values.InsiderChannel);
                 }
 
-                dictionary.Add("OS Build",
-                    !string.IsNullOrWhiteSpace(values.Ubr) ? $"{values.CurrentBuild}.{values.Ubr}" : $"{values.BuildLabExArray[0]}.{values.BuildLabExArray[1]}");
-                dictionary.Add("BuildLab", values.BuildLab);
-                dictionary.Add("BuildLabEx", values.BuildLabEx);
-                dictionary.Add("Architecture", values.Bits);
-                dictionary.Add("Install Date", values.InstallDate);
+                if (OperatingSystem.IsWindows())
+                {
+                    dictionary.Add("OS Build",
+                        !string.IsNullOrWhiteSpace(values.Ubr) ? $"{values.CurrentBuild}.{values.Ubr}" : $"{values.BuildLabExArray[0]}.{values.BuildLabExArray[1]}");
+                    dictionary.Add("BuildLab", values.BuildLab);
+                    dictionary.Add("BuildLabEx", values.BuildLabEx);
+                    dictionary.Add("Architecture", values.Bits);
+                    dictionary.Add("Install Date", values.InstallDate);
+                }
 
                 dictionary.Add("Manufacturer", values.Manufacturer);
 

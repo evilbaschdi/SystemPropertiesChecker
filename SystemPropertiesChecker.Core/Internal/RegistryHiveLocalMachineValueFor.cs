@@ -12,7 +12,9 @@ namespace SystemPropertiesChecker.Core.Internal
         ///     Constructor
         /// </summary>
         protected RegistryHiveLocalMachineValueFor([NotNull] string subKey)
+#pragma warning disable CA1416 // Validate platform compatibility
             : base(subKey, RegistryHive.LocalMachine)
+#pragma warning restore CA1416 // Validate platform compatibility
         {
         }
     }

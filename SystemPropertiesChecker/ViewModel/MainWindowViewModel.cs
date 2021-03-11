@@ -26,7 +26,7 @@ namespace SystemPropertiesChecker.ViewModel
 
         private readonly IVersionContainer _versionContainer;
         private Dictionary<string, string> _currentVersionText;
-        private Dictionary<string, string> _dotNetCoreVersionText;
+        private List<KeyValuePair<string, string>> _dotNetCoreVersionText;
         private string _dotNetVersionText;
         private List<KeyValuePair<string, string>> _otherText;
         private string _passwordExpirationMessage;
@@ -80,7 +80,7 @@ namespace SystemPropertiesChecker.ViewModel
         /// <summary>
         /// </summary>
         // ReSharper disable once UnusedMember.Global
-        public Dictionary<string, string> DotNetCoreVersionText
+        public List<KeyValuePair<string, string>> DotNetCoreVersionText
         {
             get => _dotNetCoreVersionText;
             set

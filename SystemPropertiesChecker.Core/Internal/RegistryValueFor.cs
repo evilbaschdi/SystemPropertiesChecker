@@ -28,8 +28,18 @@ namespace SystemPropertiesChecker.Core.Internal
         }
 
         /// <inheritdoc />
-        public string ValueFor(string value)
+        public string ValueFor([NotNull] string value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            if (!OperatingSystem.IsWindows())
+            {
+                return string.Empty;
+            }
+
             var bits = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
 
             var localMachine = RegistryKey.OpenBaseKey(_registryHive, bits);

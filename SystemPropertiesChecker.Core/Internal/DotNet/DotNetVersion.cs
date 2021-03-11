@@ -35,6 +35,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                     {
                         "currently installed versions:"
                     };
+            
             // .Net 2.0, 3.0, 3.5
             // .Net 4.0
             GetNetFrameworkVersionFromRegistry();
