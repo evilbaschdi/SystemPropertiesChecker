@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using SystemPropertiesChecker.Core.Internal;
-using SystemPropertiesChecker.ViewModel;
-using EvilBaschdi.CoreExtended.AppHelpers;
+﻿using System;
+using System.Windows;
+using SystemPropertiesChecker.ViewModels;
 using MahApps.Metro.Controls;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SystemPropertiesChecker
 {
@@ -12,7 +12,7 @@ namespace SystemPropertiesChecker
     // ReSharper disable once RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
     {
-        private readonly MainWindowViewModel _mainWindowViewModel;
+        private readonly IServiceProvider _serviceProvider;
 
         /// <inheritdoc />
         /// <summary>
@@ -22,16 +22,13 @@ namespace SystemPropertiesChecker
         {
             InitializeComponent();
 
-
-            IVersionContainer versionContainer = new VersionContainer();
-            IScreenShot screenShot = new ScreenShot();
-            _mainWindowViewModel = new MainWindowViewModel(versionContainer, screenShot);
+            _serviceProvider = App.ServiceProvider;
             Loaded += MainWindowLoaded;
         }
 
         private void MainWindowLoaded(object sender, RoutedEventArgs e)
         {
-            DataContext = _mainWindowViewModel;
+            DataContext = ActivatorUtilities.GetServiceOrCreateInstance(_serviceProvider, typeof(MainWindowViewModel));
         }
     }
 }

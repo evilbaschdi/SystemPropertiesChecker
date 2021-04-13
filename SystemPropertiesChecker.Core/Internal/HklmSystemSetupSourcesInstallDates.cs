@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Versioning;
 using SystemPropertiesChecker.Core.Models;
 using EvilBaschdi.Core;
 using Microsoft.Win32;
@@ -12,6 +13,7 @@ namespace SystemPropertiesChecker.Core.Internal
     public class HklmSystemSetupSourcesInstallDates : CachedValue<ObservableCollection<SourceOs>>, ISourceOsCollection
     {
         /// <inheritdoc />
+        [SupportedOSPlatform("windows")]
         protected override ObservableCollection<SourceOs> NonCachedValue
         {
             get

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
+using SystemPropertiesChecker.Core.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console;
-using Unity;
 
 namespace SystemPropertiesChecker.Terminal
 {
@@ -10,14 +13,18 @@ namespace SystemPropertiesChecker.Terminal
     {
         private static void Main()
         {
-            IVersionContainer versionContainer = new VersionContainer();
-            var versionContainerValue = versionContainer.Value;
+            var serviceCollection = new ServiceCollection();
 
-            var currentVersionText = versionContainerValue.Resolve<IWindowsVersionDictionary>().Value;
-            var otherText = versionContainerValue.Resolve<IOtherInformationText>().Value;
-            var dotNetVersionText = versionContainerValue.Resolve<IDotNetVersion>().Value;
-            var dotNetCoreInfo = versionContainerValue.Resolve<IDotNetCoreInfo>().Value;
-            var sourceOsCollection = versionContainerValue.Resolve<ISourceOsCollection>().Value;
+            IConfigureCoreServices configureCoreServices = new ConfigureCoreServices();
+            configureCoreServices.RunFor(serviceCollection);
+
+            IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+
+            var currentVersionText = serviceProvider.GetService<IWindowsVersionDictionary>()?.Value ?? new Dictionary<string, string>();
+            var otherText = serviceProvider.GetService<IOtherInformationText>()?.Value ?? new List<KeyValuePair<string, string>>();
+            var dotNetVersionText = serviceProvider.GetService<IDotNetVersion>()?.Value ?? new List<string>();
+            var dotNetCoreInfo = serviceProvider.GetService<IDotNetCoreInfo>()?.Value ?? new List<KeyValuePair<string, string>>();
+            var sourceOsCollection = serviceProvider.GetService<ISourceOsCollection>()?.Value ?? new ObservableCollection<SourceOs>();
 
             //WINDOWS
             var windowsTable = new Table()
@@ -96,7 +103,6 @@ namespace SystemPropertiesChecker.Terminal
             AnsiConsole.Render(otherTable);
 
             Console.ReadLine();
-            versionContainerValue.Dispose();
         }
     }
 }

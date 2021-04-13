@@ -9,11 +9,11 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
     public class DotNetCoreInfo : IDotNetCoreInfo
     {
         /// <inheritdoc />
-        public List<KeyValuePair<string,string>> Value
+        public List<KeyValuePair<string, string>> Value
         {
             get
             {
-                var dictionary = new List<KeyValuePair<string,string>>();
+                var dictionary = new List<KeyValuePair<string, string>>();
 
                 try
                 {
@@ -22,22 +22,10 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                     process.Start();
 
 
-                    foreach (var item in process.ReadStandardOutput())
-                    {
-                        var line = (item.Contains("[") ? item.Split('[').First() : item).Trim();
-
-
-                        if (line.EndsWith(":"))
-                        {
-                            dictionary.Add(new KeyValuePair<string, string>(line, string.Empty));
-                        }
-                        else
-                        {
-                            var lastKey = dictionary.Last().Key;
-                            //dictionary[lastKey] = $"{dictionary[lastKey]}{Environment.NewLine}{line}";
-                            dictionary.Add(new KeyValuePair<string, string>(string.Empty,line));
-                        }
-                    }
+                    dictionary.AddRange(process.ReadStandardOutput().Select(item => (item.Contains("[") ? item.Split('[').First() : item).Trim())
+                                               .Select(line => line.EndsWith(":")
+                                                           ? new KeyValuePair<string, string>(line, string.Empty)
+                                                           : new KeyValuePair<string, string>(string.Empty, line)));
 
                     process.Close();
                 }

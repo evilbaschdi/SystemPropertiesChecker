@@ -12,9 +12,8 @@ using EvilBaschdi.CoreExtended.Controls.About;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
 using JetBrains.Annotations;
-using Unity;
 
-namespace SystemPropertiesChecker.ViewModel
+namespace SystemPropertiesChecker.ViewModels
 {
     /// <inheritdoc cref="INotifyPropertyChanged" />
     /// <summary>
@@ -22,26 +21,36 @@ namespace SystemPropertiesChecker.ViewModel
     /// </summary>
     public class MainWindowViewModel : ApplicationStyleViewModel
     {
+        private readonly IDotNetCoreInfo _dotNetCoreInfo;
+        private readonly IDotNetVersion _dotNetVersion;
+        private readonly IOtherInformationText _otherInformationText;
+        private readonly IPasswordExpirationMessage _passwordExpirationMessage;
         private readonly IScreenShot _screenShot;
+        private readonly ISourceOsCollection _sourceOsCollection;
+        private readonly IWindowsVersionDictionary _windowsVersionDictionary;
 
-        private readonly IVersionContainer _versionContainer;
-        private Dictionary<string, string> _currentVersionText;
-        private List<KeyValuePair<string, string>> _dotNetCoreVersionText;
-        private string _dotNetVersionText;
-        private List<KeyValuePair<string, string>> _otherText;
-        private string _passwordExpirationMessage;
-        private ObservableCollection<SourceOs> _sourceOsCollection;
-        private Visibility _windowsTabVisibility;
 
         /// <inheritdoc />
         /// <summary>
         ///     Constructor
         /// </summary>
-        protected internal MainWindowViewModel([NotNull] IVersionContainer versionContainer, [NotNull] IScreenShot screenShot)
+        public MainWindowViewModel([NotNull] IScreenShot screenShot,
+                                   [NotNull] IWindowsVersionDictionary windowsVersionDictionary,
+                                   [NotNull] IOtherInformationText otherInformationText,
+                                   [NotNull] IDotNetVersion dotNetVersion,
+                                   [NotNull] IDotNetCoreInfo dotNetCoreInfo,
+                                   [NotNull] ISourceOsCollection sourceOsCollection,
+                                   [NotNull] IPasswordExpirationMessage passwordExpirationMessage)
 
         {
-            _versionContainer = versionContainer ?? throw new ArgumentNullException(nameof(versionContainer));
             _screenShot = screenShot ?? throw new ArgumentNullException(nameof(screenShot));
+            _windowsVersionDictionary = windowsVersionDictionary ?? throw new ArgumentNullException(nameof(windowsVersionDictionary));
+            _otherInformationText = otherInformationText ?? throw new ArgumentNullException(nameof(otherInformationText));
+            _dotNetVersion = dotNetVersion ?? throw new ArgumentNullException(nameof(dotNetVersion));
+            _dotNetCoreInfo = dotNetCoreInfo ?? throw new ArgumentNullException(nameof(dotNetCoreInfo));
+            _sourceOsCollection = sourceOsCollection ?? throw new ArgumentNullException(nameof(sourceOsCollection));
+            _passwordExpirationMessage = passwordExpirationMessage ?? throw new ArgumentNullException(nameof(passwordExpirationMessage));
+
 
             ScreenShot = new DefaultCommand
                          {
@@ -54,7 +63,6 @@ namespace SystemPropertiesChecker.ViewModel
                                    Text = "about",
                                    Command = new RelayCommand(_ => AboutWindowCommand())
                                };
-            BuildCompositionRoot();
         }
 
         /// <summary>
@@ -66,65 +74,91 @@ namespace SystemPropertiesChecker.ViewModel
 
         /// <summary>
         /// </summary>
+        [NotNull]
         // ReSharper disable once UnusedMember.Global
         public Dictionary<string, string> CurrentVersionText
         {
-            get => _currentVersionText;
+            get => _windowsVersionDictionary.Value;
             set
             {
-                _currentVersionText = value;
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
                 OnPropertyChanged();
             }
         }
 
         /// <summary>
         /// </summary>
+        [NotNull]
         // ReSharper disable once UnusedMember.Global
         public List<KeyValuePair<string, string>> DotNetCoreVersionText
         {
-            get => _dotNetCoreVersionText;
+            get => _dotNetCoreInfo.Value;
             set
             {
-                _dotNetCoreVersionText = value;
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
                 OnPropertyChanged();
             }
         }
 
         /// <summary>
         /// </summary>
+        [NotNull]
         // ReSharper disable once UnusedMember.Global
+
         public string DotNetVersionText
         {
-            get => _dotNetVersionText;
+            get => string.Join(Environment.NewLine, _dotNetVersion.Value);
             set
             {
-                _dotNetVersionText = value;
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
                 OnPropertyChanged();
             }
         }
 
         /// <summary>
         /// </summary>
+        [NotNull]
         // ReSharper disable once UnusedMember.Global
         public List<KeyValuePair<string, string>> OtherText
         {
-            get => _otherText;
+            get => _otherInformationText.Value;
             set
             {
-                _otherText = value;
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
                 OnPropertyChanged();
             }
         }
 
         /// <summary>
         /// </summary>
+        [NotNull]
         // ReSharper disable once UnusedMember.Global
         public string PasswordExpirationMessage
         {
-            get => _passwordExpirationMessage;
+            get => _passwordExpirationMessage.Value;
             set
             {
-                _passwordExpirationMessage = value;
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -138,14 +172,18 @@ namespace SystemPropertiesChecker.ViewModel
 
         /// <summary>
         /// </summary>
+        [NotNull]
         // ReSharper disable once UnusedMember.Global
         public ObservableCollection<SourceOs> SourceOsCollection
         {
-            get => _sourceOsCollection;
-
+            get => _sourceOsCollection.Value;
             set
             {
-                _sourceOsCollection = value;
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -155,35 +193,16 @@ namespace SystemPropertiesChecker.ViewModel
         // ReSharper disable once UnusedMember.Global
         public Visibility WindowsTabVisibility
         {
-            get => _windowsTabVisibility;
+            get => _sourceOsCollection.Value.Any() ? Visibility.Visible : Visibility.Hidden;
             set
             {
-                _windowsTabVisibility = value;
+                if (!Enum.IsDefined(typeof(Visibility), value))
+                {
+                    throw new InvalidEnumArgumentException(nameof(value), (int) value, typeof(Visibility));
+                }
+
                 OnPropertyChanged();
             }
-        }
-
-
-        /// <summary>
-        /// </summary>
-        private void BuildCompositionRoot()
-        {
-            RunVersionChecks();
-        }
-
-        private void RunVersionChecks()
-        {
-            var versionContainer = _versionContainer.Value;
-
-            _currentVersionText = versionContainer.Resolve<IWindowsVersionDictionary>().Value;
-            _otherText = versionContainer.Resolve<IOtherInformationText>().Value;
-            _dotNetVersionText = string.Join(Environment.NewLine, versionContainer.Resolve<IDotNetVersion>().Value);
-            _dotNetCoreVersionText = versionContainer.Resolve<IDotNetCoreInfo>().Value;
-            _passwordExpirationMessage = versionContainer.Resolve<IPasswordExpirationMessage>().Value;
-            _sourceOsCollection = versionContainer.Resolve<ISourceOsCollection>().Value;
-            _windowsTabVisibility = _sourceOsCollection.Any() ? Visibility.Visible : Visibility.Hidden;
-
-            versionContainer.Dispose();
         }
 
         private void ScreenShotCommand()

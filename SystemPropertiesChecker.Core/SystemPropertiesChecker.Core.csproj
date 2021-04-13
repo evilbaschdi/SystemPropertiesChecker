@@ -19,8 +19,9 @@
   <ItemGroup>
     <PackageReference Include="EvilBaschdi.Core" Version="2021.2.25.2046-develop" />
     <PackageReference Include="EvilBaschdi.Settings" Version="2021.1.6.1052" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-    <PackageReference Include="Unity" Version="5.11.10" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="System.DirectoryServices" Version="5.0.0" />
     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0" />
     <PackageReference Include="System.Management" Version="5.0.0" />

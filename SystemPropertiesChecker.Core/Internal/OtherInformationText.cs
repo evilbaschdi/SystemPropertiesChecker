@@ -140,7 +140,7 @@ namespace SystemPropertiesChecker.Core.Internal
                                           Name = (string) browserKey.GetValue(null)
                                       };
 
-                        if (browser.Name != null && browser.Name.Equals("Internet Explorer"))
+                        if (browser.Name is "Internet Explorer")
                         {
                             continue;
                         }
