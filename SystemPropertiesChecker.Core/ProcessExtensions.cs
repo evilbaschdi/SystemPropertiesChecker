@@ -46,7 +46,7 @@ namespace SystemPropertiesChecker.Core
         /// <param name="arguments"></param>
         public static void SetHiddenProcessFor(this Process process, string fileName, string arguments)
         {
-            process.StartInfo = new ProcessStartInfo(fileName, arguments)
+            process.StartInfo = new(fileName, arguments)
                                 {
                                     UseShellExecute = false,
                                     CreateNoWindow = true,

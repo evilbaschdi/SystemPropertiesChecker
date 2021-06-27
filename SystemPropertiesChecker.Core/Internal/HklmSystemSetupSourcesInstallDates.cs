@@ -35,7 +35,7 @@ namespace SystemPropertiesChecker.Core.Internal
                                        InstallDate = new DateTime(1970, 1, 1).AddSeconds(Convert.ToDouble(currentSubKey.GetValue("InstallDate")?.ToString()))
                                    }).ToList();
 
-                return new ObservableCollection<SourceOs>(list.OrderByDescending(i => i.InstallDate));
+                return new(list.OrderByDescending(i => i.InstallDate));
             }
         }
     }

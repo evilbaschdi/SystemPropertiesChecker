@@ -124,7 +124,7 @@ namespace SystemPropertiesChecker.Core.Internal
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return new KeyValuePair<string, string>("(supported on windows only)", "(supported on windows only)");
+                return new("(supported on windows only)", "(supported on windows only)");
             }
 
             const string win32ComputerSystem = "SELECT * FROM Win32_BaseBoard";
@@ -133,10 +133,10 @@ namespace SystemPropertiesChecker.Core.Internal
 
             foreach (var item in info)
             {
-                return new KeyValuePair<string, string>(item["Manufacturer"].ToString(), item["Product"].ToString());
+                return new(item["Manufacturer"].ToString(), item["Product"].ToString());
             }
 
-            return new KeyValuePair<string, string>();
+            return new();
         }
 
         private static string InstallDate()

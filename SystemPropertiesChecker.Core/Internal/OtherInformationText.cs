@@ -34,12 +34,12 @@ namespace SystemPropertiesChecker.Core.Internal
                 }
 
 
-                list.Add(new KeyValuePair<string, string>("Internet Explorer", GetIeVersion()));
+                list.Add(new("Internet Explorer", GetIeVersion()));
 
                 list.AddRange(GetBrowsers().Select(browser => new KeyValuePair<string, string>(browser.Name, browser.Version)));
 
-                list.Add(new KeyValuePair<string, string>("PowerShell", psVersion));
-                list.Add(new KeyValuePair<string, string>("Git", GetGitVersion()));
+                list.Add(new("PowerShell", psVersion));
+                list.Add(new("Git", GetGitVersion()));
 
 
                 return list;
@@ -165,7 +165,7 @@ namespace SystemPropertiesChecker.Core.Internal
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                browsers.Add(new Browser
+                browsers.Add(new()
                              {
                                  Name = "Error",
                                  Version = e.Message
@@ -194,7 +194,7 @@ namespace SystemPropertiesChecker.Core.Internal
             var result = Regex.Match(version ?? string.Empty, "(((([0-9.])\\d)+){1})");
             if (result.Success)
             {
-                return new Browser
+                return new()
                        {
                            Name = "MicrosoftEdge",
                            Version = result.Value

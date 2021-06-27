@@ -32,8 +32,8 @@ namespace SystemPropertiesChecker.Terminal
                                .Centered()
                                .Border(TableBorder.Square)
                                .BorderColor(Color.Red)
-                               .AddColumn(new TableColumn("[u]Key[/]"))
-                               .AddColumn(new TableColumn("[u]Value[/]"));
+                               .AddColumn(new("[u]Key[/]"))
+                               .AddColumn(new("[u]Value[/]"));
 
             foreach (var (key, value) in currentVersionText)
             {
@@ -47,10 +47,10 @@ namespace SystemPropertiesChecker.Terminal
                                .Centered()
                                .Border(TableBorder.Square)
                                .BorderColor(Color.Red)
-                               .AddColumn(new TableColumn("[u]Build[/]"))
-                               .AddColumn(new TableColumn("[u]Product Name[/]"))
-                               .AddColumn(new TableColumn("[u]Release Id[/]"))
-                               .AddColumn(new TableColumn("[u]Product Name[/]"));
+                               .AddColumn(new("[u]Build[/]"))
+                               .AddColumn(new("[u]Product Name[/]"))
+                               .AddColumn(new("[u]Release Id[/]"))
+                               .AddColumn(new("[u]Product Name[/]"));
             foreach (var sourceOs in sourceOsCollection)
             {
                 historyTable.AddRow($"[blue]{sourceOs.Build}[/]", $"[white]{sourceOs.ProductName}[/]", $"[white]{sourceOs.ReleaseId}[/]",
@@ -64,7 +64,7 @@ namespace SystemPropertiesChecker.Terminal
                               .Centered()
                               .Border(TableBorder.Square)
                               .BorderColor(Color.Red)
-                              .AddColumn(new TableColumn($"[u]{dotNetVersionText[0].TrimEnd(':')}[/]"));
+                              .AddColumn(new($"[u]{dotNetVersionText[0].TrimEnd(':')}[/]"));
 
             foreach (var line in dotNetVersionText.GetRange(1, dotNetVersionText.Count - 1))
             {
@@ -78,8 +78,8 @@ namespace SystemPropertiesChecker.Terminal
                                   .Centered()
                                   .Border(TableBorder.Square)
                                   .BorderColor(Color.Red)
-                                  .AddColumn(new TableColumn("[u]Key[/]"))
-                                  .AddColumn(new TableColumn("[u]Value[/]"));
+                                  .AddColumn(new("[u]Key[/]"))
+                                  .AddColumn(new("[u]Value[/]"));
             foreach (var (key, value) in dotNetCoreInfo)
             {
                 dotnetCoreTable.AddRow($"[blue]{key}[/]", $"[white]{value}[/]");
@@ -92,8 +92,8 @@ namespace SystemPropertiesChecker.Terminal
                              .Centered()
                              .Border(TableBorder.Square)
                              .BorderColor(Color.Red)
-                             .AddColumn(new TableColumn("[u]Key[/]"))
-                             .AddColumn(new TableColumn("[u]Value[/]"));
+                             .AddColumn(new("[u]Key[/]"))
+                             .AddColumn(new("[u]Value[/]"));
 
             foreach (var (key, value) in otherText)
             {

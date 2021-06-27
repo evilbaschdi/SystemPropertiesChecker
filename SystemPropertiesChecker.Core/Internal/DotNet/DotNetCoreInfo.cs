@@ -24,7 +24,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
 
                     dictionary.AddRange(process.ReadStandardOutput().Select(item => (item.Contains("[") ? item.Split('[').First() : item).Trim())
                                                .Select(line => line.EndsWith(":")
-                                                           ? new KeyValuePair<string, string>(line, string.Empty)
+                                                           ? new(line, string.Empty)
                                                            : new KeyValuePair<string, string>(string.Empty, line)));
 
                     process.Close();
@@ -32,7 +32,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    dictionary.Add(new KeyValuePair<string, string>("(none)", string.Empty));
+                    dictionary.Add(new("(none)", string.Empty));
                 }
 
 

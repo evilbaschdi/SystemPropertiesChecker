@@ -16,7 +16,7 @@ namespace SystemPropertiesChecker.Core.Internal
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return new PasswordExpirationModel
+                return new()
                        {
                            DateString = "(undefined)",
                            UserName = ""
@@ -34,15 +34,19 @@ namespace SystemPropertiesChecker.Core.Internal
                 var sr = ds.FindOne();
                 if (sr != null)
                 {
-                    var de = sr.GetDirectoryEntry();
-                    var nextSet = (DateTime) de.InvokeGet("PasswordExpirationDate");
-                    var dateString = nextSet.ToString("g");
-                    return new PasswordExpirationModel
-                           {
-                               DateString = nextSet.Year == 1970 ? "-" : dateString,
-                               UserName = samAccountName,
-                               PasswordExpirationDate = nextSet
-                           };
+                    var directoryEntry = sr.GetDirectoryEntry();
+                    var passwordExpirationDate = directoryEntry.InvokeGet("PasswordExpirationDate");
+                    if (passwordExpirationDate != null)
+                    {
+                        var nextSet = (DateTime) passwordExpirationDate;
+                        var dateString = nextSet.ToString("g");
+                        return new()
+                               {
+                                   DateString = nextSet.Year == 1970 ? "-" : dateString,
+                                   UserName = samAccountName,
+                                   PasswordExpirationDate = nextSet
+                               };
+                    }
                 }
             }
             catch (Exception e)
@@ -50,7 +54,7 @@ namespace SystemPropertiesChecker.Core.Internal
                 Console.WriteLine(e);
             }
 
-            return new PasswordExpirationModel
+            return new()
                    {
                        DateString = "(undefined)",
                        UserName = ""

@@ -31,7 +31,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
 
         private void GetNetFrameworks()
         {
-            Value = new List<string>
+            Value = new()
                     {
                         "currently installed versions:"
                     };
