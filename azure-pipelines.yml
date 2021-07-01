@@ -1,0 +1,21 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+  branches:
+    include: 
+      - '*'
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Main/EvilBaschdi.BuildTemplates
+      ref: refs/heads/main # optional ref to pin to
+
+jobs:
+- template: azureDevOps.yml@templates  # Template reference
+  parameters:
+    projectName: $(Build.Repository.Name)
