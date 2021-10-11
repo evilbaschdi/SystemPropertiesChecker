@@ -91,6 +91,7 @@ namespace SystemPropertiesChecker.Core.Internal
                 _windowsVersionInformationModel.DisplayVersion = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("DisplayVersion");
                 _windowsVersionInformationModel.Ubr = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("UBR");
                 _windowsVersionInformationModel.InstallDate = InstallDate();
+                _windowsVersionInformationModel.Caption = Caption();
                 _cachedWindowsVersionInformationModel = _windowsVersionInformationModel;
                 return _cachedWindowsVersionInformationModel;
             }
@@ -156,8 +157,27 @@ namespace SystemPropertiesChecker.Core.Internal
                 break;
             }
 
-
             return ManagementDateTimeConverter.ToDateTime(installDate ?? string.Empty).ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
+        private static string Caption()
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return "(supported on windows only)";
+            }
+
+            const string win32OperatingSystem = "SELECT * FROM Win32_OperatingSystem";
+            var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
+            var info = managementObjectSearcher.Get();
+            var caption = string.Empty;
+            foreach (var item in info)
+            {
+                caption = item["Caption"]?.ToString();
+                break;
+            }
+
+            return caption;
         }
     }
 }

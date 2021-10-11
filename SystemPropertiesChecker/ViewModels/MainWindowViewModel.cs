@@ -4,14 +4,15 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using SystemPropertiesChecker.Core.Internal;
-using SystemPropertiesChecker.Core.Internal.DotNet;
-using SystemPropertiesChecker.Core.Models;
+using EvilBaschdi.CoreExtended;
 using EvilBaschdi.CoreExtended.AppHelpers;
 using EvilBaschdi.CoreExtended.Controls.About;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
 using JetBrains.Annotations;
+using SystemPropertiesChecker.Core.Internal;
+using SystemPropertiesChecker.Core.Internal.DotNet;
+using SystemPropertiesChecker.Core.Models;
 
 namespace SystemPropertiesChecker.ViewModels
 {
@@ -21,6 +22,7 @@ namespace SystemPropertiesChecker.ViewModels
     /// </summary>
     public class MainWindowViewModel : ApplicationStyleViewModel
     {
+        private static IRoundCorners _roundCorners;
         private readonly IDotNetCoreInfo _dotNetCoreInfo;
         private readonly IDotNetVersion _dotNetVersion;
         private readonly IOtherInformationText _otherInformationText;
@@ -40,7 +42,9 @@ namespace SystemPropertiesChecker.ViewModels
                                    [NotNull] IDotNetVersion dotNetVersion,
                                    [NotNull] IDotNetCoreInfo dotNetCoreInfo,
                                    [NotNull] ISourceOsCollection sourceOsCollection,
-                                   [NotNull] IPasswordExpirationMessage passwordExpirationMessage)
+                                   [NotNull] IPasswordExpirationMessage passwordExpirationMessage,
+                                   [NotNull] IRoundCorners roundCorners)
+            : base(roundCorners)
 
         {
             _screenShot = screenShot ?? throw new ArgumentNullException(nameof(screenShot));
@@ -50,6 +54,7 @@ namespace SystemPropertiesChecker.ViewModels
             _dotNetCoreInfo = dotNetCoreInfo ?? throw new ArgumentNullException(nameof(dotNetCoreInfo));
             _sourceOsCollection = sourceOsCollection ?? throw new ArgumentNullException(nameof(sourceOsCollection));
             _passwordExpirationMessage = passwordExpirationMessage ?? throw new ArgumentNullException(nameof(passwordExpirationMessage));
+            _roundCorners = roundCorners ?? throw new ArgumentNullException(nameof(roundCorners));
 
 
             ScreenShot = new DefaultCommand
@@ -198,7 +203,7 @@ namespace SystemPropertiesChecker.ViewModels
             {
                 if (!Enum.IsDefined(typeof(Visibility), value))
                 {
-                    throw new InvalidEnumArgumentException(nameof(value), (int) value, typeof(Visibility));
+                    throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(Visibility));
                 }
 
                 OnPropertyChanged();
@@ -221,7 +226,7 @@ namespace SystemPropertiesChecker.ViewModels
                 new AboutContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\spc.png");
             var aboutWindow = new AboutWindow
                               {
-                                  DataContext = new AboutViewModel(aboutWindowContent)
+                                  DataContext = new AboutViewModel(aboutWindowContent, _roundCorners)
                               };
             aboutWindow.ShowDialog();
         }

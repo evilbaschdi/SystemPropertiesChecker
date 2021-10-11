@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))-develop</Version>
-    <LangVersion>9</LangVersion>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,26 +15,26 @@
     <PackageReference Include="AutoFixture.Idioms" Version="4.17.0" />
     <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
     <PackageReference Include="Castle.Core" Version="4.4.1" />
-    <PackageReference Include="coverlet.collector" Version="3.0.3">
+    <PackageReference Include="coverlet.collector" Version="3.1.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="EvilBaschdi.Core" Version="2021.6.27.737-develop" />
-    <PackageReference Include="EvilBaschdi.Testing" Version="2021.2.8.1743" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2021.10.11.609-develop" />
+    <PackageReference Include="EvilBaschdi.Testing" Version="2021.10.3.2147-develop" />
     <PackageReference Include="Fare" Version="2.1.2" />
-    <PackageReference Include="FluentAssertions" Version="6.0.0-beta0001" />
-    <PackageReference Include="Microsoft.CodeCoverage" Version="16.11.0-release-20210626-04" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0-release-20210626-04" />
-    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="16.11.0-release-20210626-04" />
-    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="16.11.0-release-20210626-04" />
+    <PackageReference Include="FluentAssertions" Version="6.1.0" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="16.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="16.11.0" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="16.11.0" />
     <PackageReference Include="NCrunch.Framework" Version="4.7.0.4" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />
     <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.14" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0-preview.5.21301.5" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0-rc.1.21451.13" />
     <PackageReference Include="System.ValueTuple" version="4.5.0" />
-    <PackageReference Include="xunit" Version="2.4.2-pre.build.4151" />
-    <PackageReference Include="xunit.analyzers" Version="0.11.0-pre.71" />
-    <PackageReference Include="xunit.runner.console" Version="2.4.2-pre.build.4151">
+    <PackageReference Include="xunit" Version="2.4.2-pre.14" />
+    <PackageReference Include="xunit.analyzers" Version="0.12.0-pre.20" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.2-pre.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

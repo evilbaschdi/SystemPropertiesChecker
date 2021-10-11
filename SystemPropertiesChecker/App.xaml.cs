@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows;
-using SystemPropertiesChecker.Core.Internal;
-using SystemPropertiesChecker.ViewModels;
+using EvilBaschdi.CoreExtended;
 using EvilBaschdi.CoreExtended.AppHelpers;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using SystemPropertiesChecker.Core.Internal;
+using SystemPropertiesChecker.ViewModels;
 #if (!DEBUG)
 using ControlzEx.Theming;
 
@@ -63,6 +63,7 @@ namespace SystemPropertiesChecker
             IConfigureCoreServices configureCoreServices = new ConfigureCoreServices();
             configureCoreServices.RunFor(services);
             services.AddScoped<IScreenShot, ScreenShot>();
+            services.AddScoped<IRoundCorners, RoundCorners>();
             services.AddSingleton<MainWindowViewModel>();
             services.AddTransient(typeof(MainWindow));
         }

@@ -46,7 +46,7 @@ namespace SystemPropertiesChecker.Core.Internal
                     dictionary.Add("Password expiration date", values.PasswordExpirationDate);
                 }
 
-                dictionary.Add("Edition", $"{values.ProductName}{values.CsdVersion}");
+                dictionary.Add("Edition", $"{values.Caption}{values.CsdVersion}");
 
 
                 if (!string.IsNullOrWhiteSpace(values.DisplayVersion))

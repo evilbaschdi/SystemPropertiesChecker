@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Microsoft.Extensions.DependencyInjection;
+using Spectre.Console;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 using SystemPropertiesChecker.Core.Models;
-using Microsoft.Extensions.DependencyInjection;
-using Spectre.Console;
 
 namespace SystemPropertiesChecker.Terminal
 {
@@ -40,7 +40,7 @@ namespace SystemPropertiesChecker.Terminal
                 windowsTable.AddRow($"[blue]{key}[/]", $"[white]{value}[/]");
             }
 
-            AnsiConsole.Render(windowsTable);
+            AnsiConsole.Write(windowsTable);
             //HISTORY
             var historyTable = new Table()
                                .Title("HISTORY")
@@ -57,7 +57,7 @@ namespace SystemPropertiesChecker.Terminal
                     $"[white]{sourceOs.InstallDate:yyyy-MM-dd HH:mm:ss}[/]");
             }
 
-            AnsiConsole.Render(historyTable);
+            AnsiConsole.Write(historyTable);
             //.NET FRAMEWORK
             var dotnetTable = new Table()
                               .Title(".NET FRAMEWORK")
@@ -71,7 +71,7 @@ namespace SystemPropertiesChecker.Terminal
                 dotnetTable.AddRow($"[white]{line}[/]");
             }
 
-            AnsiConsole.Render(dotnetTable);
+            AnsiConsole.Write(dotnetTable);
             //.NET CORE
             var dotnetCoreTable = new Table()
                                   .Title(".NET CORE")
@@ -85,7 +85,7 @@ namespace SystemPropertiesChecker.Terminal
                 dotnetCoreTable.AddRow($"[blue]{key}[/]", $"[white]{value}[/]");
             }
 
-            AnsiConsole.Render(dotnetCoreTable);
+            AnsiConsole.Write(dotnetCoreTable);
             //OTHER
             var otherTable = new Table()
                              .Title("OTHER")
@@ -100,7 +100,7 @@ namespace SystemPropertiesChecker.Terminal
                 otherTable.AddRow($"[blue]{key}[/]", $"[white]{value}[/]");
             }
 
-            AnsiConsole.Render(otherTable);
+            AnsiConsole.Write(otherTable);
 
             Console.ReadLine();
         }

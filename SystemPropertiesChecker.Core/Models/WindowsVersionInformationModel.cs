@@ -100,6 +100,11 @@ namespace SystemPropertiesChecker.Core.Models
         /// <summary>
         /// </summary>
         public string InsiderChannel { get; set; }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
+        public string Caption { get; set; }
     }
     // ReSharper restore UnusedAutoPropertyAccessor.Global
 }

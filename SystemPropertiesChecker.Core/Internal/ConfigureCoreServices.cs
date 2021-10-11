@@ -1,7 +1,7 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 using SystemPropertiesChecker.Core.Models;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace SystemPropertiesChecker.Core.Internal
 {

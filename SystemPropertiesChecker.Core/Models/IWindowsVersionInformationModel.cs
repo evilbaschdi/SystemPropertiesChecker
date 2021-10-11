@@ -78,7 +78,9 @@ namespace SystemPropertiesChecker.Core.Models
 
         /// <summary>
         /// </summary>
-        string UserName { get; set; }
+        string UserName { get; set; } /// <summary>
+        /// </summary>
+        string Caption { get; set; }
     }
     // ReSharper restore UnusedMemberInSuper.Global
     // ReSharper restore UnusedMember.Global
