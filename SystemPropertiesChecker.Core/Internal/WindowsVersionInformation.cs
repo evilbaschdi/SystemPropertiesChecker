@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Management;
+﻿using System.Management;
 using System.Runtime.InteropServices;
-using SystemPropertiesChecker.Core.Models;
 using JetBrains.Annotations;
+using SystemPropertiesChecker.Core.Models;
 
 namespace SystemPropertiesChecker.Core.Internal
 {

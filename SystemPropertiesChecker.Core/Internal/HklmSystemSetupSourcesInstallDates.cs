@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.Versioning;
-using SystemPropertiesChecker.Core.Models;
 using EvilBaschdi.Core;
 using Microsoft.Win32;
+using SystemPropertiesChecker.Core.Models;
 
 namespace SystemPropertiesChecker.Core.Internal
 {

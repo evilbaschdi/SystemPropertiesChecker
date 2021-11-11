@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using JetBrains.Annotations;
 using Microsoft.Win32;
 
@@ -20,7 +19,7 @@ namespace SystemPropertiesChecker.Core.Internal
         {
             if (!Enum.IsDefined(typeof(RegistryHive), registryHive))
             {
-                throw new InvalidEnumArgumentException(nameof(registryHive), (int) registryHive, typeof(RegistryHive));
+                throw new InvalidEnumArgumentException(nameof(registryHive), (int)registryHive, typeof(RegistryHive));
             }
 
             _subKey = subKey ?? throw new ArgumentNullException(nameof(subKey));

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Microsoft.Win32;
 
 namespace SystemPropertiesChecker.Core.Internal.DotNet
@@ -35,7 +32,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                     {
                         "currently installed versions:"
                     };
-            
+
             // .Net 2.0, 3.0, 3.5
             // .Net 4.0
             GetNetFrameworkVersionFromRegistry();
@@ -72,7 +69,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
                     continue;
                 }
 
-                var name = (string) versionKey.GetValue("Version", "");
+                var name = (string)versionKey.GetValue("Version", "");
                 var sp = versionKey.GetValue("SP", "")?.ToString();
                 var install = versionKey.GetValue("Install", "")?.ToString();
 
@@ -96,7 +93,7 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet
 
                     if (subKey != null)
                     {
-                        name = (string) subKey.GetValue("Version", "");
+                        name = (string)subKey.GetValue("Version", "");
                         if (name != "")
                         {
                             sp = subKey.GetValue("SP", "")?.ToString();

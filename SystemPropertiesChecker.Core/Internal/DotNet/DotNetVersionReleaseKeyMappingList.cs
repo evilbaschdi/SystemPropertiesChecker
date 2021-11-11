@@ -1,5 +1,3 @@
-using System;
-
 namespace SystemPropertiesChecker.Core.Internal.DotNet
 {
     // ReSharper disable once ClassNeverInstantiated.Global

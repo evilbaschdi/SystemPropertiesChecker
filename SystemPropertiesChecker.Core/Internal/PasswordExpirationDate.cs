@@ -1,4 +1,3 @@
-using System;
 using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
 using System.Runtime.InteropServices;
@@ -38,7 +37,7 @@ namespace SystemPropertiesChecker.Core.Internal
                     var passwordExpirationDate = directoryEntry.InvokeGet("PasswordExpirationDate");
                     if (passwordExpirationDate != null)
                     {
-                        var nextSet = (DateTime) passwordExpirationDate;
+                        var nextSet = (DateTime)passwordExpirationDate;
                         var dateString = nextSet.ToString("g");
                         return new()
                                {

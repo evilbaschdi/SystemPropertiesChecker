@@ -1,5 +1,3 @@
-using System;
-
 namespace SystemPropertiesChecker.Core.Models
 {
     /// <summary>

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows;
-using SystemPropertiesChecker.ViewModels;
+﻿using System.Windows;
 using MahApps.Metro.Controls;
 using Microsoft.Extensions.DependencyInjection;
+using SystemPropertiesChecker.ViewModels;
 
 namespace SystemPropertiesChecker
 {

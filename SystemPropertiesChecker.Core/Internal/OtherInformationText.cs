@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using SystemPropertiesChecker.Core.Models;
 using Microsoft.Win32;
+using SystemPropertiesChecker.Core.Models;
 
 namespace SystemPropertiesChecker.Core.Internal
 {
@@ -137,7 +133,7 @@ namespace SystemPropertiesChecker.Core.Internal
 
                         var browser = new Browser
                                       {
-                                          Name = (string) browserKey.GetValue(null)
+                                          Name = (string)browserKey.GetValue(null)
                                       };
 
                         if (browser.Name is "Internet Explorer")
