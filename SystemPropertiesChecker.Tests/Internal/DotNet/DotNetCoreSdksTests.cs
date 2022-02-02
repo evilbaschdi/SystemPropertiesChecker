@@ -4,40 +4,38 @@ using FluentAssertions;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 using Xunit;
 
-namespace SystemPropertiesChecker.Core.Tests.Internal.DotNet
+namespace SystemPropertiesChecker.Core.Tests.Internal.DotNet;
+
+public class DotNetCoreSdksTests
 {
-    public class DotNetCoreSdksTests
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Constructor_HasNullGuards(GuardClauseAssertion assertion)
     {
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Constructor_HasNullGuards(GuardClauseAssertion assertion)
-        {
-            assertion.Verify(typeof(DotNetCoreSdks).GetConstructors());
-        }
+        assertion.Verify(typeof(DotNetCoreSdks).GetConstructors());
+    }
 
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Constructor_ReturnsIDotNetCoreSdks(DotNetCoreSdks sut)
-        {
-            Assert.IsAssignableFrom<IDotNetCoreSdks>(sut);
-        }
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Constructor_ReturnsIDotNetCoreSdks(DotNetCoreSdks sut)
+    {
+        Assert.IsAssignableFrom<IDotNetCoreSdks>(sut);
+    }
 
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
-        {
-            assertion.Verify(typeof(DotNetCoreSdks).GetMethods().Where(method => !method.IsAbstract));
-        }
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
+    {
+        assertion.Verify(typeof(DotNetCoreSdks).GetMethods().Where(method => !method.IsAbstract));
+    }
 
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Value_ForParameterListSdks_ReturnsListOfInstalledSdks(
-            DotNetCoreSdks sut)
-        {
-            // Arrange
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Value_ForParameterListSdks_ReturnsListOfInstalledSdks(
+        DotNetCoreSdks sut)
+    {
+        // Arrange
 
+        // Act
+        var result = sut.Value;
 
-            // Act
-            var result = sut.Value;
-
-            // Assert
-            result.Should().NotBeNullOrWhiteSpace();
-        }
+        // Assert
+        result.Should().NotBeNullOrWhiteSpace();
     }
 }

@@ -2,33 +2,34 @@
 using SystemPropertiesChecker.Core.Internal.DotNet;
 using SystemPropertiesChecker.Core.Models;
 
-namespace SystemPropertiesChecker.Core.Internal
+namespace SystemPropertiesChecker.Core.Internal;
+
+/// <inheritdoc />
+public class ConfigureCoreServices : IConfigureCoreServices
 {
     /// <inheritdoc />
-    public class ConfigureCoreServices : IConfigureCoreServices
+    public void RunFor(IServiceCollection services)
     {
-        /// <inheritdoc />
-        public void RunFor(IServiceCollection services)
+        if (services == null)
         {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-
-            services.AddScoped<IDotNetVersionReleaseKeyMapping, DotNetVersionReleaseKeyMapping>();
-            services.AddScoped<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
-            services.AddScoped<IDotNetVersion, DotNetVersion>();
-            services.AddScoped<IDotNetCoreInfo, DotNetCoreInfo>();
-            services.AddScoped<IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion, RegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion>();
-            services.AddScoped<IRegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection, RegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection>();
-            services.AddScoped<IInsiderChannel, InsiderChannel>();
-            services.AddScoped<ISourceOsCollection, HklmSystemSetupSourcesInstallDates>();
-            services.AddScoped<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
-            services.AddScoped<IWindowsVersionInformation, WindowsVersionInformation>();
-            services.AddScoped<IWindowsVersionDictionary, WindowsVersionDictionary>();
-            services.AddScoped<IOtherInformationText, OtherInformationText>();
-            services.AddScoped<IPasswordExpirationDate, PasswordExpirationDate>();
-            services.AddScoped<IPasswordExpirationMessage, PasswordExpirationMessage>();
+            throw new ArgumentNullException(nameof(services));
         }
+
+        services.AddScoped<IDotNetCoreInfo, DotNetCoreInfo>();
+        services.AddScoped<IDotNetVersion, DotNetVersion>();
+        services.AddScoped<IDotNetVersionReleaseKeyMapping, DotNetVersionReleaseKeyMapping>();
+        services.AddScoped<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
+        services.AddScoped<IExecutePowerShellCommand, ExecutePowerShellCommand>();
+        services.AddScoped<IInsiderChannel, InsiderChannel>();
+        services.AddScoped<IOtherInformationText, OtherInformationText>();
+        services.AddScoped<IPasswordExpirationDate, PasswordExpirationDate>();
+        services.AddScoped<IPasswordExpirationMessage, PasswordExpirationMessage>();
+        services.AddScoped<IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion, RegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion>();
+        services.AddScoped<IRegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection, RegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection>();
+        services.AddScoped<ISourceOsCollection, HklmSystemSetupSourcesInstallDates>();
+        services.AddScoped<IWindowsFeatureExperiencePackVersion, WindowsFeatureExperiencePackVersion>();
+        services.AddScoped<IWindowsVersionDictionary, WindowsVersionDictionary>();
+        services.AddScoped<IWindowsVersionInformation, WindowsVersionInformation>();
+        services.AddScoped<IWindowsVersionInformationModel, WindowsVersionInformationModel>();
     }
 }

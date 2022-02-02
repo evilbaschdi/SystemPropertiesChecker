@@ -93,3 +93,7 @@ foreach (var (key, value) in otherText)
 }
 
 AnsiConsole.Write(otherTable);
+
+#if DEBUG
+Console.ReadLine();
+#endif

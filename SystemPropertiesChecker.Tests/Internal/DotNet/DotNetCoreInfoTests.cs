@@ -4,39 +4,38 @@ using FluentAssertions;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 using Xunit;
 
-namespace SystemPropertiesChecker.Core.Tests.Internal.DotNet
+namespace SystemPropertiesChecker.Core.Tests.Internal.DotNet;
+
+public class DotNetCoreInfoTests
 {
-    public class DotNetCoreInfoTests
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Constructor_HasNullGuards(GuardClauseAssertion assertion)
     {
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Constructor_HasNullGuards(GuardClauseAssertion assertion)
-        {
-            assertion.Verify(typeof(DotNetCoreInfo).GetConstructors());
-        }
+        assertion.Verify(typeof(DotNetCoreInfo).GetConstructors());
+    }
 
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Constructor_ReturnsInterfaceName(DotNetCoreInfo sut)
-        {
-            sut.Should().BeAssignableTo<IDotNetCoreInfo>();
-        }
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Constructor_ReturnsInterfaceName(DotNetCoreInfo sut)
+    {
+        sut.Should().BeAssignableTo<IDotNetCoreInfo>();
+    }
 
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
-        {
-            assertion.Verify(typeof(DotNetCoreInfo).GetMethods().Where(method => !method.IsAbstract));
-        }
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
+    {
+        assertion.Verify(typeof(DotNetCoreInfo).GetMethods().Where(method => !method.IsAbstract));
+    }
 
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Value_ForParameterVersion_ReturnsInfo(
-            DotNetCoreInfo sut)
-        {
-            // Arrange
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Value_ForParameterVersion_ReturnsInfo(
+        DotNetCoreInfo sut)
+    {
+        // Arrange
 
-            // Act
-            var result = sut.Value;
+        // Act
+        var result = sut.Value;
 
-            // Assert
-            result.Should().NotBeEmpty();
-        }
+        // Assert
+        result.Should().NotBeEmpty();
     }
 }

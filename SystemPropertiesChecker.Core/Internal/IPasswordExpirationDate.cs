@@ -1,12 +1,11 @@
-using SystemPropertiesChecker.Core.Models;
 using EvilBaschdi.Core;
+using SystemPropertiesChecker.Core.Models;
 
-namespace SystemPropertiesChecker.Core.Internal
+namespace SystemPropertiesChecker.Core.Internal;
+
+/// <inheritdoc />
+/// <summary>
+/// </summary>
+public interface IPasswordExpirationDate : IValueFor<string, PasswordExpirationModel>
 {
-    /// <inheritdoc />
-    /// <summary>
-    /// </summary>
-    public interface IPasswordExpirationDate : IValueFor<string, PasswordExpirationModel>
-    {
-    }
 }

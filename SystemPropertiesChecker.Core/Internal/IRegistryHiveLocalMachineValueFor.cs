@@ -1,7 +1,6 @@
-﻿namespace SystemPropertiesChecker.Core.Internal
+﻿namespace SystemPropertiesChecker.Core.Internal;
+
+/// <inheritdoc />
+public interface IRegistryHiveLocalMachineValueFor : IRegistryValueFor
 {
-    /// <inheritdoc />
-    public interface IRegistryHiveLocalMachineValueFor : IRegistryValueFor
-    {
-    }
 }

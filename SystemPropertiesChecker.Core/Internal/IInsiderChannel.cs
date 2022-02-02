@@ -1,9 +1,8 @@
 ﻿using EvilBaschdi.Core;
 
-namespace SystemPropertiesChecker.Core.Internal
+namespace SystemPropertiesChecker.Core.Internal;
+
+/// <inheritdoc />
+public interface IInsiderChannel : IValue<string>
 {
-    /// <inheritdoc />
-    public interface IInsiderChannel : IValue<string>
-    {
-    }
 }

@@ -1,18 +1,17 @@
-﻿namespace SystemPropertiesChecker.Core.Internal
+﻿namespace SystemPropertiesChecker.Core.Internal;
+
+/// <summary>
+///     Class that provides RegistryValues from WindowsNT CurrentVersion.
+/// </summary>
+// ReSharper disable once ClassNeverInstantiated.Global
+public class RegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection : RegistryHiveLocalMachineValueFor,
+                                                                                   IRegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection
 {
     /// <summary>
-    ///     Class that provides RegistryValues from WindowsNT CurrentVersion.
+    ///     Constructor
     /// </summary>
-    // ReSharper disable once ClassNeverInstantiated.Global
-    public class RegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection : RegistryHiveLocalMachineValueFor,
-                                                                                       IRegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection
+    public RegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection()
+        : base(@"SOFTWARE\Microsoft\WindowsSelfHost\UI\Selection")
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        public RegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection()
-            : base(@"SOFTWARE\Microsoft\WindowsSelfHost\UI\Selection")
-        {
-        }
     }
 }

@@ -1,54 +1,52 @@
 ﻿using JetBrains.Annotations;
 
-namespace SystemPropertiesChecker.Core.Internal
+namespace SystemPropertiesChecker.Core.Internal;
+
+/// <inheritdoc />
+// ReSharper disable once ClassNeverInstantiated.Global
+public class InsiderChannel : IInsiderChannel
 {
-    /// <inheritdoc />
-    // ReSharper disable once ClassNeverInstantiated.Global
-    public class InsiderChannel : IInsiderChannel
+    private readonly IRegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection _localMachineSoftwareMicrosoftWindowsSelfHostUiSelection;
+
+    /// <summary>
+    ///     Constructor
+    /// </summary>
+    /// <param name="localMachineSoftwareMicrosoftWindowsSelfHostUiSelection"></param>
+    public InsiderChannel([NotNull] IRegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection localMachineSoftwareMicrosoftWindowsSelfHostUiSelection)
     {
-        private readonly IRegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection _localMachineSoftwareMicrosoftWindowsSelfHostUiSelection;
+        _localMachineSoftwareMicrosoftWindowsSelfHostUiSelection = localMachineSoftwareMicrosoftWindowsSelfHostUiSelection ??
+                                                                   throw new ArgumentNullException(nameof(localMachineSoftwareMicrosoftWindowsSelfHostUiSelection));
+    }
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        /// <param name="localMachineSoftwareMicrosoftWindowsSelfHostUiSelection"></param>
-        public InsiderChannel([NotNull] IRegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection localMachineSoftwareMicrosoftWindowsSelfHostUiSelection)
+    /// <inheritdoc />
+    public string Value
+    {
+        get
         {
-            _localMachineSoftwareMicrosoftWindowsSelfHostUiSelection = localMachineSoftwareMicrosoftWindowsSelfHostUiSelection ??
-                                                                       throw new ArgumentNullException(nameof(localMachineSoftwareMicrosoftWindowsSelfHostUiSelection));
-        }
+            var uIBranch = _localMachineSoftwareMicrosoftWindowsSelfHostUiSelection.ValueFor("UIBranch") ?? string.Empty;
+            var uIContentType = _localMachineSoftwareMicrosoftWindowsSelfHostUiSelection.ValueFor("UIContentType") ?? string.Empty;
+            var uIRing = _localMachineSoftwareMicrosoftWindowsSelfHostUiSelection.ValueFor("UIRing") ?? string.Empty;
 
-        /// <inheritdoc />
-        public string Value
-        {
-            get
+            if (!uIBranch.Equals("external", StringComparison.OrdinalIgnoreCase))
             {
-                var uIBranch = _localMachineSoftwareMicrosoftWindowsSelfHostUiSelection.ValueFor("UIBranch") ?? string.Empty;
-                var uIContentType = _localMachineSoftwareMicrosoftWindowsSelfHostUiSelection.ValueFor("UIContentType") ?? string.Empty;
-                var uIRing = _localMachineSoftwareMicrosoftWindowsSelfHostUiSelection.ValueFor("UIRing") ?? string.Empty;
-
-
-                if (!uIBranch.Equals("external", StringComparison.OrdinalIgnoreCase))
-                {
-                    return uIBranch;
-                }
-
-                return uIContentType switch
-                {
-                    "Active" => uIRing switch
-                    {
-                        "WIF" => "Dev",
-                        "WIS" => "Beta",
-                        _ => uIRing
-                    },
-                    "Current" => uIRing switch
-                    {
-                        "RP" => "Release Preview",
-                        _ => uIRing,
-                    },
-                    _ => uIBranch
-                };
+                return uIBranch;
             }
+
+            return uIContentType switch
+            {
+                "Active" => uIRing switch
+                {
+                    "WIF" => "Dev",
+                    "WIS" => "Beta",
+                    _ => uIRing
+                },
+                "Current" => uIRing switch
+                {
+                    "RP" => "Release Preview",
+                    _ => uIRing,
+                },
+                _ => uIBranch
+            };
         }
     }
 }

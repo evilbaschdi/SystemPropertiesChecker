@@ -1,18 +1,17 @@
-﻿namespace SystemPropertiesChecker.Core.Internal
+﻿namespace SystemPropertiesChecker.Core.Internal;
+
+/// <summary>
+///     Class that provides RegistryValues from WindowsNT CurrentVersion.
+/// </summary>
+// ReSharper disable once ClassNeverInstantiated.Global
+public class RegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion : RegistryHiveLocalMachineValueFor,
+                                                                                IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion
 {
     /// <summary>
-    ///     Class that provides RegistryValues from WindowsNT CurrentVersion.
+    ///     Constructor
     /// </summary>
-    // ReSharper disable once ClassNeverInstantiated.Global
-    public class RegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion : RegistryHiveLocalMachineValueFor,
-                                                                                    IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion
+    public RegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion()
+        : base(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion")
     {
-        /// <summary>
-        ///     Constructor
-        /// </summary>
-        public RegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion()
-            : base(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion")
-        {
-        }
     }
 }

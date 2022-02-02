@@ -1,10 +1,8 @@
-﻿using EvilBaschdi.Core;
-using Microsoft.Extensions.DependencyInjection;
+﻿using EvilBaschdi.DependencyInjection;
 
-namespace SystemPropertiesChecker.Core.Internal
+namespace SystemPropertiesChecker.Core.Internal;
+
+/// <inheritdoc />
+public interface IConfigureCoreServices : IConfigureServiceCollection
 {
-    /// <inheritdoc />
-    public interface IConfigureCoreServices : IRunFor<IServiceCollection>
-    {
-    }
 }

@@ -1,47 +1,46 @@
 ﻿using System.Diagnostics;
 using System.Text;
 
-namespace SystemPropertiesChecker.Core.Internal.DotNet
+namespace SystemPropertiesChecker.Core.Internal.DotNet;
+
+/// <inheritdoc />
+public class DotNetCoreRuntimes : IDotNetCoreRuntimes
 {
     /// <inheritdoc />
-    public class DotNetCoreRuntimes : IDotNetCoreRuntimes
+    public string Value
     {
-        /// <inheritdoc />
-        public string Value
+        get
         {
-            get
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("currently installed runtimes:");
+            var list = new List<string>();
+
+            try
             {
-                var stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine("currently installed runtimes:");
-                var list = new List<string>();
+                var process = new Process();
+                process.SetHiddenProcessFor("dotnet", "--list-runtimes");
+                process.Start();
 
-                try
+                if (!process.ReadStandardError().Contains("Unknown option: --list-runtimes"))
                 {
-                    var process = new Process();
-                    process.SetHiddenProcessFor("dotnet", "--list-runtimes");
-                    process.Start();
-
-                    if (!process.ReadStandardError().Contains("Unknown option: --list-runtimes"))
-                    {
-                        list.AddRange(from item
-                                          in process.ReadStandardOutput()
-                                      select item.Contains("[")
-                                          ? item.Split('[').First()
-                                          : item);
-                    }
-
-                    process.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    stringBuilder.AppendLine("(none)");
+                    list.AddRange(from item
+                                      in process.ReadStandardOutput()
+                                  select item.Contains("[")
+                                      ? item.Split('[').First()
+                                      : item);
                 }
 
-                stringBuilder.AppendLine(string.Join(", ", list.OrderByDescending(i => i.Trim()).ToList()));
-
-                return stringBuilder.ToString();
+                process.Close();
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                stringBuilder.AppendLine("(none)");
+            }
+
+            stringBuilder.AppendLine(string.Join(", ", list.OrderByDescending(i => i.Trim()).ToList()));
+
+            return stringBuilder.ToString();
         }
     }
 }

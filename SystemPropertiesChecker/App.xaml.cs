@@ -32,12 +32,10 @@ namespace SystemPropertiesChecker
             ServiceProvider = _host.Services;
         }
 
-
         /// <summary>
         ///     ServiceProvider for DependencyInjection
         /// </summary>
         public static IServiceProvider ServiceProvider { get; private set; }
-
 
         /// <inheritdoc />
         protected override async void OnStartup(StartupEventArgs e)
