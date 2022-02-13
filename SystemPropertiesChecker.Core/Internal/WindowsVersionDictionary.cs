@@ -164,6 +164,10 @@ public class WindowsVersionDictionary : IWindowsVersionDictionary
                         break;
                     case AddressFamily.Max:
                         break;
+                    case AddressFamily.Packet:
+                        break;
+                    case AddressFamily.ControllerAreaNetwork:
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

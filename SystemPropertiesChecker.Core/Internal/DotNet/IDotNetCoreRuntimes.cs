@@ -6,6 +6,6 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet;
 /// <summary>
 ///     Interface for classes that return a list of current installed .net core runtimes
 /// </summary>
-public interface IDotNetCoreRuntimes : IValue<string>
+public interface IDotNetCoreRunTimes : IString
 {
 }

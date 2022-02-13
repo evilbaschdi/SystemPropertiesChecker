@@ -5,6 +5,6 @@ namespace SystemPropertiesChecker.Core.Internal;
 /// <inheritdoc />
 /// <summary>
 /// </summary>
-public interface IPasswordExpirationMessage : IValue<string>
+public interface IPasswordExpirationMessage : IString
 {
 }

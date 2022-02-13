@@ -6,6 +6,6 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet;
 /// <summary>
 ///     Interface for classes that return a list of current installed .net core sdks
 /// </summary>
-public interface IDotNetCoreSdks : IValue<string>
+public interface IDotNetCoreSdks : IString
 {
 }

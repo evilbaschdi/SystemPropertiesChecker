@@ -4,7 +4,7 @@ using System.Text;
 namespace SystemPropertiesChecker.Core.Internal.DotNet;
 
 /// <inheritdoc />
-public class DotNetCoreRuntimes : IDotNetCoreRuntimes
+public class DotNetCoreRunTimes : IDotNetCoreRunTimes
 {
     /// <inheritdoc />
     public string Value

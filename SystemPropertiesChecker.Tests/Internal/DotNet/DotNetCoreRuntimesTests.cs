@@ -11,24 +11,24 @@ public class DotNetCoreRuntimesTests
     [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
     public void Constructor_HasNullGuards(GuardClauseAssertion assertion)
     {
-        assertion.Verify(typeof(DotNetCoreRuntimes).GetConstructors());
+        assertion.Verify(typeof(DotNetCoreRunTimes).GetConstructors());
     }
 
     [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-    public void Constructor_ReturnsIDotNetCoreRuntimes(DotNetCoreRuntimes sut)
+    public void Constructor_ReturnsIDotNetCoreRuntimes(DotNetCoreRunTimes sut)
     {
-        Assert.IsAssignableFrom<IDotNetCoreRuntimes>(sut);
+        Assert.IsAssignableFrom<IDotNetCoreRunTimes>(sut);
     }
 
     [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
     public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
     {
-        assertion.Verify(typeof(DotNetCoreRuntimes).GetMethods().Where(method => !method.IsAbstract));
+        assertion.Verify(typeof(DotNetCoreRunTimes).GetMethods().Where(method => !method.IsAbstract));
     }
 
     [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
     public void Value_ForParameterListRuntimes_ReturnsListOfInstalledRuntimes(
-        DotNetCoreRuntimes sut)
+        DotNetCoreRunTimes sut)
     {
         // Arrange
 

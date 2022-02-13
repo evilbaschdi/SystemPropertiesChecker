@@ -3,6 +3,6 @@
 namespace SystemPropertiesChecker.Core.Internal;
 
 /// <inheritdoc />
-public interface IInsiderChannel : IString
+public interface IWindowsFeatureExperiencePackVersion : IString
 {
 }
