@@ -155,7 +155,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
         var installDate = string.Empty;
         foreach (var item in info)
         {
-            installDate = item["InstallDate"]?.ToString();
+            installDate = item["InstallDate"].ToString();
             break;
         }
 
@@ -175,7 +175,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
         var caption = string.Empty;
         foreach (var item in info)
         {
-            caption = item["Caption"]?.ToString();
+            caption = item["Caption"].ToString();
             break;
         }
 

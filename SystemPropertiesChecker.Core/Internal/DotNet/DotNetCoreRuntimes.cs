@@ -25,7 +25,7 @@ public class DotNetCoreRunTimes : IDotNetCoreRunTimes
                 {
                     list.AddRange(from item
                                       in process.ReadStandardOutput()
-                                  select item.Contains("[")
+                                  select item.Contains('[')
                                       ? item.Split('[').First()
                                       : item);
                 }

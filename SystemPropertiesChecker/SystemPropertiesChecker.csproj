@@ -3,13 +3,13 @@
 	<PropertyGroup>
 		<AppDesignerFolder>Properties</AppDesignerFolder>
 		<ApplicationIcon>spc.ico</ApplicationIcon>
-		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<AssemblyName>SystemPropertiesChecker</AssemblyName>
 		<Authors>Sebastian Walter</Authors>
 		<Company>evilbaschdi (Sebastian Walter)</Company>
 		<Copyright>Copyright © 2014 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
 		<!-- ReSharper disable once UnknownProperty -->
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\SystemPropertiesChecker.xml</DocumentationFile>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>preview</LangVersion>
 		<OutputType>WinExe</OutputType>
@@ -22,16 +22,19 @@
 		<UseWPF>true</UseWPF>
 		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
 	</PropertyGroup>
+
 	<ItemGroup>
+		<None Remove=".editorconfig" />
 		<None Remove="about.png" />
 		<None Remove="SystemPropertiesChecker.VisualElementsManifest.xml" />
 		<None Remove="spc_150.png" />
 		<None Remove="spc_70.png" />
 		<None Remove="spc.ico" />
 	</ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="ControlzEx" Version="5.0.1" />
-		<PackageReference Include="EvilBaschdi.CoreExtended" Version="2022.2.13.1006-develop" />
+		<PackageReference Include="EvilBaschdi.CoreExtended" Version="2022.2.28.704" />
 		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
@@ -48,9 +51,11 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
+
 	<ItemGroup>
 		<AppDesigner Include="Properties\" />
 	</ItemGroup>
+
 	<ItemGroup>
 		<Content Include="about.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -64,6 +69,7 @@
 		<Content Include="spc_70.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+		<EditorConfigFiles Include=".editorconfig" />
 		<Resource Include="spc.ico">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Resource>
@@ -71,6 +77,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj" />
 	</ItemGroup>
+
 	<ItemGroup>
 		<Compile Update="Properties\Settings.Designer.cs">
 			<DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -78,10 +85,12 @@
 			<DependentUpon>Settings.settings</DependentUpon>
 		</Compile>
 	</ItemGroup>
+
 	<ItemGroup>
 		<None Update="Properties\Settings.settings">
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
 		</None>
 	</ItemGroup>
+
 </Project>

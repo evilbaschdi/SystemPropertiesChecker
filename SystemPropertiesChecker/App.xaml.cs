@@ -50,7 +50,7 @@ namespace SystemPropertiesChecker
             mainWindow.Show();
         }
 
-        private void ConfigureServices([NotNull] IServiceCollection services)
+        private static void ConfigureServices([NotNull] IServiceCollection services)
         {
             if (services == null)
             {
