@@ -16,7 +16,7 @@ public class DotNetCoreVersion : IDotNetCoreVersion
 
             try
             {
-                var process = new Process();
+                using var process = new Process();
                 process.SetHiddenProcessFor("dotnet", "--version");
                 process.Start();
                 stringBuilder.AppendLine(process.StandardOutput.ReadToEnd().Trim());

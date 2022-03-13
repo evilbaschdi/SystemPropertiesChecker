@@ -19,7 +19,7 @@ public class ExecutePowerShellCommand : IExecutePowerShellCommand
 
         try
         {
-            var process = new Process();
+            using var process = new Process();
             process.SetHiddenProcessFor(@"C:\windows\system32\windowspowershell\v1.0\powershell.exe", value);
             process.Start();
             stringBuilder.AppendLine(process.StandardOutput.ReadToEnd().Trim());

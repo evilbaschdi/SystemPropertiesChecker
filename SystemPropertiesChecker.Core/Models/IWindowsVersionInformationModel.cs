@@ -22,7 +22,7 @@ public interface IWindowsVersionInformationModel
 
     /// <summary>
     /// </summary>
-    string[] BuildLabExArray { get; set; }
+    List<string> BuildLabExList { get; set; }
 
     /// <summary>
     /// </summary>
@@ -30,7 +30,7 @@ public interface IWindowsVersionInformationModel
 
     /// <summary>
     /// </summary>
-    string Computername { get; set; }
+    string ComputerName { get; set; }
 
     /// <summary>
     /// </summary>

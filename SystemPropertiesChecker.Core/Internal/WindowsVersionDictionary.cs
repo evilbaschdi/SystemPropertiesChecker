@@ -33,7 +33,7 @@ public class WindowsVersionDictionary : IWindowsVersionDictionary
             var values = _windowsVersionInformation.Value;
             GetLocalIpAddress();
 
-            dictionary.Add("Device Name", values.Computername);
+            dictionary.Add("Device Name", values.ComputerName);
             dictionary.Add("Current IP v4", _ipAddressV4);
             dictionary.Add("Current IP v6", _ipAddressV6);
             if (!string.IsNullOrWhiteSpace(values.Domain))
@@ -57,7 +57,11 @@ public class WindowsVersionDictionary : IWindowsVersionDictionary
 
             dictionary.Add("Internal Version", values.CurrentVersion);
             dictionary.Add("Current Build", values.CurrentBuild);
-            dictionary.Add("Windows Feature Experience Pack", values.WindowsFeatureExperiencePackVersion);
+            if (!string.IsNullOrWhiteSpace(values.WindowsFeatureExperiencePackVersion))
+            {
+                dictionary.Add("Windows Feature Experience Pack", values.WindowsFeatureExperiencePackVersion);
+            }
+
             if (!string.IsNullOrWhiteSpace(values.InsiderChannel))
             {
                 dictionary.Add("Insider Channel", values.InsiderChannel);
@@ -66,7 +70,7 @@ public class WindowsVersionDictionary : IWindowsVersionDictionary
             if (OperatingSystem.IsWindows())
             {
                 dictionary.Add("OS Build",
-                    !string.IsNullOrWhiteSpace(values.Ubr) ? $"{values.CurrentBuild}.{values.Ubr}" : $"{values.BuildLabExArray[0]}.{values.BuildLabExArray[1]}");
+                    !string.IsNullOrWhiteSpace(values.Ubr) ? $"{values.CurrentBuild}.{values.Ubr}" : $"{values.BuildLabExList[0]}.{values.BuildLabExList[1]}");
                 dictionary.Add("BuildLab", values.BuildLab);
                 dictionary.Add("BuildLabEx", values.BuildLabEx);
                 dictionary.Add("Architecture", values.Bits);
@@ -110,66 +114,6 @@ public class WindowsVersionDictionary : IWindowsVersionDictionary
                     case AddressFamily.InterNetworkV6:
                         _ipAddressV6 = ip.Address.ToString();
                         break;
-                    case AddressFamily.Unknown:
-                        break;
-                    case AddressFamily.Unspecified:
-                        break;
-                    case AddressFamily.Unix:
-                        break;
-                    case AddressFamily.ImpLink:
-                        break;
-                    case AddressFamily.Pup:
-                        break;
-                    case AddressFamily.Chaos:
-                        break;
-                    case AddressFamily.NS:
-                        break;
-                    case AddressFamily.Iso:
-                        break;
-                    case AddressFamily.Ecma:
-                        break;
-                    case AddressFamily.DataKit:
-                        break;
-                    case AddressFamily.Ccitt:
-                        break;
-                    case AddressFamily.Sna:
-                        break;
-                    case AddressFamily.DecNet:
-                        break;
-                    case AddressFamily.DataLink:
-                        break;
-                    case AddressFamily.Lat:
-                        break;
-                    case AddressFamily.HyperChannel:
-                        break;
-                    case AddressFamily.AppleTalk:
-                        break;
-                    case AddressFamily.NetBios:
-                        break;
-                    case AddressFamily.VoiceView:
-                        break;
-                    case AddressFamily.FireFox:
-                        break;
-                    case AddressFamily.Banyan:
-                        break;
-                    case AddressFamily.Atm:
-                        break;
-                    case AddressFamily.Cluster:
-                        break;
-                    case AddressFamily.Ieee12844:
-                        break;
-                    case AddressFamily.Irda:
-                        break;
-                    case AddressFamily.NetworkDesigners:
-                        break;
-                    case AddressFamily.Max:
-                        break;
-                    case AddressFamily.Packet:
-                        break;
-                    case AddressFamily.ControllerAreaNetwork:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
                 }
             }
         }

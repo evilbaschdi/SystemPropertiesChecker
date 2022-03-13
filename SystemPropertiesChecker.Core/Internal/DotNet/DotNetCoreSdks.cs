@@ -17,7 +17,7 @@ public class DotNetCoreSdks : IDotNetCoreSdks
 
             try
             {
-                var process = new Process();
+                using var process = new Process();
                 process.SetHiddenProcessFor("dotnet", "--list-sdks");
                 process.Start();
 

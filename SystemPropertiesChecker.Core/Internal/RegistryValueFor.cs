@@ -41,8 +41,8 @@ public abstract class RegistryValueFor : IRegistryValueFor
 
         var bits = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
 
-        var localMachine = RegistryKey.OpenBaseKey(_registryHive, bits);
-        var regPath = localMachine.OpenSubKey(_subKey);
+        using var localMachine = RegistryKey.OpenBaseKey(_registryHive, bits);
+        using var regPath = localMachine.OpenSubKey(_subKey);
 
         return regPath?.GetValue(value) != null
             ? regPath.GetValue(value)?.ToString()

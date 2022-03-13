@@ -17,7 +17,7 @@ public class DotNetCoreRunTimes : IDotNetCoreRunTimes
 
             try
             {
-                var process = new Process();
+                using var process = new Process();
                 process.SetHiddenProcessFor("dotnet", "--list-runtimes");
                 process.Start();
 

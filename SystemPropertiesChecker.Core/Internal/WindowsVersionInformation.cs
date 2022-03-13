@@ -73,7 +73,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
                 _windowsVersionInformationModel.PasswordExpirationDate = passwordExpirationDate.DateString;
             }
 
-            _windowsVersionInformationModel.Computername = Environment.MachineName;
+            _windowsVersionInformationModel.ComputerName = Environment.MachineName;
             _windowsVersionInformationModel.Bits = bits;
             _windowsVersionInformationModel.Manufacturer = ManufacturerByWin32ComputerSystem();
             _windowsVersionInformationModel.ManufacturerProduct = ManufacturerByWin32ComputerSystem().Equals(ManufacturerByWin32BaseBoard().Key)
@@ -83,7 +83,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
             _windowsVersionInformationModel.InsiderChannel = _insiderChannel.Value;
             _windowsVersionInformationModel.BuildLab = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLab");
             _windowsVersionInformationModel.BuildLabEx = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx");
-            _windowsVersionInformationModel.BuildLabExArray = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx").Split('.');
+            _windowsVersionInformationModel.BuildLabExList = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx")?.Split('.').ToList();
             _windowsVersionInformationModel.CurrentBuild = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CurrentBuild");
             _windowsVersionInformationModel.ProductName = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ProductName");
             _windowsVersionInformationModel.CurrentVersion = version;
@@ -112,7 +112,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
         }
 
         const string win32ComputerSystem = "SELECT * FROM Win32_ComputerSystem";
-        var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
+        using var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
         var info = managementObjectSearcher.Get();
 
         foreach (var item in info)
@@ -131,7 +131,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
         }
 
         const string win32ComputerSystem = "SELECT * FROM Win32_BaseBoard";
-        var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
+        using var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
         var info = managementObjectSearcher.Get();
 
         foreach (var item in info)
@@ -150,7 +150,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
         }
 
         const string win32OperatingSystem = "SELECT * FROM Win32_OperatingSystem";
-        var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
+        using var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
         var info = managementObjectSearcher.Get();
         var installDate = string.Empty;
         foreach (var item in info)
@@ -170,7 +170,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
         }
 
         const string win32OperatingSystem = "SELECT * FROM Win32_OperatingSystem";
-        var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
+        using var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
         var info = managementObjectSearcher.Get();
         var caption = string.Empty;
         foreach (var item in info)

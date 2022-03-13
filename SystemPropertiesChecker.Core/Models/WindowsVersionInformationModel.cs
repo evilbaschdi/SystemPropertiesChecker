@@ -63,7 +63,7 @@ public class WindowsVersionInformationModel : IWindowsVersionInformationModel
     /// <inheritdoc />
     /// <summary>
     /// </summary>
-    public string[] BuildLabExArray { get; set; }
+    public List<string> BuildLabExList { get; set; }
 
     /// <inheritdoc />
     /// <summary>
@@ -78,7 +78,7 @@ public class WindowsVersionInformationModel : IWindowsVersionInformationModel
     /// <inheritdoc />
     /// <summary>
     /// </summary>
-    public string Computername { get; set; }
+    public string ComputerName { get; set; }
 
     /// <inheritdoc />
     /// <summary>

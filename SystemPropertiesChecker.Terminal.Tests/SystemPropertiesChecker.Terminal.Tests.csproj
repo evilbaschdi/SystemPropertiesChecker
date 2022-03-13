@@ -54,7 +54,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj" />
+		<ProjectReference Include="..\SystemPropertiesChecker.Terminal\SystemPropertiesChecker.Terminal.csproj" />
 	</ItemGroup>
 
 </Project>

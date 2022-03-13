@@ -24,7 +24,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove=".editorconfig" />
 		<None Remove="about.png" />
 		<None Remove="SystemPropertiesChecker.VisualElementsManifest.xml" />
 		<None Remove="spc_150.png" />
@@ -38,6 +37,10 @@
 		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
+		<!--<PackageReference Include="WpfAnalyzers" Version="4.0.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>-->
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -69,7 +72,6 @@
 		<Content Include="spc_70.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-		<EditorConfigFiles Include=".editorconfig" />
 		<Resource Include="spc.ico">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Resource>

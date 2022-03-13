@@ -47,8 +47,8 @@ public class DotNetVersion : IDotNetVersion
         }
 
         // Opens the registry key for the .NET Framework entry.
-        using var ndpKey =
-            RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "").OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\");
+        using var localMachine = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "");
+        using var ndpKey = localMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\");
         // As an alternative, if you know the computers you will query are running .NET Framework 4.5
         // or later, you can use:
         // using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
@@ -122,9 +122,8 @@ public class DotNetVersion : IDotNetVersion
             return;
         }
 
-        using var ndpKey =
-            RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "")
-                       .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\");
+        using var localMachine = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "");
+        using var ndpKey = localMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\");
         if (ndpKey == null)
         {
             return;
