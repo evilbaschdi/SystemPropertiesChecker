@@ -16,6 +16,6 @@ resources:
       ref: refs/heads/main # optional ref to pin to
 
 jobs:
-- template: azureDevOps.yml@templates  # Template reference
+- template: buildNZip.yml@templates  # Template reference
   parameters:
     projectName: $(Build.Repository.Name)
