@@ -1,7 +1,6 @@
 ﻿using EvilBaschdi.Core;
 using EvilBaschdi.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using SystemPropertiesChecker.Terminal.Internal;
 
 namespace SystemPropertiesChecker.Terminal;
@@ -15,9 +14,11 @@ public class Execute : IRun
     public Execute()
     {
         IHostInstance hostInstance = new HostInstance();
-        IValueFor<Action<HostBuilderContext, IServiceCollection>, IServiceProvider> initServiceProviderByHostBuilder = new InitServiceProviderByHostBuilder(hostInstance);
+        IConfigureDelegateForConfigureServices configureDelegateForConfigureServices = new ConfigureDelegateForConfigureServices();
+        IConfigureServicesByHostBuilderAndConfigureDelegate configureServicesByHostBuilderAndConfigureDelegate =
+            new ConfigureServicesByHostBuilderAndConfigureDelegate(hostInstance, configureDelegateForConfigureServices);
 
-        ServiceProvider = initServiceProviderByHostBuilder.ValueFor(new ConfigureServices().RunFor);
+        ServiceProvider = configureServicesByHostBuilderAndConfigureDelegate.Value;
     }
 
     /// <summary>

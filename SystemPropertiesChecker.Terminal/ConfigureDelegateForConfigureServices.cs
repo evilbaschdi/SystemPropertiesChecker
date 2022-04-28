@@ -1,15 +1,12 @@
-﻿using EvilBaschdi.CoreExtended;
-using EvilBaschdi.CoreExtended.AppHelpers;
-using EvilBaschdi.DependencyInjection;
+﻿using EvilBaschdi.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SystemPropertiesChecker.Core.Internal;
-using SystemPropertiesChecker.ViewModels;
 
-namespace SystemPropertiesChecker;
+namespace SystemPropertiesChecker.Terminal;
 
 /// <inheritdoc />
-public class ConfigureServices : IConfigureServices
+public class ConfigureDelegateForConfigureServices : IConfigureDelegateForConfigureServices
 {
     /// <inheritdoc />
     public void RunFor(HostBuilderContext _, IServiceCollection serviceCollection)
@@ -25,10 +22,9 @@ public class ConfigureServices : IConfigureServices
         }
 
         IConfigureCoreServices configureCoreServices = new ConfigureCoreServices();
+        IConfigureTerminalServices configureTerminalServices = new ConfigureTerminalServices();
+
         configureCoreServices.RunFor(serviceCollection);
-        serviceCollection.AddScoped<IScreenShot, ScreenShot>();
-        serviceCollection.AddScoped<IRoundCorners, RoundCorners>();
-        serviceCollection.AddSingleton<MainWindowViewModel>();
-        serviceCollection.AddTransient(typeof(MainWindow));
+        configureTerminalServices.RunFor(serviceCollection);
     }
 }

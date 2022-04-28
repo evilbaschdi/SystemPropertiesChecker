@@ -1,9 +1,6 @@
 ﻿using System.Windows;
-using EvilBaschdi.Core;
 using EvilBaschdi.DependencyInjection;
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 #if (!DEBUG)
 using ControlzEx.Theming;
 
@@ -26,9 +23,11 @@ namespace SystemPropertiesChecker
         public App()
         {
             IHostInstance hostInstance = new HostInstance();
-            IValueFor<Action<HostBuilderContext, IServiceCollection>, IServiceProvider> initServiceProviderByHostBuilder = new InitServiceProviderByHostBuilder(hostInstance);
+            IConfigureDelegateForConfigureServices configureDelegateForConfigureServices = new ConfigureDelegateForConfigureServices();
+            IConfigureServicesByHostBuilderAndConfigureDelegate configureServicesByHostBuilderAndConfigureDelegate =
+                new ConfigureServicesByHostBuilderAndConfigureDelegate(hostInstance, configureDelegateForConfigureServices);
 
-            ServiceProvider = initServiceProviderByHostBuilder.ValueFor(new ConfigureServices().RunFor);
+            ServiceProvider = configureServicesByHostBuilderAndConfigureDelegate.Value;
 
             _handleAppStartup = new HandleAppStartup<MainWindow>(hostInstance);
             _handleAppExit = new HandleAppExit(hostInstance);
