@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace SystemPropertiesChecker.Tests
+namespace SystemPropertiesChecker.Core.Tests
 {
     /// <summary>
     ///     Do not delete this class.

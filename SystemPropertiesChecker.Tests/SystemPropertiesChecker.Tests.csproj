@@ -5,12 +5,12 @@
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
 		<LangVersion>preview</LangVersion>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
 		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))-develop</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EvilBaschdi.Testing" Version="2022.4.8.559-develop" />
+		<PackageReference Include="EvilBaschdi.Testing" Version="2022.5.18.1847-develop" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -30,14 +30,14 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.4-preview.8">
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.6-preview.3">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj" />
+		<ProjectReference Include="..\SystemPropertiesChecker\SystemPropertiesChecker.csproj" />
 	</ItemGroup>
 
 </Project>

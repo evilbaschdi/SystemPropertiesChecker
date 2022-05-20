@@ -21,8 +21,7 @@ public static class ProcessExtensions
         }
 
         using var reader = process.StandardOutput;
-        string line;
-        while ((line = reader.ReadLine()) != null)
+        while (reader.ReadLine() is { } line)
         {
             yield return line;
         }
@@ -41,8 +40,7 @@ public static class ProcessExtensions
         }
 
         using var reader = process.StandardError;
-        string line;
-        while ((line = reader.ReadLine()) != null)
+        while (reader.ReadLine() is { } line)
         {
             yield return line;
         }
