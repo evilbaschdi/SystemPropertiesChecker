@@ -44,7 +44,7 @@ namespace SystemPropertiesChecker
 #if (!DEBUG)
             ThemeManager.Current.SyncTheme(ThemeSyncMode.SyncAll);
 #endif
-            _mainWindow = await _handleAppStartup.ValueForAsync(ServiceProvider);
+            _mainWindow = await _handleAppStartup.ValueFor(ServiceProvider);
             _mainWindow.Show();
         }
 
@@ -56,7 +56,7 @@ namespace SystemPropertiesChecker
                 throw new ArgumentNullException(nameof(e));
             }
 
-            await _handleAppExit.RunAsync();
+            await _handleAppExit.Value();
 
             base.OnExit(e);
         }
