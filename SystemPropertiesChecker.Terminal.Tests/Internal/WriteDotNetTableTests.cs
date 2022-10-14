@@ -1,8 +1,4 @@
-﻿using AutoFixture.Idioms;
-using EvilBaschdi.Testing;
-using FluentAssertions;
-using SystemPropertiesChecker.Terminal.Internal;
-using Xunit;
+﻿using SystemPropertiesChecker.Terminal.Internal;
 
 namespace SystemPropertiesChecker.Terminal.Tests.Internal
 {

@@ -1,7 +1,4 @@
-﻿using AutoFixture.Idioms;
-using EvilBaschdi.Testing;
-using SystemPropertiesChecker.Core.Models;
-using Xunit;
+﻿using SystemPropertiesChecker.Core.Models;
 
 namespace SystemPropertiesChecker.Core.Tests.Models
 {
@@ -16,7 +13,7 @@ namespace SystemPropertiesChecker.Core.Tests.Models
         [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
         public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
         {
-            assertion.Verify(typeof(PasswordExpirationModel).GetMethods().Where(method => !method.IsAbstract));
+            assertion.Verify(typeof(PasswordExpirationModel).GetMethods().Where(method => !method.IsAbstract & !method.Name.StartsWith("set") & !method.Name.StartsWith("init")));
         }
     }
 }

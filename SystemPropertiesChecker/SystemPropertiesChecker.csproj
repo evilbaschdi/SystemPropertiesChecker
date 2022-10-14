@@ -8,7 +8,7 @@
 		<Company>evilbaschdi (Sebastian Walter)</Company>
 		<Copyright>Copyright © 2014 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
 		<!-- ReSharper disable once UnknownProperty -->
-		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\SystemPropertiesChecker.xml</DocumentationFile>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>preview</LangVersion>
@@ -18,7 +18,7 @@
 		<Product>SystemPropertiesChecker</Product>
 		<RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
 		<RootNamespace>SystemPropertiesChecker</RootNamespace>
-		<TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+		<TargetFramework>net6.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</VersionPrefix>
 	</PropertyGroup>
@@ -32,8 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ControlzEx" Version="5.0.1" />
-		<PackageReference Include="EvilBaschdi.CoreExtended" Version="2022.6.7.1813-develop" />
+		<PackageReference Include="EvilBaschdi.CoreExtended" Version="2022.10.9.631-develop" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
 		<!--<PackageReference Include="WpfAnalyzers" Version="4.0.2">
@@ -75,6 +74,7 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Resource>
 	</ItemGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj" />
 	</ItemGroup>

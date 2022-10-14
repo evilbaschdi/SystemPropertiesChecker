@@ -27,7 +27,7 @@ public class ConfigureDelegateForConfigureServices : IConfigureDelegateForConfig
         IConfigureCoreServices configureCoreServices = new ConfigureCoreServices();
         configureCoreServices.RunFor(serviceCollection);
         serviceCollection.AddScoped<IScreenShot, ScreenShot>();
-        serviceCollection.AddScoped<IRoundCorners, RoundCorners>();
+        serviceCollection.AddSingleton<IApplicationStyle>(new ApplicationStyle(true));
         serviceCollection.AddSingleton<MainWindowViewModel>();
         serviceCollection.AddTransient(typeof(MainWindow));
     }

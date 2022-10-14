@@ -19,6 +19,7 @@ namespace SystemPropertiesChecker.ViewModels;
 /// </summary>
 public class MainWindowViewModel : ApplicationStyleViewModel
 {
+    private readonly IApplicationStyle _applicationStyle;
     private readonly IDotNetCoreInfo _dotNetCoreInfo;
     private readonly IDotNetVersion _dotNetVersion;
     private readonly IOtherInformationText _otherInformationText;
@@ -32,22 +33,18 @@ public class MainWindowViewModel : ApplicationStyleViewModel
     ///     Constructor
     /// </summary>
     public MainWindowViewModel([NotNull] IScreenShot screenShot,
+                               [NotNull] IApplicationStyle applicationStyle,
                                [NotNull] IWindowsVersionDictionary windowsVersionDictionary,
                                [NotNull] IOtherInformationText otherInformationText,
                                [NotNull] IDotNetVersion dotNetVersion,
                                [NotNull] IDotNetCoreInfo dotNetCoreInfo,
                                [NotNull] ISourceOsCollection sourceOsCollection,
-                               [NotNull] IPasswordExpirationMessage passwordExpirationMessage,
-                               [NotNull] IRoundCorners roundCorners)
-        : base(roundCorners)
-
+                               [NotNull] IPasswordExpirationMessage passwordExpirationMessage
+    )
+        : base(applicationStyle)
     {
-        if (roundCorners == null)
-        {
-            throw new ArgumentNullException(nameof(roundCorners));
-        }
-
         _screenShot = screenShot ?? throw new ArgumentNullException(nameof(screenShot));
+        _applicationStyle = applicationStyle ?? throw new ArgumentNullException(nameof(applicationStyle));
         _windowsVersionDictionary = windowsVersionDictionary ?? throw new ArgumentNullException(nameof(windowsVersionDictionary));
         _otherInformationText = otherInformationText ?? throw new ArgumentNullException(nameof(otherInformationText));
         _dotNetVersion = dotNetVersion ?? throw new ArgumentNullException(nameof(dotNetVersion));
@@ -215,11 +212,11 @@ public class MainWindowViewModel : ApplicationStyleViewModel
         _screenShot.SaveToClipboard(current);
     }
 
-    private static void AboutWindowCommand()
+    private void AboutWindowCommand()
     {
         ICurrentAssembly currentAssembly = new CurrentAssembly();
         IAboutContent aboutContent = new AboutContent(currentAssembly);
-        IAboutModel aboutModel = new AboutViewModel(aboutContent);
+        IAboutModel aboutModel = new AboutViewModel(aboutContent, _applicationStyle);
         var aboutWindow = new AboutWindow(aboutModel);
         aboutWindow.ShowDialog();
     }

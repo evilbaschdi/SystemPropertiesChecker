@@ -1,11 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using AutoFixture.Idioms;
 using EvilBaschdi.Core;
-using EvilBaschdi.Testing;
-using FluentAssertions;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Models;
-using Xunit;
 
 namespace SystemPropertiesChecker.Core.Tests.Internal
 {

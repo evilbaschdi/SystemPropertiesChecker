@@ -1,8 +1,4 @@
-using AutoFixture.Idioms;
-using EvilBaschdi.Testing;
-using FluentAssertions;
 using SystemPropertiesChecker.Core.Internal.DotNet;
-using Xunit;
 
 namespace SystemPropertiesChecker.Core.Tests.Internal.DotNet;
 

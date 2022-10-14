@@ -1,9 +1,4 @@
-﻿using AutoFixture.Idioms;
-using EvilBaschdi.Testing;
-using FluentAssertions;
-using Xunit;
-
-namespace SystemPropertiesChecker.Terminal.Tests
+﻿namespace SystemPropertiesChecker.Terminal.Tests
 {
     public class ConfigureTerminalServicesTests
     {

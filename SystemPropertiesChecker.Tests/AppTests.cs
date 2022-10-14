@@ -1,8 +1,4 @@
 ﻿using System.Windows;
-using AutoFixture.Idioms;
-using EvilBaschdi.Testing;
-using FluentAssertions;
-using Xunit;
 
 namespace SystemPropertiesChecker.Tests
 {

@@ -1,9 +1,5 @@
-﻿using AutoFixture.Idioms;
-using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
-using EvilBaschdi.Testing;
-using FluentAssertions;
+﻿using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using SystemPropertiesChecker.ViewModels;
-using Xunit;
 
 namespace SystemPropertiesChecker.Tests.ViewModels
 {
