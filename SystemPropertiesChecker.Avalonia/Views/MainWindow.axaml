@@ -101,7 +101,7 @@
 								<TabItem Name="DotNetFullTab" Header=".net framework">
 									<TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent"
 											 BorderThickness="0" TextAlignment="Center"
-											 HorizontalAlignment="Center" VerticalAlignment="Center"
+											 HorizontalAlignment="Center" VerticalAlignment="Top"
 											 Text="{Binding DotNetVersionText}" />
 								</TabItem>
 							</TabControl>

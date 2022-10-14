@@ -1,46 +1,14 @@
-﻿using System.Diagnostics;
-using System.Text;
+﻿namespace SystemPropertiesChecker.Core.Internal.DotNet;
 
-namespace SystemPropertiesChecker.Core.Internal.DotNet;
-
-/// <inheritdoc />
-public class DotNetCoreSdks : IDotNetCoreSdks
+/// <inheritdoc cref="IDotNetCoreSdks" />
+/// <inheritdoc cref="DotNetCoreListAsString" />
+public class DotNetCoreSdks : DotNetCoreListAsString, IDotNetCoreSdks
 {
-    /// <inheritdoc />
-    public string Value
+    /// <summary>
+    ///     Constructor
+    /// </summary>
+    public DotNetCoreSdks()
+        : base("sdks")
     {
-        get
-        {
-            var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("currently installed sdks:");
-            var list = new List<string>();
-
-            try
-            {
-                using var process = new Process();
-                process.SetHiddenProcessFor("dotnet", "--list-sdks");
-                process.Start();
-
-                if (!process.ReadStandardError().Contains("Unknown option: --list-sdks"))
-                {
-                    list.AddRange(from item
-                                      in process.ReadStandardOutput()
-                                  select item.Contains('[')
-                                      ? item.Split('[').First()
-                                      : item);
-                }
-
-                process.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                stringBuilder.AppendLine("(none)");
-            }
-
-            stringBuilder.AppendLine(string.Join(", ", list.OrderByDescending(i => i.Trim()).ToList()));
-
-            return stringBuilder.ToString();
-        }
     }
 }

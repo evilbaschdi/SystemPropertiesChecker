@@ -9,7 +9,6 @@ public interface IWindowsVersionInformationModel
 {
     /// <summary>
     /// </summary>
-
     string Bits { get; set; }
 
     /// <summary>

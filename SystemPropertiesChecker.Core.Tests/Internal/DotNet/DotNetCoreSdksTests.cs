@@ -14,6 +14,7 @@ public class DotNetCoreSdksTests
     public void Constructor_ReturnsIDotNetCoreSdks(DotNetCoreSdks sut)
     {
         Assert.IsAssignableFrom<IDotNetCoreSdks>(sut);
+        Assert.IsAssignableFrom<DotNetCoreListAsString>(sut);
     }
 
     [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]

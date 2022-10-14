@@ -14,6 +14,7 @@ public class DotNetCoreRuntimesTests
     public void Constructor_ReturnsIDotNetCoreRuntimes(DotNetCoreRunTimes sut)
     {
         Assert.IsAssignableFrom<IDotNetCoreRunTimes>(sut);
+        Assert.IsAssignableFrom<DotNetCoreListAsString>(sut);
     }
 
     [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
