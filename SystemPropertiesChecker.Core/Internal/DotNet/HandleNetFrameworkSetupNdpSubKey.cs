@@ -23,15 +23,15 @@ public class HandleNetFrameworkSetupNdpSubKey : IHandleNetFrameworkSetupNdpSubKe
             return string.Empty;
         }
 
-        var name = subKey.GetValue("Version", "")?.ToString();
+        var name = subKey.GetValue("Version", "").ToString();
         if (string.IsNullOrWhiteSpace(name))
         {
             return string.Empty;
         }
 
-        var sp = subKey.GetValue("SP", "")?.ToString();
+        var sp = subKey.GetValue("SP", "").ToString();
 
-        var install = subKey.GetValue("Install", "")?.ToString();
+        var install = subKey.GetValue("Install", "").ToString();
 
         if (string.IsNullOrEmpty(install) || !install.Equals("1"))
         {

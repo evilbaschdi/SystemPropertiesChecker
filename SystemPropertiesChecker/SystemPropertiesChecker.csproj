@@ -18,7 +18,7 @@
 		<Product>SystemPropertiesChecker</Product>
 		<RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
 		<RootNamespace>SystemPropertiesChecker</RootNamespace>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFramework>net7.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</VersionPrefix>
 	</PropertyGroup>
@@ -32,7 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EvilBaschdi.CoreExtended" Version="2022.10.9.631-develop" />
+		<PackageReference Include="EvilBaschdi.CoreExtended" Version="2022.11.8.1803-develop" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
 		<!--<PackageReference Include="WpfAnalyzers" Version="4.0.2">

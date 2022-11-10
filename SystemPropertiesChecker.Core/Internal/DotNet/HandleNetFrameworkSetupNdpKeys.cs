@@ -10,7 +10,7 @@ public class HandleNetFrameworkSetupNdpKeys : IHandleNetFrameworkSetupNdpKeys
     private readonly IHandleNetFrameworkSetupNdpSubKey _handleNetFrameworkSetupNdpSubKey;
 
     /// <summary>
-    /// Constructor
+    ///     Constructor
     /// </summary>
     /// <param name="handleNetFrameworkSetupNdpSubKey"></param>
     /// <exception cref="ArgumentNullException"></exception>
@@ -40,9 +40,9 @@ public class HandleNetFrameworkSetupNdpKeys : IHandleNetFrameworkSetupNdpKeys
             return list;
         }
 
-        var name = versionKey.GetValue("Version", "")?.ToString();
-        var sp = versionKey.GetValue("SP", "")?.ToString();
-        var install = versionKey.GetValue("Install", "")?.ToString();
+        var name = versionKey.GetValue("Version", "").ToString();
+        var sp = versionKey.GetValue("SP", "").ToString();
+        var install = versionKey.GetValue("Install", "").ToString();
 
         // .Net 2.0, 3.0, 3.5
         if (!string.IsNullOrEmpty(name))

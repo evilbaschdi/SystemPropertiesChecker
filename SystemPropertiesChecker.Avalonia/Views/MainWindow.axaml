@@ -2,12 +2,11 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d"
-		Width="800" Height="800"
+		mc:Ignorable="d" Width="800" Height="800"
 		x:Class="SystemPropertiesChecker.Avalonia.Views.MainWindow"
+        Title="SystemPropertiesChecker"
 		Icon="/Assets/spc.ico"
-		Title="SystemPropertiesChecker"
-		TransparencyLevelHint="Mica"
+        TransparencyLevelHint="Mica"
 		Background="{x:Null}">
 
 	<Panel Name="RootPanel">
