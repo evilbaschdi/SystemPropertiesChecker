@@ -31,7 +31,7 @@ public class App : Application
 
             desktop.MainWindow = new MainWindow
                                  {
-                                     DataContext = serviceProvider.GetRequiredService<MainWindowViewModel>(),
+                                     DataContext = serviceProvider.GetRequiredService<MainWindowViewModel>()
                                  };
         }
 
