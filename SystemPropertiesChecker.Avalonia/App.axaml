@@ -3,11 +3,11 @@
              xmlns:local="using:SystemPropertiesChecker.Avalonia"
              x:Class="SystemPropertiesChecker.Avalonia.App">
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
 
     <Application.Styles>
-        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
         <FluentTheme Mode="Dark" />
     </Application.Styles>
 </Application>

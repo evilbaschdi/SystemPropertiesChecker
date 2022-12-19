@@ -1,134 +1,136 @@
 <Window xmlns="https://github.com/avaloniaui"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" Width="800" Height="800"
-		x:Class="SystemPropertiesChecker.Avalonia.Views.MainWindow"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Width="800" Height="800"
+        x:Class="SystemPropertiesChecker.Avalonia.Views.MainWindow"
         Title="SystemPropertiesChecker"
-		Icon="/Assets/spc.ico"
+        Icon="/Assets/spc.ico"
         TransparencyLevelHint="Mica"
-		Background="{x:Null}">
+        Background="{x:Null}">
 
-	<Panel Name="RootPanel">
-		<ExperimentalAcrylicBorder IsHitTestVisible="False">
-			<ExperimentalAcrylicBorder.Material>
-				<ExperimentalAcrylicMaterial
-					TintColor="Black"
-					TintOpacity="1"
-					MaterialOpacity="0.9" />
-			</ExperimentalAcrylicBorder.Material>
-		</ExperimentalAcrylicBorder>
+    <Panel Name="RootPanel">
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.9" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
 
-		<Panel Name="HeaderPanel" IsVisible="False">
-			<TextBlock Text="System Properties Checker" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,7,0,0" />
-		</Panel>
+        <Panel Name="HeaderPanel" IsVisible="False">
+            <Panel Margin="7">
+                <Image Source="/Assets/spc.ico" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" DoubleTapped="LogoOnDoubleTapped"/>
+            </Panel>
+            <TextBlock Text="System Properties Checker" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,7,0,0" />
+        </Panel>
 
-		<Panel Name="MainPanel" Margin="0,0,0,0">
-			<Panel>
-				<Panel Name="ContentPanel" Margin="0,0,0,0">
-					<TabControl TabStripPlacement="Left" >
-						<!--Basic-->
-						<TabItem Name="BasicTab" Header="🏢" FontSize="20">
-							<DataGrid Name="CurrentVersion" Margin="0"
-									  SelectionMode="Single" ColumnWidth="*"
-									  GridLinesVisibility="Horizontal"
-									  AutoGenerateColumns="False"
-									  ScrollViewer.VerticalScrollBarVisibility="Auto"
-									  ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
-									  HorizontalAlignment="Center" VerticalAlignment="Top"
-									  Items="{Binding CurrentVersionText}" VerticalScrollBarVisibility="Auto" >
-								<DataGrid.Columns>
-									<DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12" />
-									<DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12" />
-								</DataGrid.Columns>
-								<DataGrid.Styles>
-									<Style Selector="DataGridColumnHeader">
-										<Setter Property="Background" Value="Transparent" />
-									</Style>
-								</DataGrid.Styles>
-							</DataGrid>
-						</TabItem>
-						<!--Windows History-->
-						<TabItem Name="WindowsTab" Header="📖" IsVisible="{Binding WindowsTabVisibility}" FontSize="20">
-							<DataGrid Name="WindowsHistory" Margin="0"
-									  SelectionMode="Single" ColumnWidth="*"
-									  GridLinesVisibility="Horizontal"
-									  AutoGenerateColumns="False"
-									  ScrollViewer.VerticalScrollBarVisibility="Auto"
-									  ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
-									  HorizontalAlignment="Center" VerticalAlignment="Top"
-									  Items="{Binding SourceOsCollection}" VerticalScrollBarVisibility="Auto">
-								<DataGrid.Columns>
-									<DataGridTextColumn Binding="{Binding Build}" Header="Build" Width="95" FontSize="12"/>
-									<DataGridTextColumn Binding="{Binding ProductName}" Header="Product Name" Width="*" FontSize="12"/>
-									<DataGridTextColumn Binding="{Binding ReleaseId}" Header="Release Id" Width="95" FontSize="12"/>
-									<DataGridTextColumn
-										Binding="{Binding InstallDate, StringFormat=\{0:yyyy-MM-dd hh:mm:ss\}}"
-										Header="Install Date" Width="150" FontSize="12">
-									</DataGridTextColumn>
-								</DataGrid.Columns>
-								<DataGrid.Styles>
-									<Style Selector="DataGridColumnHeader">
-										<Setter Property="Background" Value="Transparent" />
-									</Style>
-								</DataGrid.Styles>
-							</DataGrid>
-						</TabItem>
-						<!--.net-->
-						<TabItem Name="DotNetTab" Header=".net" FontSize="20">
-							<TabControl Name="DotNetTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Top">
-								<TabItem Name="DotNetCoreTab" Header=".net core">
-									<DataGrid Name="DotNetCoreDataGrid" Margin="0"
-											  SelectionMode="Single" ColumnWidth="*"
-											  GridLinesVisibility="Horizontal"
-											  AutoGenerateColumns="False"
-											  ScrollViewer.VerticalScrollBarVisibility="Auto"
-											  ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
-											  HorizontalAlignment="Center" VerticalAlignment="Top"
-											  Items="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto">
-										<DataGrid.Columns>
-											<DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12"/>
-											<DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12"/>
-										</DataGrid.Columns>
-										<DataGrid.Styles>
-											<Style Selector="DataGridColumnHeader">
-												<Setter Property="Background" Value="Transparent" />
-											</Style>
-										</DataGrid.Styles>
-									</DataGrid>
-								</TabItem>
-								<TabItem Name="DotNetFullTab" Header=".net framework">
-									<TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent"
-											 BorderThickness="0" TextAlignment="Center"
-											 HorizontalAlignment="Center" VerticalAlignment="Top"
-											 Text="{Binding DotNetVersionText}" />
-								</TabItem>
-							</TabControl>
-						</TabItem>
-						<!--Other-->
-						<TabItem Name="OtherTab" Header="..." FontSize="20">
-							<DataGrid Name="OtherDataGrid" Margin="0"
-									  SelectionMode="Single" ColumnWidth="*"
-									  GridLinesVisibility="Horizontal"
-									  AutoGenerateColumns="False"
-									  ScrollViewer.VerticalScrollBarVisibility="Auto"
-									  ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
-									  HorizontalAlignment="Center" VerticalAlignment="Top"
-									  Items="{Binding OtherText}" VerticalScrollBarVisibility="Auto">
-								<DataGrid.Columns>
-									<DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12"/>
-									<DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12"/>
-								</DataGrid.Columns>
-								<DataGrid.Styles>
-									<Style Selector="DataGridColumnHeader">
-										<Setter Property="Background" Value="Transparent" />
-									</Style>
-								</DataGrid.Styles>
-							</DataGrid>
-						</TabItem>
-					</TabControl>
-				</Panel>
-			</Panel>
-		</Panel>
-	</Panel>
+        <Panel Name="MainPanel" Margin="0,0,0,0">
+            <Panel>
+                <Panel Name="ContentPanel" Margin="0,0,0,0">
+                    <TabControl TabStripPlacement="Left">
+                        <!--Basic-->
+                        <TabItem Name="BasicTab" Header="🏢" FontSize="20">
+                            <DataGrid Name="CurrentVersion" Margin="0"
+                                      SelectionMode="Single" ColumnWidth="*"
+                                      GridLinesVisibility="Horizontal"
+                                      AutoGenerateColumns="False"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
+                                      HorizontalAlignment="Center" VerticalAlignment="Top"
+                                      Items="{Binding CurrentVersionText}" VerticalScrollBarVisibility="Auto">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12" />
+                                    <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12" />
+                                </DataGrid.Columns>
+                                <DataGrid.Styles>
+                                    <Style Selector="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="Transparent" />
+                                    </Style>
+                                </DataGrid.Styles>
+                            </DataGrid>
+                        </TabItem>
+                        <!--Windows History-->
+                        <TabItem Name="WindowsTab" Header="📖" IsVisible="{Binding WindowsTabVisibility}" FontSize="20">
+                            <DataGrid Name="WindowsHistory" Margin="0"
+                                      SelectionMode="Single" ColumnWidth="*"
+                                      GridLinesVisibility="Horizontal"
+                                      AutoGenerateColumns="False"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
+                                      HorizontalAlignment="Center" VerticalAlignment="Top"
+                                      Items="{Binding SourceOsCollection}" VerticalScrollBarVisibility="Auto">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Build}" Header="Build" Width="95" FontSize="12" />
+                                    <DataGridTextColumn Binding="{Binding ProductName}" Header="Product Name" Width="*" FontSize="12" />
+                                    <DataGridTextColumn Binding="{Binding ReleaseId}" Header="Release Id" Width="95" FontSize="12" />
+                                    <DataGridTextColumn
+                                        Binding="{Binding InstallDate, StringFormat=\{0:yyyy-MM-dd hh:mm:ss\}}"
+                                        Header="Install Date" Width="150" FontSize="12" />
+                                </DataGrid.Columns>
+                                <DataGrid.Styles>
+                                    <Style Selector="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="Transparent" />
+                                    </Style>
+                                </DataGrid.Styles>
+                            </DataGrid>
+                        </TabItem>
+                        <!--.net-->
+                        <TabItem Name="DotNetTab" Header=".net" FontSize="20">
+                            <TabControl Name="DotNetTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Top">
+                                <TabItem Name="DotNetCoreTab" Header=".net core">
+                                    <DataGrid Name="DotNetCoreDataGrid" Margin="0"
+                                              SelectionMode="Single" ColumnWidth="*"
+                                              GridLinesVisibility="Horizontal"
+                                              AutoGenerateColumns="False"
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
+                                              HorizontalAlignment="Center" VerticalAlignment="Top"
+                                              Items="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12" />
+                                            <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12" />
+                                        </DataGrid.Columns>
+                                        <DataGrid.Styles>
+                                            <Style Selector="DataGridColumnHeader">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Style>
+                                        </DataGrid.Styles>
+                                    </DataGrid>
+                                </TabItem>
+                                <TabItem Name="DotNetFullTab" Header=".net framework">
+                                    <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent"
+                                             BorderThickness="0" TextAlignment="Center"
+                                             HorizontalAlignment="Center" VerticalAlignment="Top"
+                                             Text="{Binding DotNetVersionText}" />
+                                </TabItem>
+                            </TabControl>
+                        </TabItem>
+                        <!--Other-->
+                        <TabItem Name="OtherTab" Header="..." FontSize="20">
+                            <DataGrid Name="OtherDataGrid" Margin="0"
+                                      SelectionMode="Single" ColumnWidth="*"
+                                      GridLinesVisibility="Horizontal"
+                                      AutoGenerateColumns="False"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True"
+                                      HorizontalAlignment="Center" VerticalAlignment="Top"
+                                      Items="{Binding OtherText}" VerticalScrollBarVisibility="Auto">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12" />
+                                    <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12" />
+                                </DataGrid.Columns>
+                                <DataGrid.Styles>
+                                    <Style Selector="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="Transparent" />
+                                    </Style>
+                                </DataGrid.Styles>
+                            </DataGrid>
+                        </TabItem>
+                    </TabControl>
+                </Panel>
+            </Panel>
+        </Panel>
+    </Panel>
 </Window>
