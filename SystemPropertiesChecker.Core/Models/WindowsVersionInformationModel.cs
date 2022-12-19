@@ -19,7 +19,7 @@ public class WindowsVersionInformationModel : IWindowsVersionInformationModel
     /// <inheritdoc />
     /// <summary>
     /// </summary>
-    public string Bits { get; set; }
+    public string Architecture { get; set; }
 
     /// <inheritdoc />
     /// <summary>

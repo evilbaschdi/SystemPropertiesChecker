@@ -73,7 +73,7 @@ public class WindowsVersionDictionary : IWindowsVersionDictionary
                     !string.IsNullOrWhiteSpace(values.Ubr) ? $"{values.CurrentBuild}.{values.Ubr}" : $"{values.BuildLabExList[0]}.{values.BuildLabExList[1]}");
                 dictionary.Add("BuildLab", values.BuildLab);
                 dictionary.Add("BuildLabEx", values.BuildLabEx);
-                dictionary.Add("Architecture", values.Bits);
+                dictionary.Add("Architecture", values.Architecture);
                 dictionary.Add("Install Date", values.InstallDate);
             }
 
