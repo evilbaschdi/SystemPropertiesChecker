@@ -1,7 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Input;
+using EvilBaschdi.About.Avalonia;
+using EvilBaschdi.About.Avalonia.Models;
+using EvilBaschdi.About.Core;
 using EvilBaschdi.Avalonia.Core;
-using EvilBaschdi.Avalonia.Core.Controls.About;
 using EvilBaschdi.Core;
 
 namespace SystemPropertiesChecker.Avalonia.Views;
@@ -25,15 +27,15 @@ public partial class MainWindow : Window
     }
 
     // ReSharper disable UnusedParameter.Local
-    private void LogoOnDoubleTapped(object sender, TappedEventArgs e)
+    private void LogoOnTapped(object sender, TappedEventArgs e)
         // ReSharper restore UnusedParameter.Local
     {
         ICurrentAssembly currentAssembly = new CurrentAssembly();
         IAboutContent aboutContent = new AboutContent(currentAssembly);
-        IAboutModel aboutModel = new AboutViewModel(aboutContent);
+        IAboutViewModelExtended aboutViewModelExtended = new AboutViewModelExtended(aboutContent);
         var aboutWindow = new AboutWindow
                           {
-                              DataContext = aboutModel
+                              DataContext = aboutViewModelExtended
                           };
         aboutWindow.ShowDialog(this);
     }

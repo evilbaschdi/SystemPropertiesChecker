@@ -1,10 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using EvilBaschdi.About.Core;
+using EvilBaschdi.About.Core.Models;
+using EvilBaschdi.About.Wpf;
 using EvilBaschdi.Core;
 using EvilBaschdi.CoreExtended;
 using EvilBaschdi.CoreExtended.AppHelpers;
-using EvilBaschdi.CoreExtended.Controls.About;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
 using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
 using JetBrains.Annotations;
@@ -20,7 +22,6 @@ namespace SystemPropertiesChecker.ViewModels;
 /// </summary>
 public class MainWindowViewModel : ApplicationStyleViewModel
 {
-    private readonly IApplicationStyle _applicationStyle;
     private readonly IDotNetCoreInfo _dotNetCoreInfo;
     private readonly IDotNetVersion _dotNetVersion;
     private readonly IOtherInformationText _otherInformationText;
@@ -45,7 +46,6 @@ public class MainWindowViewModel : ApplicationStyleViewModel
         : base(applicationStyle)
     {
         _screenShot = screenShot ?? throw new ArgumentNullException(nameof(screenShot));
-        _applicationStyle = applicationStyle ?? throw new ArgumentNullException(nameof(applicationStyle));
         _windowsVersionDictionary = windowsVersionDictionary ?? throw new ArgumentNullException(nameof(windowsVersionDictionary));
         _otherInformationText = otherInformationText ?? throw new ArgumentNullException(nameof(otherInformationText));
         _dotNetVersion = dotNetVersion ?? throw new ArgumentNullException(nameof(dotNetVersion));
@@ -217,7 +217,7 @@ public class MainWindowViewModel : ApplicationStyleViewModel
     {
         ICurrentAssembly currentAssembly = new CurrentAssembly();
         IAboutContent aboutContent = new AboutContent(currentAssembly);
-        IAboutModel aboutModel = new AboutViewModel(aboutContent, _applicationStyle);
+        IAboutModel aboutModel = new AboutViewModel(aboutContent);
         var aboutWindow = new AboutWindow(aboutModel);
         aboutWindow.ShowDialog();
     }

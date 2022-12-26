@@ -101,7 +101,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
 
     private static string Architecture()
     {
-        return Enum.GetName(RuntimeInformation.ProcessArchitecture);
+        return Enum.GetName(RuntimeInformation.OSArchitecture);
     }
 
     private static string ManufacturerByWin32ComputerSystem()

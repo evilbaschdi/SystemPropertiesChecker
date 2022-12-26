@@ -21,7 +21,7 @@
 
         <Panel Name="HeaderPanel" IsVisible="False">
             <Panel Margin="7">
-                <Image Source="/Assets/spc.ico" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" DoubleTapped="LogoOnDoubleTapped"/>
+                <Image Source="/Assets/spc.ico" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Tapped="LogoOnTapped"/>
             </Panel>
             <TextBlock Text="System Properties Checker" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,7,0,0" />
         </Panel>
