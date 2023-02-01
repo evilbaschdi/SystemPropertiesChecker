@@ -2,11 +2,10 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
-using SystemPropertiesChecker.Avalonia.ViewModels;
 using SystemPropertiesChecker.Avalonia.Views;
 using SystemPropertiesChecker.Core.Internal;
 
-namespace SystemPropertiesChecker.Avalonia;
+namespace SystemPropertiesChecker.Avalonia.ViewModels;
 
 /// <inheritdoc />
 public class App : Application

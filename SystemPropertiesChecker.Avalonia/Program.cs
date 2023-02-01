@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.ReactiveUI;
+using SystemPropertiesChecker.Avalonia.ViewModels;
 
 namespace SystemPropertiesChecker.Avalonia;
 

@@ -20,6 +20,7 @@
 		<!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
 		<TrimMode>copyused</TrimMode>
 		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -31,7 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EvilBaschdi.About.Avalonia" Version="2022.12.23.1407-develop" />
+		<PackageReference Include="EvilBaschdi.About.Avalonia" Version="2023.1.26.1703-develop" />
 		<PackageReference Include="EvilBaschdi.Avalonia.Core" Version="2022.12.23.1417-develop" />
 		<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0-preview4" />
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
@@ -54,8 +55,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Models\" />
 		<AvaloniaResource Include="Assets\**" />
+		<Content Include="Assets\about.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
