@@ -25,9 +25,9 @@
 		<PackageReference Include="EvilBaschdi.DependencyInjection" Version="2023.2.21.1751" />
 		<PackageReference Include="EvilBaschdi.Settings" Version="2023.2.21.1756" />
 		<PackageReference Include="Microsoft.Win32.Registry" Version="6.0.0-preview.5.21301.5" />
-		<PackageReference Include="System.DirectoryServices" Version="7.0.1" />
-		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.0" />
-		<PackageReference Include="System.Management" Version="7.0.0" />
+		<PackageReference Include="System.DirectoryServices" Version="8.0.0-preview.1.23110.8" />
+		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="8.0.0-preview.1.23110.8" />
+		<PackageReference Include="System.Management" Version="8.0.0-preview.1.23110.8" />
 		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
