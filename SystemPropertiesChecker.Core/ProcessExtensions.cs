@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using JetBrains.Annotations;
 
 namespace SystemPropertiesChecker.Core;
 
@@ -12,11 +13,15 @@ public static class ProcessExtensions
     /// </summary>
     /// <param name="process"></param>
     /// <returns></returns>
-    public static IEnumerable<string> ReadStandardOutput(this Process process)
+    public static IEnumerable<string> ReadStandardOutput([NotNull] this Process process)
     {
+        if (process == null)
+        {
+            throw new ArgumentNullException(nameof(process));
+        }
+
         using var reader = process.StandardOutput;
-        string line;
-        while ((line = reader.ReadLine()) != null)
+        while (reader.ReadLine() is { } line)
         {
             yield return line;
         }
@@ -27,11 +32,15 @@ public static class ProcessExtensions
     /// </summary>
     /// <param name="process"></param>
     /// <returns></returns>
-    public static IEnumerable<string> ReadStandardError(this Process process)
+    public static IEnumerable<string> ReadStandardError([NotNull] this Process process)
     {
+        if (process == null)
+        {
+            throw new ArgumentNullException(nameof(process));
+        }
+
         using var reader = process.StandardError;
-        string line;
-        while ((line = reader.ReadLine()) != null)
+        while (reader.ReadLine() is { } line)
         {
             yield return line;
         }
@@ -43,8 +52,23 @@ public static class ProcessExtensions
     /// <param name="process"></param>
     /// <param name="fileName"></param>
     /// <param name="arguments"></param>
-    public static void SetHiddenProcessFor(this Process process, string fileName, string arguments)
+    public static void SetHiddenProcessFor([NotNull] this Process process, [NotNull] string fileName, [NotNull] string arguments)
     {
+        if (process == null)
+        {
+            throw new ArgumentNullException(nameof(process));
+        }
+
+        if (fileName == null)
+        {
+            throw new ArgumentNullException(nameof(fileName));
+        }
+
+        if (arguments == null)
+        {
+            throw new ArgumentNullException(nameof(arguments));
+        }
+
         process.StartInfo = new(fileName, arguments)
                             {
                                 UseShellExecute = false,

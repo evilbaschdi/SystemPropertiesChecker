@@ -8,7 +8,8 @@
                       mc:Ignorable="d" ShowIconOnTitleBar="False"
                       WindowStartupLocation="CenterScreen" Icon="spc.ico"
                       Title="System Properties Checker" Width="800" Height="800"
-                      GlowBrush="{DynamicResource MahApps.Brushes.AccentBase}"
+                      BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
+                      BorderThickness="1"
                       TitleCharacterCasing="Normal">
 
     <!--  RightWindowCommands  -->
@@ -171,7 +172,7 @@
                 <TabItem Name="DotNetFullTab" Header=".net framework" ToolTip=".Net Framework">
                     <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent"
                              BorderThickness="0" TextAlignment="Center"
-                             HorizontalAlignment="Center" VerticalAlignment="Center"
+                             HorizontalAlignment="Center" VerticalAlignment="Top"
                              Text="{Binding DotNetVersionText}" />
                 </TabItem>
             </TabControl>

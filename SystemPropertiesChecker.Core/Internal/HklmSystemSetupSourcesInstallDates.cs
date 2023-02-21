@@ -24,8 +24,8 @@ public class HklmSystemSetupSourcesInstallDates : CachedValue<ObservableCollecti
 
             var bits = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
 
-            var localMachine = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, bits);
-            var regPath = localMachine.OpenSubKey(@"System\Setup");
+            using var localMachine = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, bits);
+            using var regPath = localMachine.OpenSubKey(@"System\Setup");
 
             var list = (from source in regPath?.GetSubKeyNames().Where(name => name.StartsWith("Source"))
                         select regPath?.OpenSubKey(source)

@@ -1,6 +1,7 @@
 using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
 using System.Runtime.InteropServices;
+using JetBrains.Annotations;
 using SystemPropertiesChecker.Core.Models;
 
 namespace SystemPropertiesChecker.Core.Internal;
@@ -11,8 +12,13 @@ namespace SystemPropertiesChecker.Core.Internal;
 public class PasswordExpirationDate : IPasswordExpirationDate
 {
     /// <inheritdoc />
-    public PasswordExpirationModel ValueFor(string domain)
+    public PasswordExpirationModel ValueFor([NotNull] string domain)
     {
+        if (domain == null)
+        {
+            throw new ArgumentNullException(nameof(domain));
+        }
+
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             return new()

@@ -1,11 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-using EvilBaschdi.CoreExtended;
-using EvilBaschdi.CoreExtended.AppHelpers;
-using EvilBaschdi.CoreExtended.Controls.About;
-using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
-using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
+using EvilBaschdi.About.Core;
+using EvilBaschdi.About.Core.Models;
+using EvilBaschdi.About.Wpf;
+using EvilBaschdi.Core;
+using EvilBaschdi.Core.Wpf;
+using EvilBaschdi.Core.Wpf.AppHelpers;
+using EvilBaschdi.Core.Wpf.Mvvm.ViewModel;
+using EvilBaschdi.Core.Wpf.Mvvm.ViewModel.Command;
 using JetBrains.Annotations;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
@@ -32,21 +35,16 @@ public class MainWindowViewModel : ApplicationStyleViewModel
     ///     Constructor
     /// </summary>
     public MainWindowViewModel([NotNull] IScreenShot screenShot,
+                               [NotNull] IApplicationStyle applicationStyle,
                                [NotNull] IWindowsVersionDictionary windowsVersionDictionary,
                                [NotNull] IOtherInformationText otherInformationText,
                                [NotNull] IDotNetVersion dotNetVersion,
                                [NotNull] IDotNetCoreInfo dotNetCoreInfo,
                                [NotNull] ISourceOsCollection sourceOsCollection,
-                               [NotNull] IPasswordExpirationMessage passwordExpirationMessage,
-                               [NotNull] IRoundCorners roundCorners)
-        : base(roundCorners)
-
+                               [NotNull] IPasswordExpirationMessage passwordExpirationMessage
+    )
+        : base(applicationStyle)
     {
-        if (roundCorners == null)
-        {
-            throw new ArgumentNullException(nameof(roundCorners));
-        }
-
         _screenShot = screenShot ?? throw new ArgumentNullException(nameof(screenShot));
         _windowsVersionDictionary = windowsVersionDictionary ?? throw new ArgumentNullException(nameof(windowsVersionDictionary));
         _otherInformationText = otherInformationText ?? throw new ArgumentNullException(nameof(otherInformationText));
@@ -215,12 +213,13 @@ public class MainWindowViewModel : ApplicationStyleViewModel
         _screenShot.SaveToClipboard(current);
     }
 
-    private static void AboutWindowCommand()
+    private void AboutWindowCommand()
     {
         ICurrentAssembly currentAssembly = new CurrentAssembly();
         IAboutContent aboutContent = new AboutContent(currentAssembly);
-        IAboutModel aboutModel = new AboutViewModel(aboutContent);
-        var aboutWindow = new AboutWindow(aboutModel);
+        IAboutViewModel aboutModel = new AboutViewModel(aboutContent);
+        IApplyMicaBrush applyMicaBrush = new ApplyMicaBrush();
+        var aboutWindow = new AboutWindow(aboutModel, applyMicaBrush);
         aboutWindow.ShowDialog();
     }
 }

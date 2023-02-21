@@ -14,7 +14,7 @@ public class DotNetCoreInfo : IDotNetCoreInfo
 
             try
             {
-                var process = new Process();
+                using var process = new Process();
                 process.SetHiddenProcessFor("dotnet", "--info");
                 process.Start();
 

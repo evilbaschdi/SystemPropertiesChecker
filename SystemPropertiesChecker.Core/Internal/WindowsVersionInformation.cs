@@ -49,7 +49,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
                 return _cachedWindowsVersionInformationModel;
             }
 
-            var bits = Bits();
+            var architecture = Architecture();
             var domain = System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName;
 
             var currentVersion = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CurrentVersion");
@@ -73,8 +73,8 @@ public class WindowsVersionInformation : IWindowsVersionInformation
                 _windowsVersionInformationModel.PasswordExpirationDate = passwordExpirationDate.DateString;
             }
 
-            _windowsVersionInformationModel.Computername = Environment.MachineName;
-            _windowsVersionInformationModel.Bits = bits;
+            _windowsVersionInformationModel.ComputerName = Environment.MachineName;
+            _windowsVersionInformationModel.Architecture = architecture;
             _windowsVersionInformationModel.Manufacturer = ManufacturerByWin32ComputerSystem();
             _windowsVersionInformationModel.ManufacturerProduct = ManufacturerByWin32ComputerSystem().Equals(ManufacturerByWin32BaseBoard().Key)
                 ? ManufacturerByWin32BaseBoard().Value
@@ -83,7 +83,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
             _windowsVersionInformationModel.InsiderChannel = _insiderChannel.Value;
             _windowsVersionInformationModel.BuildLab = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLab");
             _windowsVersionInformationModel.BuildLabEx = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx");
-            _windowsVersionInformationModel.BuildLabExArray = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx").Split('.');
+            _windowsVersionInformationModel.BuildLabExList = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx")?.Split('.').ToList();
             _windowsVersionInformationModel.CurrentBuild = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CurrentBuild");
             _windowsVersionInformationModel.ProductName = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ProductName");
             _windowsVersionInformationModel.CurrentVersion = version;
@@ -99,9 +99,9 @@ public class WindowsVersionInformation : IWindowsVersionInformation
         }
     }
 
-    private static string Bits()
+    private static string Architecture()
     {
-        return Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
+        return Enum.GetName(RuntimeInformation.OSArchitecture);
     }
 
     private static string ManufacturerByWin32ComputerSystem()
@@ -112,12 +112,20 @@ public class WindowsVersionInformation : IWindowsVersionInformation
         }
 
         const string win32ComputerSystem = "SELECT * FROM Win32_ComputerSystem";
-        var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
-        var info = managementObjectSearcher.Get();
 
-        foreach (var item in info)
+        try
         {
-            return item["Manufacturer"].ToString();
+            using var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
+            var info = managementObjectSearcher.Get();
+
+            foreach (var item in info)
+            {
+                return item["Manufacturer"].ToString();
+            }
+        }
+        catch (Exception)
+        {
+            // ignored
         }
 
         return string.Empty;
@@ -131,12 +139,20 @@ public class WindowsVersionInformation : IWindowsVersionInformation
         }
 
         const string win32ComputerSystem = "SELECT * FROM Win32_BaseBoard";
-        var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
-        var info = managementObjectSearcher.Get();
 
-        foreach (var item in info)
+        try
         {
-            return new(item["Manufacturer"].ToString(), item["Product"].ToString());
+            using var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
+            var info = managementObjectSearcher.Get();
+
+            foreach (var item in info)
+            {
+                return new(item["Manufacturer"].ToString(), item["Product"].ToString());
+            }
+        }
+        catch (Exception)
+        {
+            // ignored
         }
 
         return new();
@@ -150,16 +166,25 @@ public class WindowsVersionInformation : IWindowsVersionInformation
         }
 
         const string win32OperatingSystem = "SELECT * FROM Win32_OperatingSystem";
-        var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
-        var info = managementObjectSearcher.Get();
-        var installDate = string.Empty;
-        foreach (var item in info)
+        try
         {
-            installDate = item["InstallDate"].ToString();
-            break;
+            using var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
+            var info = managementObjectSearcher.Get();
+            var installDate = string.Empty;
+            foreach (var item in info)
+            {
+                installDate = item["InstallDate"].ToString();
+                break;
+            }
+
+            return ManagementDateTimeConverter.ToDateTime(installDate ?? string.Empty).ToString("yyyy-MM-dd HH:mm:ss");
+        }
+        catch (Exception)
+        {
+            // ignored
         }
 
-        return ManagementDateTimeConverter.ToDateTime(installDate ?? string.Empty).ToString("yyyy-MM-dd HH:mm:ss");
+        return string.Empty;
     }
 
     private static string Caption()
@@ -170,13 +195,21 @@ public class WindowsVersionInformation : IWindowsVersionInformation
         }
 
         const string win32OperatingSystem = "SELECT * FROM Win32_OperatingSystem";
-        var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
-        var info = managementObjectSearcher.Get();
         var caption = string.Empty;
-        foreach (var item in info)
+        try
         {
-            caption = item["Caption"].ToString();
-            break;
+            using var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
+            var info = managementObjectSearcher.Get();
+
+            foreach (var item in info)
+            {
+                caption = item["Caption"].ToString();
+                break;
+            }
+        }
+        catch (Exception)
+        {
+            // ignored
         }
 
         return caption;
