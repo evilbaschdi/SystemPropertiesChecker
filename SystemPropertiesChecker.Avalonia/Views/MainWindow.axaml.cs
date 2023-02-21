@@ -3,8 +3,8 @@ using Avalonia.Input;
 using EvilBaschdi.About.Avalonia;
 using EvilBaschdi.About.Avalonia.Models;
 using EvilBaschdi.About.Core;
-using EvilBaschdi.Avalonia.Core;
 using EvilBaschdi.Core;
+using EvilBaschdi.Core.Avalonia;
 
 namespace SystemPropertiesChecker.Avalonia.Views;
 

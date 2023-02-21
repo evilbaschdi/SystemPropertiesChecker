@@ -1,26 +1,25 @@
-﻿using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
+﻿using EvilBaschdi.Core.Wpf.Mvvm.ViewModel;
 using SystemPropertiesChecker.ViewModels;
 
-namespace SystemPropertiesChecker.Tests.ViewModels
+namespace SystemPropertiesChecker.Tests.ViewModels;
+
+public class MainWindowViewModelTests
 {
-    public class MainWindowViewModelTests
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Constructor_HasNullGuards(GuardClauseAssertion assertion)
     {
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Constructor_HasNullGuards(GuardClauseAssertion assertion)
-        {
-            assertion.Verify(typeof(MainWindowViewModel).GetConstructors());
-        }
+        assertion.Verify(typeof(MainWindowViewModel).GetConstructors());
+    }
 
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Constructor_ReturnsInterfaceName(MainWindowViewModel sut)
-        {
-            sut.Should().BeAssignableTo<ApplicationStyleViewModel>();
-        }
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Constructor_ReturnsInterfaceName(MainWindowViewModel sut)
+    {
+        sut.Should().BeAssignableTo<ApplicationStyleViewModel>();
+    }
 
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
-        {
-            assertion.Verify(typeof(MainWindowViewModel).GetMethods().Where(method => !method.IsAbstract));
-        }
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
+    {
+        assertion.Verify(typeof(MainWindowViewModel).GetMethods().Where(method => !method.IsAbstract));
     }
 }

@@ -5,10 +5,10 @@ using EvilBaschdi.About.Core;
 using EvilBaschdi.About.Core.Models;
 using EvilBaschdi.About.Wpf;
 using EvilBaschdi.Core;
-using EvilBaschdi.CoreExtended;
-using EvilBaschdi.CoreExtended.AppHelpers;
-using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
-using EvilBaschdi.CoreExtended.Mvvm.ViewModel.Command;
+using EvilBaschdi.Core.Wpf;
+using EvilBaschdi.Core.Wpf.AppHelpers;
+using EvilBaschdi.Core.Wpf.Mvvm.ViewModel;
+using EvilBaschdi.Core.Wpf.Mvvm.ViewModel.Command;
 using JetBrains.Annotations;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
@@ -217,8 +217,9 @@ public class MainWindowViewModel : ApplicationStyleViewModel
     {
         ICurrentAssembly currentAssembly = new CurrentAssembly();
         IAboutContent aboutContent = new AboutContent(currentAssembly);
-        IAboutModel aboutModel = new AboutViewModel(aboutContent);
-        var aboutWindow = new AboutWindow(aboutModel);
+        IAboutViewModel aboutModel = new AboutViewModel(aboutContent);
+        IApplyMicaBrush applyMicaBrush = new ApplyMicaBrush();
+        var aboutWindow = new AboutWindow(aboutModel, applyMicaBrush);
         aboutWindow.ShowDialog();
     }
 }

@@ -1,25 +1,24 @@
 ﻿using SystemPropertiesChecker.Core.Internal;
 
-namespace SystemPropertiesChecker.Core.Tests.Internal
+namespace SystemPropertiesChecker.Core.Tests.Internal;
+
+public class ConfigureCoreServicesTests
 {
-    public class ConfigureCoreServicesTests
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Constructor_HasNullGuards(GuardClauseAssertion assertion)
     {
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Constructor_HasNullGuards(GuardClauseAssertion assertion)
-        {
-            assertion.Verify(typeof(ConfigureCoreServices).GetConstructors());
-        }
+        assertion.Verify(typeof(ConfigureCoreServices).GetConstructors());
+    }
 
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Constructor_ReturnsInterfaceName(ConfigureCoreServices sut)
-        {
-            sut.Should().BeAssignableTo<IConfigureCoreServices>();
-        }
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Constructor_ReturnsInterfaceName(ConfigureCoreServices sut)
+    {
+        sut.Should().BeAssignableTo<IConfigureCoreServices>();
+    }
 
-        [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-        public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
-        {
-            assertion.Verify(typeof(ConfigureCoreServices).GetMethods().Where(method => !method.IsAbstract));
-        }
+    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
+    public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
+    {
+        assertion.Verify(typeof(ConfigureCoreServices).GetMethods().Where(method => !method.IsAbstract));
     }
 }

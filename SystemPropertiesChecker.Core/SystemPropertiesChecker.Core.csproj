@@ -8,7 +8,7 @@
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
 		<!-- ReSharper disable once UnknownProperty -->
-		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\SystemPropertiesChecker.Core.xml</DocumentationFile>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>preview</LangVersion>
@@ -21,11 +21,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EvilBaschdi.Core" Version="2023.2.1.1815-develop" />
-		<PackageReference Include="EvilBaschdi.DependencyInjection" Version="2023.2.1.1926-develop" />
-		<PackageReference Include="EvilBaschdi.Settings" Version="2023.2.1.1923-develop" />
+		<PackageReference Include="EvilBaschdi.Core" Version="2023.2.21.1731" />
+		<PackageReference Include="EvilBaschdi.DependencyInjection" Version="2023.2.21.1751" />
+		<PackageReference Include="EvilBaschdi.Settings" Version="2023.2.21.1756" />
 		<PackageReference Include="Microsoft.Win32.Registry" Version="6.0.0-preview.5.21301.5" />
-		<PackageReference Include="System.DirectoryServices" Version="7.0.0" />
+		<PackageReference Include="System.DirectoryServices" Version="7.0.1" />
 		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.0" />
 		<PackageReference Include="System.Management" Version="7.0.0" />
 		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
