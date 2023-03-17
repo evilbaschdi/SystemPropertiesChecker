@@ -7,7 +7,7 @@
         Title="SystemPropertiesChecker"
         Icon="/Assets/spc.ico"
         TransparencyLevelHint="Mica"
-        Background="{x:Null}">
+        Background="Transparent">
 
     <Panel Name="RootPanel">
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
