@@ -14,13 +14,13 @@
 		<OutputType>WinExe</OutputType>
 		<PackageProjectUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</PackageProjectUrl>
 		<Product>SystemPropertiesChecker</Product>
+		<PublishSingleFile>true</PublishSingleFile>
 		<RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
 		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
 		<TrimMode>copyused</TrimMode>
 		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -32,11 +32,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EvilBaschdi.About.Avalonia" Version="2023.3.9.1905-develop" />
-		<PackageReference Include="EvilBaschdi.Core.Avalonia" Version="2023.3.9.1813-develop" />
-		<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0-preview5" />
+		<PackageReference Include="EvilBaschdi.About.Avalonia" Version="2023.4.10.1419-develop" />
+		<PackageReference Include="EvilBaschdi.Core.Avalonia" Version="2023.4.10.1354-develop" />
+		<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0-preview6" />
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview5" />
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview6" />
 	</ItemGroup>
 
 	<ItemGroup>

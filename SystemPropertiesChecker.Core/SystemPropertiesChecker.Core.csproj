@@ -22,12 +22,12 @@
 
 	<ItemGroup>
 		<PackageReference Include="EvilBaschdi.Core" Version="2023.3.9.1752-develop" />
-		<PackageReference Include="EvilBaschdi.DependencyInjection" Version="2023.3.14.1713-develop" />
-		<PackageReference Include="EvilBaschdi.Settings" Version="2023.3.14.1706-develop" />
+		<PackageReference Include="EvilBaschdi.DependencyInjection" Version="2023.4.11.1616-develop" />
+		<PackageReference Include="EvilBaschdi.Settings" Version="2023.4.11.1612-develop" />
 		<PackageReference Include="Microsoft.Win32.Registry" Version="6.0.0-preview.5.21301.5" />
-		<PackageReference Include="System.DirectoryServices" Version="8.0.0-preview.2.23128.3" />
-		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="8.0.0-preview.2.23128.3" />
-		<PackageReference Include="System.Management" Version="8.0.0-preview.2.23128.3" />
+		<PackageReference Include="System.DirectoryServices" Version="8.0.0-preview.3.23174.8" />
+		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="8.0.0-preview.3.23174.8" />
+		<PackageReference Include="System.Management" Version="8.0.0-preview.3.23174.8" />
 		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

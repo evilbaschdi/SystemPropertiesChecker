@@ -17,10 +17,11 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))-develop</VersionPrefix>
 		<NoWarn>1701;1702</NoWarn>
+		<PublishSingleFile>true</PublishSingleFile>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Spectre.Console" Version="0.46.1-preview.0.17" />
+		<PackageReference Include="Spectre.Console" Version="0.46.1-preview.0.20" />
 		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
