@@ -11,19 +11,24 @@ namespace SystemPropertiesChecker.Avalonia.Views;
 /// <inheritdoc />
 public partial class MainWindow : Window
 {
+    private readonly IHandleOsDependentTitleBar _handleOsDependentTitleBar;
+    private readonly IApplicationLayout _applicationLayout;
+
     /// <summary>
     ///     Constructor
     /// </summary>
     public MainWindow()
     {
         InitializeComponent();
-        Load();
+        _handleOsDependentTitleBar = new HandleOsDependentTitleBar();
+        _applicationLayout = new ApplicationLayout();
+        ApplyLayout();
     }
 
-    private void Load()
+    private void ApplyLayout()
     {
-        IHandleOsDependentTitleBar handleOsDependentTitleBar = new HandleOsDependentTitleBar();
-        handleOsDependentTitleBar.RunFor((this, HeaderPanel, MainPanel, AcrylicBorder));
+        _handleOsDependentTitleBar.RunFor(this);
+        _applicationLayout.RunFor((this, true, false));
     }
 
     // ReSharper disable UnusedParameter.Local
@@ -33,10 +38,7 @@ public partial class MainWindow : Window
         ICurrentAssembly currentAssembly = new CurrentAssembly();
         IAboutContent aboutContent = new AboutContent(currentAssembly);
         IAboutViewModelExtended aboutViewModelExtended = new AboutViewModelExtended(aboutContent);
-        var aboutWindow = new AboutWindow
-                          {
-                              DataContext = aboutViewModelExtended
-                          };
+        var aboutWindow = new AboutWindow(aboutViewModelExtended, _applicationLayout, _handleOsDependentTitleBar);
         aboutWindow.ShowDialog(this);
     }
 }

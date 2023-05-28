@@ -20,13 +20,14 @@ namespace SystemPropertiesChecker.ViewModels;
 /// <summary>
 ///     MainWindowViewModel of SystemPropertiesChecker.
 /// </summary>
-public class MainWindowViewModel : ApplicationStyleViewModel
+public class MainWindowViewModel : ApplicationLayoutViewModel
 {
     private readonly IDotNetCoreInfo _dotNetCoreInfo;
     private readonly IDotNetVersion _dotNetVersion;
     private readonly IOtherInformationText _otherInformationText;
     private readonly IPasswordExpirationMessage _passwordExpirationMessage;
     private readonly IScreenShot _screenShot;
+    [NotNull] private readonly IApplicationLayout _applicationLayout;
     private readonly ISourceOsCollection _sourceOsCollection;
     private readonly IWindowsVersionDictionary _windowsVersionDictionary;
 
@@ -35,6 +36,7 @@ public class MainWindowViewModel : ApplicationStyleViewModel
     ///     Constructor
     /// </summary>
     public MainWindowViewModel([NotNull] IScreenShot screenShot,
+                               [NotNull] IApplicationLayout applicationLayout,
                                [NotNull] IApplicationStyle applicationStyle,
                                [NotNull] IWindowsVersionDictionary windowsVersionDictionary,
                                [NotNull] IOtherInformationText otherInformationText,
@@ -43,9 +45,10 @@ public class MainWindowViewModel : ApplicationStyleViewModel
                                [NotNull] ISourceOsCollection sourceOsCollection,
                                [NotNull] IPasswordExpirationMessage passwordExpirationMessage
     )
-        : base(applicationStyle)
+        : base(applicationLayout, applicationStyle, true, false)
     {
         _screenShot = screenShot ?? throw new ArgumentNullException(nameof(screenShot));
+        _applicationLayout = applicationLayout;
         _windowsVersionDictionary = windowsVersionDictionary ?? throw new ArgumentNullException(nameof(windowsVersionDictionary));
         _otherInformationText = otherInformationText ?? throw new ArgumentNullException(nameof(otherInformationText));
         _dotNetVersion = dotNetVersion ?? throw new ArgumentNullException(nameof(dotNetVersion));
@@ -219,7 +222,7 @@ public class MainWindowViewModel : ApplicationStyleViewModel
         IAboutContent aboutContent = new AboutContent(currentAssembly);
         IAboutViewModel aboutModel = new AboutViewModel(aboutContent);
         IApplyMicaBrush applyMicaBrush = new ApplyMicaBrush();
-        var aboutWindow = new AboutWindow(aboutModel, applyMicaBrush);
+        var aboutWindow = new AboutWindow(aboutModel, _applicationLayout, applyMicaBrush);
         aboutWindow.ShowDialog();
     }
 }
