@@ -19,4 +19,4 @@ jobs:
 - template: buildNZip.yml@templates  # Template reference
   parameters:
     projectName: $(Build.Repository.Name)
-    framework: net6.0-windows
+    framework: net7.0-windows
