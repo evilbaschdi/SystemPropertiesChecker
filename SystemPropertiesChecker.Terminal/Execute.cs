@@ -24,34 +24,34 @@ public class Execute : IRun
     /// <summary>
     ///     ServiceProvider for DependencyInjection
     /// </summary>
-    private static IServiceProvider? ServiceProvider { get; set; }
+    private static IServiceProvider ServiceProvider { get; set; }
 
     /// <inheritdoc />
     public void Run()
     {
         //WINDOWS
         // ReSharper disable once SuggestVarOrType_SimpleTypes
-        IWriteWindowsTable? writeWindowsTable = ServiceProvider?.GetService<IWriteWindowsTable>();
+        IWriteWindowsTable writeWindowsTable = ServiceProvider?.GetService<IWriteWindowsTable>();
         writeWindowsTable?.Run();
 
         //HISTORY
         // ReSharper disable once SuggestVarOrType_SimpleTypes
-        IWriteHistoryTable? writeHistoryTable = ServiceProvider?.GetService<IWriteHistoryTable>();
+        IWriteHistoryTable writeHistoryTable = ServiceProvider?.GetService<IWriteHistoryTable>();
         writeHistoryTable?.Run();
 
         //.NET FRAMEWORK
         // ReSharper disable once SuggestVarOrType_SimpleTypes
-        IWriteDotNetTable? writeDotNetTable = ServiceProvider?.GetService<IWriteDotNetTable>();
+        IWriteDotNetTable writeDotNetTable = ServiceProvider?.GetService<IWriteDotNetTable>();
         writeDotNetTable?.Run();
 
         //.NET CORE
         // ReSharper disable once SuggestVarOrType_SimpleTypes
-        IWriteDotNetCoreTable? writeDotNetCoreTable = ServiceProvider?.GetService<IWriteDotNetCoreTable>();
+        IWriteDotNetCoreTable writeDotNetCoreTable = ServiceProvider?.GetService<IWriteDotNetCoreTable>();
         writeDotNetCoreTable?.Run();
 
         //OTHER
         // ReSharper disable once SuggestVarOrType_SimpleTypes
-        IWriteOtherTable? writeOtherTable = ServiceProvider?.GetService<IWriteOtherTable>();
+        IWriteOtherTable writeOtherTable = ServiceProvider?.GetService<IWriteOtherTable>();
         writeOtherTable?.Run();
     }
 }

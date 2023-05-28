@@ -12,7 +12,6 @@
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>preview</LangVersion>
-		<Nullable>enable</Nullable>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net7.0</TargetFramework>
 		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))-develop</VersionPrefix>
@@ -21,16 +20,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Spectre.Console" Version="0.47.1-preview.0.5" />
-		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
+		<PackageReference Include="Spectre.Console" />
+		<PackageReference Include="DotNet.ReproducibleBuilds">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+		<PackageReference Include="Microsoft.SourceLink.GitHub">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.1.1">
+		<PackageReference Include="Microsoft.SourceLink.AzureRepos.Git">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>

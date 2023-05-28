@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		Directory.Packages.props = Directory.Packages.props
 		global.json = global.json
 		NuGet.config = NuGet.config
 		README.md = README.md
@@ -26,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AE469DF5-2744-484E-BCD5-2055D35B4A44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemPropertiesChecker.Avalonia", "SystemPropertiesChecker.Avalonia\SystemPropertiesChecker.Avalonia.csproj", "{2D6FD662-9850-4DB5-B733-CA27B6E032E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPropertiesChecker.Avalonia", "SystemPropertiesChecker.Avalonia\SystemPropertiesChecker.Avalonia.csproj", "{2D6FD662-9850-4DB5-B733-CA27B6E032E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

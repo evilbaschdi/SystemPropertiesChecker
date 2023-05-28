@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
+using SystemPropertiesChecker.Avalonia.DepencencyInjection;
 using SystemPropertiesChecker.Avalonia.Views;
 using SystemPropertiesChecker.Core.Internal;
 
@@ -16,22 +17,32 @@ public class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
+    /// <summary>
+    ///     ServiceProvider for DependencyInjection
+    /// </summary>
+    // ReSharper disable once MemberCanBePrivate.Global
+    public static IServiceProvider ServiceProvider { get; set; }
+
     /// <inheritdoc />
     public override void OnFrameworkInitializationCompleted()
     {
+        IServiceCollection serviceCollection = new ServiceCollection();
+        IConfigureCoreServices configureCoreServices = new ConfigureCoreServices();
+        IConfigureWindowsAndViewModels configureWindowsAndViewModels = new ConfigureWindowsAndViewModels();
+
+        configureCoreServices.RunFor(serviceCollection);
+        configureWindowsAndViewModels.RunFor(serviceCollection);
+
+        ServiceProvider = serviceCollection.BuildServiceProvider();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            IServiceCollection serviceCollection = new ServiceCollection();
-            IConfigureCoreServices configureCoreServices = new ConfigureCoreServices();
-            configureCoreServices.RunFor(serviceCollection);
-            serviceCollection.AddSingleton<MainWindowViewModel>();
+            var mainWindow = new MainWindow
+                             {
+                                 DataContext = ServiceProvider.GetRequiredService<MainWindowViewModel>()
+                             };
 
-            IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-
-            desktop.MainWindow = new MainWindow
-                                 {
-                                     DataContext = serviceProvider.GetRequiredService<MainWindowViewModel>()
-                                 };
+            desktop.MainWindow = mainWindow;
         }
 
         base.OnFrameworkInitializationCompleted();

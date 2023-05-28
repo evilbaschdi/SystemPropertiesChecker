@@ -20,10 +20,14 @@
         </ExperimentalAcrylicBorder>
 
         <Panel Name="HeaderPanel" IsVisible="False">
-            <Panel Margin="7">
-                <Image Source="/Assets/spc.ico" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Tapped="LogoOnTapped" />
-            </Panel>
-            <TextBlock Text="System Properties Checker" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,7,0,0" />
+            <Button VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" Command="{Binding AboutWindowCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <ContentControl>
+                        <Image Source="/Assets/spc.ico" Width="20" Height="20" />
+                    </ContentControl>
+                    <TextBlock Text="System Properties Checker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,0,0,0" />
+                </StackPanel>
+            </Button>
         </Panel>
 
         <Panel Name="MainPanel" Margin="0,0,0,0">

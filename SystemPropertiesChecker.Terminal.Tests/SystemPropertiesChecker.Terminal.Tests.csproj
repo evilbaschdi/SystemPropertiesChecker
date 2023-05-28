@@ -17,27 +17,27 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EvilBaschdi.Testing" Version="2023.5.28.841-develop" />
+		<PackageReference Include="EvilBaschdi.Testing" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="coverlet.collector" Version="6.0.0">
+		<PackageReference Include="coverlet.collector">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="FluentAssertions.Analyzers" Version="0.18.0">
+		<PackageReference Include="FluentAssertions.Analyzers">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.16">
+		<PackageReference Include="NSubstitute.Analyzers.CSharp">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="xunit.analyzers" Version="1.2.0-pre.9">
+		<PackageReference Include="xunit.analyzers">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.0-pre.14">
+		<PackageReference Include="xunit.runner.visualstudio">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

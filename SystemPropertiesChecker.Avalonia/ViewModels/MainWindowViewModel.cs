@@ -1,4 +1,10 @@
 using System.Collections.ObjectModel;
+using System.Reactive;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using EvilBaschdi.About.Avalonia;
+using Microsoft.Extensions.DependencyInjection;
+using ReactiveUI;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 using SystemPropertiesChecker.Core.Models;
@@ -38,6 +44,8 @@ public class MainWindowViewModel : ViewModelBase
         _passwordExpirationMessage = passwordExpirationMessage ?? throw new ArgumentNullException(nameof(passwordExpirationMessage));
         _sourceOsCollection = sourceOsCollection ?? throw new ArgumentNullException(nameof(sourceOsCollection));
         _windowsVersionDictionary = windowsVersionDictionary ?? throw new ArgumentNullException(nameof(windowsVersionDictionary));
+
+        AboutWindowCommand = ReactiveCommand.Create(AboutWindowCommandAction);
     }
 
     /// <summary>
@@ -133,6 +141,20 @@ public class MainWindowViewModel : ViewModelBase
             {
                 throw new ArgumentNullException(nameof(value));
             }
+        }
+    }
+
+    /// <summary>
+    /// </summary>
+    public ReactiveCommand<Unit, Unit> AboutWindowCommand { get; set; }
+
+    private void AboutWindowCommandAction()
+    {
+        var aboutWindow = App.ServiceProvider.GetRequiredService<AboutWindow>();
+        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+        if (mainWindow != null)
+        {
+            aboutWindow.ShowDialog(mainWindow);
         }
     }
 

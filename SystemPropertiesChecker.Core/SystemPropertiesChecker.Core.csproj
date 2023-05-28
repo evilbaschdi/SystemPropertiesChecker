@@ -21,22 +21,22 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EvilBaschdi.Core" Version="2023.5.14.959-develop" />
-		<PackageReference Include="EvilBaschdi.DependencyInjection" Version="2023.5.16.1928-develop" />
-		<PackageReference Include="EvilBaschdi.Settings" Version="2023.5.16.1928-develop" />
-		<PackageReference Include="Microsoft.Win32.Registry" Version="6.0.0-preview.5.21301.5" />
-		<PackageReference Include="System.DirectoryServices" Version="8.0.0-preview.4.23259.5" />
-		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="8.0.0-preview.4.23259.5" />
-		<PackageReference Include="System.Management" Version="8.0.0-preview.4.23259.5" />
-		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
+		<PackageReference Include="EvilBaschdi.Core" />
+		<PackageReference Include="EvilBaschdi.DependencyInjection" />
+		<PackageReference Include="EvilBaschdi.Settings" />
+		<PackageReference Include="Microsoft.Win32.Registry" />
+		<PackageReference Include="System.DirectoryServices" />
+		<PackageReference Include="System.DirectoryServices.AccountManagement" />
+		<PackageReference Include="System.Management" />
+		<PackageReference Include="DotNet.ReproducibleBuilds">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+		<PackageReference Include="Microsoft.SourceLink.GitHub">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.1.1">
+		<PackageReference Include="Microsoft.SourceLink.AzureRepos.Git">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>

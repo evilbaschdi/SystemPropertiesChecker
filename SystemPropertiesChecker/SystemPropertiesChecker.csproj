@@ -33,23 +33,23 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EvilBaschdi.Core.Wpf" Version="2023.5.10.1552-develop" />
-		<PackageReference Include="EvilBaschdi.About.Wpf" Version="2023.5.28.912-develop" />
-		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
-		<PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
+		<PackageReference Include="EvilBaschdi.Core.Wpf" />
+		<PackageReference Include="EvilBaschdi.About.Wpf" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Material" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Modern" />
 		<!--<PackageReference Include="WpfAnalyzers" Version="4.0.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>-->
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+		<PackageReference Include="Microsoft.SourceLink.GitHub">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.1.1">
+		<PackageReference Include="Microsoft.SourceLink.AzureRepos.Git">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="WpfAnalyzers" Version="4.1.1">
+		<PackageReference Include="WpfAnalyzers">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
