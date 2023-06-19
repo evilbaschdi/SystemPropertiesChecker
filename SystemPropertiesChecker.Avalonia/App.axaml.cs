@@ -3,10 +3,11 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using SystemPropertiesChecker.Avalonia.DepencencyInjection;
+using SystemPropertiesChecker.Avalonia.ViewModels;
 using SystemPropertiesChecker.Avalonia.Views;
 using SystemPropertiesChecker.Core.Internal;
 
-namespace SystemPropertiesChecker.Avalonia.ViewModels;
+namespace SystemPropertiesChecker.Avalonia;
 
 /// <inheritdoc />
 public class App : Application
@@ -38,9 +39,9 @@ public class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var mainWindow = new MainWindow
-                             {
-                                 DataContext = ServiceProvider.GetRequiredService<MainWindowViewModel>()
-                             };
+            {
+                DataContext = ServiceProvider.GetRequiredService<MainWindowViewModel>()
+            };
 
             desktop.MainWindow = mainWindow;
         }

@@ -21,17 +21,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Properties\**" />
-	  <EmbeddedResource Remove="Properties\**" />
-	  <None Remove="Properties\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Spectre.Console" />
-		<PackageReference Include="DotNet.ReproducibleBuilds">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -44,12 +34,6 @@
 		</Resource>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <PrivateSdkAssemblies Remove="Properties\**" />
-	</ItemGroup>
 
-	<ItemGroup>
-	  <FrameworkAssemblies Remove="Properties\**" />
-	</ItemGroup>
 
 </Project>

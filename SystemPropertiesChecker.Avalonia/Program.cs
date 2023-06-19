@@ -1,7 +1,5 @@
 using Avalonia;
-using Avalonia.ReactiveUI;
 using EvilBaschdi.Core.Avalonia;
-using SystemPropertiesChecker.Avalonia.ViewModels;
 
 namespace SystemPropertiesChecker.Avalonia;
 
@@ -18,5 +16,5 @@ internal class Program
     // Avalonia configuration, don't remove; also used by visual designer.
     // ReSharper disable once MemberCanBePrivate.Global
     public static AppBuilder BuildAvaloniaApp()
-        => new AppBuilderImplementation<App>().Value.UseReactiveUI();
+        => new AppBuilderImplementation<App>().Value;
 }

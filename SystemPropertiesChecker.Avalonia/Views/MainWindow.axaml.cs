@@ -1,7 +1,6 @@
 using Avalonia.Controls;
 using EvilBaschdi.Core.Avalonia;
 using Microsoft.Extensions.DependencyInjection;
-using SystemPropertiesChecker.Avalonia.ViewModels;
 
 namespace SystemPropertiesChecker.Avalonia.Views;
 

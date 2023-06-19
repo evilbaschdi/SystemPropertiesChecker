@@ -19,8 +19,7 @@
     <PackageVersion Include="FluentAssertions.Analyzers" Version="0.20.0" />
     <PackageVersion Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
     <PackageVersion Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
-    <PackageVersion Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.1.1" />
-    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.0-preview.23280.1" />
     <PackageVersion Include="Microsoft.Win32.Registry" Version="6.0.0-preview.5.21301.5" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.16" />
     <PackageVersion Include="Spectre.Console" Version="0.47.1-preview.0.8" />

@@ -1,12 +1,14 @@
 ﻿using EvilBaschdi.Core;
 using EvilBaschdi.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using SystemPropertiesChecker.Terminal;
 
-IHostInstance hostInstance = new HostInstance();
-IConfigureDelegateForConfigureServices configureDelegateForConfigureServices = new ConfigureDelegateForConfigureServices();
-IConfigureServicesByHostBuilderAndConfigureDelegate configureServicesByHostBuilderAndConfigureDelegate =
-    new ConfigureServicesByHostBuilderAndConfigureDelegate(hostInstance, configureDelegateForConfigureServices);
-IServiceProvider serviceProvider = configureServicesByHostBuilderAndConfigureDelegate.Value;
+IServiceCollection serviceCollection = new ServiceCollection();
+IConfigureServiceCollection starup = new Startup();
+starup.RunFor(serviceCollection);
+
+IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+
 IRun execute = new Execute(serviceProvider);
 execute.Run();
 

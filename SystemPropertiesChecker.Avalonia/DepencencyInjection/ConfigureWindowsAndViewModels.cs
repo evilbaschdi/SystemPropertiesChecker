@@ -17,9 +17,6 @@ public class ConfigureWindowsAndViewModels : IConfigureWindowsAndViewModels
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        //services.AddSingleton<AddEditAnnotationDialogViewModel>();
-        //services.AddTransient(typeof(AddEditAnnotationDialog));
-
         services.AddSingleton<ICurrentAssembly, CurrentAssembly>();
         services.AddSingleton<IAboutContent, AboutContent>();
         services.AddSingleton<IAboutViewModelExtended, AboutViewModelExtended>();
