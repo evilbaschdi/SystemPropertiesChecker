@@ -37,18 +37,6 @@
 		<PackageReference Include="EvilBaschdi.About.Wpf" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Material" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Modern" />
-		<!--<PackageReference Include="WpfAnalyzers" Version="4.0.2">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-		</PackageReference>-->
-		<PackageReference Include="Microsoft.SourceLink.GitHub">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.SourceLink.AzureRepos.Git">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-		</PackageReference>
 		<PackageReference Include="WpfAnalyzers">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -79,10 +67,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Properties\" />
 	</ItemGroup>
 
 </Project>

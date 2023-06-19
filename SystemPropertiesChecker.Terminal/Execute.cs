@@ -1,5 +1,5 @@
 ﻿using EvilBaschdi.Core;
-using EvilBaschdi.DependencyInjection;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using SystemPropertiesChecker.Terminal.Internal;
 
@@ -11,14 +11,9 @@ public class Execute : IRun
     /// <summary>
     ///     Constructor
     /// </summary>
-    public Execute()
+    public Execute([NotNull] IServiceProvider serviceProvider)
     {
-        IHostInstance hostInstance = new HostInstance();
-        IConfigureDelegateForConfigureServices configureDelegateForConfigureServices = new ConfigureDelegateForConfigureServices();
-        IConfigureServicesByHostBuilderAndConfigureDelegate configureServicesByHostBuilderAndConfigureDelegate =
-            new ConfigureServicesByHostBuilderAndConfigureDelegate(hostInstance, configureDelegateForConfigureServices);
-
-        ServiceProvider = configureServicesByHostBuilderAndConfigureDelegate.Value;
+        ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
     }
 
     /// <summary>

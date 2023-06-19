@@ -20,6 +20,7 @@
 		<!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
 		<TrimMode>copyused</TrimMode>
 		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
+		<PublishAot>true</PublishAot>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -39,17 +40,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.SourceLink.AzureRepos.Git">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj" />
 	</ItemGroup>
 
@@ -64,10 +54,6 @@
 		<Resource Include="Assets\spc.ico">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Resource>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Properties\" />
 	</ItemGroup>
 
 </Project>
