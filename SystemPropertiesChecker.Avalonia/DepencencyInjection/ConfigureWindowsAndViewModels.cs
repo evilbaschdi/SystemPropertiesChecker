@@ -1,10 +1,7 @@
-﻿using EvilBaschdi.About.Avalonia;
-using EvilBaschdi.About.Avalonia.Models;
-using EvilBaschdi.About.Core;
-using EvilBaschdi.Core;
-using EvilBaschdi.Core.Avalonia;
+﻿using EvilBaschdi.Core.Avalonia;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using SystemPropertiesChecker.Avalonia.ViewModels;
 
 namespace SystemPropertiesChecker.Avalonia.DepencencyInjection;
@@ -17,13 +14,9 @@ public class ConfigureWindowsAndViewModels : IConfigureWindowsAndViewModels
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        services.AddSingleton<ICurrentAssembly, CurrentAssembly>();
-        services.AddSingleton<IAboutContent, AboutContent>();
-        services.AddSingleton<IAboutViewModelExtended, AboutViewModelExtended>();
-        services.AddTransient(typeof(AboutWindow));
-
-        services.AddSingleton<IHandleOsDependentTitleBar, HandleOsDependentTitleBar>();
-        services.AddSingleton<IApplicationLayout, ApplicationLayout>();
+        services.TryAddSingleton<IHandleOsDependentTitleBar, HandleOsDependentTitleBar>();
+        services.TryAddSingleton<IApplicationLayout, ApplicationLayout>();
+        services.TryAddSingleton<IMainWindowByApplicationLifetime, MainWindowsByApplicationLifetime>();
         services.AddSingleton<MainWindowViewModel>();
     }
 }
