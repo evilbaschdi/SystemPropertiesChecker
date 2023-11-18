@@ -16,7 +16,7 @@
 		<Product>SystemPropertiesChecker</Product>
 		<RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
 		<RootNamespace>SystemPropertiesChecker.Core</RootNamespace>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</VersionPrefix>
 	</PropertyGroup>
 
@@ -24,7 +24,6 @@
 		<PackageReference Include="EvilBaschdi.Core" />
 		<PackageReference Include="EvilBaschdi.DependencyInjection" />
 		<PackageReference Include="EvilBaschdi.Settings" />
-		<PackageReference Include="Microsoft.Win32.Registry" />
 		<PackageReference Include="System.DirectoryServices" />
 		<PackageReference Include="System.DirectoryServices.AccountManagement" />
 		<PackageReference Include="System.Management" />

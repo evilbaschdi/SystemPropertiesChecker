@@ -13,11 +13,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>preview</LangVersion>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))-develop</VersionPrefix>
 		<NoWarn>1701;1702</NoWarn>
 		<PublishSingleFile>true</PublishSingleFile>
-		<PublishAot>true</PublishAot>
 	</PropertyGroup>
 
 	<ItemGroup>
