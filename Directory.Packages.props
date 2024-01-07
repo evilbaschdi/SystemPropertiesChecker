@@ -4,28 +4,28 @@
     <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Avalonia.Diagnostics" Version="11.0.5" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.0.6" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
-    <PackageVersion Include="EvilBaschdi.About.Avalonia" Version="2023.10.10.1807-develop" />
-    <PackageVersion Include="EvilBaschdi.About.Wpf" Version="2023.10.10.1807-develop" />
+    <PackageVersion Include="EvilBaschdi.About.Avalonia" Version="2023.11.25.1102-develop" />
+    <PackageVersion Include="EvilBaschdi.About.Wpf" Version="2023.11.25.1102-develop" />
     <PackageVersion Include="EvilBaschdi.Core" Version="2023.11.8.1715-develop" />
-    <PackageVersion Include="EvilBaschdi.Core.Avalonia" Version="2023.11.8.1726-develop" />
-    <PackageVersion Include="EvilBaschdi.Core.Wpf" Version="2023.11.8.1723-develop" />
+    <PackageVersion Include="EvilBaschdi.Core.Avalonia" Version="2023.12.6.1650-develop" />
+    <PackageVersion Include="EvilBaschdi.Core.Wpf" Version="2023.12.10.835-develop" />
     <PackageVersion Include="EvilBaschdi.DependencyInjection" Version="2023.11.14.1729-develop" />
     <PackageVersion Include="EvilBaschdi.Settings" Version="2023.11.14.1729-develop" />
-    <PackageVersion Include="EvilBaschdi.Testing" Version="2023.11.8.1645-develop" />
-    <PackageVersion Include="FluentAssertions.Analyzers" Version="0.26.0" />
+    <PackageVersion Include="EvilBaschdi.Testing" Version="2024.1.5.633-develop" />
+    <PackageVersion Include="FluentAssertions.Analyzers" Version="0.29.0" />
     <PackageVersion Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
     <PackageVersion Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0-preview-23531-01" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0-preview-23577-04" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.16" />
-    <PackageVersion Include="Spectre.Console" Version="0.47.1-preview.0.38" />
+    <PackageVersion Include="Spectre.Console" Version="0.48.1-preview.0.9" />
     <PackageVersion Include="System.DirectoryServices" Version="8.0.0" />
     <PackageVersion Include="System.DirectoryServices.AccountManagement" Version="8.0.0" />
     <PackageVersion Include="System.Management" Version="8.0.0" />
     <PackageVersion Include="WpfAnalyzers" Version="4.1.1" />
-    <PackageVersion Include="xunit.analyzers" Version="1.5.0" />
-    <PackageVersion Include="xunit.runner.console" Version="2.6.1" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.3" />
+    <PackageVersion Include="xunit.analyzers" Version="1.9.0" />
+    <PackageVersion Include="xunit.runner.console" Version="2.6.5" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.6" />
   </ItemGroup>
 </Project>
