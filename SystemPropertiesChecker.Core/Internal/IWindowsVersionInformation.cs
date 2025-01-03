@@ -7,6 +7,4 @@ namespace SystemPropertiesChecker.Core.Internal;
 /// <summary>
 ///     Interface for classes that provide values about the current windows version.
 /// </summary>
-public interface IWindowsVersionInformation : IValue<WindowsVersionInformationModel>
-{
-}
+public interface IWindowsVersionInformation : IValue<WindowsVersionInformationModel>;

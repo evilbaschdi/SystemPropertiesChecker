@@ -6,6 +6,4 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet;
 /// <summary>
 ///     Interface for classes that return info regarding current installed version of .net core
 /// </summary>
-public interface IDotNetCoreInfo : IValueOfList<KeyValuePair<string, string>>
-{
-}
+public interface IDotNetCoreInfo : IValueOfList<KeyValuePair<string, string>>;

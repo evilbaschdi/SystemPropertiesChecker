@@ -56,10 +56,7 @@ public class MainWindowViewModel : ViewModelBase
         get => _windowsVersionDictionary.Value;
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
         }
     }
 
@@ -71,10 +68,7 @@ public class MainWindowViewModel : ViewModelBase
         get => _dotNetCoreInfo.Value;
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
         }
     }
 
@@ -87,10 +81,7 @@ public class MainWindowViewModel : ViewModelBase
         get => string.Join(Environment.NewLine, _dotNetVersion.Value);
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
         }
     }
 
@@ -107,10 +98,7 @@ public class MainWindowViewModel : ViewModelBase
         get => _otherInformationText.Value;
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
         }
     }
 
@@ -122,10 +110,7 @@ public class MainWindowViewModel : ViewModelBase
         get => _passwordExpirationMessage.Value;
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
         }
     }
 
@@ -137,10 +122,7 @@ public class MainWindowViewModel : ViewModelBase
         get => _sourceOsCollection.Value;
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
         }
     }
 

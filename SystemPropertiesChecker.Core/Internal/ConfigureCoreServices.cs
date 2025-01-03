@@ -4,16 +4,13 @@ using SystemPropertiesChecker.Core.Models;
 
 namespace SystemPropertiesChecker.Core.Internal;
 
-/// <inheritdoc />
-public class ConfigureCoreServices : IConfigureCoreServices
+/// <summary />
+public static class ConfigureCoreServices
 {
-    /// <inheritdoc />
-    public void RunFor(IServiceCollection services)
+    /// <summary />
+    public static void AddCoreServices(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        ArgumentNullException.ThrowIfNull(services);
 
         services.AddScoped<ICheckNetFrameworkVersion45OrHigher, CheckNetFrameworkVersion45OrHigher>();
         services.AddScoped<IDotNetCoreInfo, DotNetCoreInfo>();

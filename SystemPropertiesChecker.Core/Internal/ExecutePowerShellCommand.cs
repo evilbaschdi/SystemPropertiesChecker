@@ -10,10 +10,7 @@ public class ExecutePowerShellCommand : IExecutePowerShellCommand
     /// <inheritdoc />
     public string ValueFor([NotNull] string value)
     {
-        if (value == null)
-        {
-            throw new ArgumentNullException(nameof(value));
-        }
+        ArgumentNullException.ThrowIfNull(value);
 
         var stringBuilder = new StringBuilder();
 

@@ -1,16 +1,15 @@
 ﻿using EvilBaschdi.Core.Avalonia;
-using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SystemPropertiesChecker.Avalonia.ViewModels;
 
 namespace SystemPropertiesChecker.Avalonia.DepencencyInjection;
 
-/// <inheritdoc />
-public class ConfigureWindowsAndViewModels : IConfigureWindowsAndViewModels
+/// <summary />
+public static class ConfigureWindowsAndViewModels
 {
-    /// <inheritdoc />
-    public void RunFor([NotNull] IServiceCollection services)
+    /// <summary />
+    public static void AddWindowsAndViewModels(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
 

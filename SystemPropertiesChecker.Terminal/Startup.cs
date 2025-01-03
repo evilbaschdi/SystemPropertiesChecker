@@ -12,10 +12,8 @@ public class Startup : IConfigureServiceCollection
     public void RunFor([NotNull] IServiceCollection serviceCollection)
     {
         ArgumentNullException.ThrowIfNull(serviceCollection);
-        IConfigureCoreServices configureCoreServices = new ConfigureCoreServices();
-        IConfigureTerminalServices configureTerminalServices = new ConfigureTerminalServices();
 
-        configureCoreServices.RunFor(serviceCollection);
-        configureTerminalServices.RunFor(serviceCollection);
+        serviceCollection.AddCoreServices();
+        serviceCollection.AddTerminalServices();
     }
 }

@@ -3,6 +3,4 @@
 namespace SystemPropertiesChecker.Core.Internal.DotNet;
 
 /// <inheritdoc />
-public interface INetFrameworkVersionFromRegistry : IValueOfList<string>
-{
-}
+public interface INetFrameworkVersionFromRegistry : IValueOfList<string>;

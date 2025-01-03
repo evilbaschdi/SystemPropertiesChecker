@@ -16,10 +16,7 @@ public class ParseReleaseKeyByReleaseKeyMappingList : IParseReleaseKeyByReleaseK
     /// <inheritdoc />
     public string ValueFor(string releaseKey)
     {
-        if (releaseKey == null)
-        {
-            throw new ArgumentNullException(nameof(releaseKey));
-        }
+        ArgumentNullException.ThrowIfNull(releaseKey);
 
         //releaseKey = 460900;
         var value = _dotNetVersionReleaseKeyMappingList.ValueFor(releaseKey);

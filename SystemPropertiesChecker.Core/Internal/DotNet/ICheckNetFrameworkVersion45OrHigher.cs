@@ -3,6 +3,4 @@
 namespace SystemPropertiesChecker.Core.Internal.DotNet;
 
 /// <inheritdoc />
-public interface ICheckNetFrameworkVersion45OrHigher : IString
-{
-}
+public interface ICheckNetFrameworkVersion45OrHigher : IString;

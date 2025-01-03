@@ -51,10 +51,7 @@ namespace SystemPropertiesChecker
         /// <inheritdoc />
         protected override async void OnExit([NotNull] ExitEventArgs e)
         {
-            if (e == null)
-            {
-                throw new ArgumentNullException(nameof(e));
-            }
+            ArgumentNullException.ThrowIfNull(e);
 
             await _handleAppExit.Value();
 

@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using EvilBaschdi.About.Avalonia.DependencyInjection;
-using EvilBaschdi.About.Core.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using SystemPropertiesChecker.Avalonia.DepencencyInjection;
 using SystemPropertiesChecker.Avalonia.ViewModels;
@@ -30,13 +29,10 @@ public class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         IServiceCollection serviceCollection = new ServiceCollection();
-        IConfigureCoreServices configureCoreServices = new ConfigureCoreServices();
-        IConfigureAboutServices configureAboutServices = new ConfigureAboutServices();
-        IConfigureWindowsAndViewModels configureWindowsAndViewModels = new ConfigureWindowsAndViewModels();
 
-        configureCoreServices.RunFor(serviceCollection);
-        configureAboutServices.RunFor(serviceCollection);
-        configureWindowsAndViewModels.RunFor(serviceCollection);
+        serviceCollection.AddCoreServices();
+        serviceCollection.AddAboutServices();
+        serviceCollection.AddWindowsAndViewModels();
 
         ServiceProvider = serviceCollection.BuildServiceProvider();
 

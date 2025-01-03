@@ -6,6 +6,4 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet;
 /// <summary>
 ///     Interface for classes that return a list of current installed .net versions
 /// </summary>
-public interface IDotNetVersion : IValueOfList<string>
-{
-}
+public interface IDotNetVersion : IValueOfList<string>;

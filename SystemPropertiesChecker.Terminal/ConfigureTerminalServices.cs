@@ -3,16 +3,13 @@ using SystemPropertiesChecker.Terminal.Internal;
 
 namespace SystemPropertiesChecker.Terminal;
 
-/// <inheritdoc />
-public class ConfigureTerminalServices : IConfigureTerminalServices
+/// <summary />
+public static class ConfigureTerminalServices
 {
-    /// <inheritdoc />
-    public void RunFor(IServiceCollection services)
+    /// <summary />
+    public static void AddTerminalServices(this IServiceCollection services)
     {
-        if (services == null)
-        {
-            throw new ArgumentNullException(nameof(services));
-        }
+        ArgumentNullException.ThrowIfNull(services);
 
         services.AddScoped<IWriteWindowsTable, WriteWindowsTable>();
         services.AddScoped<IWriteHistoryTable, WriteHistoryTable>();

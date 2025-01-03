@@ -85,10 +85,7 @@ public class MainWindowViewModel : ApplicationLayoutViewModel
         get => _windowsVersionDictionary.Value;
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             OnPropertyChanged();
         }
@@ -103,10 +100,7 @@ public class MainWindowViewModel : ApplicationLayoutViewModel
         get => _dotNetCoreInfo.Value;
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             OnPropertyChanged();
         }
@@ -122,10 +116,7 @@ public class MainWindowViewModel : ApplicationLayoutViewModel
         get => string.Join(Environment.NewLine, _dotNetVersion.Value);
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             OnPropertyChanged();
         }
@@ -140,10 +131,7 @@ public class MainWindowViewModel : ApplicationLayoutViewModel
         get => _otherInformationText.Value;
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             OnPropertyChanged();
         }
@@ -158,10 +146,7 @@ public class MainWindowViewModel : ApplicationLayoutViewModel
         get => _passwordExpirationMessage.Value;
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             OnPropertyChanged();
         }
@@ -183,10 +168,7 @@ public class MainWindowViewModel : ApplicationLayoutViewModel
         get => _sourceOsCollection.Value;
         set
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             OnPropertyChanged();
         }

@@ -9,12 +9,6 @@ public class ConfigureTerminalServicesTests
     }
 
     [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-    public void Constructor_ReturnsInterfaceName(ConfigureTerminalServices sut)
-    {
-        sut.Should().BeAssignableTo<IConfigureTerminalServices>();
-    }
-
-    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
     public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
     {
         assertion.Verify(typeof(ConfigureTerminalServices).GetMethods().Where(method => !method.IsAbstract));

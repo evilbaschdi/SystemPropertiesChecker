@@ -6,6 +6,4 @@ namespace SystemPropertiesChecker.Core.Internal;
 /// <summary>
 ///     Interface for classes that provide a WindowsVersionInformationStack.
 /// </summary>
-public interface IWindowsVersionDictionary : IValue<Dictionary<string, string>>
-{
-}
+public interface IWindowsVersionDictionary : IValue<Dictionary<string, string>>;

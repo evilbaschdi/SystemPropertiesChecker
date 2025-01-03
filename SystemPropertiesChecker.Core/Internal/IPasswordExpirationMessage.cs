@@ -5,6 +5,4 @@ namespace SystemPropertiesChecker.Core.Internal;
 /// <inheritdoc />
 /// <summary>
 /// </summary>
-public interface IPasswordExpirationMessage : IString
-{
-}
+public interface IPasswordExpirationMessage : IString;
