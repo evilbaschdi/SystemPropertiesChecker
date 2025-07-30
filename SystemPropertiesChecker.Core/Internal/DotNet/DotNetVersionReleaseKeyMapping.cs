@@ -1,4 +1,4 @@
-using EvilBaschdi.Settings;
+using EvilBaschdi.Core.Settings;
 
 namespace SystemPropertiesChecker.Core.Internal.DotNet;
 

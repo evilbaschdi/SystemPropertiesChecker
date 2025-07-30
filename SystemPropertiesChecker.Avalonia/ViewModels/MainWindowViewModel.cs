@@ -45,7 +45,7 @@ public class MainWindowViewModel : ViewModelBase
         _sourceOsCollection = sourceOsCollection ?? throw new ArgumentNullException(nameof(sourceOsCollection));
         _windowsVersionDictionary = windowsVersionDictionary ?? throw new ArgumentNullException(nameof(windowsVersionDictionary));
 
-        AboutWindowCommand = ReactiveCommand.Create(AboutWindowCommandAction);
+        AboutWindowCommand = ReactiveCommand.CreateFromTask(AboutWindowCommandAction);
     }
 
     /// <summary>
@@ -54,10 +54,7 @@ public class MainWindowViewModel : ViewModelBase
     public Dictionary<string, string> CurrentVersionText
     {
         get => _windowsVersionDictionary.Value;
-        set
-        {
-            ArgumentNullException.ThrowIfNull(value);
-        }
+        set => ArgumentNullException.ThrowIfNull(value);
     }
 
     /// <summary>
@@ -66,10 +63,7 @@ public class MainWindowViewModel : ViewModelBase
     public List<KeyValuePair<string, string>> DotNetCoreVersionText
     {
         get => _dotNetCoreInfo.Value;
-        set
-        {
-            ArgumentNullException.ThrowIfNull(value);
-        }
+        set => ArgumentNullException.ThrowIfNull(value);
     }
 
     /// <summary>
@@ -79,10 +73,7 @@ public class MainWindowViewModel : ViewModelBase
     public string DotNetVersionText
     {
         get => string.Join(Environment.NewLine, _dotNetVersion.Value);
-        set
-        {
-            ArgumentNullException.ThrowIfNull(value);
-        }
+        set => ArgumentNullException.ThrowIfNull(value);
     }
 
     /// <summary>
@@ -96,10 +87,7 @@ public class MainWindowViewModel : ViewModelBase
     public List<KeyValuePair<string, string>> OtherText
     {
         get => _otherInformationText.Value;
-        set
-        {
-            ArgumentNullException.ThrowIfNull(value);
-        }
+        set => ArgumentNullException.ThrowIfNull(value);
     }
 
     /// <summary>
@@ -108,10 +96,7 @@ public class MainWindowViewModel : ViewModelBase
     public string PasswordExpirationMessage
     {
         get => _passwordExpirationMessage.Value;
-        set
-        {
-            ArgumentNullException.ThrowIfNull(value);
-        }
+        set => ArgumentNullException.ThrowIfNull(value);
     }
 
     /// <summary>
@@ -120,23 +105,20 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<SourceOs> SourceOsCollection
     {
         get => _sourceOsCollection.Value;
-        set
-        {
-            ArgumentNullException.ThrowIfNull(value);
-        }
+        set => ArgumentNullException.ThrowIfNull(value);
     }
 
     /// <summary>
     /// </summary>
     public ReactiveCommand<Unit, Unit> AboutWindowCommand { get; set; }
 
-    private void AboutWindowCommandAction()
+    private async Task AboutWindowCommandAction()
     {
         var aboutWindow = App.ServiceProvider.GetRequiredService<AboutWindow>();
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
         if (mainWindow != null)
         {
-            aboutWindow.ShowDialog(mainWindow);
+            await aboutWindow.ShowDialog(mainWindow);
         }
     }
 

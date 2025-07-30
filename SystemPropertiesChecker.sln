@@ -1,14 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# 17
+# Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPropertiesChecker.Core", "SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj", "{C0D5924B-40F7-41EC-B060-137BEC6DF66B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPropertiesChecker.Core.Tests", "SystemPropertiesChecker.Core.Tests\SystemPropertiesChecker.Core.Tests.csproj", "{D13C954D-41D8-42F0-8A59-9CA5F55C4CEC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPropertiesChecker", "SystemPropertiesChecker\SystemPropertiesChecker.csproj", "{2CBB6DF7-363C-41B0-B38F-2BC75512F312}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPropertiesChecker.Tests", "SystemPropertiesChecker.Tests\SystemPropertiesChecker.Tests.csproj", "{7644B600-118A-4F5F-BB7D-F18E679C1AEB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPropertiesChecker.Terminal", "SystemPropertiesChecker.Terminal\SystemPropertiesChecker.Terminal.csproj", "{4C6D0722-0B3A-4BFD-85A2-D1A44EB10AAB}"
 EndProject
@@ -43,14 +39,6 @@ Global
 		{D13C954D-41D8-42F0-8A59-9CA5F55C4CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D13C954D-41D8-42F0-8A59-9CA5F55C4CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D13C954D-41D8-42F0-8A59-9CA5F55C4CEC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2CBB6DF7-363C-41B0-B38F-2BC75512F312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CBB6DF7-363C-41B0-B38F-2BC75512F312}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CBB6DF7-363C-41B0-B38F-2BC75512F312}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CBB6DF7-363C-41B0-B38F-2BC75512F312}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7644B600-118A-4F5F-BB7D-F18E679C1AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7644B600-118A-4F5F-BB7D-F18E679C1AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7644B600-118A-4F5F-BB7D-F18E679C1AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7644B600-118A-4F5F-BB7D-F18E679C1AEB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C6D0722-0B3A-4BFD-85A2-D1A44EB10AAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C6D0722-0B3A-4BFD-85A2-D1A44EB10AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C6D0722-0B3A-4BFD-85A2-D1A44EB10AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,7 +57,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D13C954D-41D8-42F0-8A59-9CA5F55C4CEC} = {AE469DF5-2744-484E-BCD5-2055D35B4A44}
-		{7644B600-118A-4F5F-BB7D-F18E679C1AEB} = {AE469DF5-2744-484E-BCD5-2055D35B4A44}
 		{7185D2E5-EECB-4EA0-BE19-E20E4B978418} = {AE469DF5-2744-484E-BCD5-2055D35B4A44}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

@@ -7,8 +7,6 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet;
 /// <inheritdoc />
 public class DotNetCoreListAsString : IDotNetCoreListAsString
 {
-    private readonly string _listName;
-
     /// <summary>
     ///     Constructor
     /// </summary>
@@ -16,7 +14,7 @@ public class DotNetCoreListAsString : IDotNetCoreListAsString
     /// <exception cref="ArgumentNullException"></exception>
     public DotNetCoreListAsString([NotNull] string listName)
     {
-        _listName = listName ?? throw new ArgumentNullException(nameof(listName));
+        Value = listName ?? throw new ArgumentNullException(nameof(listName));
     }
 
     /// <inheritdoc />
@@ -25,16 +23,16 @@ public class DotNetCoreListAsString : IDotNetCoreListAsString
         get
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine($"currently installed {_listName}:");
+            stringBuilder.AppendLine($"currently installed {field}:");
             var list = new List<string>();
 
             try
             {
                 using var process = new Process();
-                process.SetHiddenProcessFor("dotnet", $"--list-{_listName}");
+                process.SetHiddenProcessFor("dotnet", $"--list-{field}");
                 process.Start();
 
-                if (!process.ReadStandardError().Contains($"Unknown option: --list-{_listName}"))
+                if (!process.ReadStandardError().Contains($"Unknown option: --list-{field}"))
                 {
                     list.AddRange(from item
                                       in process.ReadStandardOutput()

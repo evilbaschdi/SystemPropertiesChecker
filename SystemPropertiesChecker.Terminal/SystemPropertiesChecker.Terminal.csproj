@@ -14,7 +14,7 @@
 		<LangVersion>preview</LangVersion>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net9.0</TargetFramework>
-		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))-develop</VersionPrefix>
+		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.H))-develop</VersionPrefix>
 		<NoWarn>1701;1702</NoWarn>
 		<PublishSingleFile>true</PublishSingleFile>
 	</PropertyGroup>

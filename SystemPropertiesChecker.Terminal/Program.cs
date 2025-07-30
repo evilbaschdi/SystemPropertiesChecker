@@ -1,11 +1,11 @@
 ﻿using EvilBaschdi.Core;
-using EvilBaschdi.DependencyInjection;
+using EvilBaschdi.Core.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using SystemPropertiesChecker.Terminal;
 
 IServiceCollection serviceCollection = new ServiceCollection();
-IConfigureServiceCollection starup = new Startup();
-starup.RunFor(serviceCollection);
+IConfigureServiceCollection startup = new Startup();
+startup.RunFor(serviceCollection);
 
 IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 

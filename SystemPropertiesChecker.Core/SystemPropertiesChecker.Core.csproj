@@ -17,13 +17,13 @@
 		<RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
 		<RootNamespace>SystemPropertiesChecker.Core</RootNamespace>
 		<TargetFramework>net9.0</TargetFramework>
-		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</VersionPrefix>
+		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.H))</VersionPrefix>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="EvilBaschdi.Core" />
-		<PackageReference Include="EvilBaschdi.DependencyInjection" />
-		<PackageReference Include="EvilBaschdi.Settings" />
+		<PackageReference Include="EvilBaschdi.Core.DependencyInjection" />
+		<PackageReference Include="EvilBaschdi.Core.Settings" />
 		<PackageReference Include="System.DirectoryServices" />
 		<PackageReference Include="System.DirectoryServices.AccountManagement" />
 		<PackageReference Include="System.Management" />

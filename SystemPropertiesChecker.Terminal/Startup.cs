@@ -1,4 +1,4 @@
-﻿using EvilBaschdi.DependencyInjection;
+﻿using EvilBaschdi.Core.DependencyInjection;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using SystemPropertiesChecker.Core.Internal;

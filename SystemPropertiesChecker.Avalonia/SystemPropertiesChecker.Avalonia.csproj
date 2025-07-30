@@ -19,7 +19,7 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
 		<TrimMode>copyused</TrimMode>
-		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
+		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.H))</Version>
 	</PropertyGroup>
 
 	<ItemGroup>

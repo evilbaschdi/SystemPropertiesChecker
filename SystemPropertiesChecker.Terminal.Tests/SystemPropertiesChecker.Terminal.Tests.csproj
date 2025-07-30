@@ -5,12 +5,14 @@
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
 		<LangVersion>preview</LangVersion>
+		<OutputType>Exe</OutputType>
 		<TargetFramework>net9.0</TargetFramework>
-		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))-develop</Version>
+		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.H))-develop</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<Using Include="AutoFixture.Idioms" />
+		<Using Include="AutoFixture.Xunit3" />
 		<Using Include="EvilBaschdi.Testing" />
 		<Using Include="FluentAssertions" />
 		<Using Include="Xunit" />
@@ -19,29 +21,30 @@
 	<ItemGroup>
 		<PackageReference Include="EvilBaschdi.Core" />
 		<PackageReference Include="EvilBaschdi.Testing" />
+		<PackageReference Include="xunit.v3" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="coverlet.collector">
 			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="FluentAssertions.Analyzers">
 			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="NSubstitute.Analyzers.CSharp">
 			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="xunit.analyzers">
 			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="xunit.runner.visualstudio">
 			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
 
