@@ -18,5 +18,5 @@ resources:
 jobs:
 - template: buildNZip.yml@templates  # Template reference
   parameters:
-    projectName: $(Build.Repository.Name)
-    framework: net9.0-windows
+    projectName: SystemPropertiesChecker.Avalonia
+    framework: net9.0
