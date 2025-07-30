@@ -15,10 +15,7 @@ public static class ProcessExtensions
     /// <returns></returns>
     public static IEnumerable<string> ReadStandardOutput([NotNull] this Process process)
     {
-        if (process == null)
-        {
-            throw new ArgumentNullException(nameof(process));
-        }
+        ArgumentNullException.ThrowIfNull(process);
 
         using var reader = process.StandardOutput;
         while (reader.ReadLine() is { } line)
@@ -34,10 +31,7 @@ public static class ProcessExtensions
     /// <returns></returns>
     public static IEnumerable<string> ReadStandardError([NotNull] this Process process)
     {
-        if (process == null)
-        {
-            throw new ArgumentNullException(nameof(process));
-        }
+        ArgumentNullException.ThrowIfNull(process);
 
         using var reader = process.StandardError;
         while (reader.ReadLine() is { } line)
@@ -54,20 +48,11 @@ public static class ProcessExtensions
     /// <param name="arguments"></param>
     public static void SetHiddenProcessFor([NotNull] this Process process, [NotNull] string fileName, [NotNull] string arguments)
     {
-        if (process == null)
-        {
-            throw new ArgumentNullException(nameof(process));
-        }
+        ArgumentNullException.ThrowIfNull(process);
 
-        if (fileName == null)
-        {
-            throw new ArgumentNullException(nameof(fileName));
-        }
+        ArgumentNullException.ThrowIfNull(fileName);
 
-        if (arguments == null)
-        {
-            throw new ArgumentNullException(nameof(arguments));
-        }
+        ArgumentNullException.ThrowIfNull(arguments);
 
         process.StartInfo = new(fileName, arguments)
                             {

@@ -5,6 +5,4 @@ namespace SystemPropertiesChecker.Core.Internal.DotNet;
 /// <inheritdoc />
 /// <summary>
 /// </summary>
-public interface IDotNetVersionReleaseKeyMappingList : IValueFor<string, string>
-{
-}
+public interface IDotNetVersionReleaseKeyMappingList : IValueFor<string, string>;

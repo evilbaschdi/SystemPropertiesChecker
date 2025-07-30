@@ -14,10 +14,7 @@ public class PasswordExpirationDate : IPasswordExpirationDate
     /// <inheritdoc />
     public PasswordExpirationModel ValueFor([NotNull] string domain)
     {
-        if (domain == null)
-        {
-            throw new ArgumentNullException(nameof(domain));
-        }
+        ArgumentNullException.ThrowIfNull(domain);
 
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {

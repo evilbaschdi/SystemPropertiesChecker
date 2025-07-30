@@ -20,10 +20,7 @@ public class DotNetVersionReleaseKeyMappingList : IDotNetVersionReleaseKeyMappin
     /// </summary>
     public string ValueFor(string releaseKey)
     {
-        if (releaseKey == null)
-        {
-            throw new ArgumentNullException(nameof(releaseKey));
-        }
+        ArgumentNullException.ThrowIfNull(releaseKey);
 
         if (!OperatingSystem.IsWindows())
         {

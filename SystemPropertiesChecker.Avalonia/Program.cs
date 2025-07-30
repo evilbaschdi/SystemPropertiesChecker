@@ -1,6 +1,5 @@
 using Avalonia;
-using Avalonia.ReactiveUI;
-using SystemPropertiesChecker.Avalonia.ViewModels;
+using EvilBaschdi.Core.Avalonia;
 
 namespace SystemPropertiesChecker.Avalonia;
 
@@ -17,13 +16,5 @@ internal class Program
     // Avalonia configuration, don't remove; also used by visual designer.
     // ReSharper disable once MemberCanBePrivate.Global
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
-                     .UsePlatformDetect()
-                     .LogToTrace()
-                     .UseReactiveUI()
-                     .With(new Win32PlatformOptions
-                           {
-                               UseWindowsUIComposition = false, // it's enabled by default, but breaks rounded corners since v11 
-                               CompositionBackdropCornerRadius = 8f
-                           });
+        => new AppBuilderImplementation<App>().Value;
 }

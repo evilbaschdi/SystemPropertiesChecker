@@ -3,6 +3,4 @@
 namespace SystemPropertiesChecker.Terminal.Internal;
 
 /// <inheritdoc />
-public interface IWriteDotNetTable : IRun
-{
-}
+public interface IWriteDotNetTable : IRun;

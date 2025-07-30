@@ -1,4 +1,10 @@
 using System.Collections.ObjectModel;
+using System.Reactive;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using EvilBaschdi.About.Avalonia;
+using Microsoft.Extensions.DependencyInjection;
+using ReactiveUI;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 using SystemPropertiesChecker.Core.Models;
@@ -38,6 +44,8 @@ public class MainWindowViewModel : ViewModelBase
         _passwordExpirationMessage = passwordExpirationMessage ?? throw new ArgumentNullException(nameof(passwordExpirationMessage));
         _sourceOsCollection = sourceOsCollection ?? throw new ArgumentNullException(nameof(sourceOsCollection));
         _windowsVersionDictionary = windowsVersionDictionary ?? throw new ArgumentNullException(nameof(windowsVersionDictionary));
+
+        AboutWindowCommand = ReactiveCommand.CreateFromTask(AboutWindowCommandAction);
     }
 
     /// <summary>
@@ -46,13 +54,7 @@ public class MainWindowViewModel : ViewModelBase
     public Dictionary<string, string> CurrentVersionText
     {
         get => _windowsVersionDictionary.Value;
-        set
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-        }
+        set => ArgumentNullException.ThrowIfNull(value);
     }
 
     /// <summary>
@@ -61,13 +63,7 @@ public class MainWindowViewModel : ViewModelBase
     public List<KeyValuePair<string, string>> DotNetCoreVersionText
     {
         get => _dotNetCoreInfo.Value;
-        set
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-        }
+        set => ArgumentNullException.ThrowIfNull(value);
     }
 
     /// <summary>
@@ -77,13 +73,7 @@ public class MainWindowViewModel : ViewModelBase
     public string DotNetVersionText
     {
         get => string.Join(Environment.NewLine, _dotNetVersion.Value);
-        set
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-        }
+        set => ArgumentNullException.ThrowIfNull(value);
     }
 
     /// <summary>
@@ -97,13 +87,7 @@ public class MainWindowViewModel : ViewModelBase
     public List<KeyValuePair<string, string>> OtherText
     {
         get => _otherInformationText.Value;
-        set
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-        }
+        set => ArgumentNullException.ThrowIfNull(value);
     }
 
     /// <summary>
@@ -112,13 +96,7 @@ public class MainWindowViewModel : ViewModelBase
     public string PasswordExpirationMessage
     {
         get => _passwordExpirationMessage.Value;
-        set
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-        }
+        set => ArgumentNullException.ThrowIfNull(value);
     }
 
     /// <summary>
@@ -127,12 +105,20 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<SourceOs> SourceOsCollection
     {
         get => _sourceOsCollection.Value;
-        set
+        set => ArgumentNullException.ThrowIfNull(value);
+    }
+
+    /// <summary>
+    /// </summary>
+    public ReactiveCommand<Unit, Unit> AboutWindowCommand { get; set; }
+
+    private async Task AboutWindowCommandAction()
+    {
+        var aboutWindow = App.ServiceProvider.GetRequiredService<AboutWindow>();
+        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+        if (mainWindow != null)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            await aboutWindow.ShowDialog(mainWindow);
         }
     }
 

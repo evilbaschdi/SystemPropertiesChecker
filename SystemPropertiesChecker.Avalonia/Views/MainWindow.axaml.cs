@@ -1,10 +1,6 @@
 using Avalonia.Controls;
-using Avalonia.Input;
-using EvilBaschdi.About.Avalonia;
-using EvilBaschdi.About.Avalonia.Models;
-using EvilBaschdi.About.Core;
-using EvilBaschdi.Core;
 using EvilBaschdi.Core.Avalonia;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SystemPropertiesChecker.Avalonia.Views;
 
@@ -17,26 +13,15 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        Load();
+        ApplyLayout();
     }
 
-    private void Load()
+    private void ApplyLayout()
     {
-        IHandleOsDependentTitleBar handleOsDependentTitleBar = new HandleOsDependentTitleBar();
-        handleOsDependentTitleBar.RunFor((this, HeaderPanel, MainPanel));
-    }
+        var handleOsDependentTitleBar = App.ServiceProvider?.GetRequiredService<IHandleOsDependentTitleBar>();
+        handleOsDependentTitleBar?.RunFor(this);
 
-    // ReSharper disable UnusedParameter.Local
-    private void LogoOnTapped(object sender, TappedEventArgs e)
-        // ReSharper restore UnusedParameter.Local
-    {
-        ICurrentAssembly currentAssembly = new CurrentAssembly();
-        IAboutContent aboutContent = new AboutContent(currentAssembly);
-        IAboutViewModelExtended aboutViewModelExtended = new AboutViewModelExtended(aboutContent);
-        var aboutWindow = new AboutWindow
-                          {
-                              DataContext = aboutViewModelExtended
-                          };
-        aboutWindow.ShowDialog(this);
+        var applicationLayout = App.ServiceProvider?.GetRequiredService<IApplicationLayout>();
+        applicationLayout?.RunFor((this, true, false));
     }
 }

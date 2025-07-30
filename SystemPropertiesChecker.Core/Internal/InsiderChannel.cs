@@ -36,7 +36,7 @@ public class InsiderChannel : IInsiderChannel
             {
                 "Active" => uIRing switch
                 {
-                    "WIF" => "Dev",
+                    "WIF" => "Canary",
                     "WIS" => "Beta",
                     _ => uIRing
                 },

@@ -3,6 +3,4 @@
 namespace SystemPropertiesChecker.Terminal.Internal;
 
 /// <inheritdoc />
-public interface IWriteHistoryTable : IRun
-{
-}
+public interface IWriteHistoryTable : IRun;

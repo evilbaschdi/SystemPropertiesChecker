@@ -6,6 +6,4 @@ namespace SystemPropertiesChecker.Core.Internal;
 /// <inheritdoc />
 /// <summary>
 /// </summary>
-public interface IPasswordExpirationDate : IValueFor<string, PasswordExpirationModel>
-{
-}
+public interface IPasswordExpirationDate : IValueFor<string, PasswordExpirationModel>;

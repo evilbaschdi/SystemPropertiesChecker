@@ -1,5 +1,5 @@
 ﻿using EvilBaschdi.Core;
-using EvilBaschdi.DependencyInjection;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using SystemPropertiesChecker.Terminal.Internal;
 
@@ -11,47 +11,42 @@ public class Execute : IRun
     /// <summary>
     ///     Constructor
     /// </summary>
-    public Execute()
+    public Execute([NotNull] IServiceProvider serviceProvider)
     {
-        IHostInstance hostInstance = new HostInstance();
-        IConfigureDelegateForConfigureServices configureDelegateForConfigureServices = new ConfigureDelegateForConfigureServices();
-        IConfigureServicesByHostBuilderAndConfigureDelegate configureServicesByHostBuilderAndConfigureDelegate =
-            new ConfigureServicesByHostBuilderAndConfigureDelegate(hostInstance, configureDelegateForConfigureServices);
-
-        ServiceProvider = configureServicesByHostBuilderAndConfigureDelegate.Value;
+        ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
     }
 
     /// <summary>
     ///     ServiceProvider for DependencyInjection
     /// </summary>
-    private static IServiceProvider? ServiceProvider { get; set; }
+    private static IServiceProvider ServiceProvider { get; set; }
 
     /// <inheritdoc />
     public void Run()
     {
         //WINDOWS
         // ReSharper disable once SuggestVarOrType_SimpleTypes
-        IWriteWindowsTable? writeWindowsTable = ServiceProvider?.GetService<IWriteWindowsTable>();
+        IWriteWindowsTable writeWindowsTable = ServiceProvider?.GetService<IWriteWindowsTable>();
         writeWindowsTable?.Run();
 
         //HISTORY
         // ReSharper disable once SuggestVarOrType_SimpleTypes
-        IWriteHistoryTable? writeHistoryTable = ServiceProvider?.GetService<IWriteHistoryTable>();
+        IWriteHistoryTable writeHistoryTable = ServiceProvider?.GetService<IWriteHistoryTable>();
         writeHistoryTable?.Run();
 
         //.NET FRAMEWORK
         // ReSharper disable once SuggestVarOrType_SimpleTypes
-        IWriteDotNetTable? writeDotNetTable = ServiceProvider?.GetService<IWriteDotNetTable>();
+        IWriteDotNetTable writeDotNetTable = ServiceProvider?.GetService<IWriteDotNetTable>();
         writeDotNetTable?.Run();
 
         //.NET CORE
         // ReSharper disable once SuggestVarOrType_SimpleTypes
-        IWriteDotNetCoreTable? writeDotNetCoreTable = ServiceProvider?.GetService<IWriteDotNetCoreTable>();
+        IWriteDotNetCoreTable writeDotNetCoreTable = ServiceProvider?.GetService<IWriteDotNetCoreTable>();
         writeDotNetCoreTable?.Run();
 
         //OTHER
         // ReSharper disable once SuggestVarOrType_SimpleTypes
-        IWriteOtherTable? writeOtherTable = ServiceProvider?.GetService<IWriteOtherTable>();
+        IWriteOtherTable writeOtherTable = ServiceProvider?.GetService<IWriteOtherTable>();
         writeOtherTable?.Run();
     }
 }

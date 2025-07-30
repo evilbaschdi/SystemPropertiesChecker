@@ -8,6 +8,4 @@ namespace SystemPropertiesChecker.Core.Internal;
 /// <summary>
 ///     Interface for classes that provide RegistryValues.
 /// </summary>
-public interface ISourceOsCollection : IValue<ObservableCollection<SourceOs>>
-{
-}
+public interface ISourceOsCollection : IValue<ObservableCollection<SourceOs>>;

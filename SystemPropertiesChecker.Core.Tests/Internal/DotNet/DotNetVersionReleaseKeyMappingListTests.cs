@@ -1,4 +1,3 @@
-using AutoFixture.Xunit2;
 using Microsoft.Extensions.Configuration;
 using NSubstitute;
 using SystemPropertiesChecker.Core.Internal.DotNet;

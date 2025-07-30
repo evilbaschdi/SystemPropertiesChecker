@@ -1,6 +1,4 @@
 ﻿namespace SystemPropertiesChecker.Core.Internal;
 
 /// <inheritdoc />
-public interface IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion : IRegistryHiveLocalMachineValueFor
-{
-}
+public interface IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion : IRegistryHiveLocalMachineValueFor;

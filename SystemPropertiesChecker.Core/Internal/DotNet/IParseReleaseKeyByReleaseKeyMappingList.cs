@@ -3,6 +3,4 @@
 namespace SystemPropertiesChecker.Core.Internal.DotNet;
 
 /// <inheritdoc />
-public interface IParseReleaseKeyByReleaseKeyMappingList : IValueFor<string, string>
-{
-}
+public interface IParseReleaseKeyByReleaseKeyMappingList : IValueFor<string, string>;

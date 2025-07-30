@@ -40,6 +40,9 @@ public class WriteHistoryTable : IWriteHistoryTable
                 $"[white]{sourceOs.InstallDate:yyyy-MM-dd HH:mm:ss}[/]");
         }
 
-        AnsiConsole.Write(historyTable);
+        if (sourceOsCollection.Any())
+        {
+            AnsiConsole.Write(historyTable);
+        }
     }
 }

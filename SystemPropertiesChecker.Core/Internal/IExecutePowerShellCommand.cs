@@ -3,6 +3,4 @@
 namespace SystemPropertiesChecker.Core.Internal;
 
 /// <inheritdoc />
-public interface IExecutePowerShellCommand : IValueFor<string, string>
-{
-}
+public interface IExecutePowerShellCommand : IValueFor<string, string>;

@@ -15,7 +15,6 @@ public class WindowsVersionInformation : IWindowsVersionInformation
     private readonly IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion _localMachineSoftwareMicrosoftWindowsNtCurrentVersion;
     private readonly IPasswordExpirationDate _passwordExpirationDate;
     private readonly IWindowsFeatureExperiencePackVersion _windowsFeatureExperiencePackVersion;
-    private readonly WindowsVersionInformationModel _windowsVersionInformationModel = new();
     private WindowsVersionInformationModel _cachedWindowsVersionInformationModel;
 
     /// <summary>
@@ -67,42 +66,39 @@ public class WindowsVersionInformation : IWindowsVersionInformation
 
             if (!string.IsNullOrWhiteSpace(domain))
             {
-                _windowsVersionInformationModel.Domain = domain;
+                field.Domain = domain;
                 var passwordExpirationDate = _passwordExpirationDate.ValueFor(domain);
-                _windowsVersionInformationModel.UserName = passwordExpirationDate.UserName;
-                _windowsVersionInformationModel.PasswordExpirationDate = passwordExpirationDate.DateString;
+                field.UserName = passwordExpirationDate.UserName;
+                field.PasswordExpirationDate = passwordExpirationDate.DateString;
             }
 
-            _windowsVersionInformationModel.ComputerName = Environment.MachineName;
-            _windowsVersionInformationModel.Architecture = architecture;
-            _windowsVersionInformationModel.Manufacturer = ManufacturerByWin32ComputerSystem();
-            _windowsVersionInformationModel.ManufacturerProduct = ManufacturerByWin32ComputerSystem().Equals(ManufacturerByWin32BaseBoard().Key)
+            field.ComputerName = Environment.MachineName;
+            field.Architecture = architecture;
+            field.Manufacturer = ManufacturerByWin32ComputerSystem();
+            field.ManufacturerProduct = ManufacturerByWin32ComputerSystem().Equals(ManufacturerByWin32BaseBoard().Key)
                 ? ManufacturerByWin32BaseBoard().Value
                 : string.Empty;
 
-            _windowsVersionInformationModel.InsiderChannel = _insiderChannel.Value;
-            _windowsVersionInformationModel.BuildLab = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLab");
-            _windowsVersionInformationModel.BuildLabEx = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx");
-            _windowsVersionInformationModel.BuildLabExList = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx")?.Split('.').ToList();
-            _windowsVersionInformationModel.CurrentBuild = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CurrentBuild");
-            _windowsVersionInformationModel.ProductName = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ProductName");
-            _windowsVersionInformationModel.CurrentVersion = version;
-            _windowsVersionInformationModel.CsdVersion = csdVersion;
-            _windowsVersionInformationModel.ReleaseId = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ReleaseId");
-            _windowsVersionInformationModel.DisplayVersion = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("DisplayVersion");
-            _windowsVersionInformationModel.Ubr = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("UBR");
-            _windowsVersionInformationModel.WindowsFeatureExperiencePackVersion = _windowsFeatureExperiencePackVersion.Value;
-            _windowsVersionInformationModel.InstallDate = InstallDate();
-            _windowsVersionInformationModel.Caption = Caption();
-            _cachedWindowsVersionInformationModel = _windowsVersionInformationModel;
+            field.InsiderChannel = _insiderChannel.Value;
+            field.BuildLab = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLab");
+            field.BuildLabEx = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx");
+            field.BuildLabExList = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("BuildLabEx")?.Split('.').ToList();
+            field.CurrentBuild = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("CurrentBuild");
+            field.ProductName = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ProductName");
+            field.CurrentVersion = version;
+            field.CsdVersion = csdVersion;
+            field.ReleaseId = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("ReleaseId");
+            field.DisplayVersion = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("DisplayVersion");
+            field.Ubr = _localMachineSoftwareMicrosoftWindowsNtCurrentVersion.ValueFor("UBR");
+            field.WindowsFeatureExperiencePackVersion = _windowsFeatureExperiencePackVersion.Value;
+            field.InstallDate = InstallDate();
+            field.Caption = Caption();
+            _cachedWindowsVersionInformationModel = field;
             return _cachedWindowsVersionInformationModel;
         }
-    }
+    } = new();
 
-    private static string Architecture()
-    {
-        return Enum.GetName(RuntimeInformation.OSArchitecture);
-    }
+    private static string Architecture() => Enum.GetName(RuntimeInformation.OSArchitecture);
 
     private static string ManufacturerByWin32ComputerSystem()
     {
