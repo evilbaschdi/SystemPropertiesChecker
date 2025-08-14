@@ -5,9 +5,7 @@
         mc:Ignorable="d" Width="800" Height="800"
         x:Class="SystemPropertiesChecker.Avalonia.Views.MainWindow"
         Title="SystemPropertiesChecker"
-        Icon="/Assets/spc.ico"
-        TransparencyLevelHint="Mica"
-        Background="Transparent">
+        Icon="/Assets/spc.ico">
 
     <Panel Name="RootPanel">
         <ExperimentalAcrylicBorder IsHitTestVisible="False" Name="AcrylicBorder">

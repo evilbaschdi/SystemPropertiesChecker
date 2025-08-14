@@ -19,7 +19,7 @@ public class DotNetCoreInfo : IDotNetCoreInfo
                 process.Start();
 
                 dictionary.AddRange(process.ReadStandardOutput().Select(item => (item.Contains('[') ? item.Split('[').First() : item).Trim())
-                                           .Select(line => line.EndsWith(":")
+                                           .Select(line => line.EndsWith(':')
                                                        ? new(line, string.Empty)
                                                        : new KeyValuePair<string, string>(string.Empty, line)));
 
