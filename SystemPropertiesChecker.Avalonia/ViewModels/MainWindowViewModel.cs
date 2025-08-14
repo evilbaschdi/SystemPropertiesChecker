@@ -69,17 +69,11 @@ public class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// </summary>
     // ReSharper disable once UnusedMember.Global
-
     public string DotNetVersionText
     {
         get => string.Join(Environment.NewLine, _dotNetVersion.Value);
         set => ArgumentNullException.ThrowIfNull(value);
     }
-
-    /// <summary>
-    /// </summary>
-    // ReSharper disable once UnusedMember.Global
-    public string Greeting => "Welcome to Avalonia!";
 
     /// <summary>
     /// </summary>

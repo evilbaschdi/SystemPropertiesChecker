@@ -39,7 +39,7 @@ public class NetFrameworkVersionFromRegistry : INetFrameworkVersionFromRegistry
                 return list;
             }
 
-            foreach (var versionKeyName in ndpKey.GetSubKeyNames().Where(v => v.StartsWith("v")))
+            foreach (var versionKeyName in ndpKey.GetSubKeyNames().Where(v => v.StartsWith('v')))
             {
                 list.AddRange(_handleNetFrameworkSetupNdpKeys.ValueFor((versionKeyName, ndpKey)));
             }
