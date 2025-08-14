@@ -27,8 +27,5 @@ public class ViewLocator : IDataTemplate
     }
 
     /// <inheritdoc />
-    public bool Match(object data)
-    {
-        return data is ViewModelBase;
-    }
+    public bool Match(object data) => data is ViewModelBase;
 }
