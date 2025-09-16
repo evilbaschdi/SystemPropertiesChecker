@@ -16,7 +16,7 @@
 		<Product>SystemPropertiesChecker</Product>
 		<RepositoryUrl>https://github.com/evilbaschdi/SystemPropertiesChecker</RepositoryUrl>
 		<RootNamespace>SystemPropertiesChecker.Core</RootNamespace>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.H))</VersionPrefix>
 	</PropertyGroup>
 

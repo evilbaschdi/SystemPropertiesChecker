@@ -27,7 +27,7 @@ public class WriteDotNetCoreTable : IWriteDotNetCoreTable
                               .Title(".NET CORE")
                               .Centered()
                               .Border(TableBorder.Square)
-                              .BorderColor(Color.Red)
+                              .BorderColor(AccentColorHelper.GetSpectreConsoleColor())
                               .AddColumn(new("[u]Key[/]"))
                               .AddColumn(new("[u]Value[/]"));
         foreach (var (key, value) in dotNetCoreInfo)

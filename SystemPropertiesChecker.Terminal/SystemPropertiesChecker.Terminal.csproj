@@ -11,9 +11,10 @@
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
 		<LangVersion>preview</LangVersion>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<VersionPrefix>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.H))-develop</VersionPrefix>
 		<NoWarn>1701;1702</NoWarn>
 		<PublishSingleFile>true</PublishSingleFile>

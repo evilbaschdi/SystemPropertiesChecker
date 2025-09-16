@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Microsoft.Win32;
 using SystemPropertiesChecker.Core.Models;
@@ -34,7 +35,10 @@ public class OtherInformationText : IOtherInformationText
             list.AddRange(GetBrowsers().Select(browser => new KeyValuePair<string, string>(browser.Name, browser.Version)));
 
             list.Add(new("PowerShell", psVersion));
+            list.Add(new("PowerShell Core", GetPowerShellCoreVersion()));
             list.Add(new("Git", GetGitVersion()));
+            list.Add(new("Visual Studio", VsVersion()));
+            list.Add(new("Code", VsCodeVersion()));
 
             return list;
         }
@@ -104,6 +108,32 @@ public class OtherInformationText : IOtherInformationText
         return !string.IsNullOrWhiteSpace(value) && value.Equals("1");
     }
 
+    private static string GetPowerShellCoreVersion()
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            return "(supported on windows only)";
+        }
+
+        var list = new List<string>();
+        var basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "PowerShell");
+
+        if (Directory.Exists(basePath))
+        {
+            foreach (var dir in Directory.GetDirectories(basePath))
+            {
+                var exePath = Path.Combine(dir, "pwsh.exe");
+                if (File.Exists(exePath))
+                {
+                    var versionInfo = FileVersionInfo.GetVersionInfo(exePath);
+                    list.Add(versionInfo.ProductVersion?.Split(' ').FirstOrDefault());
+                }
+            }
+        }
+
+        return list.Any() ? string.Join(", ", list) : "(none)";
+    }
+
     private static IEnumerable<Browser> GetBrowsers()
     {
         var browsers = new List<Browser>();
@@ -156,14 +186,9 @@ public class OtherInformationText : IOtherInformationText
                 browsers.Add(edgeBrowser);
             }
         }
-        catch (Exception e)
+        catch
         {
-            Console.WriteLine(e);
-            browsers.Add(new()
-                         {
-                             Name = "Error",
-                             Version = e.Message
-                         });
+            // ignored
         }
 
         return browsers;
@@ -196,5 +221,88 @@ public class OtherInformationText : IOtherInformationText
         }
 
         return null;
+    }
+
+    private static string VsVersion()
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            return "(supported on windows only)";
+        }
+
+        var list = new List<string>();
+
+        var vswherePath =
+            Environment.ExpandEnvironmentVariables(
+                @"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe");
+
+        if (!File.Exists(vswherePath))
+        {
+            return ("(none)");
+        }
+
+        var psi = new ProcessStartInfo
+                  {
+                      FileName = vswherePath,
+                      Arguments = "-all -products * -prerelease -format json",
+                      RedirectStandardOutput = true,
+                      UseShellExecute = false,
+                      CreateNoWindow = true
+                  };
+
+        using var process = Process.Start(psi);
+        // ReSharper disable once InvertIf
+        if (process != null)
+        {
+            var output = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+
+            var instances = JsonSerializer.Deserialize<JsonElement>(output);
+
+            list.AddRange(from instance in instances.EnumerateArray()
+                          let catalog = instance.GetProperty("catalog")
+                          where catalog.GetProperty("productName").GetString() == "Visual Studio"
+                          let displayName = instance.GetProperty("displayName").GetString()
+                          let installationVersion = instance.GetProperty("installationVersion").GetString()
+                          let productDisplayVersion = catalog.GetProperty("productDisplayVersion").GetString()
+                          let productMilestone = catalog.GetProperty("productMilestone").GetString()
+                          select $"{displayName} ({productMilestone}) v{productDisplayVersion} ({installationVersion})");
+        }
+
+        return list.Any() ? string.Join(Environment.NewLine, list) : "(none)";
+    }
+
+    private static string VsCodeVersion()
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            return "(supported on windows only)";
+        }
+
+        List<string> possiblePaths =
+        [
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\Microsoft VS Code\Code.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"Microsoft VS Code\Code.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft VS Code\Code.exe")
+        ];
+
+        List<string> possibleVsCodeInsidersPaths =
+        [
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\Microsoft VS Code Insiders\Code - Insiders.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"Microsoft VS Code Insiders\Code - Insiders.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft VS Code Insiders\Code - Insiders.exe")
+        ];
+
+        var list = possiblePaths
+                   .Where(File.Exists)
+                   .Select(FileVersionInfo.GetVersionInfo)
+                   .Select(versionInfo => versionInfo.ProductVersion)
+                   .ToList();
+        list.AddRange(possibleVsCodeInsidersPaths
+                      .Where(File.Exists)
+                      .Select(FileVersionInfo.GetVersionInfo)
+                      .Select(versionInfo => versionInfo.ProductVersion + "(Insider)"));
+
+        return list.Any() ? string.Join(", ", list) : "(none)";
     }
 }

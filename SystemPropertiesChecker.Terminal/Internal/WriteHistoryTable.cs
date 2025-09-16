@@ -29,7 +29,7 @@ public class WriteHistoryTable : IWriteHistoryTable
                            .Title("HISTORY")
                            .Centered()
                            .Border(TableBorder.Square)
-                           .BorderColor(Color.Red)
+                           .BorderColor(AccentColorHelper.GetSpectreConsoleColor())
                            .AddColumn(new("[u]Build[/]"))
                            .AddColumn(new("[u]Product Name[/]"))
                            .AddColumn(new("[u]Release Id[/]"))

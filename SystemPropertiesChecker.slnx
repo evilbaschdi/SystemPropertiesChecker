@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="NuGet.config" />
+    <File Path="README.md" />
+    <File Path="SystemPropertiesChecker.v3.ncrunchsolution" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="SystemPropertiesChecker.Core.Tests/SystemPropertiesChecker.Core.Tests.csproj" />
+    <Project Path="SystemPropertiesChecker.Terminal.Tests/SystemPropertiesChecker.Terminal.Tests.csproj" />
+  </Folder>
+  <Project Path="SystemPropertiesChecker.Avalonia/SystemPropertiesChecker.Avalonia.csproj" />
+  <Project Path="SystemPropertiesChecker.Core/SystemPropertiesChecker.Core.csproj" />
+  <Project Path="SystemPropertiesChecker.Terminal/SystemPropertiesChecker.Terminal.csproj" />
+</Solution>

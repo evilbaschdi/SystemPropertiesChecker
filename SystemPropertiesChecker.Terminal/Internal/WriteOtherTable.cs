@@ -26,7 +26,7 @@ public class WriteOtherTable : IWriteOtherTable
                          .Title("OTHER")
                          .Centered()
                          .Border(TableBorder.Square)
-                         .BorderColor(Color.Red)
+                         .BorderColor(AccentColorHelper.GetSpectreConsoleColor())
                          .AddColumn(new("[u]Key[/]"))
                          .AddColumn(new("[u]Value[/]"));
 

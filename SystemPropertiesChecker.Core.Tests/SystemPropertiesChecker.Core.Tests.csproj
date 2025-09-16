@@ -6,7 +6,7 @@
 		<IsTestProject>true</IsTestProject>
 		<LangVersion>preview</LangVersion>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.H))-develop</Version>
 	</PropertyGroup>
 

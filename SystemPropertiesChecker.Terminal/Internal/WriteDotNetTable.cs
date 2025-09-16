@@ -27,7 +27,7 @@ public class WriteDotNetTable : IWriteDotNetTable
                           .Title(".NET FRAMEWORK")
                           .Centered()
                           .Border(TableBorder.Square)
-                          .BorderColor(Color.Red)
+                          .BorderColor(AccentColorHelper.GetSpectreConsoleColor())
                           .AddColumn(new($"[u]{dotNetVersionText[0].TrimEnd(':')}[/]"));
 
         foreach (var line in dotNetVersionText.GetRange(1, dotNetVersionText.Count - 1))
