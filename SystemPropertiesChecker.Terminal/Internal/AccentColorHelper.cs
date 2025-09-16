@@ -7,39 +7,59 @@ namespace SystemPropertiesChecker.Terminal.Internal;
 /// <summary>
 ///     Helpers to get the system accent color
 /// </summary>
-public static class AccentColorHelper
+public class AccentColorHelper : IAccentColorHelper
 {
-    /// <summary>
-    ///     Gets the system accent color and returns it as a <see cref="System.Drawing.Color" /> struct.
-    /// </summary>
-    /// <returns></returns>
-    public static Color GetAccentColor()
+    private Color? _cachedAccentColor;
+    private Spectre.Console.Color? _cachedSpectreColor;
+
+    /// <inheritdoc />
+    public Color AccentColor
     {
-        if (OperatingSystem.IsWindows())
+        get
         {
-            return GetWindowsAccentColor();
-        }
+            if (_cachedAccentColor.HasValue)
+            {
+                return _cachedAccentColor.Value;
+            }
 
-        if (OperatingSystem.IsLinux())
-        {
-            return GetLinuxAccentColor();
-        }
+            Color color;
+            if (OperatingSystem.IsWindows())
+            {
+                color = GetWindowsAccentColor();
+            }
+            else if (OperatingSystem.IsLinux())
+            {
+                color = GetLinuxAccentColor();
+            }
+            else
+            {
+                color = Color.Empty; // Not implemented for macOS or others
+            }
 
-        return Color.Empty; // Not implemented for macOS or others
+            _cachedAccentColor = color;
+            return color;
+        }
     }
 
-    /// <summary>
-    ///     Gets the system accent color and returns it as a <see cref="Spectre.Console.Color" /> struct.
-    /// </summary>
-    /// <returns></returns>
-    public static Spectre.Console.Color GetSpectreConsoleColor()
+    /// <inheritdoc />
+    public Spectre.Console.Color SpectreConsoleColor
     {
-        var accent = GetAccentColor();
-        return new(accent.R, accent.G, accent.B);
+        get
+        {
+            if (_cachedSpectreColor.HasValue)
+            {
+                return _cachedSpectreColor.Value;
+            }
+
+            var accent = AccentColor;
+            var spectreColor = new Spectre.Console.Color(accent.R, accent.G, accent.B);
+            _cachedSpectreColor = spectreColor;
+            return spectreColor;
+        }
     }
 
     // ---------------- WINDOWS ----------------
-    private static Color GetWindowsAccentColor()
+    private Color GetWindowsAccentColor()
     {
         try
         {
@@ -70,7 +90,7 @@ public static class AccentColorHelper
     }
 
     // ---------------- LINUX ----------------
-    private static Color GetLinuxAccentColor()
+    private Color GetLinuxAccentColor()
     {
         // Try GNOME first
         var gnomeColor = TryRunCommand("gsettings", "get org.gnome.desktop.interface accent-color");
@@ -84,7 +104,8 @@ public static class AccentColorHelper
         }
 
         // Try KDE
-        var kdeConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config/kdeglobals");
+        var kdeConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            ".config/kdeglobals");
         // ReSharper disable once InvertIf
         if (File.Exists(kdeConfigPath))
         {
@@ -107,7 +128,7 @@ public static class AccentColorHelper
     }
 
     // ---------------- HELPERS ----------------
-    private static string TryRunCommand(string fileName, string arguments)
+    private string TryRunCommand(string fileName, string arguments)
     {
         try
         {
@@ -129,7 +150,7 @@ public static class AccentColorHelper
         }
     }
 
-    private static bool TryParseHexColor(string hex, out Color color)
+    private bool TryParseHexColor(string hex, out Color color)
     {
         try
         {
@@ -143,7 +164,7 @@ public static class AccentColorHelper
         }
     }
 
-    private static bool TryParseKdeColor(string value, out Color color)
+    private bool TryParseKdeColor(string value, out Color color)
     {
         try
         {

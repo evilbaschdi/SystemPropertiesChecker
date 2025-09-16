@@ -11,6 +11,7 @@ public static class ConfigureTerminalServices
     {
         ArgumentNullException.ThrowIfNull(services);
 
+        services.AddSingleton<IAccentColorHelper, AccentColorHelper>();
         services.AddScoped<IWriteWindowsTable, WriteWindowsTable>();
         services.AddScoped<IWriteHistoryTable, WriteHistoryTable>();
         services.AddScoped<IWriteDotNetTable, WriteDotNetTable>();

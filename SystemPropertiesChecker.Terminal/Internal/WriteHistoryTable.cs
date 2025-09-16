@@ -9,15 +9,18 @@ namespace SystemPropertiesChecker.Terminal.Internal;
 public class WriteHistoryTable : IWriteHistoryTable
 {
     private readonly ISourceOsCollection _sourceOsCollection;
+    private readonly IAccentColorHelper _accentColorHelper;
 
     /// <summary>
     ///     Constructor
     /// </summary>
     /// <param name="sourceOsCollection"></param>
+    /// <param name="accentColorHelper"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public WriteHistoryTable(ISourceOsCollection sourceOsCollection)
+    public WriteHistoryTable(ISourceOsCollection sourceOsCollection, IAccentColorHelper accentColorHelper)
     {
         _sourceOsCollection = sourceOsCollection ?? throw new ArgumentNullException(nameof(sourceOsCollection));
+        _accentColorHelper = accentColorHelper ?? throw new ArgumentNullException(nameof(accentColorHelper));
     }
 
     /// <inheritdoc />
@@ -25,18 +28,22 @@ public class WriteHistoryTable : IWriteHistoryTable
     {
         var sourceOsCollection = _sourceOsCollection.Value ?? new ObservableCollection<SourceOs>();
 
+        var color = _accentColorHelper.SpectreConsoleColor;
+        var markup = color.ToMarkup();
+
         var historyTable = new Table()
                            .Title("HISTORY")
                            .Centered()
                            .Border(TableBorder.Square)
-                           .BorderColor(AccentColorHelper.GetSpectreConsoleColor())
+                           .BorderColor(color)
                            .AddColumn(new("[u]Build[/]"))
                            .AddColumn(new("[u]Product Name[/]"))
                            .AddColumn(new("[u]Release Id[/]"))
                            .AddColumn(new("[u]Product Name[/]"));
         foreach (var sourceOs in sourceOsCollection)
         {
-            historyTable.AddRow($"[blue]{sourceOs.Build}[/]", $"[white]{sourceOs.ProductName}[/]", $"[white]{sourceOs.ReleaseId}[/]",
+            historyTable.AddRow($"[{markup}]{sourceOs.Build}[/]", $"[white]{sourceOs.ProductName}[/]",
+                $"[white]{sourceOs.ReleaseId}[/]",
                 $"[white]{sourceOs.InstallDate:yyyy-MM-dd HH:mm:ss}[/]");
         }
 
