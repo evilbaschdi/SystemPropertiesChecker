@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using EvilBaschdi.About.Terminal;
 using Spectre.Console;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Models;

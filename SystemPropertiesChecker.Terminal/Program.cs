@@ -1,11 +1,14 @@
-﻿using EvilBaschdi.Core;
-using EvilBaschdi.Core.DependencyInjection;
+﻿using EvilBaschdi.About.Terminal.DependencyInjection;
+using EvilBaschdi.Core;
 using Microsoft.Extensions.DependencyInjection;
+using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Terminal;
 
 IServiceCollection serviceCollection = new ServiceCollection();
-IConfigureServiceCollection startup = new Startup();
-startup.RunFor(serviceCollection);
+
+serviceCollection.AddCoreServices();
+serviceCollection.AddAboutServices();
+serviceCollection.AddTerminalServices();
 
 IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 

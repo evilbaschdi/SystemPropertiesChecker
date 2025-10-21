@@ -22,6 +22,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="EvilBaschdi.Core" />
+		<PackageReference Include="EvilBaschdi.About.Terminal" />
 		<PackageReference Include="Spectre.Console" />
 	</ItemGroup>
 
