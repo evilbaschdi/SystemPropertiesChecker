@@ -131,7 +131,7 @@ public class OtherInformationText : IOtherInformationText
             }
         }
 
-        return list.Any() ? string.Join(", ", list) : "(none)";
+        return list.Count != 0 ? string.Join(", ", list) : "(none)";
     }
 
     private static IEnumerable<Browser> GetBrowsers()
@@ -269,7 +269,7 @@ public class OtherInformationText : IOtherInformationText
                           select $"{displayName} ({productMilestone}) v{productDisplayVersion} ({installationVersion})");
         }
 
-        return list.Any() ? string.Join(Environment.NewLine, list) : "(none)";
+        return list.Count != 0 ? string.Join(Environment.NewLine, list) : "(none)";
     }
 
     private static string VsCodeVersion()
@@ -303,6 +303,6 @@ public class OtherInformationText : IOtherInformationText
                       .Select(FileVersionInfo.GetVersionInfo)
                       .Select(versionInfo => versionInfo.ProductVersion + "(Insider)"));
 
-        return list.Any() ? string.Join(", ", list) : "(none)";
+        return list.Count != 0 ? string.Join(", ", list) : "(none)";
     }
 }
