@@ -9,11 +9,11 @@
     <PackageVersion Include="EvilBaschdi.About.Avalonia" Version="2026.1.13.18" />
     <PackageVersion Include="EvilBaschdi.About.Terminal" Version="2026.1.13.18" />
     <PackageVersion Include="EvilBaschdi.Core" Version="2025.12.9.20" />
-    <PackageVersion Include="EvilBaschdi.Core.Avalonia" Version="2026.1.13.18" />
-    <PackageVersion Include="EvilBaschdi.Core.DependencyInjection" Version="2026.1.13.19" />
-    <PackageVersion Include="EvilBaschdi.Core.Settings" Version="2026.1.13.19" />
+    <PackageVersion Include="EvilBaschdi.Core.Avalonia" Version="2026.1.27.17" />
+    <PackageVersion Include="EvilBaschdi.Core.DependencyInjection" Version="2026.1.27.19" />
+    <PackageVersion Include="EvilBaschdi.Core.Settings" Version="2026.1.27.19" />
     <PackageVersion Include="EvilBaschdi.Testing" Version="2026.1.15.17" />
-    <PackageVersion Include="FluentAvaloniaUI" Version="2.4.1" />
+    <PackageVersion Include="FluentAvaloniaUI" Version="2.5.0" />
     <PackageVersion Include="FluentAssertions.Analyzers" Version="0.34.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
