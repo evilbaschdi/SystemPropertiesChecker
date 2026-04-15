@@ -1,5 +1,8 @@
 using Avalonia;
+using EvilBaschdi.About.Avalonia.DependencyInjection;
 using EvilBaschdi.Core.Avalonia;
+using SystemPropertiesChecker.Avalonia.DepencencyInjection;
+using SystemPropertiesChecker.Core.Internal;
 
 namespace SystemPropertiesChecker.Avalonia;
 
@@ -16,5 +19,11 @@ internal class Program
     // Avalonia configuration, don't remove; also used by visual designer.
     // ReSharper disable once MemberCanBePrivate.Global
     public static AppBuilder BuildAvaloniaApp()
-        => new AppBuilderImplementation<App>().Value;
+        => new AppBuilderImplementationToUseReactiveUIWithMicrosoftDependencyResolver<App>()
+            .ValueFor(serviceCollection =>
+                      {
+                          serviceCollection.AddCoreServices();
+                          serviceCollection.AddAboutServices();
+                          serviceCollection.AddWindowsAndViewModels();
+                      });
 }

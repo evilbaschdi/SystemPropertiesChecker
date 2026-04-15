@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using EvilBaschdi.Core.Avalonia;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace SystemPropertiesChecker.Avalonia.Views;
 
@@ -18,10 +17,10 @@ public partial class MainWindow : Window
 
     private void ApplyLayout()
     {
-        var handleOsDependentTitleBar = App.ServiceProvider?.GetRequiredService<IHandleOsDependentTitleBar>();
+        var handleOsDependentTitleBar = ApplicationServices.GetRequiredService<IHandleOsDependentTitleBar>();
         handleOsDependentTitleBar?.RunFor(this);
 
-        var applicationLayout = App.ServiceProvider?.GetRequiredService<IApplicationLayout>();
+        var applicationLayout = ApplicationServices.GetRequiredService<IApplicationLayout>();
         applicationLayout?.RunFor((this, true, false));
     }
 }

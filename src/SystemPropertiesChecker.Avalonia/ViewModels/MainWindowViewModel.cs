@@ -3,7 +3,7 @@ using System.Reactive;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using EvilBaschdi.About.Avalonia;
-using Microsoft.Extensions.DependencyInjection;
+using EvilBaschdi.Core.Avalonia;
 using ReactiveUI;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
@@ -108,7 +108,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private async Task AboutWindowCommandAction()
     {
-        var aboutWindow = App.ServiceProvider.GetRequiredService<AboutWindow>();
+        var aboutWindow = ApplicationServices.GetRequiredService<AboutWindow>();
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
         if (mainWindow != null)
         {

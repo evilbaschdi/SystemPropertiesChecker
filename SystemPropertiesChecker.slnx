@@ -10,11 +10,13 @@
     <File Path="README.md" />
     <File Path="SystemPropertiesChecker.v3.ncrunchsolution" />
   </Folder>
-  <Folder Name="/Tests/">
-    <Project Path="SystemPropertiesChecker.Core.Tests/SystemPropertiesChecker.Core.Tests.csproj" />
-    <Project Path="SystemPropertiesChecker.Terminal.Tests/SystemPropertiesChecker.Terminal.Tests.csproj" />
+  <Folder Name="/src/">
+    <Project Path="src/SystemPropertiesChecker.Avalonia/SystemPropertiesChecker.Avalonia.csproj" />
+    <Project Path="src/SystemPropertiesChecker.Core/SystemPropertiesChecker.Core.csproj" />
+    <Project Path="src/SystemPropertiesChecker.Terminal/SystemPropertiesChecker.Terminal.csproj" />
   </Folder>
-  <Project Path="SystemPropertiesChecker.Avalonia/SystemPropertiesChecker.Avalonia.csproj" />
-  <Project Path="SystemPropertiesChecker.Core/SystemPropertiesChecker.Core.csproj" />
-  <Project Path="SystemPropertiesChecker.Terminal/SystemPropertiesChecker.Terminal.csproj" />
+  <Folder Name="/tests/">
+    <Project Path="tests/SystemPropertiesChecker.Core.Tests/SystemPropertiesChecker.Core.Tests.csproj" />
+    <Project Path="tests/SystemPropertiesChecker.Terminal.Tests/SystemPropertiesChecker.Terminal.Tests.csproj" />
+  </Folder>
 </Solution>

@@ -21,7 +21,7 @@
 	<ItemGroup>
 		<PackageReference Include="EvilBaschdi.Core" />
 		<PackageReference Include="EvilBaschdi.Testing" />
-		<PackageReference Include="xunit.v3" />
+		<PackageReference Include="xunit.v3.mtp-v2" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
 	</ItemGroup>
 
@@ -49,7 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SystemPropertiesChecker.Core\SystemPropertiesChecker.Core.csproj" />
+		<ProjectReference Include="..\..\src\SystemPropertiesChecker.Terminal\SystemPropertiesChecker.Terminal.csproj" />
 	</ItemGroup>
 
 </Project>
