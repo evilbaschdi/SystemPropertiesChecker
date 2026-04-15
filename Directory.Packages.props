@@ -1,27 +1,29 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.3" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
-    <PackageVersion Include="EvilBaschdi.About.Avalonia" Version="2025.8.5.19" />
-    <PackageVersion Include="EvilBaschdi.Core" Version="2025.7.22.17" />
-    <PackageVersion Include="EvilBaschdi.Core.Avalonia" Version="2025.8.5.19" />
-    <PackageVersion Include="EvilBaschdi.Core.DependencyInjection" Version="2025.8.5.17" />
-    <PackageVersion Include="EvilBaschdi.Core.Settings" Version="2025.8.5.17" />
-    <PackageVersion Include="EvilBaschdi.Testing" Version="2025.7.14.6" />
-    <PackageVersion Include="FluentAvaloniaUI" Version="2.4.0" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.14" />
+    <PackageVersion Include="coverlet.collector" Version="8.0.1" />
+    <PackageVersion Include="EvilBaschdi.About.Avalonia" Version="2026.4.4.9" />
+    <PackageVersion Include="EvilBaschdi.About.Terminal" Version="2026.4.4.9" />
+    <PackageVersion Include="EvilBaschdi.Core" Version="2026.3.30.19" />
+    <PackageVersion Include="EvilBaschdi.Core.Avalonia" Version="2026.4.13.19" />
+    <PackageVersion Include="EvilBaschdi.Core.DependencyInjection" Version="2026.4.15.17" />
+    <PackageVersion Include="EvilBaschdi.Core.Settings" Version="2026.4.15.17" />
+    <PackageVersion Include="EvilBaschdi.Testing" Version="2026.4.6.14" />
+    <PackageVersion Include="FluentAvaloniaUI" Version="2.5.1" />
     <PackageVersion Include="FluentAssertions.Analyzers" Version="0.34.1" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.4.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
-    <PackageVersion Include="Spectre.Console" Version="0.50.0" />
-    <PackageVersion Include="System.DirectoryServices" Version="9.0.8" />
-    <PackageVersion Include="System.DirectoryServices.AccountManagement" Version="9.0.8" />
-    <PackageVersion Include="System.Management" Version="9.0.8" />
-    <PackageVersion Include="xunit.v3" Version="3.0.0" />
-    <PackageVersion Include="xunit.analyzers" Version="1.23.0" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.3" />
+    <PackageVersion Include="Spectre.Console" Version="0.55.0" />
+    <PackageVersion Include="System.DirectoryServices" Version="10.0.6" />
+    <PackageVersion Include="System.DirectoryServices.AccountManagement" Version="10.0.6" />
+    <PackageVersion Include="System.Management" Version="10.0.6" />
+    <PackageVersion Include="Tmds.DBus.Protocol" Version="0.21.3" />
+    <PackageVersion Include="xunit.v3.mtp-v2" Version="3.2.2" />
+    <PackageVersion Include="xunit.analyzers" Version="1.27.0" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
   </ItemGroup>
 </Project>
