@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:SystemPropertiesChecker.Avalonia.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="SystemPropertiesChecker.Avalonia.Views.HistoryView"
+             x:DataType="viewModels:MainWindowViewModel">
+    <DataGrid Name="WindowsHistory" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding SourceOsCollection}" VerticalScrollBarVisibility="Auto">
+        <DataGrid.Columns>
+            <DataGridTextColumn Binding="{Binding Build}" Header="Build" Width="95" FontSize="12" />
+            <DataGridTextColumn Binding="{Binding ProductName}" Header="Product Name" Width="*" FontSize="12" />
+            <DataGridTextColumn Binding="{Binding ReleaseId}" Header="Release Id" Width="95" FontSize="12" />
+            <DataGridTextColumn Binding="{Binding InstallDate, StringFormat=\{0:yyyy-MM-dd hh:mm:ss\}}" Header="Install Date" Width="150" FontSize="12" />
+        </DataGrid.Columns>
+        <DataGrid.Styles>
+            <Style Selector="DataGridColumnHeader">
+                <Setter Property="Background" Value="Transparent" />
+            </Style>
+        </DataGrid.Styles>
+    </DataGrid>
+</UserControl>

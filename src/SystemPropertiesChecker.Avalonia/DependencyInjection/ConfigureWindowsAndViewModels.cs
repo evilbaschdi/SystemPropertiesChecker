@@ -1,9 +1,10 @@
-﻿using EvilBaschdi.Core.Avalonia;
+﻿using EvilBaschdi.Core.Avalonia.Layout;
+using EvilBaschdi.Core.Avalonia.Lifetime;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SystemPropertiesChecker.Avalonia.ViewModels;
 
-namespace SystemPropertiesChecker.Avalonia.DepencencyInjection;
+namespace SystemPropertiesChecker.Avalonia.DependencyInjection;
 
 /// <summary />
 public static class ConfigureWindowsAndViewModels

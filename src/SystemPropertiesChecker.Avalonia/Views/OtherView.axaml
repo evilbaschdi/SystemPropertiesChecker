@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:SystemPropertiesChecker.Avalonia.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="SystemPropertiesChecker.Avalonia.Views.OtherView"
+             x:DataType="viewModels:MainWindowViewModel">
+    <DataGrid Name="OtherDataGrid" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding OtherText}" VerticalScrollBarVisibility="Auto">
+        <DataGrid.Columns>
+            <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12" />
+            <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12" />
+        </DataGrid.Columns>
+        <DataGrid.Styles>
+            <Style Selector="DataGridColumnHeader">
+                <Setter Property="Background" Value="Transparent" />
+            </Style>
+        </DataGrid.Styles>
+    </DataGrid>
+</UserControl>
