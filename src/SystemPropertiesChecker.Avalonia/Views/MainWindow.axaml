@@ -21,104 +21,20 @@
         </Panel>
 
         <Panel Name="MainPanel" Margin="0,30,0,0">
-            <Panel>
-                <Panel Name="ContentPanel" Margin="0,0,0,0">
-                    <!--<TabControl TabStripPlacement="Left">
-                        -->                    <!--Basic-->                    <!--
-                        <TabItem Name="BasicTab" Header="🏢" FontSize="20">
-                            <DataGrid Name="CurrentVersion" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding CurrentVersionText}" VerticalScrollBarVisibility="Auto">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12" />
-                                    <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12" />
-                                </DataGrid.Columns>
-                                <DataGrid.Styles>
-                                    <Style Selector="DataGridColumnHeader">
-                                        <Setter Property="Background" Value="Transparent" />
-                                    </Style>
-                                </DataGrid.Styles>
-                            </DataGrid>
-                        </TabItem>
-                        -->                    <!--Windows History-->                    <!--
-                        <TabItem Name="WindowsTab" Header="📖" IsVisible="{Binding WindowsTabVisibility}" FontSize="20">
-                            <DataGrid Name="WindowsHistory" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding SourceOsCollection}" VerticalScrollBarVisibility="Auto">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Build}" Header="Build" Width="95" FontSize="12" />
-                                    <DataGridTextColumn Binding="{Binding ProductName}" Header="Product Name" Width="*" FontSize="12" />
-                                    <DataGridTextColumn Binding="{Binding ReleaseId}" Header="Release Id" Width="95" FontSize="12" />
-                                    <DataGridTextColumn Binding="{Binding InstallDate, StringFormat=\{0:yyyy-MM-dd hh:mm:ss\}}" Header="Install Date" Width="150" FontSize="12" />
-                                </DataGrid.Columns>
-                                <DataGrid.Styles>
-                                    <Style Selector="DataGridColumnHeader">
-                                        <Setter Property="Background" Value="Transparent" />
-                                    </Style>
-                                </DataGrid.Styles>
-                            </DataGrid>
-                        </TabItem>
-                        -->                    <!--.net-->                    <!--
-                        <TabItem Name="DotNetTab" Header=".net" FontSize="20">
-                            <TabControl Name="DotNetTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Top">
-                                <TabItem Name="DotNetCoreTab" Header=".net core">
-                                    <DataGrid Name="DotNetCoreDataGrid" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto">
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12" />
-                                            <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12" />
-                                        </DataGrid.Columns>
-                                        <DataGrid.Styles>
-                                            <Style Selector="DataGridColumnHeader">
-                                                <Setter Property="Background" Value="Transparent" />
-                                            </Style>
-                                        </DataGrid.Styles>
-                                    </DataGrid>
-                                </TabItem>
-                                <TabItem Name="DotNetFullTab" Header=".net framework">
-                                    <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding DotNetVersionText}" />
-                                </TabItem>
-                            </TabControl>
-                        </TabItem>
-                        -->                    <!--Other-->                    <!--
-                        <TabItem Name="OtherTab" Header="other" FontSize="20">
-                            <DataGrid Name="OtherDataGrid" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding OtherText}" VerticalScrollBarVisibility="Auto">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12" />
-                                    <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12" />
-                                </DataGrid.Columns>
-                                <DataGrid.Styles>
-                                    <Style Selector="DataGridColumnHeader">
-                                        <Setter Property="Background" Value="Transparent" />
-                                    </Style>
-                                </DataGrid.Styles>
-                            </DataGrid>
-                        </TabItem>
-                    </TabControl>-->
+            <controls:FANavigationView x:Name="MainNavigationView" PaneDisplayMode="LeftCompact" IsSettingsVisible="False" IsPaneToggleButtonVisible="False"
+                                       SelectedItem="{Binding SelectedMenuItem}"
+                                       Content="{Binding CurrentPage}">
+                <controls:FANavigationView.MenuItems>
+                    <controls:FANavigationViewItem Content="Basic" Tag="Basic" IconSource="Home" />
+                    <controls:FANavigationViewItem Content="History" Tag="History" IconSource="AllApps" IsVisible="{Binding WindowsTabVisibility}" />
+                    <controls:FANavigationViewItem Content=".NET" Tag="DotNet" IconSource="Code" />
+                    <controls:FANavigationViewItem Content="Other" Tag="Other" IconSource="Library" />
+                </controls:FANavigationView.MenuItems>
 
-                    <controls:FANavigationView x:Name="nvSample6" Height="460" PaneDisplayMode="LeftMinimal">
-                        <controls:FANavigationView.MenuItems>
-                            <controls:FANavigationViewItem Content="Menu Item1" Tag="SamplePage1" IconSource="Play" />
-                            <controls:FANavigationViewItemHeader Content="Actions" />
-                            <controls:FANavigationViewItem Name="MenuItem2" Content="Menu Item2" Tag="SamplePage2" IconSource="Download" />
-                            <controls:FANavigationViewItem Content="Menu Item3" Tag="SamplePage3" IconSource="Refresh" />
-                        </controls:FANavigationView.MenuItems>
-
-                        <controls:FANavigationView.AutoCompleteBox>
-                            <AutoCompleteBox />
-                        </controls:FANavigationView.AutoCompleteBox>
-
-                        <controls:FANavigationView.PaneCustomContent>
-                            <TextBlock Name="PaneHyperlink" TextDecorations="Underline" Text="More Info" IsVisible="False" />
-                        </controls:FANavigationView.PaneCustomContent>
-
-                        <controls:FANavigationView.PaneFooter>
-                            <StackPanel Name="FooterStackPanel" Orientation="Vertical" IsVisible="False">
-                                <controls:FANavigationViewItem IconSource="Download" />
-                                <controls:FANavigationViewItem IconSource="Alert" />
-                            </StackPanel>
-                        </controls:FANavigationView.PaneFooter>
-
-                    </controls:FANavigationView>
-
-
-                </Panel>
-            </Panel>
+                <controls:FANavigationView.FooterMenuItems>
+                    <controls:FANavigationViewItem Content="About" Tag="About" IconSource="More" />
+                </controls:FANavigationView.FooterMenuItems>
+            </controls:FANavigationView>
         </Panel>
     </Panel>
 </windowing:FAAppWindow>
