@@ -3,7 +3,7 @@ using System.Reactive;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using EvilBaschdi.About.Avalonia;
-using EvilBaschdi.Core.Avalonia;
+using EvilBaschdi.Core.Avalonia.DependencyInjection;
 using ReactiveUI;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;

@@ -1,7 +1,7 @@
 using Avalonia;
 using EvilBaschdi.About.Avalonia.DependencyInjection;
-using EvilBaschdi.Core.Avalonia;
-using SystemPropertiesChecker.Avalonia.DepencencyInjection;
+using EvilBaschdi.Core.Avalonia.AppBuilderImplementations;
+using SystemPropertiesChecker.Avalonia.DependencyInjection;
 using SystemPropertiesChecker.Core.Internal;
 
 namespace SystemPropertiesChecker.Avalonia;
