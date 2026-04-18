@@ -13,7 +13,7 @@ Gives information regarding device name, current IP, and the windows information
 List of former installed versions / builds of windows
 ![Screenshot_History](./.repo/history.png)
 
-## `.net core` View
+## `.net` View
 Reads global.json to list installed .net (core) runtimes and SDKs
 ![Screenshot_Core](./.repo/core.png)
 

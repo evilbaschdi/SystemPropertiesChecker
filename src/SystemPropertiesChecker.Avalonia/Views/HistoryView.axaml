@@ -6,7 +6,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SystemPropertiesChecker.Avalonia.Views.HistoryView"
              x:DataType="viewModels:MainWindowViewModel">
-    <DataGrid Name="WindowsHistory" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding SourceOsCollection}" VerticalScrollBarVisibility="Auto">
+    <DataGrid Name="WindowsHistory" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False"
+              ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center"
+              VerticalAlignment="Top" ItemsSource="{Binding SourceOsCollection}" VerticalScrollBarVisibility="Auto">
         <DataGrid.Columns>
             <DataGridTextColumn Binding="{Binding Build}" Header="Build" Width="95" FontSize="12" />
             <DataGridTextColumn Binding="{Binding ProductName}" Header="Product Name" Width="*" FontSize="12" />

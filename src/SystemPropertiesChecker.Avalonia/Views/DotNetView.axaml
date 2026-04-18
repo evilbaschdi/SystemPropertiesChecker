@@ -2,13 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:SystemPropertiesChecker.Avalonia.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="SystemPropertiesChecker.Avalonia.Views.DotNetView"
-             x:DataType="viewModels:MainWindowViewModel">
+             xmlns:viewModels="clr-namespace:SystemPropertiesChecker.Avalonia.ViewModels" mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="SystemPropertiesChecker.Avalonia.Views.DotNetView" x:DataType="viewModels:MainWindowViewModel">
     <TabControl Name="DotNetTabControl" HorizontalContentAlignment="Center" TabStripPlacement="Top">
-        <TabItem Name="DotNetCoreTab" Header=".net core">
-            <DataGrid Name="DotNetCoreDataGrid" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto">
+        <TabItem Name="DotNetCoreTab" Header=".net">
+            <DataGrid Name="DotNetCoreDataGrid" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center"
+                      VerticalAlignment="Top" ItemsSource="{Binding DotNetCoreVersionText}" VerticalScrollBarVisibility="Auto">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12" />
                     <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12" />
@@ -21,7 +21,8 @@
             </DataGrid>
         </TabItem>
         <TabItem Name="DotNetFullTab" Header=".net framework">
-            <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding DotNetVersionText}" />
+            <TextBox Name="DotNetVersion" Margin="10" IsReadOnly="True" Background="Transparent" BorderThickness="0" TextAlignment="Center" HorizontalAlignment="Center"
+                     VerticalAlignment="Top" Text="{Binding DotNetVersionText}" />
         </TabItem>
     </TabControl>
 </UserControl>

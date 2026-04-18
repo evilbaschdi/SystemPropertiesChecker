@@ -16,6 +16,7 @@
     <Project Path="src/SystemPropertiesChecker.Terminal/SystemPropertiesChecker.Terminal.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/SystemPropertiesChecker.Avalonia.Tests/SystemPropertiesChecker.Avalonia.Tests.csproj" />
     <Project Path="tests/SystemPropertiesChecker.Core.Tests/SystemPropertiesChecker.Core.Tests.csproj" />
     <Project Path="tests/SystemPropertiesChecker.Terminal.Tests/SystemPropertiesChecker.Terminal.Tests.csproj" />
   </Folder>

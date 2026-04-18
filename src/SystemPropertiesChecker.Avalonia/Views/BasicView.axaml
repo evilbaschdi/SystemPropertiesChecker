@@ -6,7 +6,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SystemPropertiesChecker.Avalonia.Views.BasicView"
              x:DataType="viewModels:MainWindowViewModel">
-    <DataGrid Name="CurrentVersion" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding CurrentVersionText}" VerticalScrollBarVisibility="Auto">
+    <DataGrid Name="CurrentVersion" Margin="0" SelectionMode="Single" ColumnWidth="*" GridLinesVisibility="Horizontal" AutoGenerateColumns="False"
+              ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" HorizontalAlignment="Center"
+              VerticalAlignment="Top" ItemsSource="{Binding CurrentVersionText}" VerticalScrollBarVisibility="Auto">
         <DataGrid.Columns>
             <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="250" FontSize="12" />
             <DataGridTextColumn Binding="{Binding Value}" Header="Value" Width="*" FontSize="12" />

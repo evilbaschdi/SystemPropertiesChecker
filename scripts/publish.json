@@ -1,5 +1,6 @@
 {
-    "publish": [
+    "pipelineName": "System Properties Checker",
+    "profiles": [
         {
             "project": "SystemPropertiesChecker.Avalonia",
             "runtimes": [
