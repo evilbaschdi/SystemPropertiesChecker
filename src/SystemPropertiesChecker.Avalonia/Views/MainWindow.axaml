@@ -5,20 +5,15 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:windowing="clr-namespace:FluentAvalonia.UI.Windowing;assembly=FluentAvalonia"
                        xmlns:viewModels="clr-namespace:SystemPropertiesChecker.Avalonia.ViewModels"
-                       xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia" mc:Ignorable="d" Width="800" Height="800"
-                       x:Class="SystemPropertiesChecker.Avalonia.Views.MainWindow" x:DataType="viewModels:MainWindowViewModel" Title="SystemPropertiesChecker" ShowAsDialog="True"
-                       Icon="/Assets/spc.ico">
+                       xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+                       xmlns:evilBaschdi="clr-namespace:EvilBaschdi.Core.Avalonia.Controls;assembly=EvilBaschdi.Core.Avalonia"
+                       mc:Ignorable="d" Width="800" Height="800"
+                       x:Class="SystemPropertiesChecker.Avalonia.Views.MainWindow" x:DataType="viewModels:MainWindowViewModel" Title="SystemPropertiesChecker" ShowAsDialog="True">
 
     <Panel Name="RootPanel">
 
-        <Panel Name="TitleBarPanel" Height="30" VerticalAlignment="Top" Margin="0,0,0,0">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8" Margin="8,0">
-                <!-- App Icon -->
-                <Image Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=windowing:FAAppWindow}}" Width="20" Height="20" VerticalAlignment="Center" />
-                <!-- App Title -->
-                <TextBlock Text="System Properties Checker" />
-            </StackPanel>
-        </Panel>
+        <!-- ReSharper disable once Xaml.PathError -->
+        <evilBaschdi:TitleBarControl Icon="/Assets/spc.ico" Name="TitleBarControl" />
 
         <Panel Name="MainPanel" Margin="0,30,0,0">
             <controls:FANavigationView x:Name="MainNavigationView" PaneDisplayMode="LeftCompact" IsSettingsVisible="False" IsPaneToggleButtonVisible="False"

@@ -1,26 +1,26 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1" />
-    <PackageVersion Include="coverlet.collector" Version="10.0.0" />
-    <PackageVersion Include="EvilBaschdi.About.Avalonia" Version="2026.4.13.18-develop" />
-    <PackageVersion Include="EvilBaschdi.About.Terminal" Version="2026.4.13.18-develop" />
-    <PackageVersion Include="EvilBaschdi.Core" Version="2026.3.30.19" />
-    <PackageVersion Include="EvilBaschdi.Core.Avalonia" Version="2026.4.13.18-develop" />
-    <PackageVersion Include="EvilBaschdi.Core.DependencyInjection" Version="2026.4.15.17" />
-    <PackageVersion Include="EvilBaschdi.Core.Settings" Version="2026.4.15.17" />
-    <PackageVersion Include="EvilBaschdi.Testing" Version="2026.4.6.14" />
-    <PackageVersion Include="EvilBaschdi.Testing.Avalonia" Version="2026.4.13.18-develop" />
+    <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
+    <PackageVersion Include="coverlet.collector" Version="10.0.1" />
+    <PackageVersion Include="EvilBaschdi.About.Avalonia" Version="2026.6.6.7" />
+    <PackageVersion Include="EvilBaschdi.About.Terminal" Version="2026.6.6.7" />
+    <PackageVersion Include="EvilBaschdi.Core" Version="2026.6.18.15" />
+    <PackageVersion Include="EvilBaschdi.Core.Avalonia" Version="2026.6.28.6" />
+    <PackageVersion Include="EvilBaschdi.Core.DependencyInjection" Version="2026.6.9.18" />
+    <PackageVersion Include="EvilBaschdi.Core.Settings" Version="2026.6.9.18" />
+    <PackageVersion Include="EvilBaschdi.Testing" Version="2026.6.4.12" />
+    <PackageVersion Include="EvilBaschdi.Testing.Avalonia" Version="2026.6.28.6" />
     <PackageVersion Include="FluentAssertions.Analyzers" Version="0.34.1" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.4.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
-    <PackageVersion Include="Spectre.Console" Version="0.55.2" />
-    <PackageVersion Include="System.DirectoryServices" Version="10.0.6" />
-    <PackageVersion Include="System.DirectoryServices.AccountManagement" Version="10.0.6" />
-    <PackageVersion Include="System.Management" Version="10.0.6" />
+    <PackageVersion Include="Spectre.Console" Version="0.57.1" />
+    <PackageVersion Include="System.DirectoryServices" Version="10.0.9" />
+    <PackageVersion Include="System.DirectoryServices.AccountManagement" Version="10.0.9" />
+    <PackageVersion Include="System.Management" Version="10.0.9" />
     <PackageVersion Include="xunit.v3.mtp-v2" Version="3.2.2" />
     <PackageVersion Include="xunit.analyzers" Version="1.27.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />

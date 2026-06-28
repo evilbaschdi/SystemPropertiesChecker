@@ -163,7 +163,9 @@ public class MainWindowViewModel : ViewModelBase
     private async Task AboutWindowCommandAction()
     {
         var aboutWindow = ApplicationServices.GetRequiredService<AboutWindow>();
-        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+            ? desktop.MainWindow
+            : null;
         if (mainWindow != null)
         {
             await aboutWindow.ShowDialog(mainWindow);

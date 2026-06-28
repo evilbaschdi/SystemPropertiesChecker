@@ -1,5 +1,4 @@
-﻿using EvilBaschdi.Core.Avalonia.Layout;
-using EvilBaschdi.Core.Avalonia.Lifetime;
+﻿using EvilBaschdi.Core.Avalonia.Lifetime;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SystemPropertiesChecker.Avalonia.ViewModels;
@@ -14,8 +13,6 @@ public static class ConfigureWindowsAndViewModels
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        services.TryAddSingleton<IHandleOsDependentTitleBar, HandleOsDependentTitleBar>();
-        services.TryAddSingleton<IApplicationLayout, ApplicationLayout>();
         services.TryAddSingleton<IMainWindowByApplicationLifetime, MainWindowByApplicationLifetime>();
         services.AddSingleton<MainWindowViewModel>();
     }
