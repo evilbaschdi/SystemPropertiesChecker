@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using Microsoft.Win32;
+using JetBrains.Annotations;
 using SystemPropertiesChecker.Core.Models;
 
 namespace SystemPropertiesChecker.Core.Internal;
@@ -12,6 +12,16 @@ namespace SystemPropertiesChecker.Core.Internal;
 // ReSharper disable once ClassNeverInstantiated.Global
 public class OtherInformationText : IOtherInformationText
 {
+    private readonly ISystemPropertiesProvider _systemPropertiesProvider;
+
+    /// <summary>
+    ///     Constructor
+    /// </summary>
+    public OtherInformationText([NotNull] ISystemPropertiesProvider systemPropertiesProvider)
+    {
+        _systemPropertiesProvider = systemPropertiesProvider ?? throw new ArgumentNullException(nameof(systemPropertiesProvider));
+    }
+
     /// <summary>
     ///     Other information text.
     /// </summary>
@@ -44,22 +54,14 @@ public class OtherInformationText : IOtherInformationText
         }
     }
 
-    private static string GetIeVersion()
+    private string GetIeVersion()
     {
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             return "(supported on windows only)";
         }
 
-        const string key = @"Software\Microsoft\Internet Explorer";
-        var subKey = Registry.LocalMachine.OpenSubKey(key, false);
-        if (subKey == null)
-        {
-            return "0";
-        }
-
-        var value = subKey.GetValue("svcVersion")?.ToString();
-        return value;
+        return _systemPropertiesProvider.Data.RegistryInternetExplorerVersion ?? "0";
     }
 
     private static string GetGitVersion()
@@ -79,33 +81,44 @@ public class OtherInformationText : IOtherInformationText
         return $"{versionInfo.FileMajorPart}.{versionInfo.FileMinorPart}.{versionInfo.FileBuildPart}.{versionInfo.FilePrivatePart}";
     }
 
-    private static string GetPowerShellVersion(int version)
+    private string GetPowerShellVersion(int version)
     {
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             return "(supported on windows only)";
         }
 
-        var key = $@"SOFTWARE\Microsoft\PowerShell\{version}\PowerShellEngine";
-        var subKey = Registry.LocalMachine.OpenSubKey(key, false);
-        if (subKey == null)
+        var dict = _systemPropertiesProvider.Data.RegistryPowerShellStatus;
+        if (dict != null)
         {
-            return "0";
+            var key = version == 3 ? "PS3CompatibleVersion" : "PS1CompatibleVersion";
+            if (dict.TryGetValue(key, out var result) && !string.IsNullOrWhiteSpace(result))
+            {
+                return result.Split(',').LastOrDefault()?.Trim() ?? "0";
+            }
         }
 
-        var value = subKey.GetValue("PSCompatibleVersion")?.ToString()?.Split(',');
-        return value?.Last().Trim();
+        return "0";
     }
 
-    private static bool PowerShellExists(int version)
+    private bool PowerShellExists(int version)
     {
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             return false;
         }
 
-        var value = Registry.GetValue($@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\{version}", "Install", null)?.ToString();
-        return !string.IsNullOrWhiteSpace(value) && value.Equals("1");
+        var dict = _systemPropertiesProvider.Data.RegistryPowerShellStatus;
+        if (dict != null)
+        {
+            var key = version == 3 ? "PS3Install" : "PS1Install";
+            if (dict.TryGetValue(key, out var result))
+            {
+                return !string.IsNullOrWhiteSpace(result) && result.Equals("1");
+            }
+        }
+
+        return false;
     }
 
     private static string GetPowerShellCoreVersion()
@@ -134,89 +147,43 @@ public class OtherInformationText : IOtherInformationText
         return list.Count != 0 ? string.Join(", ", list) : "(none)";
     }
 
-    private static IEnumerable<Browser> GetBrowsers()
+    private IEnumerable<Browser> GetBrowsers()
     {
-        var browsers = new List<Browser>();
-
-        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        var list = new List<Browser>();
+        if (_systemPropertiesProvider.Data.Browsers != null)
         {
-            return browsers;
+            list.AddRange(_systemPropertiesProvider.Data.Browsers);
         }
 
-        try
+        var edgeBrowser = GetEdgeVersion();
+        if (edgeBrowser != null)
         {
-            var browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Clients\StartMenuInternet") ??
-                              Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Clients\StartMenuInternet");
-
-            var browserNames = browserKeys?.GetSubKeyNames();
-            if (browserNames != null)
-            {
-                foreach (var browserName in browserNames)
-                {
-                    var browserKey = browserKeys.OpenSubKey(browserName);
-                    if (browserKey == null)
-                    {
-                        continue;
-                    }
-
-                    var browser = new Browser
-                                  {
-                                      Name = (string)browserKey.GetValue(null)
-                                  };
-
-                    if (browser.Name is "Internet Explorer")
-                    {
-                        continue;
-                    }
-
-                    var browserKeyPath = browserKey.OpenSubKey(@"shell\open\command");
-                    if (browserKeyPath != null)
-                    {
-                        browser.Path = browserKeyPath.GetValue(null)?.ToString()?.Replace("\"", "");
-                    }
-
-                    browser.Version = browser.Path != null ? FileVersionInfo.GetVersionInfo(browser.Path).FileVersion : "unknown";
-                    browsers.Add(browser);
-                }
-            }
-
-            var edgeBrowser = GetEdgeVersion();
-            if (edgeBrowser != null)
-            {
-                browsers.Add(edgeBrowser);
-            }
-        }
-        catch
-        {
-            // ignored
+            list.Add(edgeBrowser);
         }
 
-        return browsers;
+        return list;
     }
 
-    private static Browser GetEdgeVersion()
+    private Browser GetEdgeVersion()
     {
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             return null;
         }
 
-        var edgeKey =
-            Registry.CurrentUser.OpenSubKey(
-                @"SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppModel\SystemAppData\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\Schemas");
-        if (edgeKey == null)
+        var result = _systemPropertiesProvider.Data.RegistryEdgePackageFullName;
+        if (string.IsNullOrWhiteSpace(result))
         {
             return null;
         }
 
-        var version = edgeKey.GetValue("PackageFullName")?.ToString()?.Replace("\"", "");
-        var result = Regex.Match(version ?? string.Empty, "(((([0-9.])\\d)+){1})");
-        if (result.Success)
+        var match = Regex.Match(result, "(((([0-9.])\\d)+){1})");
+        if (match.Success)
         {
             return new()
                    {
                        Name = "MicrosoftEdge",
-                       Version = result.Value
+                       Version = match.Value
                    };
         }
 

@@ -1,24 +1,31 @@
-﻿using Avalonia.Controls.Templates;
+using Avalonia.Controls;
+using Avalonia.Controls.Templates;
 
 namespace SystemPropertiesChecker.Avalonia.Tests;
 
 public class ViewLocatorTests
 {
-    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-    public void Constructor_HasNullGuards(GuardClauseAssertion assertion)
+    [Fact]
+    public void Constructor_ReturnsInterfaceName()
     {
-        assertion.Verify(typeof(ViewLocator).GetConstructors());
-    }
-
-    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-    public void Constructor_ReturnsInterfaceName(ViewLocator sut)
-    {
+        var sut = new ViewLocator();
         sut.Should().BeAssignableTo<IDataTemplate>();
     }
 
-    [Theory, NSubstituteOmitAutoPropertiesTrueAutoData]
-    public void Methods_HaveNullGuards(GuardClauseAssertion assertion)
+    [Fact]
+    public void Build_WithNull_ReturnsTextBlock()
     {
-        assertion.Verify(typeof(ViewLocator).GetMethods().Where(method => !method.IsAbstract));
+        var sut = new ViewLocator();
+        var result = sut.Build(null);
+        result.Should().BeOfType<TextBlock>();
+        ((TextBlock)result!).Text.Should().Be("View Not Found");
+    }
+
+    [Fact]
+    public void Match_WithNull_ReturnsFalse()
+    {
+        var sut = new ViewLocator();
+        var result = sut.Match(null);
+        result.Should().BeFalse();
     }
 }

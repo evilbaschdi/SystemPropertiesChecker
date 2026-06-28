@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 using SystemPropertiesChecker.Core.Models;
 
@@ -18,8 +18,6 @@ public static class ConfigureCoreServices
         services.AddScoped<IDotNetVersionReleaseKeyMapping, DotNetVersionReleaseKeyMapping>();
         services.AddScoped<IDotNetVersionReleaseKeyMappingList, DotNetVersionReleaseKeyMappingList>();
         services.AddScoped<IExecutePowerShellCommand, ExecutePowerShellCommand>();
-        services.AddScoped<IHandleNetFrameworkSetupNdpKeys, HandleNetFrameworkSetupNdpKeys>();
-        services.AddScoped<IHandleNetFrameworkSetupNdpSubKey, HandleNetFrameworkSetupNdpSubKey>();
         services.AddScoped<IInsiderChannel, InsiderChannel>();
         services.AddScoped<INetFrameworkVersionFromRegistry, NetFrameworkVersionFromRegistry>();
         services.AddScoped<IOtherInformationText, OtherInformationText>();
@@ -29,6 +27,7 @@ public static class ConfigureCoreServices
         services.AddScoped<IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion, RegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion>();
         services.AddScoped<IRegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection, RegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection>();
         services.AddScoped<ISourceOsCollection, HklmSystemSetupSourcesInstallDates>();
+        services.AddSingleton<ISystemPropertiesProvider, SystemPropertiesProvider>();
         services.AddScoped<IWindowsFeatureExperiencePackVersion, WindowsFeatureExperiencePackVersion>();
         services.AddScoped<IWindowsVersionDictionary, WindowsVersionDictionary>();
         services.AddScoped<IWindowsVersionInformation, WindowsVersionInformation>();

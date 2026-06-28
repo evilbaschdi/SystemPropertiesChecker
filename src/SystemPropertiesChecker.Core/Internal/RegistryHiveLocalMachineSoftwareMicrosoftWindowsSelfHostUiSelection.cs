@@ -1,4 +1,6 @@
-﻿namespace SystemPropertiesChecker.Core.Internal;
+using JetBrains.Annotations;
+
+namespace SystemPropertiesChecker.Core.Internal;
 
 /// <summary>
 ///     Class that provides RegistryValues from WindowsNT CurrentVersion.
@@ -10,8 +12,8 @@ public class RegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection
     /// <summary>
     ///     Constructor
     /// </summary>
-    public RegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection()
-        : base(@"SOFTWARE\Microsoft\WindowsSelfHost\UI\Selection")
+    public RegistryHiveLocalMachineSoftwareMicrosoftWindowsSelfHostUiSelection([NotNull] ISystemPropertiesProvider systemPropertiesProvider)
+        : base(@"SOFTWARE\Microsoft\WindowsSelfHost\UI\Selection", systemPropertiesProvider)
     {
     }
 }

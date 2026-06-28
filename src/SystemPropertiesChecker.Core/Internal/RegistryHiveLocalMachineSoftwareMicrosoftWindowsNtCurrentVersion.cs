@@ -1,4 +1,6 @@
-﻿namespace SystemPropertiesChecker.Core.Internal;
+using JetBrains.Annotations;
+
+namespace SystemPropertiesChecker.Core.Internal;
 
 /// <summary>
 ///     Class that provides RegistryValues from WindowsNT CurrentVersion.
@@ -10,8 +12,8 @@ public class RegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion : 
     /// <summary>
     ///     Constructor
     /// </summary>
-    public RegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion()
-        : base(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion")
+    public RegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion([NotNull] ISystemPropertiesProvider systemPropertiesProvider)
+        : base(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", systemPropertiesProvider)
     {
     }
 }

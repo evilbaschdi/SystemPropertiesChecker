@@ -26,7 +26,6 @@
 		<PackageReference Include="EvilBaschdi.Core.Settings" />
 		<PackageReference Include="System.DirectoryServices" />
 		<PackageReference Include="System.DirectoryServices.AccountManagement" />
-		<PackageReference Include="System.Management" />
 	</ItemGroup>
 
 	<ItemGroup>

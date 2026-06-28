@@ -1,22 +1,25 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
-using Microsoft.Win32;
 
 namespace SystemPropertiesChecker.Core.Internal.DotNet;
 
 /// <inheritdoc />
 public class CheckNetFrameworkVersion45OrHigher : ICheckNetFrameworkVersion45OrHigher
 {
+    private readonly ISystemPropertiesProvider _systemPropertiesProvider;
     private readonly IParseReleaseKeyByReleaseKeyMappingList _parseReleaseKeyByReleaseKeyMappingList;
 
     /// <summary>
     ///     Constructor
     /// </summary>
     /// <param name="parseReleaseKeyByReleaseKeyMappingList"></param>
+    /// <param name="systemPropertiesProvider"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public CheckNetFrameworkVersion45OrHigher([NotNull] IParseReleaseKeyByReleaseKeyMappingList parseReleaseKeyByReleaseKeyMappingList)
+    public CheckNetFrameworkVersion45OrHigher([NotNull] IParseReleaseKeyByReleaseKeyMappingList parseReleaseKeyByReleaseKeyMappingList,
+                                               [NotNull] ISystemPropertiesProvider systemPropertiesProvider)
     {
         _parseReleaseKeyByReleaseKeyMappingList = parseReleaseKeyByReleaseKeyMappingList ?? throw new ArgumentNullException(nameof(parseReleaseKeyByReleaseKeyMappingList));
+        _systemPropertiesProvider = systemPropertiesProvider ?? throw new ArgumentNullException(nameof(systemPropertiesProvider));
     }
 
     /// <inheritdoc />
@@ -29,15 +32,10 @@ public class CheckNetFrameworkVersion45OrHigher : ICheckNetFrameworkVersion45OrH
                 return null;
             }
 
-            using var localMachine = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "");
-            using var ndpKey = localMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\");
-            if (ndpKey == null)
-            {
-                return null;
-            }
-
-            var releaseKey = ndpKey.GetValue("Release")?.ToString();
-            return _parseReleaseKeyByReleaseKeyMappingList.ValueFor(releaseKey);
+            var releaseKey = _systemPropertiesProvider.Data.NetFrameworkReleaseKey;
+            return string.IsNullOrWhiteSpace(releaseKey)
+                ? null
+                : _parseReleaseKeyByReleaseKeyMappingList.ValueFor(releaseKey);
         }
     }
 }

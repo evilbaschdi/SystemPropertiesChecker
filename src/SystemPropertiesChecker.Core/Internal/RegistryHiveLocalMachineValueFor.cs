@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using Microsoft.Win32;
+using JetBrains.Annotations;
 
 namespace SystemPropertiesChecker.Core.Internal;
 
@@ -11,10 +10,8 @@ public abstract class RegistryHiveLocalMachineValueFor : RegistryValueFor, IRegi
     /// <summary>
     ///     Constructor
     /// </summary>
-    protected RegistryHiveLocalMachineValueFor([NotNull] string subKey)
-#pragma warning disable CA1416 // Validate platform compatibility
-        : base(subKey, RegistryHive.LocalMachine)
-#pragma warning restore CA1416 // Validate platform compatibility
+    protected RegistryHiveLocalMachineValueFor([NotNull] string subKey, [NotNull] ISystemPropertiesProvider systemPropertiesProvider)
+        : base(subKey, systemPropertiesProvider)
     {
     }
 }

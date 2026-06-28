@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Avalonia;
 using EvilBaschdi.Testing.Avalonia;
 
@@ -25,12 +25,12 @@ public class AppTests : AvaloniaTestBase<App>
     {
         // Check what methods this class actually declares
         var methods = typeof(App)
-                      .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                      .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                       .Where(m => !m.IsAbstract && !m.IsSpecialName)
                       .ToArray();
 
-        // App class has Initialize() and OnFrameworkInitializationCompleted() methods,
-        // but both have no parameters, so there are no null guards to test
+        // App class has Initialize(), PreMainWindowCreation() and CreateMainWindow() methods,
+        // but they have no parameters, so there are no null guards to test
         var methodsWithParameters = methods.Where(m => m.GetParameters().Length > 0).ToArray();
 
         if (methodsWithParameters.Length > 0)
@@ -38,9 +38,9 @@ public class AppTests : AvaloniaTestBase<App>
             assertion.Verify(methodsWithParameters);
         }
 
-        // Verify that we found the expected methods (Initialize and OnFrameworkInitializationCompleted)
+        // Verify that we found the expected methods
         methods.Should().Contain(m => m.Name == "Initialize", "App should override Initialize method");
-        methods.Should().Contain(m => m.Name == "OnFrameworkInitializationCompleted",
-            "App should override OnFrameworkInitializationCompleted method");
+        methods.Should().Contain(m => m.Name == "PreMainWindowCreation", "App should override PreMainWindowCreation method");
+        methods.Should().Contain(m => m.Name == "CreateMainWindow", "App should override CreateMainWindow method");
     }
 }

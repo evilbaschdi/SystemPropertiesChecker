@@ -1,21 +1,21 @@
-﻿using System.Runtime.InteropServices;
-using Microsoft.Win32;
+using System.Runtime.InteropServices;
+using JetBrains.Annotations;
 
 namespace SystemPropertiesChecker.Core.Internal.DotNet;
 
 /// <inheritdoc />
 public class NetFrameworkVersionFromRegistry : INetFrameworkVersionFromRegistry
 {
-    private readonly IHandleNetFrameworkSetupNdpKeys _handleNetFrameworkSetupNdpKeys;
+    private readonly ISystemPropertiesProvider _systemPropertiesProvider;
 
     /// <summary>
     ///     Constructor
     /// </summary>
-    /// <param name="handleNetFrameworkSetupNdpKeys"></param>
+    /// <param name="systemPropertiesProvider"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public NetFrameworkVersionFromRegistry(IHandleNetFrameworkSetupNdpKeys handleNetFrameworkSetupNdpKeys)
+    public NetFrameworkVersionFromRegistry([NotNull] ISystemPropertiesProvider systemPropertiesProvider)
     {
-        _handleNetFrameworkSetupNdpKeys = handleNetFrameworkSetupNdpKeys ?? throw new ArgumentNullException(nameof(handleNetFrameworkSetupNdpKeys));
+        _systemPropertiesProvider = systemPropertiesProvider ?? throw new ArgumentNullException(nameof(systemPropertiesProvider));
     }
 
     /// <inheritdoc />
@@ -30,18 +30,9 @@ public class NetFrameworkVersionFromRegistry : INetFrameworkVersionFromRegistry
                 return list;
             }
 
-            // Opens the registry key for the .NET Framework entry.
-            using var localMachine = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, "");
-            using var ndpKey = localMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\");
-
-            if (ndpKey == null)
+            if (_systemPropertiesProvider.Data.NetFrameworkVersions != null)
             {
-                return list;
-            }
-
-            foreach (var versionKeyName in ndpKey.GetSubKeyNames().Where(v => v.StartsWith('v')))
-            {
-                list.AddRange(_handleNetFrameworkSetupNdpKeys.ValueFor((versionKeyName, ndpKey)));
+                list.AddRange(_systemPropertiesProvider.Data.NetFrameworkVersions);
             }
 
             return list;

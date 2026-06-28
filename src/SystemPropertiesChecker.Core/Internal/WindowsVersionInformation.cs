@@ -1,4 +1,3 @@
-﻿using System.Management;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using SystemPropertiesChecker.Core.Models;
@@ -11,6 +10,7 @@ namespace SystemPropertiesChecker.Core.Internal;
 // ReSharper disable once ClassNeverInstantiated.Global
 public class WindowsVersionInformation : IWindowsVersionInformation
 {
+    private readonly ISystemPropertiesProvider _systemPropertiesProvider;
     private readonly IInsiderChannel _insiderChannel;
     private readonly IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion _localMachineSoftwareMicrosoftWindowsNtCurrentVersion;
     private readonly IPasswordExpirationDate _passwordExpirationDate;
@@ -26,7 +26,8 @@ public class WindowsVersionInformation : IWindowsVersionInformation
     public WindowsVersionInformation([NotNull] IRegistryHiveLocalMachineSoftwareMicrosoftWindowsNtCurrentVersion localMachineSoftwareMicrosoftWindowsNtCurrentVersion,
                                      [NotNull] IInsiderChannel insiderChannel,
                                      [NotNull] IPasswordExpirationDate passwordExpirationDate,
-                                     [NotNull] IWindowsFeatureExperiencePackVersion windowsFeatureExperiencePackVersion)
+                                     [NotNull] IWindowsFeatureExperiencePackVersion windowsFeatureExperiencePackVersion,
+                                     [NotNull] ISystemPropertiesProvider systemPropertiesProvider)
     {
         _localMachineSoftwareMicrosoftWindowsNtCurrentVersion = localMachineSoftwareMicrosoftWindowsNtCurrentVersion ??
                                                                 throw new ArgumentNullException(nameof(localMachineSoftwareMicrosoftWindowsNtCurrentVersion));
@@ -34,6 +35,7 @@ public class WindowsVersionInformation : IWindowsVersionInformation
 
         _passwordExpirationDate = passwordExpirationDate ?? throw new ArgumentNullException(nameof(passwordExpirationDate));
         _windowsFeatureExperiencePackVersion = windowsFeatureExperiencePackVersion ?? throw new ArgumentNullException(nameof(windowsFeatureExperiencePackVersion));
+        _systemPropertiesProvider = systemPropertiesProvider ?? throw new ArgumentNullException(nameof(systemPropertiesProvider));
     }
 
     /// <summary>
@@ -100,114 +102,45 @@ public class WindowsVersionInformation : IWindowsVersionInformation
 
     private static string Architecture() => Enum.GetName(RuntimeInformation.OSArchitecture);
 
-    private static string ManufacturerByWin32ComputerSystem()
+    private string ManufacturerByWin32ComputerSystem()
     {
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             return "(supported on windows only)";
         }
 
-        const string win32ComputerSystem = "SELECT * FROM Win32_ComputerSystem";
-
-        try
-        {
-            using var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
-            var info = managementObjectSearcher.Get();
-
-            foreach (var item in info)
-            {
-                return item["Manufacturer"].ToString();
-            }
-        }
-        catch (Exception)
-        {
-            // ignored
-        }
-
-        return string.Empty;
+        return _systemPropertiesProvider.Data.CimComputerSystemManufacturer ?? string.Empty;
     }
 
-    private static KeyValuePair<string, string> ManufacturerByWin32BaseBoard()
+    private KeyValuePair<string, string> ManufacturerByWin32BaseBoard()
     {
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             return new("(supported on windows only)", "(supported on windows only)");
         }
 
-        const string win32ComputerSystem = "SELECT * FROM Win32_BaseBoard";
-
-        try
-        {
-            using var managementObjectSearcher = new ManagementObjectSearcher(win32ComputerSystem);
-            var info = managementObjectSearcher.Get();
-
-            foreach (var item in info)
-            {
-                return new(item["Manufacturer"].ToString(), item["Product"].ToString());
-            }
-        }
-        catch (Exception)
-        {
-            // ignored
-        }
-
-        return new();
+        var key = _systemPropertiesProvider.Data.CimBaseBoardManufacturer ?? string.Empty;
+        var value = _systemPropertiesProvider.Data.CimBaseBoardProduct ?? string.Empty;
+        return new(key, value);
     }
 
-    private static string InstallDate()
+    private string InstallDate()
     {
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             return "(supported on windows only)";
         }
 
-        const string win32OperatingSystem = "SELECT * FROM Win32_OperatingSystem";
-        try
-        {
-            using var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
-            var info = managementObjectSearcher.Get();
-            var installDate = string.Empty;
-            foreach (var item in info)
-            {
-                installDate = item["InstallDate"].ToString();
-                break;
-            }
-
-            return ManagementDateTimeConverter.ToDateTime(installDate ?? string.Empty).ToString("yyyy-MM-dd HH:mm:ss");
-        }
-        catch (Exception)
-        {
-            // ignored
-        }
-
-        return string.Empty;
+        return _systemPropertiesProvider.Data.CimOperatingSystemInstallDate ?? string.Empty;
     }
 
-    private static string Caption()
+    private string Caption()
     {
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             return "(supported on windows only)";
         }
 
-        const string win32OperatingSystem = "SELECT * FROM Win32_OperatingSystem";
-        var caption = string.Empty;
-        try
-        {
-            using var managementObjectSearcher = new ManagementObjectSearcher(win32OperatingSystem);
-            var info = managementObjectSearcher.Get();
-
-            foreach (var item in info)
-            {
-                caption = item["Caption"].ToString();
-                break;
-            }
-        }
-        catch (Exception)
-        {
-            // ignored
-        }
-
-        return caption;
+        return _systemPropertiesProvider.Data.CimOperatingSystemCaption ?? string.Empty;
     }
 }

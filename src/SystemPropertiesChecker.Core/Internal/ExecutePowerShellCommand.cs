@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -17,11 +17,27 @@ public class ExecutePowerShellCommand : IExecutePowerShellCommand
         try
         {
             using var process = new Process();
-            process.SetHiddenProcessFor(@"C:\windows\system32\windowspowershell\v1.0\powershell.exe", value);
+            process.StartInfo = new ProcessStartInfo
+            {
+                FileName = @"C:\windows\system32\windowspowershell\v1.0\powershell.exe",
+                Arguments = "-NoProfile -NonInteractive -Command -",
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                StandardOutputEncoding = Encoding.UTF8
+            };
+            
             process.Start();
-            stringBuilder.AppendLine(process.StandardOutput.ReadToEnd().Trim());
 
-            process.Close();
+            using (var writer = process.StandardInput)
+            {
+                writer.Write(value);
+            }
+
+            stringBuilder.AppendLine(process.StandardOutput.ReadToEnd().Trim());
+            process.WaitForExit();
         }
         catch (Exception e)
         {

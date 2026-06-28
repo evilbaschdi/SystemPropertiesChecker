@@ -1,29 +1,22 @@
-﻿using System.ComponentModel;
 using JetBrains.Annotations;
-using Microsoft.Win32;
 
 namespace SystemPropertiesChecker.Core.Internal;
 
 /// <inheritdoc />
 public abstract class RegistryValueFor : IRegistryValueFor
 {
-    private readonly RegistryHive _registryHive;
+    private readonly ISystemPropertiesProvider _systemPropertiesProvider;
     private readonly string _subKey;
 
     /// <summary>
     ///     Constructor
     /// </summary>
     /// <param name="subKey"></param>
-    /// <param name="registryHive"></param>
-    protected RegistryValueFor([NotNull] string subKey, RegistryHive registryHive)
+    /// <param name="systemPropertiesProvider"></param>
+    protected RegistryValueFor([NotNull] string subKey, [NotNull] ISystemPropertiesProvider systemPropertiesProvider)
     {
-        if (!Enum.IsDefined(typeof(RegistryHive), registryHive))
-        {
-            throw new InvalidEnumArgumentException(nameof(registryHive), (int)registryHive, typeof(RegistryHive));
-        }
-
         _subKey = subKey ?? throw new ArgumentNullException(nameof(subKey));
-        _registryHive = registryHive;
+        _systemPropertiesProvider = systemPropertiesProvider ?? throw new ArgumentNullException(nameof(systemPropertiesProvider));
     }
 
     /// <inheritdoc />
@@ -36,13 +29,23 @@ public abstract class RegistryValueFor : IRegistryValueFor
             return string.Empty;
         }
 
-        var bits = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
+        if (_subKey.Equals(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", StringComparison.OrdinalIgnoreCase))
+        {
+            var dict = _systemPropertiesProvider.Data.RegistryWindowsNtCurrentVersion;
+            if (dict != null && dict.TryGetValue(value, out var result))
+            {
+                return result ?? string.Empty;
+            }
+        }
+        else if (_subKey.Equals(@"SOFTWARE\Microsoft\WindowsSelfHost\UI\Selection", StringComparison.OrdinalIgnoreCase))
+        {
+            var dict = _systemPropertiesProvider.Data.RegistryWindowsSelfHostUiSelection;
+            if (dict != null && dict.TryGetValue(value, out var result))
+            {
+                return result ?? string.Empty;
+            }
+        }
 
-        using var localMachine = RegistryKey.OpenBaseKey(_registryHive, bits);
-        using var regPath = localMachine.OpenSubKey(_subKey);
-
-        return regPath?.GetValue(value) != null
-            ? regPath.GetValue(value)?.ToString()
-            : string.Empty;
+        return string.Empty;
     }
 }
