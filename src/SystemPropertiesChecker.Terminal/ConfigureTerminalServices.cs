@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using SystemPropertiesChecker.Terminal.Internal;
 
 namespace SystemPropertiesChecker.Terminal;

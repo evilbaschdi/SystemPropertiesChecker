@@ -1,4 +1,4 @@
-﻿using EvilBaschdi.About.Terminal;
+using EvilBaschdi.About.Terminal;
 using Spectre.Console;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 

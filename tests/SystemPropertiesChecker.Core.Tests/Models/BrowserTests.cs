@@ -1,4 +1,4 @@
-﻿using SystemPropertiesChecker.Core.Models;
+using SystemPropertiesChecker.Core.Models;
 
 namespace SystemPropertiesChecker.Core.Tests.Models;
 

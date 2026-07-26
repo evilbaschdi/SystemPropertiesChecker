@@ -1,4 +1,4 @@
-﻿namespace SystemPropertiesChecker.Avalonia.Tests;
+namespace SystemPropertiesChecker.Avalonia.Tests;
 
 /// <summary>
 ///     Do not delete this class.

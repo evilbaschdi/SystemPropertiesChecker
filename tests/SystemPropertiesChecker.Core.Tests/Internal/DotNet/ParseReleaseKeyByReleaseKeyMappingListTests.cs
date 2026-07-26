@@ -1,4 +1,4 @@
-﻿using SystemPropertiesChecker.Core.Internal.DotNet;
+using SystemPropertiesChecker.Core.Internal.DotNet;
 
 namespace SystemPropertiesChecker.Core.Tests.Internal.DotNet;
 

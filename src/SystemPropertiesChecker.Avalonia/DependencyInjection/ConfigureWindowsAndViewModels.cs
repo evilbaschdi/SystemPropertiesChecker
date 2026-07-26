@@ -1,4 +1,4 @@
-﻿using EvilBaschdi.Core.Avalonia.Lifetime;
+using EvilBaschdi.Core.Avalonia.Lifetime;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SystemPropertiesChecker.Avalonia.ViewModels;

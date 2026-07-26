@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using EvilBaschdi.Core;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Models;

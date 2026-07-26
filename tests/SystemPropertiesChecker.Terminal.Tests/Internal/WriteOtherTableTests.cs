@@ -1,4 +1,4 @@
-﻿using SystemPropertiesChecker.Terminal.Internal;
+using SystemPropertiesChecker.Terminal.Internal;
 
 namespace SystemPropertiesChecker.Terminal.Tests.Internal;
 

@@ -1,4 +1,4 @@
-﻿namespace SystemPropertiesChecker.Core.Internal.DotNet;
+namespace SystemPropertiesChecker.Core.Internal.DotNet;
 
 /// <inheritdoc />
 public class ParseReleaseKeyByReleaseKeyMappingList : IParseReleaseKeyByReleaseKeyMappingList

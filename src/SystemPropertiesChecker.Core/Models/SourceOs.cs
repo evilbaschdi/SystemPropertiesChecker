@@ -1,4 +1,4 @@
-﻿namespace SystemPropertiesChecker.Core.Models;
+namespace SystemPropertiesChecker.Core.Models;
 
 /// <summary>
 ///     Source Os

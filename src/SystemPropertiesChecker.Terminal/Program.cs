@@ -1,4 +1,4 @@
-﻿using EvilBaschdi.About.Terminal.DependencyInjection;
+using EvilBaschdi.About.Terminal.DependencyInjection;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Terminal;
 

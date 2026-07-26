@@ -1,4 +1,4 @@
-﻿namespace SystemPropertiesChecker.Core.Internal.DotNet;
+namespace SystemPropertiesChecker.Core.Internal.DotNet;
 
 /// <inheritdoc cref="IDotNetCoreRunTimes" />
 /// <inheritdoc cref="DotNetCoreListAsString" />

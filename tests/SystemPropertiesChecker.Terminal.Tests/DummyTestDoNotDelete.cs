@@ -1,4 +1,4 @@
-﻿namespace SystemPropertiesChecker.Terminal.Tests;
+namespace SystemPropertiesChecker.Terminal.Tests;
 
 /// <summary>
 ///     Do not delete this class.

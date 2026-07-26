@@ -1,4 +1,4 @@
-﻿using JetBrains.Annotations;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace SystemPropertiesChecker.Terminal;

@@ -1,4 +1,4 @@
-﻿using EvilBaschdi.Core;
+using EvilBaschdi.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace SystemPropertiesChecker.Terminal;

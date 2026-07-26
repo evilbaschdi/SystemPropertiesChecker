@@ -1,4 +1,4 @@
-﻿using EvilBaschdi.Core;
+using EvilBaschdi.Core;
 using SystemPropertiesChecker.Core.Models;
 
 namespace SystemPropertiesChecker.Core.Internal;

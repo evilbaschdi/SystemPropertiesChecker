@@ -1,4 +1,4 @@
-﻿namespace SystemPropertiesChecker.Terminal.Tests;
+namespace SystemPropertiesChecker.Terminal.Tests;
 
 public class ConfigureTerminalServicesTests
 {
