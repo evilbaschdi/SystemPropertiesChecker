@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Configuration;
-using NSubstitute;
 using SystemPropertiesChecker.Core.Internal.DotNet;
 
 namespace SystemPropertiesChecker.Core.Tests.Internal.DotNet;

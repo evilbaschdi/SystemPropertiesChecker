@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Reactive;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -7,6 +6,7 @@ using EvilBaschdi.About.Avalonia;
 using EvilBaschdi.Core.Avalonia.DependencyInjection;
 using FluentAvalonia.UI.Controls;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 using SystemPropertiesChecker.Avalonia.Views;
 using SystemPropertiesChecker.Core.Internal;
 using SystemPropertiesChecker.Core.Internal.DotNet;
@@ -158,7 +158,7 @@ public class MainWindowViewModel : ViewModelBase
 
     /// <summary>
     /// </summary>
-    public ReactiveCommand<Unit, Unit> AboutWindowCommand { get; set; }
+    public ReactiveCommand<RxVoid, RxVoid> AboutWindowCommand { get; set; }
 
     private async Task AboutWindowCommandAction()
     {
