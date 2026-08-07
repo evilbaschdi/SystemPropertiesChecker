@@ -1,6 +1,10 @@
 # ![icon](./.repo/icon.png) SystemPropertiesChecker
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE) [![CodeFactor](https://www.codefactor.io/repository/github/evilbaschdi/SystemPropertiesChecker/badge/main?style=for-the-badge)](https://www.codefactor.io/repository/github/evilbaschdi/SystemPropertiesChecker/overview/main)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+![Commit Activity](https://img.shields.io/github/commit-activity/m/evilbaschdi/SystemPropertiesChecker?style=for-the-badge&)
+![Last Commit](https://img.shields.io/github/last-commit/evilbaschdi/SystemPropertiesChecker?style=for-the-badge&)
+[![CodeFactor](https://www.codefactor.io/repository/github/evilbaschdi/SystemPropertiesChecker/badge/main?style=for-the-badge)](https://www.codefactor.io/repository/github/evilbaschdi/SystemPropertiesChecker/overview/main)
+
 
 ## About
 some little tool I wrote to get quick information about installed service packs on windows. Since Windows 7 SP1 was the last one of those service packs, I decided to extend the functionality to display installed .Net frameworks and other software.
