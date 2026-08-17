@@ -22,7 +22,7 @@
         <PackageReference Include="EvilBaschdi.Core" />
         <PackageReference Include="EvilBaschdi.Testing" />
         <PackageReference Include="EvilBaschdi.Testing.Avalonia" />
-        <PackageReference Include="xunit.v3.mtp-v2" />
+        <PackageReference Include="xunit.v3" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
     </ItemGroup>
 
