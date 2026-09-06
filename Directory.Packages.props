@@ -8,12 +8,12 @@
     <PackageVersion Include="coverlet.collector" Version="10.0.1" />
     <PackageVersion Include="EvilBaschdi.About.Avalonia" Version="2026.7.29.16" />
     <PackageVersion Include="EvilBaschdi.About.Terminal" Version="2026.7.29.16" />
-    <PackageVersion Include="EvilBaschdi.Core" Version="2026.6.18.15" />
-    <PackageVersion Include="EvilBaschdi.Core.Avalonia" Version="2026.8.3.15" />
+    <PackageVersion Include="EvilBaschdi.Core" Version="2026.8.21.10" />
+    <PackageVersion Include="EvilBaschdi.Core.Avalonia" Version="2026.9.4.14" />
     <PackageVersion Include="EvilBaschdi.Core.DependencyInjection" Version="2026.8.11.17" />
     <PackageVersion Include="EvilBaschdi.Core.Settings" Version="2026.8.11.18" />
-    <PackageVersion Include="EvilBaschdi.Testing" Version="2026.8.15.6" />
-    <PackageVersion Include="EvilBaschdi.Testing.Avalonia" Version="2026.8.3.15" />
+    <PackageVersion Include="EvilBaschdi.Testing" Version="2026.9.3.16" />
+    <PackageVersion Include="EvilBaschdi.Testing.Avalonia" Version="2026.9.4.14" />
     <PackageVersion Include="FluentAssertions.Analyzers" Version="0.34.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
