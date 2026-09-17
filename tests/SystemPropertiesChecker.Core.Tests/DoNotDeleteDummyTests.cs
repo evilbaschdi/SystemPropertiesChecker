@@ -13,8 +13,8 @@ public class DoNotDeleteDummyTests
         // Arrange
         // Act
         // Assert
-        // Use FluentAssertions equivalent
+        // Use AwesomeAssertions equivalent
         Assert.Equal(1, 1);
-        // Use FluentAssertions equivalent
+        // Use AwesomeAssertions equivalent
     }
 }

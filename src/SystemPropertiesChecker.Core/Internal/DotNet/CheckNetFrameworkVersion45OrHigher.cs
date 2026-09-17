@@ -16,7 +16,7 @@ public class CheckNetFrameworkVersion45OrHigher : ICheckNetFrameworkVersion45OrH
     /// <param name="systemPropertiesProvider"></param>
     /// <exception cref="ArgumentNullException"></exception>
     public CheckNetFrameworkVersion45OrHigher([NotNull] IParseReleaseKeyByReleaseKeyMappingList parseReleaseKeyByReleaseKeyMappingList,
-                                               [NotNull] ISystemPropertiesProvider systemPropertiesProvider)
+                                              [NotNull] ISystemPropertiesProvider systemPropertiesProvider)
     {
         _parseReleaseKeyByReleaseKeyMappingList = parseReleaseKeyByReleaseKeyMappingList ?? throw new ArgumentNullException(nameof(parseReleaseKeyByReleaseKeyMappingList));
         _systemPropertiesProvider = systemPropertiesProvider ?? throw new ArgumentNullException(nameof(systemPropertiesProvider));

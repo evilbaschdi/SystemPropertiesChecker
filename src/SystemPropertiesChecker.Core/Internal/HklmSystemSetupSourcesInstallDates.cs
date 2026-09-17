@@ -39,12 +39,12 @@ public class HklmSystemSetupSourcesInstallDates : CachedValue<ObservableCollecti
             }
 
             var list = historyData.Select(s => new SourceOs
-            {
-                ProductName = s.ProductName,
-                ReleaseId = s.ReleaseId,
-                Build = s.Build,
-                InstallDate = s.InstallDate.HasValue ? new DateTime(1970, 1, 1).AddSeconds(s.InstallDate.Value) : new DateTime(1970, 1, 1)
-            }).ToList();
+                                               {
+                                                   ProductName = s.ProductName,
+                                                   ReleaseId = s.ReleaseId,
+                                                   Build = s.Build,
+                                                   InstallDate = s.InstallDate.HasValue ? new DateTime(1970, 1, 1).AddSeconds(s.InstallDate.Value) : new DateTime(1970, 1, 1)
+                                               }).ToList();
 
             return new(list.OrderByDescending(i => i.InstallDate).ToList());
         }

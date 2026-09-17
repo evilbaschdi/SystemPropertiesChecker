@@ -15,7 +15,7 @@ using SystemPropertiesChecker.Core.Models;
 namespace SystemPropertiesChecker.Avalonia.ViewModels;
 
 /// <inheritdoc />
-public class MainWindowViewModel : ViewModelBase
+public partial class MainWindowViewModel : ViewModelBase
 {
     private readonly IDotNetCoreInfo _dotNetCoreInfo;
     private readonly IDotNetVersion _dotNetVersion;

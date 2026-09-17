@@ -18,17 +18,17 @@ public class ExecutePowerShellCommand : IExecutePowerShellCommand
         {
             using var process = new Process();
             process.StartInfo = new ProcessStartInfo
-            {
-                FileName = @"C:\windows\system32\windowspowershell\v1.0\powershell.exe",
-                Arguments = "-NoProfile -NonInteractive -Command -",
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                StandardOutputEncoding = Encoding.UTF8
-            };
-            
+                                {
+                                    FileName = @"C:\windows\system32\windowspowershell\v1.0\powershell.exe",
+                                    Arguments = "-NoProfile -NonInteractive -Command -",
+                                    UseShellExecute = false,
+                                    CreateNoWindow = true,
+                                    RedirectStandardInput = true,
+                                    RedirectStandardOutput = true,
+                                    RedirectStandardError = true,
+                                    StandardOutputEncoding = Encoding.UTF8
+                                };
+
             process.Start();
 
             using (var writer = process.StandardInput)
